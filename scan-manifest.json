@@ -1,0 +1,144 @@
+{
+  "manifest_version": 1,
+  "generated": "2026-07-17",
+  "notes": "Each repository is cloned at exactly the pinned sha. scan_paths are the directories in scope for triage; the scanner still walks the whole tree so that coverage can be reported per directory. Line numbers in inventory/ refer to these shas only.",
+  "repos": [
+    {
+      "name": "vllm",
+      "url": "https://github.com/vllm-project/vllm.git",
+      "sha": "5769a7382cb111288a9c2927342ca908943b9793",
+      "commit_date": "2026-07-06T23:06:19Z",
+      "scan_paths": [
+        "csrc",
+        "vllm"
+      ],
+      "exclude": [
+        "vllm/benchmarks",
+        "tests",
+        "benchmarks",
+        "examples",
+        "docs"
+      ]
+    },
+    {
+      "name": "sglang",
+      "url": "https://github.com/sgl-project/sglang.git",
+      "sha": "b41552334d46b9d83a6d834be361cb20b31d2137",
+      "commit_date": "2026-07-06T22:51:33Z",
+      "scan_paths": [
+        "sgl-kernel",
+        "python/sglang/srt"
+      ],
+      "exclude": [
+        "test",
+        "benchmark",
+        "docs",
+        "examples",
+        "sgl-kernel/tests",
+        "sgl-kernel/benchmark"
+      ]
+    },
+    {
+      "name": "flashinfer",
+      "url": "https://github.com/flashinfer-ai/flashinfer.git",
+      "sha": "c0d920d3270ce28e0d7db8cc2163a76245e63712",
+      "commit_date": "2026-07-06T23:13:30Z",
+      "scan_paths": [
+        "include",
+        "csrc",
+        "flashinfer"
+      ],
+      "exclude": [
+        "tests",
+        "benchmarks",
+        "docs",
+        "examples",
+        "3rdparty"
+      ]
+    },
+    {
+      "name": "flash-attention",
+      "url": "https://github.com/Dao-AILab/flash-attention.git",
+      "sha": "1f7ce2f7cb503473559f3d44d575ae05b1ed8557",
+      "commit_date": "2026-07-06T16:40:01Z",
+      "scan_paths": [
+        "csrc/flash_attn",
+        "hopper",
+        "flash_attn"
+      ],
+      "exclude": [
+        "tests",
+        "benchmarks",
+        "training",
+        "third_party",
+        "csrc/cutlass"
+      ]
+    },
+    {
+      "name": "marlin",
+      "url": "https://github.com/IST-DASLab/marlin.git",
+      "sha": "1f25790bdd49fba53106164a24666dade68d7c90",
+      "commit_date": "2024-09-04T15:35:00+02:00",
+      "scan_paths": [
+        "marlin"
+      ],
+      "exclude": [
+        "test.py",
+        "bench.py"
+      ]
+    },
+    {
+      "name": "DeepGEMM",
+      "url": "https://github.com/deepseek-ai/DeepGEMM.git",
+      "sha": "1f6f3f378920ccb5cc036ef43eb3f5972e921713",
+      "commit_date": "2026-07-06T02:30:16Z",
+      "scan_paths": [
+        "csrc",
+        "deep_gemm"
+      ],
+      "exclude": [
+        "tests",
+        "third-party"
+      ]
+    },
+    {
+      "name": "DeepEP",
+      "url": "https://github.com/deepseek-ai/DeepEP.git",
+      "sha": "099d5f2bad488b9c534ea785062b12f2e91d1d41",
+      "commit_date": "2026-07-03T02:53:50Z",
+      "scan_paths": [
+        "csrc",
+        "deep_ep"
+      ],
+      "exclude": [
+        "tests",
+        "third-party"
+      ]
+    },
+    {
+      "name": "cutlass",
+      "url": "https://github.com/NVIDIA/cutlass.git",
+      "sha": "4cbaaae4c70dbb2b3e07844010a381b97217ed76",
+      "commit_date": "2026-07-06T06:45:31Z",
+      "scan_paths": [
+        "include/cutlass/gemm/kernel",
+        "include/cutlass/gemm/device",
+        "include/cutlass/reduction",
+        "include/cutlass/epilogue",
+        "include/cutlass/barrier.h",
+        "include/cutlass/semaphore.h",
+        "include/cutlass/block_striped.h",
+        "include/cutlass/gemm/threadblock"
+      ],
+      "exclude": [
+        "test",
+        "examples",
+        "tools",
+        "python",
+        "media",
+        "docs"
+      ],
+      "scope_note": "Only split-K and stream-K reduction modes are triaged. Everything else in include/ is walked for coverage counts but not classified."
+    }
+  ]
+}
