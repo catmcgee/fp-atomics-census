@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/catmcgee/fp-atomics-census/triage/inventory.schema.json",
+  "title": "fp-atomics-census inventory row",
+  "description": "One triaged atomic site. One JSON object per line in inventory/<engine>.jsonl. See docs/TAXONOMY.md for the meaning of each field.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "engine", "sha", "file", "line_start", "line_end", "function",
+    "class", "kind", "dtype", "memory_space", "path", "default_path",
+    "evidence", "snippet", "confidence", "notes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+-[0-9]{4}$",
+      "description": "Stable identifier, <engine>-<nnnn>."
+    },
+    "engine": {
+      "type": "string",
+      "enum": ["vllm", "sglang", "flashinfer", "flash-attention", "marlin", "DeepGEMM", "DeepEP", "cutlass"]
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$",
+      "description": "Commit the line numbers refer to. Must equal the manifest sha for the engine."
+    },
+    "file": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path relative to the repository root."
+    },
+    "line_start": { "type": "integer", "minimum": 1 },
+    "line_end": { "type": "integer", "minimum": 1 },
+    "function": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Enclosing kernel, function, or Triton jit function. Use the class or struct name for CUTLASS-style functors."
+    },
+    "class": {
+      "type": "string",
+      "enum": ["A", "A1", "A2", "A3", "B", "B-indirect", "C"]
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "atomicAdd", "atomicSub", "atomicCAS-loop", "atomicCAS-lock", "atomicExch",
+        "atomicMax", "atomicMin", "atomicInc", "atomicDec", "atomicOr", "atomicAnd", "atomicXor",
+        "atomic_ref", "ptx-red", "ptx-atom", "ptx-multimem-red", "ptx-multimem-ld_reduce",
+        "tma-reduce", "tl.atomic_add", "tl.atomic_max", "tl.atomic_min", "tl.atomic_cas",
+        "tl.atomic_xchg", "torch-op", "store-race", "library-call", "cubin", "other"
+      ]
+    },
+    "dtype": {
+      "type": "string",
+      "enum": [
+        "float32", "float64", "float16", "bfloat16", "half2", "bfloat162", "float2", "float4",
+        "fp8", "int8", "int16", "int32", "uint32", "int64", "uint64", "bool", "mixed", "n/a", "unknown"
+      ]
+    },
+    "memory_space": {
+      "type": "string",
+      "enum": ["global", "shared", "distributed-shared", "unknown", "n/a"]
+    },
+    "path": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "direction", "phase", "moe"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1, "description": "Plain-language route from a user-visible configuration to this site." },
+        "quant": { "type": "array", "items": { "type": "string" }, "description": "Quantisation formats that reach the site, e.g. gptq, awq, fp8, int8, gguf, none." },
+        "attention_backend": { "type": "array", "items": { "type": "string" } },
+        "moe": { "type": "string", "enum": ["moe", "dense", "both", "n/a"] },
+        "phase": { "type": "string", "enum": ["prefill", "decode", "both", "n/a"] },
+        "direction": { "type": "string", "enum": ["forward", "backward", "both", "n/a"] },
+        "parallelism": { "type": "array", "items": { "type": "string", "enum": ["TP", "EP", "PP", "DP", "none", "any"] } },
+        "entry_points": { "type": "array", "items": { "type": "string" }, "description": "Python or C++ entry points (file:line) that launch the kernel." }
+      }
+    },
+    "default_path": {
+      "enum": [true, false, "unknown"],
+      "description": "true if a default engine configuration can reach the site; false if opt-in only."
+    },
+    "gate": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["flag", "read_at", "default"],
+      "properties": {
+        "flag": { "type": "string" },
+        "read_at": { "type": "string", "description": "file:line where the flag is consulted." },
+        "default": { "type": "string", "description": "Default value at the pinned sha, as a string." },
+        "note": { "type": "string" }
+      },
+      "description": "Required for class A3; optional elsewhere when a flag changes behaviour."
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "claim"],
+        "properties": {
+          "ref": { "type": "string", "pattern": "^[^:\\s]+:[0-9]+(-[0-9]+)?$", "description": "file:line or file:start-end, relative to the repo root unless prefixed with <engine>/." },
+          "claim": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "snippet": {
+      "type": "string",
+      "minLength": 1,
+      "description": "3 to 6 lines of code at the site, verbatim."
+    },
+    "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+    "notes": { "type": "string" },
+    "downstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order_invariant", "argument"],
+      "properties": {
+        "order_invariant": { "enum": [true, false, "unknown"] },
+        "argument": { "type": "string", "minLength": 1 }
+      },
+      "description": "Required for B-indirect: can a different slot or packet order change a downstream floating-point reduction order?"
+    },
+    "opaque_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["library", "knobs"],
+      "properties": {
+        "library": { "type": "string", "enum": ["cuBLAS", "cuBLASLt", "cuDNN", "NCCL", "TensorRT-LLM cubin", "NVSHMEM", "nvjet", "hardware-multicast", "other"] },
+        "knobs": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" }
+      },
+      "description": "Required for class C."
+    },
+    "candidate_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Ids of the rows in candidates/<engine>.jsonl this row was triaged from."
+    },
+    "cross_checked": {
+      "type": "boolean",
+      "description": "Set after the second independent read required for default-path class-A rows."
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "class": { "const": "A3" } } },
+      "then": { "required": ["gate"], "properties": { "gate": { "type": "object" } } }
+    },
+    {
+      "if": { "properties": { "class": { "const": "B-indirect" } } },
+      "then": { "required": ["downstream"] }
+    },
+    {
+      "if": { "properties": { "class": { "const": "C" } } },
+      "then": { "required": ["opaque_target"] }
+    }
+  ]
+}
