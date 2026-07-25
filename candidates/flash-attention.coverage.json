@@ -1,0 +1,193 @@
+{
+  "engine": "flash-attention",
+  "sha": "1f7ce2f7cb503473559f3d44d575ae05b1ed8557",
+  "scan_paths": [
+    "csrc/flash_attn",
+    "hopper",
+    "flash_attn"
+  ],
+  "exclude": [
+    "tests",
+    "benchmarks",
+    "training",
+    "third_party",
+    "csrc/cutlass"
+  ],
+  "languages": [
+    "cuda"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 12,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 5,
+        ".yaml": 1,
+        ".md": 4,
+        ".in": 1,
+        ".py": 1
+      }
+    },
+    "AI": {
+      "files_walked": 10,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 7,
+        ".py": 3
+      }
+    },
+    "assets": {
+      "files_walked": 17,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".pdf": 2,
+        ".png": 4,
+        ".jpg": 11
+      }
+    },
+    "benchmarks": {
+      "files_walked": 10,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".py": 9,
+        ".yaml": 1
+      }
+    },
+    "csrc/flash_attn": {
+      "files_walked": 117,
+      "files_scanned": 116,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".py": 1
+      }
+    },
+    "csrc/flash_attn_ck": {
+      "files_walked": 9,
+      "files_scanned": 9,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "csrc/fused_dense_lib": {
+      "files_walked": 4,
+      "files_scanned": 2,
+      "files_with_candidates": 1,
+      "candidates": 42,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 1,
+        ".py": 1
+      }
+    },
+    "csrc/layer_norm": {
+      "files_walked": 67,
+      "files_scanned": 65,
+      "files_with_candidates": 1,
+      "candidates": 2,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 1,
+        ".py": 1
+      }
+    },
+    "examples": {
+      "files_walked": 1,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 1
+      }
+    },
+    "flash_attn": {
+      "files_walked": 106,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".py": 99,
+        ".toml": 2,
+        "<none>": 3,
+        ".in": 1,
+        ".md": 1
+      }
+    },
+    "hopper": {
+      "files_walked": 507,
+      "files_scanned": 488,
+      "files_with_candidates": 6,
+      "candidates": 22,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".py": 19
+      }
+    },
+    "tests": {
+      "files_walked": 48,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".toml": 1,
+        ".py": 47
+      }
+    },
+    "tools": {
+      "files_walked": 9,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".py": 3,
+        ".md": 1,
+        ".sh": 3,
+        ".def": 1,
+        "<none>": 1
+      }
+    },
+    "training": {
+      "files_walked": 145,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".md": 1,
+        ".py": 37,
+        ".yaml": 106
+      }
+    }
+  },
+  "totals": {
+    "files_walked": 1062,
+    "files_scanned": 680,
+    "candidates": 67,
+    "candidates_in_scope": 23,
+    "candidates_excluded": 0,
+    "wrapper_definitions": {
+      "spin_wait_": "flash-attention-c00044",
+      "store_dq": "flash-attention-c00062",
+      "prefetch_next_work": "flash-attention-c00066"
+    }
+  }
+}

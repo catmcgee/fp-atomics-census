@@ -1,0 +1,68 @@
+{
+  "engine": "marlin",
+  "sha": "1f25790bdd49fba53106164a24666dade68d7c90",
+  "scan_paths": [
+    "marlin"
+  ],
+  "exclude": [
+    "test.py",
+    "bench.py"
+  ],
+  "languages": [
+    "cuda"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 6,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 2,
+        ".md": 1,
+        ".py": 3
+      }
+    },
+    "assets": {
+      "files_walked": 4,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".png": 4
+      }
+    },
+    "gptq": {
+      "files_walked": 5,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".py": 5
+      }
+    },
+    "marlin": {
+      "files_walked": 3,
+      "files_scanned": 2,
+      "files_with_candidates": 1,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".py": 1
+      }
+    }
+  },
+  "totals": {
+    "files_walked": 18,
+    "files_scanned": 2,
+    "candidates": 2,
+    "candidates_in_scope": 2,
+    "candidates_excluded": 0,
+    "wrapper_definitions": {
+      "barrier_release": "marlin-c00001"
+    }
+  }
+}
