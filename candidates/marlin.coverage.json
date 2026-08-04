@@ -9,19 +9,19 @@
     "bench.py"
   ],
   "languages": [
-    "cuda"
+    "cuda",
+    "python"
   ],
   "directories": {
     ".": {
       "files_walked": 6,
-      "files_scanned": 0,
+      "files_scanned": 3,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
         "<none>": 2,
-        ".md": 1,
-        ".py": 3
+        ".md": 1
       }
     },
     "assets": {
@@ -36,28 +36,24 @@
     },
     "gptq": {
       "files_walked": 5,
-      "files_scanned": 0,
+      "files_scanned": 5,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
-      "skipped_extensions": {
-        ".py": 5
-      }
+      "skipped_extensions": {}
     },
     "marlin": {
       "files_walked": 3,
-      "files_scanned": 2,
+      "files_scanned": 3,
       "files_with_candidates": 1,
       "candidates": 2,
       "in_scope": true,
-      "skipped_extensions": {
-        ".py": 1
-      }
+      "skipped_extensions": {}
     }
   },
   "totals": {
     "files_walked": 18,
-    "files_scanned": 2,
+    "files_scanned": 11,
     "candidates": 2,
     "candidates_in_scope": 2,
     "candidates_excluded": 0,

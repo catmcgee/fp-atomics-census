@@ -14,12 +14,13 @@
     "csrc/cutlass"
   ],
   "languages": [
-    "cuda"
+    "cuda",
+    "python"
   ],
   "directories": {
     ".": {
       "files_walked": 12,
-      "files_scanned": 0,
+      "files_scanned": 1,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
@@ -27,19 +28,17 @@
         "<none>": 5,
         ".yaml": 1,
         ".md": 4,
-        ".in": 1,
-        ".py": 1
+        ".in": 1
       }
     },
     "AI": {
       "files_walked": 10,
-      "files_scanned": 0,
+      "files_scanned": 3,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".md": 7,
-        ".py": 3
+        ".md": 7
       }
     },
     "assets": {
@@ -56,24 +55,21 @@
     },
     "benchmarks": {
       "files_walked": 10,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
+      "files_scanned": 9,
+      "files_with_candidates": 1,
+      "candidates": 1,
       "in_scope": false,
       "skipped_extensions": {
-        ".py": 9,
         ".yaml": 1
       }
     },
     "csrc/flash_attn": {
       "files_walked": 117,
-      "files_scanned": 116,
+      "files_scanned": 117,
       "files_with_candidates": 1,
       "candidates": 1,
       "in_scope": true,
-      "skipped_extensions": {
-        ".py": 1
-      }
+      "skipped_extensions": {}
     },
     "csrc/flash_attn_ck": {
       "files_walked": 9,
@@ -85,24 +81,22 @@
     },
     "csrc/fused_dense_lib": {
       "files_walked": 4,
-      "files_scanned": 2,
+      "files_scanned": 3,
       "files_with_candidates": 1,
       "candidates": 42,
       "in_scope": false,
       "skipped_extensions": {
-        ".md": 1,
-        ".py": 1
+        ".md": 1
       }
     },
     "csrc/layer_norm": {
       "files_walked": 67,
-      "files_scanned": 65,
+      "files_scanned": 66,
       "files_with_candidates": 1,
       "candidates": 2,
       "in_scope": false,
       "skipped_extensions": {
-        ".md": 1,
-        ".py": 1
+        ".md": 1
       }
     },
     "examples": {
@@ -117,12 +111,11 @@
     },
     "flash_attn": {
       "files_walked": 106,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
+      "files_scanned": 99,
+      "files_with_candidates": 8,
+      "candidates": 21,
       "in_scope": true,
       "skipped_extensions": {
-        ".py": 99,
         ".toml": 2,
         "<none>": 3,
         ".in": 1,
@@ -131,33 +124,29 @@
     },
     "hopper": {
       "files_walked": 507,
-      "files_scanned": 488,
-      "files_with_candidates": 6,
-      "candidates": 22,
+      "files_scanned": 507,
+      "files_with_candidates": 7,
+      "candidates": 23,
       "in_scope": true,
-      "skipped_extensions": {
-        ".py": 19
-      }
+      "skipped_extensions": {}
     },
     "tests": {
       "files_walked": 48,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
+      "files_scanned": 47,
+      "files_with_candidates": 10,
+      "candidates": 23,
       "in_scope": false,
       "skipped_extensions": {
-        ".toml": 1,
-        ".py": 47
+        ".toml": 1
       }
     },
     "tools": {
       "files_walked": 9,
-      "files_scanned": 0,
+      "files_scanned": 3,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".py": 3,
         ".md": 1,
         ".sh": 3,
         ".def": 1,
@@ -166,28 +155,27 @@
     },
     "training": {
       "files_walked": 145,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
+      "files_scanned": 37,
+      "files_with_candidates": 3,
+      "candidates": 4,
       "in_scope": false,
       "skipped_extensions": {
         "<none>": 1,
         ".md": 1,
-        ".py": 37,
         ".yaml": 106
       }
     }
   },
   "totals": {
     "files_walked": 1062,
-    "files_scanned": 680,
-    "candidates": 67,
-    "candidates_in_scope": 23,
+    "files_scanned": 901,
+    "candidates": 117,
+    "candidates_in_scope": 45,
     "candidates_excluded": 0,
     "wrapper_definitions": {
-      "spin_wait_": "flash-attention-c00044",
-      "store_dq": "flash-attention-c00062",
-      "prefetch_next_work": "flash-attention-c00066"
+      "spin_wait_": "flash-attention-c00045",
+      "store_dq": "flash-attention-c00084",
+      "prefetch_next_work": "flash-attention-c00089"
     }
   }
 }
