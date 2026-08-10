@@ -1,0 +1,622 @@
+{
+  "engine": "vllm",
+  "sha": "5769a7382cb111288a9c2927342ca908943b9793",
+  "scan_paths": [
+    "csrc",
+    "vllm"
+  ],
+  "exclude": [
+    "vllm/benchmarks",
+    "tests",
+    "benchmarks",
+    "examples",
+    "docs"
+  ],
+  "languages": [
+    "cuda",
+    "python"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 28,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 9,
+        ".yaml": 4,
+        ".md": 7,
+        ".txt": 1,
+        ".in": 1,
+        ".sh": 1,
+        ".yml": 1,
+        ".toml": 2
+      }
+    },
+    ".buildkite": {
+      "files_walked": 183,
+      "files_scanned": 7,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".yaml": 85,
+        ".sh": 61,
+        ".txt": 8,
+        ".md": 2,
+        ".json": 17,
+        ".env": 2
+      }
+    },
+    ".claude": {
+      "files_walked": 1,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 1
+      }
+    },
+    ".gemini": {
+      "files_walked": 1,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".yaml": 1
+      }
+    },
+    "benchmarks": {
+      "files_walked": 116,
+      "files_scanned": 91,
+      "files_with_candidates": 4,
+      "candidates": 7,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 5,
+        ".sh": 4,
+        ".txt": 3,
+        ".yaml": 11,
+        ".json": 2
+      }
+    },
+    "cmake": {
+      "files_walked": 9,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".cmake": 8
+      }
+    },
+    "csrc": {
+      "files_walked": 14,
+      "files_scanned": 14,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/attention": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/core": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/cpu": {
+      "files_walked": 60,
+      "files_scanned": 60,
+      "files_with_candidates": 2,
+      "candidates": 3,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/cutlass_extensions": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/libtorch_stable": {
+      "files_walked": 175,
+      "files_scanned": 172,
+      "files_with_candidates": 14,
+      "candidates": 103,
+      "in_scope": true,
+      "skipped_extensions": {
+        "<none>": 2,
+        ".md": 1
+      }
+    },
+    "csrc/moe": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/quantization": {
+      "files_walked": 5,
+      "files_scanned": 4,
+      "files_with_candidates": 1,
+      "candidates": 3,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".md": 1
+      }
+    },
+    "csrc/quickreduce": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/rocm": {
+      "files_walked": 8,
+      "files_scanned": 8,
+      "files_with_candidates": 4,
+      "candidates": 32,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "docker": {
+      "files_walked": 14,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".cpu": 1,
+        ".ppc64le": 1,
+        ".rocm": 1,
+        ".rocm_base": 1,
+        ".s390x": 1,
+        ".tpu": 1,
+        ".xpu": 1,
+        ".hcl": 3,
+        ".json": 1,
+        ".sh": 2
+      }
+    },
+    "docs": {
+      "files_walked": 335,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".yml": 5,
+        ".md": 226,
+        ".sh": 1,
+        ".png": 81,
+        ".html": 3,
+        ".jpg": 2,
+        ".svg": 5,
+        ".ico": 1,
+        ".js": 4,
+        ".css": 1
+      }
+    },
+    "examples": {
+      "files_walked": 257,
+      "files_scanned": 149,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".jinja": 44,
+        ".md": 18,
+        ".sh": 16,
+        "<none>": 1,
+        ".yaml": 22,
+        ".json": 4,
+        ".tpl": 1,
+        ".jsonl": 1,
+        ".toml": 1
+      }
+    },
+    "requirements": {
+      "files_walked": 20,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".txt": 16,
+        ".in": 4
+      }
+    },
+    "rust": {
+      "files_walked": 338,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 2,
+        ".md": 10,
+        ".lock": 1,
+        ".toml": 16,
+        ".proto": 1,
+        ".rs": 247,
+        ".json": 12,
+        ".txt": 13,
+        ".jinja": 35
+      }
+    },
+    "scripts": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "tests": {
+      "files_walked": 1643,
+      "files_scanned": 1437,
+      "files_with_candidates": 47,
+      "candidates": 93,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 5,
+        ".json": 14,
+        ".yaml": 131,
+        ".txt": 35,
+        ".mp4": 1,
+        ".png": 3,
+        ".sh": 16,
+        ".jpg": 1
+      }
+    },
+    "tools": {
+      "files_walked": 44,
+      "files_scanned": 21,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".sh": 16,
+        ".md": 2,
+        ".patch": 1,
+        ".json": 1,
+        ".png": 3
+      }
+    },
+    "vllm": {
+      "files_walked": 23,
+      "files_scanned": 22,
+      "files_with_candidates": 2,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".typed": 1
+      }
+    },
+    "vllm/assets": {
+      "files_walked": 5,
+      "files_scanned": 5,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/benchmarks": {
+      "files_walked": 25,
+      "files_scanned": 25,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "vllm/compilation": {
+      "files_walked": 43,
+      "files_scanned": 43,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/config": {
+      "files_walked": 30,
+      "files_scanned": 30,
+      "files_with_candidates": 1,
+      "candidates": 3,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/cute_utils": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/device_allocator": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/distributed": {
+      "files_walked": 126,
+      "files_scanned": 124,
+      "files_with_candidates": 13,
+      "candidates": 32,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".md": 1,
+        ".jpg": 1
+      }
+    },
+    "vllm/engine": {
+      "files_walked": 5,
+      "files_scanned": 5,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/entrypoints": {
+      "files_walked": 182,
+      "files_scanned": 180,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".js": 1,
+        ".css": 1
+      }
+    },
+    "vllm/inputs": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/ir": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/kernels": {
+      "files_walked": 34,
+      "files_scanned": 20,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".json": 14
+      }
+    },
+    "vllm/logging_utils": {
+      "files_walked": 7,
+      "files_scanned": 7,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/lora": {
+      "files_walked": 43,
+      "files_scanned": 42,
+      "files_with_candidates": 6,
+      "candidates": 6,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".md": 1
+      }
+    },
+    "vllm/model_executor": {
+      "files_walked": 1288,
+      "files_scanned": 733,
+      "files_with_candidates": 46,
+      "candidates": 81,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".json": 553,
+        "<none>": 1,
+        ".md": 1
+      }
+    },
+    "vllm/models": {
+      "files_walked": 67,
+      "files_scanned": 67,
+      "files_with_candidates": 3,
+      "candidates": 3,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/multimodal": {
+      "files_walked": 24,
+      "files_scanned": 24,
+      "files_with_candidates": 2,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/parser": {
+      "files_walked": 25,
+      "files_scanned": 25,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/platforms": {
+      "files_walked": 8,
+      "files_scanned": 8,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/plugins": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/profiler": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/ray": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/reasoning": {
+      "files_walked": 27,
+      "files_scanned": 27,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/renderers": {
+      "files_walked": 15,
+      "files_scanned": 15,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/third_party": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/tokenizers": {
+      "files_walked": 12,
+      "files_scanned": 12,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/tool_parsers": {
+      "files_walked": 45,
+      "files_scanned": 45,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/tracing": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/transformers_utils": {
+      "files_walked": 114,
+      "files_scanned": 106,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".jinja": 8
+      }
+    },
+    "vllm/triton_utils": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/usage": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/utils": {
+      "files_walked": 38,
+      "files_scanned": 37,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".sh": 1
+      }
+    },
+    "vllm/v1": {
+      "files_walked": 320,
+      "files_scanned": 319,
+      "files_with_candidates": 32,
+      "candidates": 59,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".md": 1
+      }
+    },
+    "vllm/vllm_flash_attn": {
+      "files_walked": 3,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        "<none>": 1
+      }
+    }
+  },
+  "totals": {
+    "files_walked": 5823,
+    "files_scanned": 3959,
+    "candidates": 429,
+    "candidates_in_scope": 329,
+    "candidates_excluded": 15,
+    "wrapper_definitions": {
+      "atomicMaxFloat": "vllm-c00115"
+    }
+  }
+}
