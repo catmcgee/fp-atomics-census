@@ -61,6 +61,18 @@ class ParsedFile:
             n = n.parent
         return False
 
+    def in_declarator(self, byte_offset: int) -> bool:
+        """True when the offset sits in a function declarator or parameter list
+        (``__device__ half atomicAdd(half* p, half v) {``) rather than in a body."""
+        n = self.node_at(byte_offset)
+        while n is not None:
+            if n.type in ("function_declarator", "parameter_list", "parameter_declaration"):
+                return True
+            if n.type in ("compound_statement", "function_definition", "translation_unit"):
+                return False
+            n = n.parent
+        return False
+
     def in_dead_block(self, line: int) -> bool:
         return any(a <= line <= b for a, b in self.dead_ranges)
 

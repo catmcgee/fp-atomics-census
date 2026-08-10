@@ -163,3 +163,19 @@ def _with_ids(cands):
     for i, c in enumerate(cands, 1):
         c.id = f"fixture-c{i:05d}"
     return cands
+
+
+def test_primitive_name_overload_is_a_site_but_not_a_wrapper():
+    c = live(scan("fp_overload_named_atomicAdd.cu"))
+    defn = [x for x in c if x.kind == "atomicCAS"]
+    assert len(defn) == 1 and defn[0].function == "atomicAdd" and defn[0].class_hint == "A?"
+    adds = by_kind(c, "atomicAdd")
+    assert {x.dtype_hint for x in adds} == {"int32", "float16"}
+    defs = wrapper_definitions(_with_ids(c))
+    assert "atomicAdd" not in defs
+    assert any("overload of a primitive" in n for n in defn[0].notes)
+
+
+def test_integer_only_helpers_are_not_wrappers():
+    c = live(scan("class_b_int_counter.cu"))
+    assert wrapper_definitions(_with_ids(c)) == {}

@@ -217,6 +217,9 @@ def scan_cxx_source(source: bytes, rel_path: str, engine: str, sha: str, languag
                 in_comment=pf.in_comment(off), in_string=pf.in_string(off),
                 in_dead_block=pf.in_dead_block(line),
             )
+            if pf.in_declarator(off) and not name.startswith("ptx_"):
+                cand.excluded_reason = "declaration"
+                cand.notes.append("function declarator or parameter, not a call")
             if fn_node is None:
                 macro = pf.macro_definition_name(off)
                 if macro:
@@ -325,11 +328,17 @@ def _enrich(cand: Candidate, name: str, m: re.Match, pf: ParsedFile, off: int, f
         cand.notes.append("float max/min through integer reinterpretation; exact")
         cand.dtype_hint = "float32" if "__float_as" in " ".join(cand.args) else "float64"
     if kind == "atomicCAS":
-        if re.search(r"__float_as_(?:int|uint)|__int_as_float|__uint_as_float|__double_as_longlong|__longlong_as_double|__half_as_ushort|__ushort_as_half|__bfloat16_as_ushort", fn_text):
+        reinterp = re.search(r"__float_as_(?:int|uint)|__int_as_float|__uint_as_float|__double_as_longlong|__longlong_as_double|__half_as_ushort|__ushort_as_half|__bfloat16_as_ushort|__ushort_as_bfloat16|__half2_as_uint|__bfloat162_as_uint", fn_text)
+        if reinterp:
             cand.notes.append("CAS loop with float reinterpretation in the same function: likely a float add")
             cand.class_hint = "A?"
-            if cand.dtype_hint in ("int32", "uint32", "unknown"):
-                cand.dtype_hint = "float32" if "__float_as" in fn_text else cand.dtype_hint
+            if cand.dtype_hint in INT_DTYPES or cand.dtype_hint == "unknown":
+                for pat, dt in (("__float_as", "float32"), ("__double_as", "float64"), ("__half2_as", "half2"),
+                                ("__bfloat162_as", "bfloat162"), ("__half_as", "float16"), ("__ushort_as_half", "float16"),
+                                ("__bfloat16_as", "bfloat16"), ("__ushort_as_bfloat16", "bfloat16")):
+                    if pat in fn_text:
+                        cand.dtype_hint = dt
+                        break
         else:
             cand.notes.append("CAS without float reinterpretation nearby: likely a lock or flag")
             cand.class_hint = "B"
@@ -362,13 +371,31 @@ def _in_asm_context(pf: ParsedFile, off: int) -> bool:
 # atomic, and the call sites of those helpers across the repo
 # ---------------------------------------------------------------------------
 
+_PRIMITIVE_NAMES = {"atomicAdd", "atomicSub", "atomicCAS", "atomicExch", "atomicMax", "atomicMin", "atomicInc",
+                    "atomicDec", "atomicOr", "atomicAnd", "atomicXor", "atomicAdd_block", "atomicAdd_system",
+                    "atomic_add", "atomic_max", "atomic_min", "atomic_cas", "atomic_exch"}
+
+
 def wrapper_definitions(cands: list[Candidate], max_lines: int = 80) -> dict[str, Candidate]:
-    """Map helper-function name -> defining candidate (first float-capable atomic inside)."""
+    """Map helper-function name -> defining candidate.
+
+    A helper counts when it is a small device function or a macro whose body
+    contains an atomic on a floating-point (or template/unknown) operand.
+    Integer-only helpers are not linked, and a function that overloads a
+    primitive name (``__device__ half atomicAdd(half*, half)``) is reported
+    as a site but never used as a wrapper, since that would link every call
+    of the primitive in the repository to it.
+    """
     defs: dict[str, Candidate] = {}
     for c in cands:
         if c.excluded_reason or c.kind not in _PRIMITIVE_KINDS_FLOAT_CAPABLE:
             continue
         fn = c.function
+        if fn in _PRIMITIVE_NAMES or fn.replace(" (macro)", "") in _PRIMITIVE_NAMES:
+            c.notes.append("defines an overload of a primitive atomic name; not used as a wrapper")
+            continue
+        if c.dtype_hint in INT_DTYPES:
+            continue
         if fn.endswith(" (macro)"):
             defs.setdefault(fn[: -len(" (macro)")], c)
             continue

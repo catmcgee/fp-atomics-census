@@ -50,3 +50,15 @@ def test_torch_ops():
     # comments and strings never match
     assert all(x.line not in (33, 34) for x in c)
     assert all(x.function != "not_sites" or x.match == "torch.use_deterministic_algorithms(" for x in c)
+
+
+def test_cute_dsl_atomics():
+    c = scan("cute_dsl_atomics.py")
+    rmw = [x for x in c if x.pattern == "cute_atomic" and "atomicrmw" in x.match]
+    assert len(rmw) == 1 and rmw[0].dtype_hint == "float32" and rmw[0].class_hint == "A?"
+    helper_calls = [x for x in c if x.pattern == "cute_atomic" and x.match.startswith("atomic_add_fp32")]
+    assert len(helper_calls) == 1 and helper_calls[0].function == "bwd_kernel"
+    ptx = [x for x in c if x.pattern == "ptx_string"]
+    assert len(ptx) == 1 and ptx[0].kind == "tma-reduce" and ptx[0].dtype_hint == "float32" and ptx[0].class_hint == "A?"
+    arch = [x for x in c if x.match == "cute.arch.atomic_add("]
+    assert len(arch) == 1 and arch[0].class_hint == "B"  # literal integer operand

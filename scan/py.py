@@ -69,6 +69,10 @@ OPAQUE_CALLS = {
 
 _TORCH_MATMUL_OPS = {"mm", "matmul", "bmm", "addmm", "baddbmm", "linear", "einsum"}
 
+# CuTe DSL / MLIR-level atomics (FlashAttention-4 and similar Python-authored kernels)
+_CUTE_ATOMIC_RE = re.compile(r"^(?:atomic_add|atomic_sub|atomic_fadd|atomicrmw|atomic_add_fp32|atomic_add_fp32x\d|atomic_max|atomic_min|atomic_cas|atomic_exch|red_add|red_release)[A-Za-z0-9_]*$")
+_PTX_STR_RE = re.compile(r"(?<![A-Za-z0-9_.])(cp\.reduce\.async\.bulk[a-z_.:0-9]*|multimem\.(?:red|ld_reduce)\.[a-z_.:0-9]*|(?:red|atom)(?:\.[a-z_]+)*\.(?:add|inc|dec|min|max|and|or|xor|cas|exch)(?:\.noftz)?(?:\.v[248])?\.(?:f32|f64|f16x2|f16|bf16x2|bf16|s32|u32|s64|u64|b32|b64))")
+
 
 def _dotted(node: ast.AST) -> str:
     parts: list[str] = []
@@ -174,6 +178,28 @@ class _Visitor(ast.NodeVisitor):
 
     visit_AsyncFunctionDef = visit_FunctionDef
 
+    def visit_Constant(self, node: ast.Constant):
+        if isinstance(node.value, str) and len(node.value) < 4000:
+            for m in _PTX_STR_RE.finditer(node.value):
+                txt = m.group(1)
+                if txt.startswith("cp.reduce"):
+                    kind, hint = "tma-reduce", ("A?" if ".add.f" in txt or txt.endswith(".add.f32") else "?")
+                elif txt.startswith("multimem.ld_reduce"):
+                    kind, hint = "ptx-multimem-ld_reduce", "C"
+                elif txt.startswith("multimem.red"):
+                    kind, hint = "ptx-multimem-red", ("A?" if re.search(r"\.(f32|f16|bf16|f16x2|bf16x2|f64)$", txt) else "B")
+                else:
+                    kind = "ptx-red" if txt.startswith("red") else "ptx-atom"
+                    op = re.search(r"\.(add|inc|dec|min|max|and|or|xor|cas|exch)\.", txt + ".")
+                    is_float = bool(re.search(r"\.(f32|f16|bf16|f16x2|bf16x2|f64)$", txt))
+                    hint = "A?" if (op and op.group(1) == "add" and is_float) else "B"
+                dtype = {"f32": "float32", "f64": "float64", "f16": "float16", "f16x2": "half2", "bf16": "bfloat16",
+                         "bf16x2": "bfloat162", "s32": "int32", "u32": "uint32", "s64": "int64", "u64": "uint64",
+                         "b32": "uint32", "b64": "uint64"}.get(txt.rsplit(".", 1)[-1], "unknown")
+                c = self._emit(node, "ptx_string", kind, txt, hint, dtype_hint=dtype, memory_space_hint="global" if ".global" in txt else "unknown")
+                c.notes.append("inline PTX in a Python string (CuTe DSL / Triton inline_asm)")
+        self.generic_visit(node)
+
     def visit_Call(self, node: ast.Call):
         name = _dotted(node.func)
         last = name.split(".")[-1]
@@ -244,6 +270,15 @@ class _Visitor(ast.NodeVisitor):
                 notes.append("mode=" + (ast.unparse(node.args[0]) if node.args else "?"))
             c = self._emit(node, "torch_op", "torch-op", name + "(", hint, args=args)
             c.notes.extend(notes)
+        elif _CUTE_ATOMIC_RE.match(last) and not base.endswith("tl"):
+            kind = "atomic_ref" if "rmw" in last else ("atomicMax" if "max" in last else "atomicMin" if "min" in last else "atomicCAS-lock" if "cas" in last else "atomicExch" if "exch" in last else "other")
+            hint = "B" if kind in ("atomicMax", "atomicMin", "atomicCAS-lock", "atomicExch") else "A?"
+            dtype = "float32" if ("fp32" in last or "f32" in last or "FADD" in ast.unparse(node)) else "unknown"
+            args = [ast.unparse(a)[:120] for a in node.args]
+            if len(node.args) >= 2 and isinstance(node.args[-1], ast.Constant) and isinstance(node.args[-1].value, int):
+                dtype, hint = "int32", "B"
+            c = self._emit(node, "cute_atomic", kind if kind != "other" else "other", name + "(", hint, args=args, dtype_hint=dtype, memory_space_hint="global")
+            c.notes.append("CuTe DSL / MLIR atomic helper; read the helper body for the exact instruction")
         elif last in OPAQUE_CALLS and ("torch" in name or "dist" in name or "flashinfer" in name or last.startswith(("cublas", "cudnn", "load_cubin", "get_cubin", "download_cubin"))):
             c = self._emit(node, "opaque_call", "library-call", name + "(", "C")
             c.notes.append(f"opaque library: {OPAQUE_CALLS[last]}")
@@ -251,9 +286,10 @@ class _Visitor(ast.NodeVisitor):
 
 
 def scan_python_source(source: str, rel_path: str, engine: str, sha: str) -> list[Candidate]:
-    if not any(t in source for t in ("atomic_", "index_add", "scatter", "index_put", "bincount", "histc", "cumsum",
+    if not any(t in source for t in ("atomic", "index_add", "scatter", "index_put", "bincount", "histc", "cumsum",
                                     "put_(", "index_copy", "embedding_bag", "use_deterministic", "_scaled_mm",
-                                    "all_reduce", "reduce_scatter", "all_to_all", "all_gather", "cubin", "cublas", "cudnn")):
+                                    "all_reduce", "reduce_scatter", "all_to_all", "all_gather", "cubin", "cublas", "cudnn",
+                                    "cp.reduce", "multimem", "red.", "atom.")):
         return []
     try:
         tree = ast.parse(source)
