@@ -6,9 +6,23 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "id", "engine", "sha", "file", "line_start", "line_end", "function",
-    "class", "kind", "dtype", "memory_space", "path", "default_path",
-    "evidence", "snippet", "confidence", "notes"
+    "id",
+    "engine",
+    "sha",
+    "file",
+    "line_start",
+    "line_end",
+    "function",
+    "class",
+    "kind",
+    "dtype",
+    "memory_space",
+    "path",
+    "default_path",
+    "evidence",
+    "snippet",
+    "confidence",
+    "notes"
   ],
   "properties": {
     "id": {
@@ -18,7 +32,16 @@
     },
     "engine": {
       "type": "string",
-      "enum": ["vllm", "sglang", "flashinfer", "flash-attention", "marlin", "DeepGEMM", "DeepEP", "cutlass"]
+      "enum": [
+        "vllm",
+        "sglang",
+        "flashinfer",
+        "flash-attention",
+        "marlin",
+        "DeepGEMM",
+        "DeepEP",
+        "cutlass"
+      ]
     },
     "sha": {
       "type": "string",
@@ -30,8 +53,14 @@
       "minLength": 1,
       "description": "Path relative to the repository root."
     },
-    "line_start": { "type": "integer", "minimum": 1 },
-    "line_end": { "type": "integer", "minimum": 1 },
+    "line_start": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "line_end": {
+      "type": "integer",
+      "minimum": 1
+    },
     "function": {
       "type": "string",
       "minLength": 1,
@@ -39,57 +68,198 @@
     },
     "class": {
       "type": "string",
-      "enum": ["A", "A1", "A2", "A3", "B", "B-indirect", "C"]
+      "enum": [
+        "A",
+        "A1",
+        "A2",
+        "A3",
+        "B",
+        "B-indirect",
+        "C"
+      ]
     },
     "kind": {
       "type": "string",
       "enum": [
-        "atomicAdd", "atomicSub", "atomicCAS-loop", "atomicCAS-lock", "atomicExch",
-        "atomicMax", "atomicMin", "atomicInc", "atomicDec", "atomicOr", "atomicAnd", "atomicXor",
-        "atomic_ref", "ptx-red", "ptx-atom", "ptx-multimem-red", "ptx-multimem-ld_reduce",
-        "tma-reduce", "tl.atomic_add", "tl.atomic_max", "tl.atomic_min", "tl.atomic_cas",
-        "tl.atomic_xchg", "torch-op", "store-race", "library-call", "cubin", "other"
+        "atomicAdd",
+        "atomicSub",
+        "atomicCAS-loop",
+        "atomicCAS-lock",
+        "atomicExch",
+        "atomicMax",
+        "atomicMin",
+        "atomicInc",
+        "atomicDec",
+        "atomicOr",
+        "atomicAnd",
+        "atomicXor",
+        "atomic_ref",
+        "ptx-red",
+        "ptx-atom",
+        "ptx-multimem-red",
+        "ptx-multimem-ld_reduce",
+        "tma-reduce",
+        "tl.atomic_add",
+        "tl.atomic_max",
+        "tl.atomic_min",
+        "tl.atomic_cas",
+        "tl.atomic_xchg",
+        "tl.atomic_xor",
+        "tl.atomic_and",
+        "tl.atomic_or",
+        "torch-op",
+        "store-race",
+        "library-call",
+        "cubin",
+        "other"
       ]
     },
     "dtype": {
       "type": "string",
       "enum": [
-        "float32", "float64", "float16", "bfloat16", "half2", "bfloat162", "float2", "float4",
-        "fp8", "int8", "int16", "int32", "uint32", "int64", "uint64", "bool", "mixed", "n/a", "unknown"
+        "float32",
+        "float64",
+        "float16",
+        "bfloat16",
+        "half2",
+        "bfloat162",
+        "float2",
+        "float4",
+        "fp8",
+        "int8",
+        "int16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "bool",
+        "mixed",
+        "n/a",
+        "unknown"
       ]
     },
     "memory_space": {
       "type": "string",
-      "enum": ["global", "shared", "distributed-shared", "unknown", "n/a"]
+      "enum": [
+        "global",
+        "shared",
+        "distributed-shared",
+        "unknown",
+        "n/a"
+      ]
     },
     "path": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["description", "direction", "phase", "moe"],
+      "required": [
+        "description",
+        "direction",
+        "phase",
+        "moe"
+      ],
       "properties": {
-        "description": { "type": "string", "minLength": 1, "description": "Plain-language route from a user-visible configuration to this site." },
-        "quant": { "type": "array", "items": { "type": "string" }, "description": "Quantisation formats that reach the site, e.g. gptq, awq, fp8, int8, gguf, none." },
-        "attention_backend": { "type": "array", "items": { "type": "string" } },
-        "moe": { "type": "string", "enum": ["moe", "dense", "both", "n/a"] },
-        "phase": { "type": "string", "enum": ["prefill", "decode", "both", "n/a"] },
-        "direction": { "type": "string", "enum": ["forward", "backward", "both", "n/a"] },
-        "parallelism": { "type": "array", "items": { "type": "string", "enum": ["TP", "EP", "PP", "DP", "none", "any"] } },
-        "entry_points": { "type": "array", "items": { "type": "string" }, "description": "Python or C++ entry points (file:line) that launch the kernel." }
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Plain-language route from a user-visible configuration to this site."
+        },
+        "quant": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Quantisation formats that reach the site, e.g. gptq, awq, fp8, int8, gguf, none."
+        },
+        "attention_backend": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "moe": {
+          "type": "string",
+          "enum": [
+            "moe",
+            "dense",
+            "both",
+            "n/a"
+          ]
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "prefill",
+            "decode",
+            "both",
+            "n/a"
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "forward",
+            "backward",
+            "both",
+            "n/a"
+          ]
+        },
+        "parallelism": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "TP",
+              "EP",
+              "PP",
+              "DP",
+              "none",
+              "any"
+            ]
+          }
+        },
+        "entry_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Python or C++ entry points (file:line) that launch the kernel."
+        }
       }
     },
     "default_path": {
-      "enum": [true, false, "unknown"],
+      "enum": [
+        true,
+        false,
+        "unknown"
+      ],
       "description": "true if a default engine configuration can reach the site; false if opt-in only."
     },
     "gate": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": false,
-      "required": ["flag", "read_at", "default"],
+      "required": [
+        "flag",
+        "read_at",
+        "default"
+      ],
       "properties": {
-        "flag": { "type": "string" },
-        "read_at": { "type": "string", "description": "file:line where the flag is consulted." },
-        "default": { "type": "string", "description": "Default value at the pinned sha, as a string." },
-        "note": { "type": "string" }
+        "flag": {
+          "type": "string"
+        },
+        "read_at": {
+          "type": "string",
+          "description": "file:line where the flag is consulted."
+        },
+        "default": {
+          "type": "string",
+          "description": "Default value at the pinned sha, as a string."
+        },
+        "note": {
+          "type": "string"
+        }
       },
       "description": "Required for class A3; optional elsewhere when a flag changes behaviour."
     },
@@ -99,10 +269,20 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["ref", "claim"],
+        "required": [
+          "ref",
+          "claim"
+        ],
         "properties": {
-          "ref": { "type": "string", "pattern": "^[^:\\s]+:[0-9]+(-[0-9]+)?$", "description": "file:line or file:start-end, relative to the repo root unless prefixed with <engine>/." },
-          "claim": { "type": "string", "minLength": 1 }
+          "ref": {
+            "type": "string",
+            "pattern": "^[^:\\s]+:[0-9]+(-[0-9]+)?$",
+            "description": "file:line or file:start-end, relative to the repo root unless prefixed with <engine>/."
+          },
+          "claim": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },
@@ -111,32 +291,78 @@
       "minLength": 1,
       "description": "3 to 6 lines of code at the site, verbatim."
     },
-    "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
-    "notes": { "type": "string" },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
     "downstream": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["order_invariant", "argument"],
+      "required": [
+        "order_invariant",
+        "argument"
+      ],
       "properties": {
-        "order_invariant": { "enum": [true, false, "unknown"] },
-        "argument": { "type": "string", "minLength": 1 }
+        "order_invariant": {
+          "enum": [
+            true,
+            false,
+            "unknown"
+          ]
+        },
+        "argument": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "description": "Required for B-indirect: can a different slot or packet order change a downstream floating-point reduction order?"
     },
     "opaque_target": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["library", "knobs"],
+      "required": [
+        "library",
+        "knobs"
+      ],
       "properties": {
-        "library": { "type": "string", "enum": ["cuBLAS", "cuBLASLt", "cuDNN", "NCCL", "TensorRT-LLM cubin", "NVSHMEM", "nvjet", "hardware-multicast", "other"] },
-        "knobs": { "type": "array", "items": { "type": "string" } },
-        "note": { "type": "string" }
+        "library": {
+          "type": "string",
+          "enum": [
+            "cuBLAS",
+            "cuBLASLt",
+            "cuDNN",
+            "NCCL",
+            "TensorRT-LLM cubin",
+            "NVSHMEM",
+            "nvjet",
+            "hardware-multicast",
+            "other"
+          ]
+        },
+        "knobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        }
       },
       "description": "Required for class C."
     },
     "candidate_ids": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Ids of the rows in candidates/<engine>.jsonl this row was triaged from."
     },
     "cross_checked": {
@@ -146,16 +372,51 @@
   },
   "allOf": [
     {
-      "if": { "properties": { "class": { "const": "A3" } } },
-      "then": { "required": ["gate"], "properties": { "gate": { "type": "object" } } }
+      "if": {
+        "properties": {
+          "class": {
+            "const": "A3"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "gate"
+        ],
+        "properties": {
+          "gate": {
+            "type": "object"
+          }
+        }
+      }
     },
     {
-      "if": { "properties": { "class": { "const": "B-indirect" } } },
-      "then": { "required": ["downstream"] }
+      "if": {
+        "properties": {
+          "class": {
+            "const": "B-indirect"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "downstream"
+        ]
+      }
     },
     {
-      "if": { "properties": { "class": { "const": "C" } } },
-      "then": { "required": ["opaque_target"] }
+      "if": {
+        "properties": {
+          "class": {
+            "const": "C"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "opaque_target"
+        ]
+      }
     }
   ]
 }
