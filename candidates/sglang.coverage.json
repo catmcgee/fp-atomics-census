@@ -1,0 +1,385 @@
+{
+  "engine": "sglang",
+  "sha": "b41552334d46b9d83a6d834be361cb20b31d2137",
+  "scan_paths": [
+    "sgl-kernel",
+    "python/sglang/srt"
+  ],
+  "exclude": [
+    "test",
+    "benchmark",
+    "docs",
+    "examples",
+    "sgl-kernel/tests",
+    "sgl-kernel/benchmark"
+  ],
+  "languages": [
+    "cuda",
+    "python"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 9,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 5,
+        ".cfg": 1,
+        ".yaml": 1,
+        ".md": 2
+      }
+    },
+    ".claude": {
+      "files_walked": 55,
+      "files_scanned": 11,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 37,
+        ".tmpl": 3,
+        ".sh": 4
+      }
+    },
+    ".devcontainer": {
+      "files_walked": 2,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".json": 1
+      }
+    },
+    "3rdparty": {
+      "files_walked": 17,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 3,
+        ".sh": 6,
+        ".patch": 4,
+        ".txt": 1,
+        ".toml": 1
+      }
+    },
+    "assets": {
+      "files_walked": 4,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".png": 2,
+        ".svg": 2
+      }
+    },
+    "benchmark": {
+      "files_walked": 189,
+      "files_scanned": 131,
+      "files_with_candidates": 11,
+      "candidates": 22,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 37,
+        ".sh": 11,
+        ".txt": 1,
+        ".json": 1,
+        ".jsonl": 4,
+        ".yaml": 1,
+        ".png": 2,
+        "<none>": 1
+      }
+    },
+    "docker": {
+      "files_walked": 19,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 6,
+        ".dockerfile": 9,
+        ".yaml": 3,
+        ".conf": 1
+      }
+    },
+    "docs": {
+      "files_walked": 174,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".md": 124,
+        ".rst": 13,
+        ".txt": 1,
+        ".sh": 1,
+        ".css": 2,
+        ".png": 2,
+        ".ico": 1,
+        ".js": 2,
+        ".ipynb": 13,
+        ".html": 2,
+        ".yaml": 5,
+        ".json": 1
+      }
+    },
+    "docs_new": {
+      "files_walked": 446,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 3,
+        ".md": 4,
+        ".css": 1,
+        ".json": 1,
+        ".png": 45,
+        ".mdx": 275,
+        ".svg": 2,
+        ".ipynb": 15,
+        ".rst": 4,
+        ".woff2": 2,
+        ".jsx": 92
+      }
+    },
+    "examples": {
+      "files_walked": 92,
+      "files_scanned": 62,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 2,
+        ".png": 1,
+        ".jinja": 9,
+        ".jpeg": 2,
+        ".sh": 1,
+        ".ipynb": 1,
+        ".md": 5,
+        ".pbtxt": 1,
+        ".yaml": 6,
+        ".json": 2
+      }
+    },
+    "experimental": {
+      "files_walked": 139,
+      "files_scanned": 18,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".md": 3,
+        ".toml": 4,
+        ".rs": 88,
+        ".json": 15,
+        ".txt": 2,
+        ".fake_worker": 1,
+        ".router": 1,
+        ".sh": 1,
+        ".yaml": 5
+      }
+    },
+    "proto": {
+      "files_walked": 1,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".proto": 1
+      }
+    },
+    "python": {
+      "files_walked": 5,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".toml": 5
+      }
+    },
+    "python/sglang": {
+      "files_walked": 3326,
+      "files_scanned": 2737,
+      "files_with_candidates": 203,
+      "candidates": 480,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".md": 32,
+        "<none>": 3,
+        ".json": 536,
+        ".js": 4,
+        ".html": 1,
+        ".css": 1,
+        ".yaml": 3,
+        ".sample": 1,
+        ".txt": 1,
+        ".jinja2": 5,
+        ".sh": 2
+      }
+    },
+    "python/tools": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "rust": {
+      "files_walked": 13,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".toml": 2,
+        ".rs": 11
+      }
+    },
+    "scripts": {
+      "files_walked": 127,
+      "files_scanned": 71,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".sh": 29,
+        ".yml": 1,
+        ".json": 2,
+        ".md": 4,
+        ".yaml": 19,
+        ".ipynb": 1
+      }
+    },
+    "sgl-kernel": {
+      "files_walked": 18,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        "<none>": 4,
+        ".txt": 2,
+        ".md": 1,
+        ".sh": 3,
+        ".toml": 4
+      }
+    },
+    "sgl-kernel/benchmark": {
+      "files_walked": 28,
+      "files_scanned": 28,
+      "files_with_candidates": 2,
+      "candidates": 6,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "sgl-kernel/cmake": {
+      "files_walked": 2,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".cmake": 2
+      }
+    },
+    "sgl-kernel/csrc": {
+      "files_walked": 173,
+      "files_scanned": 161,
+      "files_with_candidates": 10,
+      "candidates": 57,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".hip": 2,
+        ".txt": 1,
+        ".mu": 5,
+        ".md": 1,
+        ".metal": 1,
+        ".muh": 2
+      }
+    },
+    "sgl-kernel/include": {
+      "files_walked": 15,
+      "files_scanned": 15,
+      "files_with_candidates": 1,
+      "candidates": 4,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "sgl-kernel/python": {
+      "files_walked": 31,
+      "files_scanned": 31,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "sgl-kernel/tests": {
+      "files_walked": 44,
+      "files_scanned": 44,
+      "files_with_candidates": 6,
+      "candidates": 12,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "sgl-model-gateway": {
+      "files_walked": 409,
+      "files_scanned": 69,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".toml": 11,
+        "<none>": 7,
+        ".md": 9,
+        ".rs": 252,
+        ".ini": 1,
+        ".go": 22,
+        ".mod": 2,
+        ".sum": 2,
+        ".sh": 14,
+        ".in": 1,
+        ".gateway": 1,
+        ".yaml": 8,
+        ".jpg": 10
+      }
+    },
+    "test": {
+      "files_walked": 1498,
+      "files_scanned": 1470,
+      "files_with_candidates": 50,
+      "candidates": 123,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 16,
+        ".ini": 1,
+        ".yaml": 5,
+        ".json": 5,
+        ".jinja": 1
+      }
+    }
+  },
+  "totals": {
+    "files_walked": 6837,
+    "files_scanned": 4863,
+    "candidates": 705,
+    "candidates_in_scope": 384,
+    "candidates_excluded": 9,
+    "wrapper_definitions": {
+      "rasterizeTriangleGPU": "sglang-c00124",
+      "atomicMaxFloat": "sglang-c00568"
+    }
+  }
+}

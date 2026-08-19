@@ -1,0 +1,527 @@
+{
+  "engine": "flashinfer",
+  "sha": "c0d920d3270ce28e0d7db8cc2163a76245e63712",
+  "scan_paths": [
+    "include",
+    "csrc",
+    "flashinfer"
+  ],
+  "exclude": [
+    "tests",
+    "benchmarks",
+    "docs",
+    "examples",
+    "3rdparty"
+  ],
+  "languages": [
+    "cuda",
+    "python"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 18,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 7,
+        ".yaml": 1,
+        ".md": 4,
+        ".toml": 1,
+        ".ini": 1,
+        ".txt": 2
+      }
+    },
+    ".claude": {
+      "files_walked": 3,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 3
+      }
+    },
+    ".devcontainer": {
+      "files_walked": 4,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".json": 4
+      }
+    },
+    "3rdparty_patches": {
+      "files_walked": 2,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".patch": 2
+      }
+    },
+    "benchmarks": {
+      "files_walked": 92,
+      "files_scanned": 82,
+      "files_with_candidates": 16,
+      "candidates": 55,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 2,
+        ".sh": 5,
+        ".txt": 2,
+        ".csv": 1
+      }
+    },
+    "ci": {
+      "files_walked": 7,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".sh": 2,
+        ".yml": 1,
+        ".env": 1
+      }
+    },
+    "csrc": {
+      "files_walked": 172,
+      "files_scanned": 127,
+      "files_with_candidates": 4,
+      "candidates": 11,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".jinja": 45
+      }
+    },
+    "csrc/bgmv_moe": {
+      "files_walked": 12,
+      "files_scanned": 12,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/cute_sm120_mxfp8_groupwise": {
+      "files_walked": 10,
+      "files_scanned": 10,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/fmha_v2": {
+      "files_walked": 64,
+      "files_scanned": 60,
+      "files_with_candidates": 6,
+      "candidates": 36,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".jinja": 4
+      }
+    },
+    "csrc/fused_moe": {
+      "files_walked": 11,
+      "files_scanned": 11,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/mhc": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/nv_internal": {
+      "files_walked": 187,
+      "files_scanned": 187,
+      "files_with_candidates": 8,
+      "candidates": 34,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/nvfp4_attention_sm120": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/xqa": {
+      "files_walked": 24,
+      "files_scanned": 24,
+      "files_with_candidates": 4,
+      "candidates": 12,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "docker": {
+      "files_walked": 19,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".cu126": 1,
+        ".dev": 6,
+        ".cu128": 1,
+        ".cu129": 1,
+        ".cu130": 1,
+        ".cu131": 1,
+        ".cu132": 1,
+        ".flashinfer-ep-pytorch": 1,
+        ".flashinfer-nvep": 1,
+        ".vllm-flashinfer-ep": 1,
+        ".sh": 4
+      }
+    },
+    "docs": {
+      "files_walked": 49,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 2,
+        ".rst": 34,
+        ".sh": 1,
+        ".bat": 1,
+        ".txt": 1,
+        ".md": 4,
+        ".png": 2
+      }
+    },
+    "examples": {
+      "files_walked": 4,
+      "files_scanned": 3,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 1
+      }
+    },
+    "flashinfer": {
+      "files_walked": 36,
+      "files_scanned": 35,
+      "files_with_candidates": 3,
+      "candidates": 10,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".typed": 1
+      }
+    },
+    "flashinfer-cubin": {
+      "files_walked": 4,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".toml": 1
+      }
+    },
+    "flashinfer-jit-cache": {
+      "files_walked": 4,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".toml": 1
+      }
+    },
+    "flashinfer/attention": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/comm": {
+      "files_walked": 23,
+      "files_scanned": 23,
+      "files_with_candidates": 3,
+      "candidates": 9,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/cudnn": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/cute_dsl": {
+      "files_walked": 91,
+      "files_scanned": 91,
+      "files_with_candidates": 4,
+      "candidates": 10,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/cutile": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/diffusion_ops": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/dsv3_ops": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/fused_moe": {
+      "files_walked": 35,
+      "files_scanned": 35,
+      "files_with_candidates": 8,
+      "candidates": 39,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/gdn_kernels": {
+      "files_walked": 21,
+      "files_scanned": 21,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/gemm": {
+      "files_walked": 19,
+      "files_scanned": 19,
+      "files_with_candidates": 4,
+      "candidates": 10,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/grouped_mm": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/jit": {
+      "files_walked": 52,
+      "files_scanned": 52,
+      "files_with_candidates": 1,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/kda_kernels": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/logits_processor": {
+      "files_walked": 10,
+      "files_scanned": 10,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/mamba": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/mla": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/moe_ep": {
+      "files_walked": 18,
+      "files_scanned": 18,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/norm": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/parallel_attention": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 2,
+      "candidates": 7,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/profiler": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/quantization": {
+      "files_walked": 12,
+      "files_scanned": 12,
+      "files_with_candidates": 2,
+      "candidates": 4,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/testing": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/trace": {
+      "files_walked": 20,
+      "files_scanned": 20,
+      "files_with_candidates": 6,
+      "candidates": 22,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/trace_apply": {
+      "files_walked": 8,
+      "files_scanned": 8,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/triton": {
+      "files_walked": 15,
+      "files_scanned": 15,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "flashinfer/tuning_configs": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "include/flashinfer": {
+      "files_walked": 231,
+      "files_scanned": 231,
+      "files_with_candidates": 21,
+      "candidates": 179,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "licenses": {
+      "files_walked": 4,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".txt": 4
+      }
+    },
+    "profiler": {
+      "files_walked": 4,
+      "files_scanned": 2,
+      "files_with_candidates": 1,
+      "candidates": 4,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 1,
+        ".md": 1
+      }
+    },
+    "scripts": {
+      "files_walked": 37,
+      "files_scanned": 8,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".txt": 1,
+        ".sh": 25,
+        ".example": 1,
+        ".service": 1,
+        ".json": 1
+      }
+    },
+    "tests": {
+      "files_walked": 411,
+      "files_scanned": 309,
+      "files_with_candidates": 54,
+      "candidates": 162,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 1,
+        ".json": 101
+      }
+    }
+  },
+  "totals": {
+    "files_walked": 1783,
+    "files_scanned": 1488,
+    "candidates": 608,
+    "candidates_in_scope": 386,
+    "candidates_excluded": 14,
+    "wrapper_definitions": {
+      "atomicAdd_half2": "flashinfer-c00066",
+      "atomicMaxFloat": "flashinfer-c00068",
+      "atomicMaxFloatPos_": "flashinfer-c00071",
+      "atomicMaxUpdate": "flashinfer-c00139",
+      "RegColWiseVec computeWarpGrpColMax_sync": "flashinfer-c00145",
+      "histAtomicAdd": "flashinfer-c00265",
+      "filterAndHistogram": "flashinfer-c00266",
+      "quantize_q_to_smem": "flashinfer-c00284",
+      "DeviceSamplingFromProb": "flashinfer-c00396",
+      "RadixCollectIndices": "flashinfer-c00413"
+    }
+  }
+}
