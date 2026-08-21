@@ -1,0 +1,162 @@
+{
+  "engine": "DeepEP",
+  "sha": "099d5f2bad488b9c534ea785062b12f2e91d1d41",
+  "scan_paths": [
+    "csrc",
+    "deep_ep"
+  ],
+  "exclude": [
+    "tests",
+    "third-party"
+  ],
+  "languages": [
+    "cuda",
+    "python"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 14,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 5,
+        ".txt": 2,
+        ".md": 1,
+        ".sh": 4,
+        ".toml": 1
+      }
+    },
+    "csrc": {
+      "files_walked": 2,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".txt": 1
+      }
+    },
+    "csrc/elastic": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/indexing": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/jit": {
+      "files_walked": 8,
+      "files_scanned": 8,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/kernels": {
+      "files_walked": 24,
+      "files_scanned": 21,
+      "files_with_candidates": 3,
+      "candidates": 33,
+      "in_scope": true,
+      "skipped_extensions": {
+        ".txt": 3
+      }
+    },
+    "csrc/legacy": {
+      "files_walked": 2,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/utils": {
+      "files_walked": 7,
+      "files_scanned": 7,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_ep": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_ep/buffers": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_ep/include": {
+      "files_walked": 18,
+      "files_scanned": 18,
+      "files_with_candidates": 7,
+      "candidates": 32,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_ep/utils": {
+      "files_walked": 10,
+      "files_scanned": 10,
+      "files_with_candidates": 4,
+      "candidates": 11,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "docs": {
+      "files_walked": 2,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 2
+      }
+    },
+    "figures": {
+      "files_walked": 2,
+      "files_scanned": 0,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".png": 2
+      }
+    },
+    "tests": {
+      "files_walked": 9,
+      "files_scanned": 9,
+      "files_with_candidates": 4,
+      "candidates": 9,
+      "in_scope": false,
+      "skipped_extensions": {}
+    }
+  },
+  "totals": {
+    "files_walked": 105,
+    "files_scanned": 84,
+    "candidates": 88,
+    "candidates_in_scope": 79,
+    "candidates_excluded": 11,
+    "wrapper_definitions": {
+      "ibgda_post_send": "DeepEP-c00004"
+    }
+  }
+}

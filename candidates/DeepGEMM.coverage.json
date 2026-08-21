@@ -1,0 +1,161 @@
+{
+  "engine": "DeepGEMM",
+  "sha": "1f6f3f378920ccb5cc036ef43eb3f5972e921713",
+  "scan_paths": [
+    "csrc",
+    "deep_gemm"
+  ],
+  "exclude": [
+    "tests",
+    "third-party"
+  ],
+  "languages": [
+    "cuda",
+    "python"
+  ],
+  "directories": {
+    ".": {
+      "files_walked": 9,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        "<none>": 3,
+        ".txt": 1,
+        ".md": 1,
+        ".sh": 3
+      }
+    },
+    "csrc": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/apis": {
+      "files_walked": 7,
+      "files_scanned": 7,
+      "files_with_candidates": 2,
+      "candidates": 10,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/indexing": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/jit": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 2,
+      "candidates": 3,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/jit_kernels": {
+      "files_walked": 25,
+      "files_scanned": 25,
+      "files_with_candidates": 1,
+      "candidates": 22,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "csrc/utils": {
+      "files_walked": 8,
+      "files_scanned": 8,
+      "files_with_candidates": 1,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_gemm": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_gemm/include": {
+      "files_walked": 42,
+      "files_scanned": 42,
+      "files_with_candidates": 11,
+      "candidates": 53,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_gemm/legacy": {
+      "files_walked": 6,
+      "files_scanned": 6,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_gemm/mega": {
+      "files_walked": 1,
+      "files_scanned": 1,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_gemm/testing": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "deep_gemm/utils": {
+      "files_walked": 4,
+      "files_scanned": 4,
+      "files_with_candidates": 1,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "scripts": {
+      "files_walked": 3,
+      "files_scanned": 2,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".sh": 1
+      }
+    },
+    "tests": {
+      "files_walked": 11,
+      "files_scanned": 11,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {}
+    },
+    "third-party": {
+      "files_walked": 3,
+      "files_scanned": 3,
+      "files_with_candidates": 0,
+      "candidates": 0,
+      "in_scope": false,
+      "skipped_extensions": {}
+    }
+  },
+  "totals": {
+    "files_walked": 132,
+    "files_scanned": 123,
+    "candidates": 92,
+    "candidates_in_scope": 92,
+    "candidates_excluded": 9,
+    "wrapper_definitions": {}
+  }
+}
