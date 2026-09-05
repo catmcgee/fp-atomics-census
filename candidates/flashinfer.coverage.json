@@ -33,26 +33,6 @@
         ".txt": 2
       }
     },
-    ".claude": {
-      "files_walked": 3,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        ".md": 3
-      }
-    },
-    ".devcontainer": {
-      "files_walked": 4,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        ".json": 4
-      }
-    },
     "3rdparty_patches": {
       "files_walked": 2,
       "files_scanned": 0,
@@ -506,7 +486,7 @@
     }
   },
   "totals": {
-    "files_walked": 1783,
+    "files_walked": 1776,
     "files_scanned": 1488,
     "candidates": 608,
     "candidates_in_scope": 386,

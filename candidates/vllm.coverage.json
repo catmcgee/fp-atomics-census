@@ -34,42 +34,6 @@
         ".toml": 2
       }
     },
-    ".buildkite": {
-      "files_walked": 183,
-      "files_scanned": 7,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        "<none>": 1,
-        ".yaml": 85,
-        ".sh": 61,
-        ".txt": 8,
-        ".md": 2,
-        ".json": 17,
-        ".env": 2
-      }
-    },
-    ".claude": {
-      "files_walked": 1,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        ".md": 1
-      }
-    },
-    ".gemini": {
-      "files_walked": 1,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        ".yaml": 1
-      }
-    },
     "benchmarks": {
       "files_walked": 116,
       "files_scanned": 91,
@@ -610,8 +574,8 @@
     }
   },
   "totals": {
-    "files_walked": 5823,
-    "files_scanned": 3959,
+    "files_walked": 5638,
+    "files_scanned": 3952,
     "candidates": 429,
     "candidates_in_scope": 329,
     "candidates_excluded": 15,

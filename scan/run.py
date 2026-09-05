@@ -51,7 +51,7 @@ def scan_repo(name: str, repo: Path, sha: str, scan_paths: list[str], excludes: 
                                                 "candidates": 0, "in_scope": False, "skipped_extensions": defaultdict(int)})
     sources: dict[str, bytes] = {}
     for root, dirs, files in os.walk(repo):
-        dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS)
+        dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS and not d.startswith("."))
         for f in sorted(files):
             p = Path(root) / f
             rel = str(p.relative_to(repo))
@@ -93,7 +93,7 @@ def scan_repo(name: str, repo: Path, sha: str, scan_paths: list[str], excludes: 
     if defs and "cuda" in languages:
         extra: list[Candidate] = []
         for root, dirs, files in os.walk(repo):
-            dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS)
+            dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS and not d.startswith("."))
             for f in sorted(files):
                 p = Path(root) / f
                 if p.suffix.lower() not in CUDA_EXTENSIONS:

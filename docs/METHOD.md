@@ -149,7 +149,7 @@ Files walked: 1062. Files scanned (CUDA/C++/Python): 901. Candidates: 123 (52 in
 
 ### flashinfer @ c0d920d3
 
-Files walked: 1783. Files scanned (CUDA/C++/Python): 1488. Candidates: 608 (386 in scope, 14 flagged as comment, string, declaration or host).
+Files walked: 1776. Files scanned (CUDA/C++/Python): 1488. Candidates: 608 (386 in scope, 14 flagged as comment, string, declaration or host).
 
 | directory | in scope | files walked | files scanned | files with candidates | candidates |
 |---|---|---|---|---|---|
@@ -213,18 +213,17 @@ Files walked: 18. Files scanned (CUDA/C++/Python): 11. Candidates: 1 (1 in scope
 
 ### sglang @ b4155233
 
-Files walked: 6837. Files scanned (CUDA/C++/Python): 4863. Candidates: 705 (384 in scope, 9 flagged as comment, string, declaration or host).
+Files walked: 6769. Files scanned (CUDA/C++/Python): 4850. Candidates: 705 (384 in scope, 9 flagged as comment, string, declaration or host).
 
 | directory | in scope | files walked | files scanned | files with candidates | candidates |
 |---|---|---|---|---|---|
-| `.claude` | no | 55 | 11 | 0 | 0 |
 | `3rdparty` | no | 17 | 2 | 0 | 0 |
 | `benchmark` | no | 189 | 131 | 11 | 22 |
 | `docs` | no | 174 | 6 | 0 | 0 |
 | `docs_new` | no | 446 | 2 | 0 | 0 |
 | `examples` | no | 92 | 62 | 0 | 0 |
 | `experimental` | no | 139 | 18 | 0 | 0 |
-| `python/sglang` | yes | 3326 | 2737 | 203 | 480 |
+| `python/sglang` | yes | 3316 | 2735 | 203 | 480 |
 | `python/tools` | no | 1 | 1 | 0 | 0 |
 | `scripts` | no | 127 | 71 | 1 | 1 |
 | `sgl-kernel` | yes | 18 | 4 | 0 | 0 |
@@ -233,17 +232,16 @@ Files walked: 6837. Files scanned (CUDA/C++/Python): 4863. Candidates: 705 (384 
 | `sgl-kernel/include` | yes | 15 | 15 | 1 | 4 |
 | `sgl-kernel/python` | yes | 31 | 31 | 0 | 0 |
 | `sgl-kernel/tests` | no | 44 | 44 | 6 | 12 |
-| `sgl-model-gateway` | no | 409 | 69 | 0 | 0 |
+| `sgl-model-gateway` | no | 408 | 69 | 0 | 0 |
 | `test` | no | 1498 | 1470 | 50 | 123 |
 
 ### vllm @ 5769a738
 
-Files walked: 5823. Files scanned (CUDA/C++/Python): 3959. Candidates: 429 (329 in scope, 15 flagged as comment, string, declaration or host).
+Files walked: 5638. Files scanned (CUDA/C++/Python): 3952. Candidates: 429 (329 in scope, 15 flagged as comment, string, declaration or host).
 
 | directory | in scope | files walked | files scanned | files with candidates | candidates |
 |---|---|---|---|---|---|
 | `.` | no | 28 | 2 | 0 | 0 |
-| `.buildkite` | no | 183 | 7 | 0 | 0 |
 | `benchmarks` | no | 116 | 91 | 4 | 7 |
 | `cmake` | no | 9 | 1 | 0 | 0 |
 | `csrc` | yes | 14 | 14 | 0 | 0 |
@@ -297,4 +295,3 @@ Files walked: 5823. Files scanned (CUDA/C++/Python): 3959. Candidates: 429 (329 
 | `vllm/utils` | yes | 38 | 37 | 0 | 0 |
 | `vllm/v1` | yes | 320 | 319 | 32 | 59 |
 | `vllm/vllm_flash_attn` | yes | 3 | 2 | 0 | 0 |
-

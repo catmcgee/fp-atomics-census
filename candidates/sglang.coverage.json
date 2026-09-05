@@ -31,29 +31,6 @@
         ".md": 2
       }
     },
-    ".claude": {
-      "files_walked": 55,
-      "files_scanned": 11,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        ".md": 37,
-        ".tmpl": 3,
-        ".sh": 4
-      }
-    },
-    ".devcontainer": {
-      "files_walked": 2,
-      "files_scanned": 0,
-      "files_with_candidates": 0,
-      "candidates": 0,
-      "in_scope": false,
-      "skipped_extensions": {
-        "<none>": 1,
-        ".json": 1
-      }
-    },
     "3rdparty": {
       "files_walked": 17,
       "files_scanned": 2,
@@ -210,13 +187,13 @@
       }
     },
     "python/sglang": {
-      "files_walked": 3326,
-      "files_scanned": 2737,
+      "files_walked": 3316,
+      "files_scanned": 2735,
       "files_with_candidates": 203,
       "candidates": 480,
       "in_scope": true,
       "skipped_extensions": {
-        ".md": 32,
+        ".md": 24,
         "<none>": 3,
         ".json": 536,
         ".js": 4,
@@ -335,13 +312,13 @@
       "skipped_extensions": {}
     },
     "sgl-model-gateway": {
-      "files_walked": 409,
+      "files_walked": 408,
       "files_scanned": 69,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".toml": 11,
+        ".toml": 10,
         "<none>": 7,
         ".md": 9,
         ".rs": 252,
@@ -372,8 +349,8 @@
     }
   },
   "totals": {
-    "files_walked": 6837,
-    "files_scanned": 4863,
+    "files_walked": 6769,
+    "files_scanned": 4850,
     "candidates": 705,
     "candidates_in_scope": 384,
     "candidates_excluded": 9,
