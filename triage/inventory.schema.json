@@ -22,7 +22,8 @@
     "evidence",
     "snippet",
     "confidence",
-    "notes"
+    "notes",
+    "provenance"
   ],
   "properties": {
     "id": {
@@ -232,7 +233,7 @@
         false,
         "unknown"
       ],
-      "description": "true if a default engine configuration can reach the site; false if opt-in only."
+      "description": "true if a stock configuration of the engine selects the site on at least one supported hardware profile without changing a default option; false if a non-default option is needed; 'unknown' if that could not be established. It says reachable-by-default, not selected on every deployment: default_path_condition names the profile and shape."
     },
     "gate": {
       "type": [
@@ -259,6 +260,10 @@
         },
         "note": {
           "type": "string"
+        },
+        "default_is_atomic": {
+          "type": "boolean",
+          "description": "true when the default value of the flag at the pinned sha selects the order-dependent branch; required for default-path A3 rows."
         }
       },
       "description": "Required for class A3; optional elsewhere when a flag changes behaviour."
@@ -363,11 +368,27 @@
       "items": {
         "type": "string"
       },
-      "description": "Ids of the rows in candidates/<engine>.jsonl this row was triaged from."
+      "description": "Ids of the rows in candidates/<engine>.jsonl this row was triaged from. Required and non-empty when provenance is scanner."
     },
     "cross_checked": {
       "type": "boolean",
       "description": "Set after the second independent read required for default-path class-A rows."
+    },
+    "default_path_condition": {
+      "type": "string",
+      "description": "For default_path true: the hardware profile, build, shape or dependency state under which a stock configuration selects the site (e.g. 'Hopper, DeepGEMM not installed, k > 3n')."
+    },
+    "definition_only": {
+      "type": "boolean",
+      "description": "true when the row records the definition of a helper whose reachable call sites have their own rows; excluded from finding counts."
+    },
+    "provenance": {
+      "type": "string",
+      "enum": [
+        "scanner",
+        "manual"
+      ],
+      "description": "scanner: triaged from candidate rows listed in candidate_ids; manual: found by reading, with no scanner candidate at this file and line."
     }
   },
   "allOf": [
@@ -416,6 +437,25 @@
         "required": [
           "opaque_target"
         ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance": {
+            "const": "scanner"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "candidate_ids"
+        ],
+        "properties": {
+          "candidate_ids": {
+            "minItems": 1
+          }
+        }
       }
     }
   ]
