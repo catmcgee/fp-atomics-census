@@ -8,7 +8,7 @@ The engine is started in-process with greedy sampling and a fixed batch.
 The probe writes the top-k logprobs of every position and compares runs.
 It is the generic instrument for every default-path class-A row: run it
 once with the configuration that reaches the row (see the inventory's
-path.entry_points) and once with the allowlist configuration.
+path.entry_points) and once with the exclusion-list configuration in the README.
 """
 from __future__ import annotations
 

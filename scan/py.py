@@ -9,7 +9,7 @@ Reported patterns:
 * ``tl.atomic_add`` / ``tl.atomic_max`` / ``tl.atomic_min`` / ``tl.atomic_cas``
   / ``tl.atomic_xchg`` / ``tl.atomic_and`` / ``tl.atomic_or`` / ``tl.atomic_xor``
   inside any function (a ``@triton.jit`` decorator is noted when present);
-* PyTorch operators listed in docs/TAXONOMY.md: ``index_add_``,
+* PyTorch operators with an accumulate or reduce semantics: ``index_add_``,
   ``index_add``, ``scatter_add_``, ``scatter_add``, ``scatter_reduce_``,
   ``scatter_reduce``, ``index_put_`` and ``index_put`` with
   ``accumulate=True``, ``put_`` with ``accumulate=True``, ``bincount``,
