@@ -13,7 +13,8 @@ COLUMNS = [
     "id", "engine", "class", "kind", "dtype", "memory_space", "file", "line_start", "line_end", "function",
     "default_path", "direction", "phase", "moe", "quant", "attention_backend", "parallelism",
     "gate_flag", "gate_default", "confidence", "path_description", "evidence", "downstream_order_invariant",
-    "opaque_library", "notes", "sha",
+    "opaque_library", "default_path_condition", "definition_only", "provenance", "candidate_ids", "entry_points",
+    "cross_checked", "notes", "sha",
 ]
 
 
@@ -35,6 +36,10 @@ def flatten(row: dict) -> dict:
         "evidence": " | ".join(f"{e['ref']}: {e['claim']}" for e in row.get("evidence", [])),
         "downstream_order_invariant": d.get("order_invariant", ""),
         "opaque_library": o.get("library", ""),
+        "default_path_condition": row.get("default_path_condition", ""),
+        "definition_only": row.get("definition_only", False), "provenance": row.get("provenance", ""),
+        "candidate_ids": ";".join(row.get("candidate_ids", [])), "entry_points": ";".join(p.get("entry_points", [])),
+        "cross_checked": row.get("cross_checked", False),
         "notes": row.get("notes", ""), "sha": row["sha"],
     }
 
