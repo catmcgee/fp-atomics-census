@@ -41,9 +41,12 @@ def main() -> int:
     else:
         import flashinfer.comm as comm
         world = dist.get_world_size()
-        ws = comm.create_allreduce_fusion_workspace(rank, world, 1 << 22, torch.bfloat16)
+        hidden = 4096
+        xx = x[: 512 * hidden].view(512, hidden).contiguous()
+        ws = comm.create_allreduce_fusion_workspace(backend="auto", world_size=world, rank=rank, max_token_num=512,
+                                                    hidden_dim=hidden, dtype=torch.bfloat16, gpus_per_node=world)
         def run():
-            return [comm.allreduce_fusion(x, ws, pattern=comm.AllReduceFusionPattern.kAllReduce)]
+            return [comm.allreduce_fusion(xx, ws, pattern=comm.AllReduceFusionPattern.kAllReduce)]
         ok = run_twice(f"flashinfer_allreduce_fusion_rank{rank}", run)
     dist.barrier()
     return 0 if ok else 1

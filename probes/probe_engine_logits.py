@@ -35,7 +35,10 @@ def _kw(extra: list[str]) -> dict:
     kw = {}
     for kv in extra:
         k, v = kv.split("=", 1)
-        if v.lower() in ("true", "false"):
+        if v.startswith("{") or v.startswith("["):
+            import json
+            v = json.loads(v)
+        elif v.lower() in ("true", "false"):
             v = v.lower() == "true"
         elif v.isdigit():
             v = int(v)

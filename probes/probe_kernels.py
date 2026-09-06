@@ -1,6 +1,6 @@
 """Direct kernel probes for the engine-specific class-A and low-confidence rows.
 
-    python probes/probe_kernels.py --which vllm_moe_wna16|vllm_lora_shrink|sglang_marlin|sglang_fp8_blockwise|sglang_lora_shrink|deepgemm_bmk_bnk_mn
+    python probes/probe_kernels.py --which vllm_moe_wna16|vllm_lora_shrink|sglang_marlin|sglang_fp8_blockwise|sglang_lora_shrink|deepgemm_bmk_bnk_mn|marlin_atomic
 
 vllm_moe_wna16: vllm._custom_ops.moe_wna16_gemm with tokens/experts <= 6 (vllm-0014).
 vllm_lora_shrink: vllm.lora.ops.triton_ops lora_shrink with the default config (vllm-0018).
@@ -64,6 +64,38 @@ def sglang_lora_shrink() -> bool:
     return True
 
 
+def marlin_atomic() -> bool:
+    """vLLM's Marlin GEMM on random 4-bit weights with use_atomic_add off and on.
+
+    Shapes satisfy n < 2048 and k >= 2048, the regime in which SGLang turns the
+    atomic-add reduction on (sglang-0008) and vLLM would with
+    VLLM_MARLIN_USE_ATOMIC_ADD=1 (vllm-0010). The kernel splits K across CTAs
+    and, with use_atomic_add, adds each slice's partial into C with atomicAdd;
+    whether the order matters depends on how many slices land on one tile.
+    """
+    from vllm import _custom_ops as ops
+    from vllm.model_executor.layers.quantization.utils.marlin_utils import marlin_make_workspace_new
+    from vllm.model_executor.layers.quantization.utils.marlin_utils_test import marlin_quantize
+    from vllm.scalar_type import scalar_types
+
+    ok = True
+    for (m, n, k) in ((16, 512, 3584), (16, 1024, 8192), (64, 512, 8192), (1, 512, 8192)):
+        for dtype in (torch.float16, torch.bfloat16):
+            torch.manual_seed(0)
+            a = torch.randn(m, k, dtype=dtype, device="cuda")
+            w = torch.randn(k, n, dtype=dtype, device="cuda")
+            w_ref, q_w, s_, g_idx, sort_idx, _ = marlin_quantize(w, scalar_types.uint4b8, 128, act_order=False)
+            ws = marlin_make_workspace_new(a.device)
+            for atomic in (False, True):
+                def run(atomic=atomic):
+                    return [ops.marlin_gemm(a, None, q_w, None, s_, None, None, None, g_idx, sort_idx, ws, scalar_types.uint4b8,
+                                            m, n, k, is_k_full=True, use_atomic_add=atomic, use_fp32_reduce=not atomic)]
+                tag = "fp16" if dtype == torch.float16 else "bf16"
+                ok &= run_twice(f"marlin_gemm_atomic{atomic}_m{m}_n{n}_k{k}_{tag}", run, repeats=5,
+                                extra={"shape": [m, n, k], "dtype": tag, "use_atomic_add": atomic})
+    return ok
+
+
 def deepgemm_bmk_bnk_mn() -> bool:
     import deep_gemm
     s, m, n, k = 64, 512, 512, 128
@@ -78,12 +110,13 @@ def deepgemm_bmk_bnk_mn() -> bool:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--which", required=True, choices=["vllm_moe_wna16", "vllm_lora_shrink", "sglang_marlin", "sglang_fp8_blockwise", "sglang_lora_shrink", "deepgemm_bmk_bnk_mn"])
+    ap.add_argument("--which", required=True, choices=["vllm_moe_wna16", "vllm_lora_shrink", "sglang_marlin", "sglang_fp8_blockwise", "sglang_lora_shrink", "deepgemm_bmk_bnk_mn", "marlin_atomic"])
     args = ap.parse_args()
     torch.manual_seed(0)
     torch.cuda.manual_seed_all(0)
     fn = {"vllm_moe_wna16": vllm_moe_wna16, "vllm_lora_shrink": vllm_lora_shrink, "sglang_marlin": sglang_marlin,
-          "sglang_fp8_blockwise": sglang_fp8_blockwise, "sglang_lora_shrink": sglang_lora_shrink, "deepgemm_bmk_bnk_mn": deepgemm_bmk_bnk_mn}[args.which]
+          "sglang_fp8_blockwise": sglang_fp8_blockwise, "sglang_lora_shrink": sglang_lora_shrink, "deepgemm_bmk_bnk_mn": deepgemm_bmk_bnk_mn,
+          "marlin_atomic": marlin_atomic}[args.which]
     return 0 if fn() else 1
 
 
