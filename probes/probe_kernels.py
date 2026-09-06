@@ -21,7 +21,13 @@ from common import run_twice
 
 
 def sglang_fp8_blockwise() -> bool:
-    from sgl_kernel import fp8_blockwise_scaled_mm
+    try:
+        from sgl_kernel import fp8_blockwise_scaled_mm
+    except ImportError:
+        # sglang 0.5.19 moved the op into a JIT module and builds it for SM120 only; the
+        # SM90 stream-K dispatcher of the pinned sha (sglang-0011) is not in the release wheel.
+        from sglang.kernels.ops.gemm.fp8_blockwise_gemm import fp8_blockwise_scaled_mm
+        print("note: using sglang.kernels.ops.gemm.fp8_blockwise_gemm; at 0.5.19 this kernel is documented as SM120-only")
 
     m, n, k = 512, 1024, 8192  # k > 3n selects the stream-K kernel
     a = (torch.randn(m, k, device="cuda") * 0.1).to(torch.float8_e4m3fn)

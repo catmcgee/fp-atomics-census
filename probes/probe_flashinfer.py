@@ -59,7 +59,7 @@ def attention(backend: str) -> bool:
     return run_twice(f"fi_decode_{backend}", lambda: [w.run(q, kv)])
 
 
-def moe(fused: bool, topk_: int) -> bool:
+def moe(fused: bool, topk_: int, autotune_first: bool = False) -> bool:
     import flashinfer
 
     # Shapes follow the cutlass_fused_moe docstring; weights random. A token
@@ -74,17 +74,27 @@ def moe(fused: bool, topk_: int) -> bool:
     logits = torch.randn(tokens, experts, device="cuda")
     weights, ids = torch.topk(torch.softmax(logits, -1), topk_, dim=-1)
 
-    def run():
+    def call():
         out = flashinfer.fused_moe.cutlass_fused_moe(
             x, ids.to(torch.int32), weights.to(torch.float32), w1, w2, torch.bfloat16, [], use_fused_finalize=fused)
         return [out[0] if isinstance(out, (list, tuple)) else out]
-    return run_twice(f"fi_cutlass_fused_moe_fused_finalize_{fused}_topk{topk_}", run, extra={"topk": topk_, "tokens": tokens, "experts": experts})
+
+    if autotune_first:
+        # Without autotuning FlashInfer runs a default tactic, which need not be a
+        # fused-finalize config even when use_fused_finalize is true; tuning first
+        # lets the runner pick among the fused configs (moe_kernels.h getConfigs).
+        from flashinfer.autotuner import autotune
+        with autotune(True):
+            call()
+    name = f"fi_cutlass_fused_moe{'_autotuned' if autotune_first else ''}_fused_finalize_{fused}_topk{topk_}"
+    return run_twice(name, call, extra={"topk": topk_, "tokens": tokens, "experts": experts, "autotuned": autotune_first})
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--which", choices=["attention", "moe", "renorm", "topk"], required=True)
     ap.add_argument("--backend", default="fa2")
+    ap.add_argument("--autotune", action="store_true", help="moe: run FlashInfer autotuning before comparing")
     args = ap.parse_args()
     torch.manual_seed(0)
     torch.cuda.manual_seed_all(0)
@@ -97,7 +107,7 @@ def main() -> int:
     else:
         ok = True
         for k in (2, 4, 8):
-            ok &= moe(True, k) & moe(False, k)
+            ok &= moe(True, k, args.autotune) & moe(False, k, args.autotune)
     return 0 if ok else 1
 
 
