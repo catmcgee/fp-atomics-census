@@ -389,6 +389,49 @@
         "manual"
       ],
       "description": "scanner: triaged from candidate rows listed in candidate_ids; manual: found by reading, with no scanner candidate at this file and line."
+    },
+    "runtime_evidence": {
+      "type": "array",
+      "description": "Probe results that bear on this row, attached by triage/attach_runtime.py from probes/results/. Evidence for the named stack only.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stack",
+          "probe",
+          "in_process",
+          "fresh_process"
+        ],
+        "properties": {
+          "stack": {
+            "type": "string"
+          },
+          "probe": {
+            "type": "string"
+          },
+          "in_process": {
+            "type": "string",
+            "enum": [
+              "identical",
+              "DIFFERS"
+            ]
+          },
+          "fresh_process": {
+            "type": "string",
+            "enum": [
+              "identical",
+              "DIFFERS",
+              "n/a"
+            ]
+          },
+          "repeats": {
+            "type": "integer"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "allOf": [

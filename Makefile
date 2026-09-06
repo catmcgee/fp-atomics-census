@@ -2,7 +2,7 @@ PYTHON ?= .venv/bin/python
 REPOS_DIR ?= repos
 MANIFEST ?= scan-manifest.json
 
-.PHONY: summary help venv clone census census-all test validate csv
+.PHONY: attach-runtime summary help venv clone census census-all test validate csv
 
 help:
 	@echo "make venv           create .venv with pinned dependencies"
@@ -30,6 +30,9 @@ census-all:
 
 validate:
 	$(PYTHON) -m triage.validate --schema triage/inventory.schema.json inventory/*.jsonl
+
+attach-runtime:
+	$(PYTHON) -m triage.attach_runtime inventory/*.jsonl
 
 summary:
 	$(PYTHON) -m triage.summary inventory/*.jsonl

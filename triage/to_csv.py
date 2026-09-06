@@ -14,7 +14,7 @@ COLUMNS = [
     "default_path", "direction", "phase", "moe", "quant", "attention_backend", "parallelism",
     "gate_flag", "gate_default", "confidence", "path_description", "evidence", "downstream_order_invariant",
     "opaque_library", "default_path_condition", "definition_only", "provenance", "candidate_ids", "entry_points",
-    "cross_checked", "notes", "sha",
+    "cross_checked", "runtime_evidence", "notes", "sha",
 ]
 
 
@@ -40,6 +40,7 @@ def flatten(row: dict) -> dict:
         "definition_only": row.get("definition_only", False), "provenance": row.get("provenance", ""),
         "candidate_ids": ";".join(row.get("candidate_ids", [])), "entry_points": ";".join(p.get("entry_points", [])),
         "cross_checked": row.get("cross_checked", False),
+        "runtime_evidence": " | ".join(f"{e['probe']}: {e['in_process']}/{e['fresh_process']} ({e['stack']})" for e in row.get("runtime_evidence", [])),
         "notes": row.get("notes", ""), "sha": row["sha"],
     }
 
