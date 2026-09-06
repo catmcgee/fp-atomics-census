@@ -1,0 +1,6 @@
+# Installed on the probe machine on top of the RunPod PyTorch image. Versions
+# are not pinned here on purpose: the reports record what was installed, and
+# the point of the probes is to test a named stack, not to prescribe one.
+vllm
+flashinfer-python
+sglang[all]

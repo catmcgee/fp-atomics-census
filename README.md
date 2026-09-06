@@ -230,13 +230,26 @@ audited.
 `probes/` holds scripts that run a computation several times and compare
 outputs bit for bit, recording GPU, driver and library versions with the
 verdict. `probe_engine_logits.py` runs vLLM or SGLang on a fixed batch;
-`probe_cublaslt_algo.py` asks the cuBLASLt heuristic which algorithm and
-reduction scheme a shape gets; `probe_torch_ops.py` covers `index_add_`,
-`scatter_add_` and `cumsum`; `probe_flashinfer.py`, `probe_kernels.py`
-and `probe_collectives.py` target the FlashInfer, SGLang, DeepGEMM and
-NCCL rows named in their docstrings. None has been run for this census.
-A `DIFFERS` verdict is conclusive for the stack it ran on; an identical
-verdict after a few runs is evidence, not proof.
+`probe_cublaslt_algo.py` runs a matmul under cuBLASLt logging and records
+the algorithm, split-K count and reduction scheme the heuristic chose;
+`probe_torch_ops.py` covers `index_add_`, `scatter_add_` and `cumsum`;
+`probe_flashinfer.py`, `probe_kernels.py` and `probe_collectives.py`
+target the FlashInfer, SGLang, DeepGEMM and NCCL rows named in their
+docstrings.
+
+```
+pip install -r probes/requirements.txt
+bash probes/run_all.sh          # every probe twice in fresh processes, then the report
+bash probes/run_all.sh quick    # engine-free probes only
+python probes/report.py         # tabulate probes/results/<stack>/*.json by inventory row
+```
+
+Reports land in `probes/results/<gpu>_<driver>_<torch>/` and are committed
+as evidence for that stack only. The engine probes run against installed
+wheels, not the pinned source shas, so their mapping to inventory rows is by
+kernel identity; the report records both. A `DIFFERS` verdict is conclusive
+for the stack it ran on; an identical verdict after a few runs is evidence,
+not proof.
 
 ## Limits
 
