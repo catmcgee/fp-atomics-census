@@ -86,13 +86,14 @@ def marlin_atomic() -> bool:
             w = torch.randn(k, n, dtype=dtype, device="cuda")
             w_ref, q_w, s_, g_idx, sort_idx, _ = marlin_quantize(w, scalar_types.uint4b8, 128, act_order=False)
             ws = marlin_make_workspace_new(a.device)
-            for atomic in (False, True):
-                def run(atomic=atomic):
+            # (use_atomic_add, use_fp32_reduce): SGLang's apply_gptq_marlin_linear passes both True.
+            for atomic, fp32 in ((False, True), (True, False), (True, True)):
+                def run(atomic=atomic, fp32=fp32):
                     return [ops.marlin_gemm(a, None, q_w, None, s_, None, None, None, g_idx, sort_idx, ws, scalar_types.uint4b8,
-                                            m, n, k, is_k_full=True, use_atomic_add=atomic, use_fp32_reduce=not atomic)]
+                                            m, n, k, is_k_full=True, use_atomic_add=atomic, use_fp32_reduce=fp32)]
                 tag = "fp16" if dtype == torch.float16 else "bf16"
-                ok &= run_twice(f"marlin_gemm_atomic{atomic}_m{m}_n{n}_k{k}_{tag}", run, repeats=5,
-                                extra={"shape": [m, n, k], "dtype": tag, "use_atomic_add": atomic})
+                name = f"marlin_gemm_atomic{atomic}{'_fp32reduce' if atomic and fp32 else ''}_m{m}_n{n}_k{k}_{tag}"
+                ok &= run_twice(name, run, repeats=5, extra={"shape": [m, n, k], "dtype": tag, "use_atomic_add": atomic, "use_fp32_reduce": fp32})
     return ok
 
 
