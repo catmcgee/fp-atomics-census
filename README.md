@@ -11,8 +11,8 @@ the scanner finds is classified by reading the surrounding code. The result
 is a machine-readable inventory, a per-engine list of options a verifier
 has to pin, and probe scripts for what reading cannot settle.
 
-This is a static census. No probe in `probes/` has been run, and nothing
-here certifies a configuration as bit-exact. What it establishes is where
+The census itself is static. The probes in `probes/` have been run on one
+stack, reported below; nothing here certifies a configuration as bit-exact. What it establishes is where
 order-dependent floating-point accumulation exists in source at the
 pinned commits, which options select it, and which binaries remain
 opaque.
@@ -151,6 +151,54 @@ generated kernels are outside them.
 different property, batch invariance, which is what lets a verifier
 re-run one request out of a batch. Both are off by default and cost
 performance.
+
+## Runtime results on one stack
+
+The probes were run on 6 September 2026 on one RunPod H100 SXM (driver
+580.126.09, CUDA 13.0, torch 2.13.0, vLLM 0.28.0, SGLang 0.5.19,
+FlashInfer 0.6.16). The JSON reports are in `probes/results/`, the table
+below is condensed from `python probes/report.py`, and every inventory row
+a probe bears on carries the verdict in its `runtime_evidence` field. Each
+probe ran at least four times in each of two processes; "differs" means at
+least one repeat was not bitwise identical to the first.
+
+| Probe | Verdict | Reading |
+|---|---|---|
+| `index_add_`, `scatter_add_` on contended indices | differs; identical with deterministic algorithms on | vllm-0045, vllm-0046, flash-attention-0026 confirmed |
+| float `cumsum` | identical in both modes | the cumsum rows are stable on this torch build |
+| `bincount` with weights | differs, even in deterministic mode | no inventory row; PyTorch has no deterministic kernel for it |
+| cuBLASLt, 60 projection shapes, plain matmul and bias linear, bf16 and fp16 | identical on all 240 | the heuristic chose split-K on 11 to 18 shapes per sweep, always with the workspace reduction scheme, never the in-place atomic one |
+| FlashInfer `top_p_renorm_probs` | differs by default; identical with `is_deterministic=True` | flashinfer-0015 confirmed |
+| FlashInfer multi-CTA `top_k_renorm_probs` | differs | flashinfer-0016 confirmed |
+| FlashInfer radix top-k | output order differs by default; identical with `deterministic=True` | the order the B-indirect rows depend on does change at runtime |
+| FlashInfer fused MoE finalize, autotuned | identical at top-k 2; differs at top-k 4; identical at top-k 8 in 3 repeats | flashinfer-0001 confirmed; at top-k 2 two addends onto zero commute, so no order dependence is possible |
+| FlashInfer unfused finalize, FA2 decode | identical | |
+| vLLM Qwen3-8B and Qwen2.5-7B bf16, stock, 12 repeats per process | 1 to 2 of 12 repeats differ per process, whole requests at a time, sometimes changing sampled tokens | batch composition, see below |
+| vLLM the same with `VLLM_BATCH_INVARIANT=1`, or with `max_num_seqs=1` on the stock kernels | identical, 24 of 24 | |
+| vLLM GPTQ through Marlin (atomic add off) and through Machete, fp16 and bf16 | identical | vllm-0010 and vllm-0187 as read |
+| vLLM LoRA with the default split-K | differs, 2 to 24 sampled tokens per run | vllm-0018 confirmed; identical with `VLLM_BATCH_INVARIANT=1` |
+| vLLM GPTQ MoE through Marlin MoE, 12 repeats | identical | vllm-0022 null; the `moe_wna16` kernel (vllm-0014) could not be selected in 0.28.0, the method crashes at load, and the batch-invariant MoE kernels refuse this model's block shape |
+| SGLang Qwen3-8B bf16 with radix cache and overlap scheduler off | 3 of 6 repeats differ, exactly one request | batch composition; identical with `--enable-deterministic-inference` |
+| SGLang GPTQ through Marlin with the `if not True:` stub live | identical, 12 of 12 | sglang-0008 null on this model and stack |
+| SGLang FP8 blockwise | identical | sglang-0011 is unreachable: 0.5.19 builds its CUTLASS FP8 GEMM for SM120 only and routes Hopper to DeepGEMM or Triton |
+| TensorRT-LLM attention cubins, NCCL, cuDNN | not run | the cubins refuse H100; one GPU; no cuDNN path exercised |
+
+Two readings did not reproduce and are recorded as nulls with the probe
+names: SGLang's Marlin atomic-add path and vLLM's Marlin MoE. A null after
+twelve runs is not proof of order-invariance, but the verifier's forbid
+list can carry both as "not observed" rather than "forbidden".
+
+The residual differences in the dense path are not kernel randomness. With
+the batch-invariant mode on, or with one sequence per batch on the stock
+kernels, every configuration was identical in every repeat. On the stock
+kernels with the default scheduler, requests reach the engine over a
+socket, the first scheduling step sometimes holds a different set of
+prompts, and the kernels are not batch-invariant, so a request's logprobs
+and occasionally its tokens depend on who else was in the batch. For a
+verifier that re-runs sampled requests, this is the binding constraint on
+this stack: the atomics the census found are avoidable by configuration,
+and what remains is batch invariance, which both engines offer only as an
+opt-in mode with a performance cost.
 
 ## Layout
 
