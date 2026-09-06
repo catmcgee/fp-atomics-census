@@ -25,7 +25,7 @@ twice probe_flashinfer.py --which renorm
 twice probe_flashinfer.py --which topk
 twice probe_flashinfer.py --which moe
 twice probe_flashinfer.py --which attention --backend fa2
-twice probe_flashinfer.py --which attention --backend trtllm
+twice probe_flashinfer.py --which attention --backend trtllm-gen
 twice probe_kernels.py --which sglang_fp8_blockwise
 twice probe_kernels.py --which deepgemm_bmk_bnk_mn
 

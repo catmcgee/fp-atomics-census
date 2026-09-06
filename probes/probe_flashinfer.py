@@ -3,14 +3,14 @@
     python probes/probe_flashinfer.py --which attention|moe|renorm|topk
 
 attention: BatchDecodeWithPagedKVCacheWrapper with the FA2 template (expected
-    identical) and, on sm90+/sm100, the trtllm backend (flashinfer-0038, class C).
+    identical) and, on sm90+/sm100, the trtllm-gen backend (flashinfer-0038, class C).
 moe: cutlass_fused_moe with use_fused_finalize=True (flashinfer-0001, expected
     DIFFERS under contention) and False (expected identical); the trtllm MoE
     entry points (class C).
 renorm: top_p_renorm_probs with is_deterministic False and True (flashinfer-0014)
     and top_k_renorm_probs with a vocabulary large enough to span several CTAs
     (flashinfer-0015).
-topk: radix_topk with deterministic False and True; compares the index order,
+topk: flashinfer.topk.top_k with deterministic False and True; compares values and index order,
     not only the set (flashinfer-0017, flashinfer-0018).
 """
 from __future__ import annotations
@@ -40,7 +40,7 @@ def topk() -> bool:
     scores = torch.randn(32, 131072, device="cuda")
     ok = True
     for det in (False, True):
-        ok &= run_twice(f"fi_radix_topk_order_det{det}", lambda: [flashinfer.topk.radix_topk(scores, 2048, deterministic=det)[0]])
+        ok &= run_twice(f"fi_radix_topk_order_det{det}", lambda: list(flashinfer.topk.top_k(scores, 2048, deterministic=det)))
     return ok
 
 
@@ -72,7 +72,7 @@ def moe(fused: bool) -> bool:
     logits = torch.randn(tokens, experts, device="cuda")
     weights, ids = torch.topk(torch.softmax(logits, -1), topk_, dim=-1)
     return run_twice(f"fi_cutlass_fused_moe_fused_finalize_{fused}", lambda: [flashinfer.fused_moe.cutlass_fused_moe(
-        x, ids.to(torch.int32), weights.to(torch.float32), w1, w2, torch.bfloat16, use_fused_finalize=fused)[0]])
+        x, ids.to(torch.int32), weights.to(torch.float32), w1, w2, torch.bfloat16, [], use_fused_finalize=fused)])
 
 
 def main() -> int:
