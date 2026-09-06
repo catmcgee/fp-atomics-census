@@ -1,45 +1,156 @@
 # fp-atomics-census
 
 A census of floating-point atomic operations in the GPU kernel sources of
-the main open-source LLM inference engines, and what that census implies
-for bit-exact verification of AI inference.
+the main open-source LLM inference engines, and what it implies for
+bit-exact verification of AI inference.
 
 Eight repositories are pinned in `scan-manifest.json` and scanned at those
 commits: vLLM, SGLang, FlashInfer, FlashAttention, Marlin, DeepGEMM, DeepEP
 and the split-K and stream-K reduction paths of CUTLASS. Every atomic site
-found is classified by reading the surrounding code, and the result is a
-machine-readable inventory, a per-engine list of configurations that stay
-clear of order-dependent atomics, and a short write-up.
+the scanner finds is classified by reading the surrounding code. The result
+is a machine-readable inventory, a per-engine list of options a verifier
+has to pin, and probe scripts for what reading cannot settle.
 
-## Why this exists
+This is a static census. No probe in `probes/` has been run, and nothing
+here certifies a configuration as bit-exact. What it establishes is where
+order-dependent floating-point accumulation exists in source at the
+pinned commits, which options select it, and which binaries remain
+opaque.
 
-Verifying that a datacenter ran the workload it claims to have run, whether
-for AI governance, treaty verification or auditing an API provider, is
-simplest when inference is bit-exactly reproducible: the verifier re-runs a
-sampled computation and compares hashes. Cankaya (2026) argues that modern
-inference engines are already deterministic once the configuration is
-recorded, and that the only genuine run-to-run non-determinism comes from
-floating-point atomic accumulation. He found one such kernel (the exllama
-path in vLLM's GPTQ `q_gemm.cu`) and noted the atomics in
-FlashAttention-3's backward pass.
+## Why
 
-That claim was made from a handful of models and configurations. Nobody
-had checked it systematically across the ecosystem. If it holds, verifiers
-can demand bit-exact matches instead of tolerance schemes such as DiFR,
-which leave an adversary slack for steganography and unreported
-computation. If it does not hold, the census says which configurations a
-verification regime has to forbid or gate.
+Verifying that a datacenter ran the workload it claims to have run, for
+AI governance, treaty verification or auditing an API provider, is
+simplest when inference is bit-exactly reproducible: the verifier re-runs
+a sampled computation and compares hashes. Cankaya (2026) argues that the
+engines are already deterministic once the configuration is recorded and
+that the only genuine run-to-run non-determinism comes from floating-point
+atomic accumulation, of which he found one kernel (the exllama GPTQ path
+in vLLM) plus FlashAttention-3's backward pass. If that holds across the
+ecosystem, verifiers can demand bit-exact matches instead of tolerance
+schemes such as DiFR, which leave an adversary slack. If it does not, the
+census says which configurations a verification regime has to forbid or
+gate.
 
-The short answer, argued in `docs/FINDINGS.md`: the premise holds for the
-core dense forward pass (attention, unquantised and most quantised linear
-layers, the Triton and Marlin MoE kernels, DeepGEMM, DeepEP), but not for
-the ecosystem as a whole. Order-dependent atomics sit on default paths in
-LoRA, in several MoE finalize kernels, in one quantised MoE kernel, in
-SGLang's Marlin and CUTLASS FP8 configurations, in some sampling
-renormalisation kernels, and in PyTorch library operators used for
-pooling. A verifier can forbid every one of them with the allowlists here,
-and is then left with the closed binaries (cuBLASLt, cuDNN, NCCL, TRT-LLM
-cubins) that only a runtime probe can settle.
+## What was found
+
+Counts come from `make summary`, which reads the inventory; no number
+below is typed by hand.
+
+| Engine | Sites | A | A1 | A2 | A3 | B | B-indirect | C |
+|---|---|---|---|---|---|---|---|---|
+| vllm | 164 | 21 | 20 | 2 | 9 | 93 | 12 | 7 |
+| sglang | 263 | 12 | 27 | 1 | 8 | 202 | 4 | 9 |
+| flashinfer | 91 | 19 | 5 | 2 | 3 | 48 | 6 | 8 |
+| flash-attention | 27 | 12 | 0 | 0 | 10 | 4 | 0 | 1 |
+| marlin | 2 | 0 | 0 | 1 | 0 | 1 | 0 | 0 |
+| DeepGEMM | 10 | 2 | 4 | 0 | 0 | 1 | 2 | 1 |
+| DeepEP | 13 | 0 | 0 | 0 | 0 | 9 | 3 | 1 |
+| cutlass | 6 | 0 | 0 | 2 | 2 | 1 | 1 | 0 |
+| Total | 576 | 66 | 56 | 8 | 32 | 359 | 28 | 27 |
+
+The premise holds for the dense forward path. Attention forward in every
+backend that ships source has no order-dependent atomic; unquantised
+linear layers go to cuBLASLt; the Triton fused MoE, the Marlin MoE,
+DeepGEMM's grouped GEMMs and DeepEP's dispatch and combine have none on
+their default paths; CUTLASS stream-K defaults to its deterministic
+reduction. For a bf16 dense model, or a common FP8 or GPTQ dense model,
+served by vLLM with the stock configuration, the census found no
+order-dependent atomic in engine source.
+
+The premise fails as a statement about the ecosystem. Thirteen class-A
+sites sit on default inference paths, and five gates default to the
+atomic side. They cluster in adapters, MoE finalisation, quantised
+kernels with a split-K or atomic-add fast path, sampling renormalisation
+and PyTorch library operators used by model code.
+
+Default-path class-A sites at inference (row ids in `inventory/`):
+
+- vllm-0014: the `moe_wna16` CUDA kernel for 4-bit GPTQ and AWQ MoE
+  accumulates each token's expert output with a `half` or `bfloat16`
+  `atomicAdd`; selected for small batches.
+- vllm-0032 to vllm-0037: six compare-and-swap loops on packed `half2` and
+  `bfloat162` in the ROCm gfx1100 GPTQ kernels, the exllama pattern.
+  Medium confidence; no ROCm build was exercised.
+- vllm-0045 and vllm-0046: `index_add_` in mean pooling and in the
+  Moondream3 expert combine. PyTorch documents the CUDA kernel as
+  non-deterministic.
+- vllm-0050 and sglang-0035: float `cumsum` on CUDA in DiffusionGemma and
+  the Gemma3n audio encoder. Low confidence; the scan implementation is
+  build-dependent.
+- sglang-0011: the FP8 blockwise GEMM selects a CUTLASS stream-K kernel
+  built with `ReductionMode::Nondeterministic` when `k > 3n`. Reached on
+  Hopper when DeepGEMM is not installed.
+- flashinfer-0016: the multi-CTA top-k renormalisation sums kept
+  probabilities with a float `atomicAdd` and has no deterministic switch.
+
+Gates whose default selects the atomic side:
+
+- vllm-0018, vllm-0019: LoRA shrink uses split-K with `tl.atomic_add`
+  unless `VLLM_BATCH_INVARIANT=1`.
+- sglang-0008: `should_use_atomic_add_reduce` contains an `if not True:`
+  stub, so Marlin's atomic-add reduction is on for every `n < 2048,
+  k >= 2048` shape on CUDA.
+- flashinfer-0001: `cutlass_fused_moe` defaults to `use_fused_finalize=True`,
+  a `red.global.add` on `f16x2`. vLLM and SGLang reach it only when their
+  MoE backend is set to `flashinfer_cutlass`, which is opt-in in both.
+- flashinfer-0015: `top_p_renorm_probs` defaults to `is_deterministic=False`.
+
+SGLang's LoRA kernels with float atomics (sglang-0019, sglang-0021 and the
+rest of its experimental LoRA backend) sit behind `--lora-use-virtual-experts`
+and `SGLANG_EXPERIMENTAL_LORA_OPTI`, both off by default, so a stock SGLang
+LoRA deployment has no class-A site in source. vLLM's does.
+
+Twelve class-A sites are training only: FlashAttention's dQ, dK and dV
+accumulation across five backward kernels, plus two autograd backward
+functions in vLLM and FlashAttention's padding helpers. Ten more A3 rows
+are the `deterministic=False` default of those backward kernels. All are
+recorded with `default_path: false` because they do not run at inference.
+
+Twenty-eight integer atomics decide a slot or order that float data later
+follows. Ten are order-invariant on reading, two are not, and sixteen are
+unknown: top-k selection kernels whose output order is arrival order and
+whose consumers (sparse attention, TensorRT-LLM routing cubins) were not
+read.
+
+Twenty-seven sites call into binaries: cuBLASLt (10), cuBLAS (3), cuDNN (3),
+NCCL (4), TensorRT-LLM cubins (3), NVLink multicast (2), FlashMLA sparse
+and SGLang's FlashInfer CUTLASS MoE runner.
+Nothing in engine source pins cuBLASLt's algorithm choice beyond
+`CUBLAS_WORKSPACE_CONFIG`. These are settled only by a runtime probe on
+the exact SKU, driver and library versions.
+
+## Static exclusion lists
+
+For each engine, the options a verifier has to pin to stay clear of every
+default-path order-dependent site found in source. These are exclusion
+lists derived from reading, not certificates: the opaque binaries and any
+generated kernels are outside them.
+
+| Engine | Pin | Reason |
+|---|---|---|
+| vLLM | no LoRA, or `VLLM_BATCH_INVARIANT=1` | vllm-0018, vllm-0019 |
+| vLLM | no `moe_wna16` quantisation method | vllm-0014 |
+| vLLM | MoE backend not `flashinfer_cutlass`, or patch `use_fused_finalize=False` | flashinfer-0001 |
+| vLLM | `VLLM_MARLIN_USE_ATOMIC_ADD` unset (default) | vllm-0010 |
+| vLLM | no mean-pooling models, no Moondream3, no DiffusionGemma | vllm-0045, vllm-0046, vllm-0050 |
+| vLLM | no gfx1100 ROCm build | vllm-0032 to vllm-0037 |
+| SGLang | no Marlin for shapes with `n < 2048, k >= 2048` until the stub at `marlin_utils.py:476` is fixed | sglang-0008 |
+| SGLang | DeepGEMM installed, or no FP8 blockwise shapes with `k > 3n` | sglang-0011 |
+| SGLang | LoRA without `--lora-use-virtual-experts` and without `SGLANG_EXPERIMENTAL_LORA_OPTI` | sglang-0019, sglang-0021 |
+| SGLang | `--moe-runner-backend` not `flashinfer_cutlass` | flashinfer-0001 |
+| SGLang | no Gemma3n audio | sglang-0035 |
+| FlashInfer | `top_p_renorm_probs(..., is_deterministic=True)`; avoid `top_k_renorm_probs` on large vocabularies | flashinfer-0015, flashinfer-0016 |
+| FlashInfer | `cutlass_fused_moe(..., use_fused_finalize=False)` | flashinfer-0001 |
+| FlashAttention | forward only; for training pass `deterministic=True` | flash-attention-0001 to 0024 |
+| DeepGEMM | do not use the `bmk,bnk->mn` einsum | DeepGEMM-0001, DeepGEMM-0002 |
+| Marlin, DeepEP, CUTLASS | nothing to pin in source; CUTLASS callers must not set `ReductionMode::Nondeterministic` | cutlass-0001 |
+| all | pin and probe cuBLASLt, cuDNN, NCCL and any downloaded cubins | class C rows |
+
+`VLLM_BATCH_INVARIANT` and SGLang's deterministic mode address a
+different property, batch invariance, which is what lets a verifier
+re-run one request out of a batch. Both are off by default and cost
+performance.
 
 ## Layout
 
@@ -47,11 +158,9 @@ cubins) that only a runtime probe can settle.
 scan-manifest.json   pinned repo shas and in-scope directories
 scan/                candidate scanner (regex plus tree-sitter for C++, ast for Python)
 candidates/          raw scanner output, one jsonl and one coverage json per engine
-triage/              inventory JSON Schema, checklist, validation and export tools
+triage/              inventory JSON Schema, validator, summary and CSV export
 inventory/           triaged sites, one jsonl per engine; inventory.csv at the root
-allowlist/           per-engine deterministic configuration allowlists
-docs/                TAXONOMY, BACKGROUND, METHOD, FINDINGS, RUNTIME_PROBES
-probes/              GPU scripts that settle the class-C and low-confidence rows
+probes/              GPU scripts for the rows that reading cannot settle
 tests/               scanner unit tests on synthetic fixtures
 ```
 
@@ -63,63 +172,87 @@ make clone                    # fetch every repo at its pinned sha into repos/
 make test                     # scanner unit tests on tests/fixtures
 make census REPO=vllm         # re-run the scanner on one repo (SHA=... to override)
 make census-all               # re-run on all eight
-make validate                 # check inventory/*.jsonl against the schema and the checkouts
+make validate                 # schema, sha, snippet, reference and provenance checks
+make summary                  # the counts quoted above, from the inventory
 make csv                      # regenerate inventory.csv
-python -m triage.coverage_table candidates/*.coverage.json   # coverage tables
+python -m triage.coverage_table candidates/*.coverage.json
 ```
 
 `make census` refuses to run on a checkout whose HEAD differs from the
-manifest, so the candidates are reproducible from the manifest alone.
-Re-running the scanner regenerates `candidates/`; the inventory is a
+manifest. Re-running it regenerates `candidates/`; the inventory is a
 human product and is not regenerated.
 
 ## How to read the inventory
 
-Each line of `inventory/<engine>.jsonl` is one site. The fields are
-defined in `docs/TAXONOMY.md` and enforced by `triage/inventory.schema.json`.
-The ones that matter most:
+Each line of `inventory/<engine>.jsonl` is one site, validated against
+`triage/inventory.schema.json`. The classes:
 
-- `class`: `A` (order-dependent float accumulation, no mitigation found),
-  `A1` (no contention), `A2` (serialised), `A3` (gated by a flag),
-  `B` (exact atomic), `B-indirect` (exact atomic that decides a slot or
-  order for later float data), `C` (opaque binary).
-- `default_path`: whether a stock configuration reaches the site.
-- `gate`: for A3, the flag, where it is read, and its default at the sha.
-- `downstream`: for B-indirect, whether a different slot order can change
-  a floating-point reduction order, with the argument.
-- `evidence`: `file:line` references that justify the class.
-- `confidence` and `notes`: `low` means the class is a best reading, not a
-  settled fact; the notes say what is missing.
+- **A**: order-dependent floating-point accumulation with no mitigation
+  found: `atomicAdd` on float types, compare-and-swap add loops, PTX
+  `red`/`atom` add on float, `multimem.red`, TMA `cp.reduce.async.bulk`
+  add, `tl.atomic_add` on float, and PyTorch operators documented as
+  non-deterministic on CUDA.
+- **A1**: the same primitive where the reading shows one writer per
+  address, so no contention.
+- **A2**: serialised by a lock or turnstile so the order is fixed.
+- **A3**: behind a flag; `gate` records the flag, where it is read, its
+  default at the sha, and `default_is_atomic`.
+- **B**: exact regardless of order: integer atomics, float max and min,
+  locks and counters.
+- **B-indirect**: an exact atomic that decides a slot or order for later
+  float data; `downstream.order_invariant` says whether that can change a
+  float reduction.
+- **C**: a call into a binary (cuBLASLt, cuDNN, NCCL, cubins) whose
+  reduction strategy cannot be read; `opaque_target` names it.
+
+Fields that matter most:
+
+- `default_path`: true if a stock configuration selects the site on at
+  least one supported hardware profile without changing a default;
+  `default_path_condition` names that profile and shape. It means
+  reachable by default, not selected on every deployment.
+- `path.direction`: rows in backward kernels are training only.
+- `evidence`: `file:line` references that justify the class; the
+  validator checks that each resolves in the pinned checkout.
+- `provenance` and `candidate_ids`: `scanner` rows cite the candidate
+  they were triaged from; `manual` rows were found by reading.
+- `definition_only`: a helper whose reachable call sites have their own
+  rows; excluded from the counts.
+- `confidence` and `notes`: `low` means the class is a best reading, and
+  the notes say what is missing.
 
 `candidates/` keeps everything the scanner matched, including matches in
-comments and strings (with `excluded_reason`), so the triage can be
-audited: every inventory row cites candidate ids or a file:line that
-appears in the candidates.
+comments and strings with an `excluded_reason`, so the triage can be
+audited.
 
-Class-A rows with `default_path: true` are the findings. `A3` rows on the
-default path are findings when the gate's default is the atomic side; the
-allowlists spell out which flag to set.
+## Probes
 
-## Limits of static analysis
+`probes/` holds scripts that run a computation several times and compare
+outputs bit for bit, recording GPU, driver and library versions with the
+verdict. `probe_engine_logits.py` runs vLLM or SGLang on a fixed batch;
+`probe_cublaslt_algo.py` asks the cuBLASLt heuristic which algorithm and
+reduction scheme a shape gets; `probe_torch_ops.py` covers `index_add_`,
+`scatter_add_` and `cumsum`; `probe_flashinfer.py`, `probe_kernels.py`
+and `probe_collectives.py` target the FlashInfer, SGLang, DeepGEMM and
+NCCL rows named in their docstrings. None has been run for this census.
+A `DIFFERS` verdict is conclusive for the stack it ran on; an identical
+verdict after a few runs is evidence, not proof.
 
-- The scanner finds sites; it cannot decide contention. Every A1/A2/A3
-  sub-case was decided by reading, and a wrong reading is possible. Rows
-  with `confidence: low` say so.
-- Binaries are opaque. cuBLAS/cuBLASLt (every unquantised linear layer),
-  cuDNN, NCCL, NVSHMEM and the TensorRT-LLM kernels that FlashInfer
-  downloads as cubins are class C. The census records where they are
-  called and which knobs change their reduction strategy; `probes/` has
-  the experiments that would settle them.
-- Runtime-generated kernels are out of scope: `torch.compile` output
-  (on by default in vLLM), Triton autotune choices, and JIT variants are
-  seen only through their templates.
-- Batch invariance is a different property. A kernel can be
-  run-to-run deterministic and still give different results for the same
-  request at different batch sizes. This census is about run-to-run
-  determinism; Cankaya 2026 and the engines' batch-invariance modes cover
-  the other property.
-- The pinned shas are from 6 July 2026. Kernels move; the inventory line
-  numbers are valid only at those shas.
+## Limits
+
+- The scanner finds sites; every A1, A2 and A3 decision was made by
+  reading, and a wrong reading is possible. Nineteen rows carry low
+  confidence.
+- Binaries are opaque. cuBLASLt serves every unquantised linear layer.
+- Runtime-generated kernels are out of scope: `torch.compile` output,
+  which vLLM enables by default, Triton autotune choices and JIT
+  variants are seen only through their templates.
+- No environment is pinned. The probes record versions when run; the
+  census itself makes no claim about any PyTorch, CUDA or driver
+  version.
+- The ROCm and XPU trees of SGLang and the ROCm kernels of vLLM were
+  read but not built or run.
+- The pinned shas are from 6 July 2026. Line numbers are valid only there.
 
 ## Citations
 
@@ -135,8 +268,6 @@ allowlists spell out which flag to set.
   https://lmsys.org/blog/2025-09-22-sglang-deterministic/
 - PyTorch, `torch.use_deterministic_algorithms` reference.
   https://docs.pytorch.org/docs/2.14/generated/torch.use_deterministic_algorithms.html
-
-`docs/BACKGROUND.md` summarises what each of these claims.
 
 ## Licence
 
