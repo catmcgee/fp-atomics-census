@@ -99,6 +99,8 @@ def main() -> int:
     ap.add_argument("--variant", choices=["mm", "linear", "both"], default="both")
     ap.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
     args = ap.parse_args()
+    torch.manual_seed(0)
+    torch.cuda.manual_seed_all(0)
     if args.child:
         _child_matmul(args.m, args.n, args.k, args.dtype, args.variant)
         return 0

@@ -74,6 +74,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--which", required=True, choices=["vllm_moe_wna16", "vllm_lora_shrink", "sglang_marlin", "sglang_fp8_blockwise", "sglang_lora_shrink", "deepgemm_bmk_bnk_mn"])
     args = ap.parse_args()
+    torch.manual_seed(0)
+    torch.cuda.manual_seed_all(0)
     fn = {"vllm_moe_wna16": vllm_moe_wna16, "vllm_lora_shrink": vllm_lora_shrink, "sglang_marlin": sglang_marlin,
           "sglang_fp8_blockwise": sglang_fp8_blockwise, "sglang_lora_shrink": sglang_lora_shrink, "deepgemm_bmk_bnk_mn": deepgemm_bmk_bnk_mn}[args.which]
     return 0 if fn() else 1

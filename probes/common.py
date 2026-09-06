@@ -7,7 +7,8 @@ single element is reported as DIFFERS. Reports go to
 derived from the GPU, driver and torch version, so results from different
 machines never overwrite each other. Set ``RUN_TAG`` (e.g. ``a`` and ``b``)
 to keep two fresh-process invocations apart; ``report.py`` compares their
-hashes.
+hashes, which is only meaningful because every probe seeds torch before
+building its inputs (PyTorch's default seed is random per process).
 """
 from __future__ import annotations
 

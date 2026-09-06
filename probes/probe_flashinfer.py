@@ -71,8 +71,11 @@ def moe(fused: bool) -> bool:
     w2 = torch.randn(experts, hidden, inter, device="cuda", dtype=torch.bfloat16)
     logits = torch.randn(tokens, experts, device="cuda")
     weights, ids = torch.topk(torch.softmax(logits, -1), topk_, dim=-1)
-    return run_twice(f"fi_cutlass_fused_moe_fused_finalize_{fused}", lambda: [flashinfer.fused_moe.cutlass_fused_moe(
-        x, ids.to(torch.int32), weights.to(torch.float32), w1, w2, torch.bfloat16, [], use_fused_finalize=fused)])
+    def run():
+        out = flashinfer.fused_moe.cutlass_fused_moe(
+            x, ids.to(torch.int32), weights.to(torch.float32), w1, w2, torch.bfloat16, [], use_fused_finalize=fused)
+        return list(out) if isinstance(out, (list, tuple)) else [out]
+    return run_twice(f"fi_cutlass_fused_moe_fused_finalize_{fused}", run)
 
 
 def main() -> int:
@@ -80,6 +83,8 @@ def main() -> int:
     ap.add_argument("--which", choices=["attention", "moe", "renorm", "topk"], required=True)
     ap.add_argument("--backend", default="fa2")
     args = ap.parse_args()
+    torch.manual_seed(0)
+    torch.cuda.manual_seed_all(0)
     if args.which == "renorm":
         ok = renorm()
     elif args.which == "topk":

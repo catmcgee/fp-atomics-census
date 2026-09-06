@@ -25,6 +25,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--which", choices=["nccl", "flashinfer"], required=True)
     args = ap.parse_args()
+    torch.manual_seed(0)
+    torch.cuda.manual_seed_all(0)
     dist.init_process_group("nccl")
     rank = dist.get_rank()
     torch.cuda.set_device(rank)
