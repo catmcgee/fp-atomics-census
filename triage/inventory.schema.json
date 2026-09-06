@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/catmcgee/fp-atomics-census/triage/inventory.schema.json",
   "title": "fp-atomics-census inventory row",
-  "description": "One triaged atomic site. One JSON object per line in inventory/<engine>.jsonl. See docs/TAXONOMY.md for the meaning of each field.",
+  "description": "One triaged atomic site. One JSON object per line in inventory/<engine>.jsonl. The README explains each field.",
   "type": "object",
   "additionalProperties": false,
   "required": [
