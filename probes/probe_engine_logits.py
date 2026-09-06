@@ -73,6 +73,7 @@ def sglang_fn(args):
     kw = _kw(args.extra_arg)
     if args.lora:
         kw["lora_paths"] = [args.lora]
+    kw.setdefault("disable_radix_cache", True)  # prefix caching changes the batch shape between runs; not a kernel property
     engine = sgl.Engine(model_path=args.model, tp_size=args.tp, quantization=args.quantization, random_seed=0, **kw)
 
     def run():

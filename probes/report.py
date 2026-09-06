@@ -29,18 +29,22 @@ ROWS = [
     (r"^fi_radix_topk_", "flashinfer-0017, flashinfer-0018, vllm-0038..0044, sglang-0017"),
     (r"^fi_decode_trtllm", "flashinfer-0038, sglang-0267, vllm-0183"),
     (r"^fi_decode_", "(FA2 template, no atomics expected)"),
-    (r"^fi_cutlass_fused_moe_fused_finalize_True", "flashinfer-0001, flashinfer-0002"),
-    (r"^fi_cutlass_fused_moe_fused_finalize_False", "flashinfer-0001 (unfused path)"),
+    (r"^fi_cutlass_fused_moe_fused_finalize_True", "flashinfer-0001, flashinfer-0002 (fused finalize, red.add per expert contribution)"),
+    (r"^fi_cutlass_fused_moe_fused_finalize_False", "flashinfer-0001 (unfused finalize path)"),
     (r"^sglang_fp8_blockwise_streamk", "sglang-0011"),
     (r"^deepgemm_bmk_bnk_mn", "DeepGEMM-0001, DeepGEMM-0002"),
     (r"^nccl_allreduce_", "vllm-0182, sglang-0269, flashinfer-0043, DeepEP-0012"),
     (r"^flashinfer_allreduce_fusion_", "flashinfer-0023, flashinfer-0026"),
-    (r"^vllm_.*moe_wna16", "vllm-0014"),
-    (r"^vllm_.*_lora_", "vllm-0018, vllm-0019"),
-    (r"^vllm_.*GPTQ", "vllm-0010 (Marlin), class C linear layers"),
-    (r"^vllm_", "class C rows (cuBLASLt, NCCL, cubins) for the dense path"),
-    (r"^sglang_.*flashinfer_cutlass", "flashinfer-0001 through sglang-0271"),
-    (r"^sglang_", "sglang-0008 (Marlin shapes), sglang-0264..0266"),
+    (r"^vllm_.*moe", "vllm-0014 (moe_wna16 CUDA kernel), MoE routing rows"),
+    (r"^vllm_.*lora_batch_invariant", "vllm-0018 with VLLM_BATCH_INVARIANT=1 (split_k = 1)"),
+    (r"^vllm_.*lora", "vllm-0018 (LoRA shrink split-K atomic add)"),
+    (r"^vllm_.*gptq_marlin", "vllm-0010 (Marlin, VLLM_MARLIN_USE_ATOMIC_ADD unset)"),
+    (r"^vllm_.*(GPTQ|gptq)", "vllm-0187 (Machete stream-K), class C linear layers"),
+    (r"^vllm_", "class C rows (cuBLASLt, cubins) on the dense default path"),
+    (r"^sglang_.*fp8_blockwise_cutlass", "sglang-0011 (stream-K Nondeterministic when k > 3n)"),
+    (r"^sglang_.*fp8_blockwise_default", "sglang-0011 not selected (DeepGEMM auto backend)"),
+    (r"^sglang_.*gptq", "sglang-0008 (Marlin atomic add for n < 2048, k >= 2048)"),
+    (r"^sglang_", "sglang-0264 (cuBLASLt) on the dense default path"),
 ]
 
 
@@ -74,12 +78,29 @@ def main(argv: list[str]) -> int:
               + ", ".join(f"{k} {v}" for k, v in env["packages"].items() if v) + "\n")
         print("| Probe | In-process | Fresh process | Rows |")
         print("|---|---|---|---|")
+        sweeps: dict[tuple[str, str], list] = defaultdict(list)
         for name, by_tag in sorted(reports.items()):
             verdicts = {t: r["verdict"] for t, r in by_tag.items()}
             inproc = "identical" if all(v == "bitwise-identical" for v in verdicts.values()) else "DIFFERS"
             hashes = {r["first_hash"] for r in by_tag.values()}
             fresh = "n/a (one run)" if len(by_tag) < 2 else ("identical" if len(hashes) == 1 else "DIFFERS")
+            m = re.match(r"^cublaslt_(mm|linear)_m(\d+)_n(\d+)_k(\d+)_(\w+)$", name)
+            if m:
+                first = next(iter(by_tag.values()))
+                entries = first.get("extra", {}).get("heuristic", {}).get("entries", [])
+                algo = entries[0] if entries else {}
+                sweeps[(m.group(1), m.group(5))].append((inproc, fresh, int(algo.get("numSplitsK", 1)), algo.get("reductionScheme", "-"), int(m.group(2))))
+                continue
             print(f"| {name} | {inproc} | {fresh} | {rows_for(name)} |")
+        for (variant, dtype), rows in sorted(sweeps.items()):
+            n = len(rows)
+            ok_in = sum(1 for r in rows if r[0] == "identical")
+            ok_fresh = sum(1 for r in rows if r[1] == "identical")
+            splitk = [r for r in rows if r[2] > 1]
+            schemes = sorted({r[3] for r in splitk})
+            ms = sorted({r[4] for r in splitk})
+            detail = f"{n} shapes; split-K chosen for {len(splitk)} (M in {ms}, schemes {schemes})" if splitk else f"{n} shapes; no split-K chosen"
+            print(f"| cuBLASLt {variant} {dtype}: {detail} | {ok_in}/{n} identical | {ok_fresh}/{n} identical | {rows_for('cublaslt_')} |")
     return 0
 
 

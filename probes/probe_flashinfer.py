@@ -4,9 +4,8 @@
 
 attention: BatchDecodeWithPagedKVCacheWrapper with the FA2 template (expected
     identical) and, on sm90+/sm100, the trtllm-gen backend (flashinfer-0038, class C).
-moe: cutlass_fused_moe with use_fused_finalize=True (flashinfer-0001, expected
-    DIFFERS under contention) and False (expected identical); the trtllm MoE
-    entry points (class C).
+moe: cutlass_fused_moe with use_fused_finalize=True (flashinfer-0001) and False,
+    at top-k 2, 4 and 8; order can only matter from three addends per row.
 renorm: top_p_renorm_probs with is_deterministic False and True (flashinfer-0014)
     and top_k_renorm_probs with a vocabulary large enough to span several CTAs
     (flashinfer-0015).
@@ -60,22 +59,26 @@ def attention(backend: str) -> bool:
     return run_twice(f"fi_decode_{backend}", lambda: [w.run(q, kv)])
 
 
-def moe(fused: bool) -> bool:
+def moe(fused: bool, topk_: int) -> bool:
     import flashinfer
 
-    # Shapes follow the cutlass_fused_moe docstring; weights random. Token
-    # rows routed to several experts contend in the fused finalize.
-    tokens, hidden, inter, experts, topk_ = 4096, 2048, 1024, 8, 2
+    # Shapes follow the cutlass_fused_moe docstring; weights random. A token
+    # routed to k experts receives k reduction-adds into its output row. With
+    # k = 2 onto a zero-initialised row the sum is commutative and cannot
+    # depend on order; k >= 3 is where arrival order can change the rounding.
+    # cutlass_fused_moe returns [output, *scratch]; only output is compared.
+    tokens, hidden, inter, experts = 4096, 2048, 1024, 8
     x = torch.randn(tokens, hidden, device="cuda", dtype=torch.bfloat16)
     w1 = torch.randn(experts, 2 * inter, hidden, device="cuda", dtype=torch.bfloat16)
     w2 = torch.randn(experts, hidden, inter, device="cuda", dtype=torch.bfloat16)
     logits = torch.randn(tokens, experts, device="cuda")
     weights, ids = torch.topk(torch.softmax(logits, -1), topk_, dim=-1)
+
     def run():
         out = flashinfer.fused_moe.cutlass_fused_moe(
             x, ids.to(torch.int32), weights.to(torch.float32), w1, w2, torch.bfloat16, [], use_fused_finalize=fused)
-        return list(out) if isinstance(out, (list, tuple)) else [out]
-    return run_twice(f"fi_cutlass_fused_moe_fused_finalize_{fused}", run)
+        return [out[0] if isinstance(out, (list, tuple)) else out]
+    return run_twice(f"fi_cutlass_fused_moe_fused_finalize_{fused}_topk{topk_}", run, extra={"topk": topk_, "tokens": tokens, "experts": experts})
 
 
 def main() -> int:
@@ -92,7 +95,9 @@ def main() -> int:
     elif args.which == "attention":
         ok = attention(args.backend)
     else:
-        ok = moe(True) & moe(False)
+        ok = True
+        for k in (2, 4, 8):
+            ok &= moe(True, k) & moe(False, k)
     return 0 if ok else 1
 
 
