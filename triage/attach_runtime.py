@@ -40,6 +40,11 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^vllm_zephyr_lora_batch_invariant$", ["vllm-0018"], "LoRA adapter with VLLM_BATCH_INVARIANT=1 (split_k = 1)"),
     (r"^vllm_qwen1.5_moe_gptq_marlin_x6$", ["vllm-0022", "vllm-0016", "marlin-0001"], "GPTQ MoE through the Marlin MoE backend, 6 repeats"),
     (r"^sglang_qwen2.5_7b_gptq_marlin_x6$", ["sglang-0008"], "GPTQ model through SGLang's Marlin with the atomic-add stub live, radix cache off, 6 repeats"),
+    (r"^vllm_qwen3_8b_bf16_x12$", ["vllm-0180", "vllm-0181"], "dense bf16 default path, stock kernels, 12 repeats per process; differences, when present, are whole requests and track batch composition"),
+    (r"^vllm_qwen3_8b_bf16_batch_invariant_x12$", ["vllm-0180", "vllm-0181"], "dense bf16 default path with VLLM_BATCH_INVARIANT=1, 12 repeats per process"),
+    (r"^vllm_qwen2.5_7b_dense_bf16_one_seq_per_batch_x6$", ["vllm-0180", "vllm-0181"], "dense bf16 with max_num_seqs=1, stock kernels: batch composition fixed by construction"),
+    (r"^sglang_qwen3_8b_bf16_no_overlap_x6$", ["sglang-0264"], "dense bf16 default path, radix cache off, overlap scheduler off, stock kernels"),
+    (r"^sglang_qwen3_8b_bf16_deterministic_mode_x6$", ["sglang-0264"], "dense bf16 with --enable-deterministic-inference"),
     (r"^sglang_qwen3_8b_fp8_blockwise_default$", ["sglang-0011"], "FP8 block-quantised model; the release wheel routes Hopper to DeepGEMM, and its CUTLASS FP8 GEMM is SM120-only, so the stream-K kernel is not reached"),
 ]
 
