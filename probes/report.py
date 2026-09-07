@@ -101,7 +101,7 @@ def main(argv: list[str]) -> int:
         for name, by_tag in sorted(reports.items()):
             verdicts = {t: r["verdict"] for t, r in by_tag.items()}
             inproc = "identical" if all(v == "bitwise-identical" for v in verdicts.values()) else "DIFFERS"
-            hashes = {r["first_hash"] for r in by_tag.values()}
+            hashes = {r.get("first_hash") or r.get("modes", {}).get("sync", [{}])[0].get("output_hash") for r in by_tag.values()}
             fresh = "n/a (one run)" if len(by_tag) < 2 else ("identical" if len(hashes) == 1 else "DIFFERS")
             m = re.match(r"^cublaslt_(mm|linear)_m(\d+)_n(\d+)_k(\d+)_(\w+)$", name)
             if m:

@@ -217,7 +217,14 @@ kernels, every configuration was identical in every repeat. On the stock
 kernels with the default scheduler, requests reach the engine over a
 socket, the first scheduling step sometimes holds a different set of
 prompts, and the kernels are not batch-invariant, so a request's logprobs
-and occasionally its tokens depend on who else was in the batch. For a
+and occasionally its tokens depend on who else was in the batch. This was
+then observed directly rather than inferred: with the engine core
+in-process and the scheduler instrumented (`probes/probe_batch_composition.py`),
+twelve repeats in which all sixteen prompts enter the first step gave one
+composition signature and one bitwise-identical output, twelve repeats in
+which one prompt is held back a step gave another signature and another
+identical output, and the two outputs differ in over 2,200 of 2,560
+logprob values, on both Qwen2.5-7B and Qwen3-8B. For a
 verifier that re-runs sampled requests, this is the binding constraint on
 this stack: the atomics the census found are avoidable by configuration,
 and what remains is batch invariance, which both engines offer only as an

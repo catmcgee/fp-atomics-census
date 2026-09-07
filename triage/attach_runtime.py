@@ -40,6 +40,7 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^vllm_zephyr_lora_batch_invariant$", ["vllm-0018"], "LoRA adapter with VLLM_BATCH_INVARIANT=1 (split_k = 1)"),
     (r"^vllm_qwen1.5_moe_gptq_marlin_x6$", ["vllm-0022", "vllm-0016", "marlin-0001"], "GPTQ MoE through the Marlin MoE backend, 6 repeats"),
     (r"^sglang_qwen2.5_7b_gptq_marlin_x6$", ["sglang-0008"], "GPTQ 7B through SGLang's Marlin at TP=1: every fused projection has n >= 2048, so should_use_atomic_add_reduce returns False and the stub is not exercised"),
+    (r"^batch_composition_", ["vllm-0180", "vllm-0181"], "in-process scheduler instrumentation: 12 repeats with all prompts in the first step and 12 with one held back; each composition signature gives one bitwise-identical output, and the two compositions give different outputs"),
     (r"^vllm_qwen3_8b_bf16_x12$", ["vllm-0180", "vllm-0181"], "dense bf16 default path, stock kernels, 12 repeats per process; differences, when present, are whole requests and track batch composition"),
     (r"^vllm_qwen3_8b_bf16_batch_invariant_x12$", ["vllm-0180", "vllm-0181"], "dense bf16 default path with VLLM_BATCH_INVARIANT=1, 12 repeats per process"),
     (r"^vllm_qwen2.5_7b_dense_bf16_one_seq_per_batch_x6$", ["vllm-0180", "vllm-0181"], "dense bf16 with max_num_seqs=1, stock kernels: batch composition fixed by construction"),
@@ -100,9 +101,9 @@ def load_reports(results: Path) -> dict[str, dict[str, dict[str, dict]]]:
 
 def summarise(by_tag: dict[str, dict]) -> tuple[str, str, int]:
     inproc = "identical" if all(r["verdict"] == "bitwise-identical" for r in by_tag.values()) else "DIFFERS"
-    hashes = {r["first_hash"] for r in by_tag.values()}
+    hashes = {r.get("first_hash") or r.get("modes", {}).get("sync", [{}])[0].get("output_hash") for r in by_tag.values()}
     fresh = "n/a" if len(by_tag) < 2 else ("identical" if len(hashes) == 1 else "DIFFERS")
-    repeats = sum(len(r["runs"]) + 1 for r in by_tag.values())
+    repeats = sum(len(r["runs"]) + 1 if "runs" in r else sum(len(v) for v in r.get("modes", {}).values()) for r in by_tag.values())
     return inproc, fresh, repeats
 
 
