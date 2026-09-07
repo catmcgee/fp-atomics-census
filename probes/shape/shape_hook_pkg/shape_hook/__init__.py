@@ -461,6 +461,13 @@ def _force_fp8_per_tensor():
         pass
 
 
+def flush() -> None:
+    """Write any buffered record; runners call this after each generate call in-process."""
+    path = _out_path()
+    if path is not None:
+        _flush(path)
+
+
 def register():
     if _state["registered"]:
         return

@@ -57,6 +57,7 @@ def run(args) -> int:
         eng.add_request(str(i), prompts[i], sp)
     while eng.has_unfinished_requests():
         finished.extend(o for o in eng.step() if o.finished)
+    shape_hook.flush()
     steps = real_steps(read_hook(out / "hook"))
     write_json(out / "outputs.json", outputs_record(finished))
     write_json(out / "steps.json", [{"step": s["step"], "shape_vector": s.get("shape_vector"), "requests": s.get("requests")} for s in steps if "step" in s])

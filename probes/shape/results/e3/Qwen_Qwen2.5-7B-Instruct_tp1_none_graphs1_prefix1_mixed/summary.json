@@ -1,0 +1,29 @@
+{
+  "experiment": "E3",
+  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1_mixed",
+  "steps_compared": 42,
+  "all_steps_identical": true,
+  "outputs_identical": true,
+  "selected_steps": [
+    {
+      "step": 5,
+      "shape_identical": true,
+      "hashes_identical": true,
+      "num_reqs": 8,
+      "phase_mix": [
+        "prefill"
+      ]
+    },
+    {
+      "step": 23,
+      "shape_identical": true,
+      "hashes_identical": true,
+      "num_reqs": 16,
+      "phase_mix": [
+        "decode"
+      ]
+    }
+  ],
+  "differing_steps": [],
+  "verdict_P2": "IDENTICAL"
+}

@@ -61,6 +61,7 @@ def main() -> int:
             else:
                 batch = [TokensPrompt(prompt_token_ids=(ids[i] if i == args.target else random_token_prompt(tok, len(ids[i]), seed=1000 * k + i))) for i in range(len(ids))]
             outs = llm.generate(batch, sp, use_tqdm=False)
+            shape_hook.flush()
             rec = outputs_record(outs)
             target_rid = outs[args.target].request_id
             runs.append({"repeat": k, "kind": kind, "target_rid": target_rid, "target": rec[target_rid], "request_ids": [o.request_id for o in outs]})
@@ -83,6 +84,16 @@ def analyse(out: Path, arm: str, repeats: int, target: int) -> int:
         r["shape_history"] = [sv for _, sv, _, _ in seq]
         r["moe_counts_first_step"] = step_moe.get(seq[0][0]) if seq else None
     by_kind = {k: [r for r in runs if r["kind"] == k] for k in ("original", "dummy")}
+    # The record of a run's final step can be flushed after the log is read (it is
+    # written at the next sampling phase), so compare on the common prefix and
+    # report how many runs are short.
+    n_common = min(len(r["target_hidden_hashes"]) for r in runs) if runs else 0
+    short_runs = sum(1 for r in runs if len(r["target_hidden_hashes"]) > n_common or len(r["target_hidden_hashes"]) < max(len(x["target_hidden_hashes"]) for x in runs))
+    for r in runs:
+        r["target_hidden_hashes"] = r["target_hidden_hashes"][:n_common]
+        r["target_argmax"] = r["target_argmax"][:n_common]
+        r["shape_history"] = r["shape_history"][:n_common]
+        r["fp8_scales"] = r["fp8_scales"][:n_common]
     def all_same(items):
         return len({str(x) for x in items}) == 1
     within = {k: {"hidden": all_same([r["target_hidden_hashes"] for r in rs]), "output": all_same([r["target"]["hash"] for r in rs]), "shape": all_same([r["shape_history"] for r in rs])} for k, rs in by_kind.items()}
@@ -104,8 +115,13 @@ def analyse(out: Path, arm: str, repeats: int, target: int) -> int:
                "shape_histories_equal_across_all_runs": shapes_equal, "within_kind": within, "target_across_kinds": across,
                "moe_first_layer_expert_counts_changed": moe_changed, "fp8_first_scale_changed_between_kinds": fp8_changed, "verdict_P3": verdict,
                "first_divergent_step": next((i for i, (x, y) in enumerate(zip(by_kind["original"][0]["target_hidden_hashes"], by_kind["dummy"][0]["target_hidden_hashes"])) if x != y), None)}
+    summary["distinct_hidden_sequences_per_kind"] = {k: len({json.dumps(r["target_hidden_hashes"]) for r in rs}) for k, rs in by_kind.items()}
+    summary["distinct_shape_histories_per_kind"] = {k: len({json.dumps(r["shape_history"]) for r in rs}) for k, rs in by_kind.items()}
+    summary["steps_compared"] = n_common
+    summary["runs_missing_final_record"] = short_runs
     write_json(out / "summary.json", summary)
-    print(f"E4 {arm}: P3 {verdict}; joined {joined}; shapes equal {shapes_equal}; across kinds {across}; moe counts changed {moe_changed}; fp8 scale changed {fp8_changed}")
+    write_json(out / "runs.json", runs)
+    print(f"E4 {arm}: P3 {verdict}; joined {joined}; shapes equal {shapes_equal}; across kinds {across}; moe counts changed {moe_changed}; fp8 scale changed {fp8_changed}; distinct hidden seqs {summary['distinct_hidden_sequences_per_kind']}; steps compared {n_common}; short runs {short_runs}")
     return 0
 
 

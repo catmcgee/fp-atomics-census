@@ -114,6 +114,12 @@ def engine_kwargs(args) -> dict:
         kw["quantization"] = args.quantization
     if getattr(args, "max_num_seqs", None):
         kw["max_num_seqs"] = args.max_num_seqs
+    if getattr(args, "no_compile", False):
+        # torch.compile inlines the model, so module hooks and the Python wrappers
+        # of custom ops do not run; the mechanism arms (expert counts, FP8 scale)
+        # need the eager model. Verdicts are taken from the compiled arms.
+        kw["compilation_config"] = {"mode": 0}
+        kw["enforce_eager"] = True
     return kw
 
 
@@ -127,7 +133,8 @@ def add_common_args(ap) -> None:
     ap.add_argument("--repeats", type=int, default=12)
     ap.add_argument("--out", type=Path, required=True, help="results directory for this arm")
     ap.add_argument("--fp8-per-tensor", action="store_true", help="force per-tensor dynamic FP8 activation scales (disables the CUTLASS FP8 path)")
+    ap.add_argument("--no-compile", action="store_true", help="eager model without torch.compile or CUDA graphs, so hooks can record routing counts and FP8 scales")
 
 
 def arm_name(args) -> str:
-    return f"{args.model.replace('/', '_')}_tp{args.tp}_{args.quantization or 'none'}{'_pertensor' if getattr(args, 'fp8_per_tensor', False) else ''}_graphs{args.cudagraph}_prefix{args.prefix_caching}"
+    return f"{args.model.replace('/', '_')}_tp{args.tp}_{args.quantization or 'none'}{'_pertensor' if getattr(args, 'fp8_per_tensor', False) else ''}{'_eager' if getattr(args, 'no_compile', False) else ''}_graphs{args.cudagraph}_prefix{args.prefix_caching}"
