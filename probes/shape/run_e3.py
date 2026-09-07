@@ -28,16 +28,26 @@ from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, e
 
 def run(args) -> int:
     tag = os.environ.get("RUN_TAG", "a")
-    out = args.out / arm_name(args) / tag
+    out = args.out / (arm_name(args) + ("_mixed" if args.mixed else "")) / tag
     env_with_hook(out / "hook")
     import shape_hook
     shape_hook.register()
     from vllm import LLM, SamplingParams
 
-    llm = LLM(**engine_kwargs(args))
+    kw = engine_kwargs(args)
+    if args.mixed:
+        # chunked prefill: the second wave's long prompts are prefilled in 128-token
+        # chunks over several steps while the first wave decodes, so those steps
+        # mix decode rows with prefill chunks.
+        kw["max_num_batched_tokens"] = 128
+        kw["enable_chunked_prefill"] = True
+    llm = LLM(**kw)
     eng = llm.llm_engine
     sp = SamplingParams(temperature=0.0, max_tokens=args.max_tokens, logprobs=5, ignore_eos=True)
     prompts = mixed_prompts()
+    if args.mixed:
+        long = " ".join(["The verifier records the batch shape at every step and replays it later."] * 40)
+        prompts = prompts[:8] + [long + f" Prompt {i}." for i in range(8)]
     finished = []
     for i in range(8):
         eng.add_request(str(i), prompts[i], sp)
@@ -51,7 +61,7 @@ def run(args) -> int:
     write_json(out / "outputs.json", outputs_record(finished))
     write_json(out / "steps.json", [{"step": s["step"], "shape_vector": s.get("shape_vector"), "requests": s.get("requests")} for s in steps if "step" in s])
     write_json(out / "env.json", environment())
-    print(f"E3 {arm_name(args)} tag {tag}: {len(steps)} steps logged")
+    print(f"E3 {arm_name(args)}{'_mixed' if args.mixed else ''} tag {tag}: {len(steps)} steps logged")
     return 0
 
 
@@ -83,6 +93,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     add_common_args(ap)
     ap.add_argument("--compare", type=Path, default=None)
+    ap.add_argument("--mixed", action="store_true", help="chunked prefill of long second-wave prompts so mid-stream steps mix prefill and decode")
     if "--compare" in sys.argv:
         i = sys.argv.index("--compare")
         return compare(Path(sys.argv[i + 1]))
