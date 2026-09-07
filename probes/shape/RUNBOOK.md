@@ -54,6 +54,27 @@ python probes/shape/run_e4.py --model Qwen/Qwen1.5-MoE-A2.7B-Chat --repeats 12 -
 About 6 minutes per arm on one H100 (24 generations). TP=2 needs two
 GPUs and NCCL_NVLS_ENABLE=0 in a RunPod container.
 
+## Mechanism arms (eager model)
+
+`torch.compile` inlines the model, so module hooks and the Python wrappers
+of custom ops do not run; the per-expert routing counts and the dynamic
+FP8 scale are therefore only recorded by the eager arms:
+
+```
+python probes/shape/run_e4.py --model Qwen/Qwen1.5-MoE-A2.7B-Chat --repeats 6 --no-compile --cudagraph 0 --out $R
+python probes/shape/run_e4.py --model Qwen/Qwen2.5-7B-Instruct --quantization fp8 --fp8-per-tensor --repeats 6 --no-compile --cudagraph 0 --out $R
+```
+
+## Re-analysing saved arms
+
+The runners' joins can be recomputed offline from a saved arm directory:
+
+```
+python probes/shape/run_e2.py --analyse probes/shape/results/e2/<arm>
+python probes/shape/run_e4.py --analyse probes/shape/results/e4/<arm>
+python probes/shape/run_e3.py --compare probes/shape/results/e3/<arm>
+```
+
 ## E5, cross-SKU
 
 Run the E3 tag `a` command on each GPU into its own results root, then:
