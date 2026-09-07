@@ -30,7 +30,7 @@ import platform
 import subprocess
 import time
 
-_state = {"registered": False, "step": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "seen": set(), "env": None}
+_state = {"registered": False, "step": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "pending": None, "seen": set(), "env": None}
 
 
 def _env_record() -> dict:
@@ -90,22 +90,46 @@ def _row_hash(t) -> str:
     return hashlib.sha256(b).hexdigest()[:16]
 
 
-def _patch_dispatcher():
-    from vllm.v1.cudagraph_dispatcher import CudagraphDispatcher
-    orig = CudagraphDispatcher.dispatch
-
-    def dispatch(self, *a, **kw):
-        out = orig(self, *a, **kw)
-        try:
+def _dispatch_record(out) -> dict:
+    """Normalise the two dispatcher return shapes: (mode, BatchDescriptor) at the
+    pinned sha, BatchExecutionDescriptor(cg_mode, num_tokens, num_reqs) in 0.28.0."""
+    try:
+        if isinstance(out, tuple):
             mode, desc = out
-            _state["dispatch"] = {"cudagraph_mode": str(getattr(mode, "name", mode)),
-                                  "padded_num_tokens": int(getattr(desc, "num_tokens", -1)) if desc is not None else None,
-                                  "uniform_decode": bool(getattr(desc, "uniform_decode", False)) if desc is not None else None}
-        except Exception as e:  # noqa: BLE001
-            _state["dispatch"] = {"error": repr(e)[:80]}
-        return out
+        else:
+            desc, mode = out, getattr(out, "cg_mode", None)
+        def _i(v):
+            try:
+                return int(v)
+            except Exception:  # noqa: BLE001
+                return str(v)
+        return {"cudagraph_mode": str(getattr(mode, "name", mode)),
+                "padded_num_tokens": _i(getattr(desc, "num_tokens", None)) if desc is not None else None,
+                "padded_num_reqs": _i(getattr(desc, "num_reqs", None)) if desc is not None and hasattr(desc, "num_reqs") else None,
+                "uniform_decode": bool(getattr(desc, "uniform_decode", False)) if desc is not None else None}
+    except Exception as e:  # noqa: BLE001
+        return {"error": repr(e)[:80]}
 
-    CudagraphDispatcher.dispatch = dispatch
+
+def _dispatch_impl(self, orig, *a, **kw):
+    out = orig(self, *a, **kw)
+    _state["dispatch"] = _dispatch_record(out)
+    return out
+
+
+def _patch_dispatcher():
+    for modname, clsname in (("vllm.v1.cudagraph_dispatcher", "CudagraphDispatcher"), ("vllm.v1.worker.gpu.cudagraph_utils", "CudaGraphManager")):
+        try:
+            mod = __import__(modname, fromlist=[clsname])
+            cls = getattr(mod, clsname)
+        except Exception:  # noqa: BLE001
+            continue
+        orig = cls.dispatch
+
+        def dispatch(self, *a, _orig=orig, **kw):
+            return _dispatch_impl(self, _orig, *a, **kw)
+
+        cls.dispatch = dispatch
 
 
 def _patch_router():
@@ -197,6 +221,13 @@ def _patch_runner():
         return _execute(self, orig, scheduler_output, *a, **kw)
 
     GPUModelRunner.execute_model = execute_model
+    if hasattr(GPUModelRunner, "sample_tokens"):  # 0.28.0 two-phase step: logits are computed here
+        sorig = GPUModelRunner.sample_tokens
+
+        def sample_tokens(self, *a, **kw):
+            return _sample_impl(self, sorig, *a, **kw)
+
+        GPUModelRunner.sample_tokens = sample_tokens
     # Something in the worker's initialisation rebinds the class attribute after
     # plugins load (observed on 0.28.0), so the worker entry point also installs
     # the wrapper on the runner instance the first time it runs a batch.
@@ -214,6 +245,15 @@ def _patch_runner():
                 gb = getattr(mr, "gather_batch_req_state", None)
                 if gb is not None and getattr(gb, "__func__", None) is not _gather_wrapper:
                     mr.gather_batch_req_state = functools.partial(_gather_impl, mr, lambda _self, so, dr, *aa, **kk: gb(so, dr, *aa, **kk))
+                st = getattr(mr, "sample_tokens", None)
+                if st is not None and not getattr(mr, "_shape_hook_sample", False):
+                    mr.sample_tokens = functools.partial(_sample_impl, mr, lambda _self, *aa, **kk: st(*aa, **kk))
+                    mr._shape_hook_sample = True
+                cm = getattr(mr, "cudagraph_manager", None) or getattr(mr, "cudagraph_dispatcher", None)
+                if cm is not None and not getattr(cm, "_shape_hook_instance", False):
+                    dm = cm.dispatch
+                    cm.dispatch = functools.partial(_dispatch_impl, cm, lambda _self, *aa, **kk: dm(*aa, **kk))
+                    cm._shape_hook_instance = True
                 mr._shape_hook_instance = True
             return worig(self, scheduler_output, *a, **kw)
 
@@ -234,6 +274,7 @@ def _execute(self, orig, scheduler_output, *a, **kw):
             _wrap_compute_logits(self.model)
         except Exception:  # noqa: BLE001
             pass
+        _flush(path)  # a record left from a pass that had no sampling phase
         t0 = time.time()
         out = orig(self, scheduler_output, *a, **kw)
         try:
@@ -242,13 +283,40 @@ def _execute(self, orig, scheduler_output, *a, **kw):
             if _state["env"] is None:
                 _state["env"] = _env_record()
                 rec["env"] = _state["env"]
-            with open(path, "a") as f:
-                f.write(json.dumps(rec) + "\n")
+            _state["pending"] = rec
+            if _state["hashes"]:  # logits were computed inside execute_model (pinned-sha layout)
+                _flush(path)
         except Exception as e:  # noqa: BLE001
             with open(path, "a") as f:
                 f.write(json.dumps({"error": repr(e)[:200], "step": _state["step"]}) + "\n")
         _state["step"] += 1
         return out
+
+
+def _flush(path: str) -> None:
+    rec = _state.get("pending")
+    if not rec:
+        return
+    hashes = _state.get("hashes") or {}
+    rows = hashes.get("hidden_rows") or []
+    am = hashes.get("argmax") or []
+    for i, r in enumerate(rec.get("requests", [])):
+        if r.get("h") is None and i < len(rows):
+            r["h"] = rows[i]
+        if r.get("argmax") is None and i < len(am):
+            r["argmax"] = am[i]
+    with open(path, "a") as f:
+        f.write(json.dumps(rec) + "\n")
+    _state["pending"] = None
+    _state["hashes"] = None
+
+
+def _sample_impl(self, orig, *a, **kw):
+    out = orig(self, *a, **kw)
+    path = _out_path()
+    if path is not None:
+        _flush(path)
+    return out
 
 
 def _batch_rows(runner, so) -> list[dict]:
