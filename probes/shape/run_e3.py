@@ -23,7 +23,7 @@ from pathlib import Path
 
 os.environ.setdefault("VLLM_ENABLE_V1_MULTIPROCESSING", "0")
 
-from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, read_hook, write_json
+from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, read_hook, slot_of, write_json
 
 
 def run(args) -> int:
@@ -61,10 +61,12 @@ def compare(arm_dir: Path) -> int:
     oa = json.loads((arm_dir / "a" / "outputs.json").read_text())
     ob = json.loads((arm_dir / "b" / "outputs.json").read_text())
     rows = []
+    oa = {slot_of(k): v for k, v in oa.items()}
+    ob = {slot_of(k): v for k, v in ob.items()}
     for sa, sb in zip(a, b):
         same_shape = sa["shape_vector"] == sb["shape_vector"]
-        ha = {r["req"]: r["h"] for r in sa["requests"]}
-        hb = {r["req"]: r["h"] for r in sb["requests"]}
+        ha = {slot_of(r["req"]): (r["h"], r["argmax"]) for r in sa["requests"]}
+        hb = {slot_of(r["req"]): (r["h"], r["argmax"]) for r in sb["requests"]}
         same_hash = ha == hb
         rows.append({"step": sa["step"], "shape_identical": same_shape, "hashes_identical": same_hash, "num_reqs": len(ha),
                      "phase_mix": sorted({r["phase"] for r in sa["requests"]})})

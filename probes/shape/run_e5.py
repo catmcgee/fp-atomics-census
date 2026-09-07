@@ -11,7 +11,7 @@ import json
 import sys
 from pathlib import Path
 
-from shape_common import write_json
+from shape_common import slot_of, write_json
 
 
 def main(argv: list[str]) -> int:
@@ -22,8 +22,8 @@ def main(argv: list[str]) -> int:
     eb = json.loads((b / "env.json").read_text())
     rows = []
     for x, y in zip(sa, sb):
-        hx = {r["req"]: (r["h"], r["argmax"]) for r in x["requests"]}
-        hy = {r["req"]: (r["h"], r["argmax"]) for r in y["requests"]}
+        hx = {slot_of(r["req"]): (r["h"], r["argmax"]) for r in x["requests"]}
+        hy = {slot_of(r["req"]): (r["h"], r["argmax"]) for r in y["requests"]}
         rows.append({"step": x["step"], "shape_identical": x["shape_vector"] == y["shape_vector"], "hidden_identical": {k: hx[k][0] for k in hx} == {k: hy.get(k, (None,))[0] for k in hx},
                      "argmax_identical": {k: hx[k][1] for k in hx} == {k: hy.get(k, (None, None))[1] for k in hx}})
     summary = {"experiment": "E5", "a": {"gpu": ea.get("gpu"), "driver": ea.get("driver"), "torch": ea.get("torch")}, "b": {"gpu": eb.get("gpu"), "driver": eb.get("driver"), "torch": eb.get("torch")},

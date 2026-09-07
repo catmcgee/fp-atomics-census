@@ -80,6 +80,11 @@ def random_token_prompt(tokenizer, length: int, seed: int) -> list[int]:
     return ids
 
 
+def slot_of(rid: str) -> str:
+    """vLLM 0.28.0 request ids are '<counter>-<random>'; the counter is the slot, the suffix differs per process."""
+    return str(rid).split("-")[0]
+
+
 def write_json(path: Path, obj) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, indent=2, default=str))
