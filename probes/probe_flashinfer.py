@@ -90,9 +90,52 @@ def moe(fused: bool, topk_: int, autotune_first: bool = False) -> bool:
     return run_twice(name, call, extra={"topk": topk_, "tokens": tokens, "experts": experts, "autotuned": autotune_first})
 
 
+def b12x_moe() -> bool:
+    """FlashInfer's SM120/SM121 CuTe DSL fused MoE (flashinfer-0006 to 0008, 0010).
+
+    Weight preparation follows benchmarks/routines/moe.py (backend "b12x"):
+    NVFP4 weights with swizzled block scales converted to the MMA layout, bf16
+    activations, external top-k routing. Token counts pick the micro, static
+    and dynamic backends; top-k 2, 4 and 8 vary the number of reduction-adds
+    per output row in the bf16x2 scatter-add finalize.
+    """
+    import flashinfer
+    from flashinfer.fp4_quantization import fp4_quantize
+    from flashinfer.cute_dsl.utils import convert_sf_to_mma_layout
+    from flashinfer.fused_moe.cute_dsl.b12x_moe import b12x_fused_moe
+
+    device = "cuda"
+    hidden, inter, experts, sf_vec = 2048, 1024, 8, 16
+    torch.manual_seed(0)
+    w1_bf16 = torch.randn(experts, 2 * inter, hidden, dtype=torch.bfloat16, device=device) / 10
+    w2_bf16 = torch.randn(experts, hidden, inter, dtype=torch.bfloat16, device=device) / 10
+    gs = torch.tensor([1.0], device=device, dtype=torch.float32)
+    w1_q, w1_sf = fp4_quantize(w1_bf16.view(experts * 2 * inter, hidden), global_scale=gs, sf_vec_size=sf_vec, is_sf_swizzled_layout=True)
+    w1_weight = w1_q.view(experts, 2 * inter, hidden // 2)
+    w1_weight_sf = convert_sf_to_mma_layout(w1_sf, m=2 * inter, k=hidden, num_groups=experts, sf_vec_size=sf_vec)
+    w2_q, w2_sf = fp4_quantize(w2_bf16.view(experts * hidden, inter), global_scale=gs, sf_vec_size=sf_vec, is_sf_swizzled_layout=True)
+    w2_weight = w2_q.view(experts, hidden, inter // 2)
+    w2_weight_sf = convert_sf_to_mma_layout(w2_sf, m=hidden, k=inter, num_groups=experts, sf_vec_size=sf_vec)
+    alpha = torch.ones(experts, device=device, dtype=torch.float32)
+    ok = True
+    for tokens in (16, 512, 4096):
+        x = torch.randn(tokens, hidden, dtype=torch.bfloat16, device=device) / 10
+        logits = torch.randn(tokens, experts, device=device)
+        for topk_ in (2, 4, 8):
+            weights, ids = torch.topk(torch.softmax(logits, -1), topk_, dim=-1)
+            ids = ids.to(torch.int32); weights = weights.to(torch.float32)
+
+            def run():
+                out = b12x_fused_moe(x, w1_weight, w1_weight_sf, w2_weight, w2_weight_sf, ids, weights, experts, topk_,
+                                     w1_alpha=alpha, w2_alpha=alpha, fc2_input_scale=gs, quant_mode="nvfp4")
+                return [out[0] if isinstance(out, (list, tuple)) else out]
+            ok &= run_twice(f"fi_b12x_moe_nvfp4_tokens{tokens}_topk{topk_}", run, extra={"tokens": tokens, "topk": topk_, "experts": experts})
+    return ok
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--which", choices=["attention", "moe", "renorm", "topk"], required=True)
+    ap.add_argument("--which", choices=["attention", "moe", "renorm", "topk", "b12x_moe"], required=True)
     ap.add_argument("--backend", default="fa2")
     ap.add_argument("--autotune", action="store_true", help="moe: run FlashInfer autotuning before comparing")
     args = ap.parse_args()
@@ -104,6 +147,8 @@ def main() -> int:
         ok = topk()
     elif args.which == "attention":
         ok = attention(args.backend)
+    elif args.which == "b12x_moe":
+        ok = b12x_moe()
     else:
         ok = True
         for k in (2, 4, 8):
