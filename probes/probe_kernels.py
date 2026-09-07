@@ -64,6 +64,51 @@ def sglang_lora_shrink() -> bool:
     return True
 
 
+def vllm_moe_wna16_kernel() -> bool:
+    """vLLM's moe_wna16 CUDA kernel (vllm-0014) on random 4-bit weights.
+
+    Mirrors tests/kernels/moe/test_moe.py::test_fused_moe_wn16. fused_moe
+    selects the CUDA kernel when tokens per expert <= 6 (fused_moe.py
+    should_moe_wna16_use_cuda); the m=64, e=8 case is the Triton control.
+    """
+    from vllm.config import VllmConfig, set_current_vllm_config
+    from vllm.model_executor.layers.fused_moe import fused_moe
+    from vllm.model_executor.layers.fused_moe.config import int4_w4a16_moe_quant_config
+    from vllm.model_executor.layers.quantization.utils.quant_utils import quantize_weights
+    from vllm.scalar_type import scalar_types
+
+    ok = True
+    e, topk_, n, k, group_size = 8, 2, 512, 1024, 128
+    for dtype in (torch.float16, torch.bfloat16):
+        for m in (16, 64):
+            torch.manual_seed(0)
+            a = torch.randn((m, k), device="cuda", dtype=dtype) / 10
+            w1 = torch.randn((e, 2 * n, k), device="cuda", dtype=dtype) / 10
+            w2 = torch.randn((e, k, n), device="cuda", dtype=dtype) / 10
+            score = torch.randn((m, e), device="cuda", dtype=dtype)
+            w1_q = torch.empty((e, 2 * n, k // 2), device="cuda", dtype=torch.uint8)
+            w2_q = torch.empty((e, k, n // 2), device="cuda", dtype=torch.uint8)
+            w1_s = torch.empty((e, 2 * n, k // group_size), device="cuda", dtype=dtype)
+            w2_s = torch.empty((e, k, n // group_size), device="cuda", dtype=dtype)
+            for i in range(2 * e):
+                ex = i % e
+                w, wq, ws = (w1, w1_q, w1_s) if i < e else (w2, w2_q, w2_s)
+                _, qweight, scales, _ = quantize_weights(w[ex].T, scalar_types.uint4b8, group_size, False, False)
+                qweight = qweight.T.contiguous().to(torch.uint8)
+                wq[ex] = qweight[:, 1::2] * 16 + qweight[:, ::2]
+                ws[ex] = scales.T
+            qc = int4_w4a16_moe_quant_config(w1_scale=w1_s, w2_scale=w2_s, block_shape=[0, group_size])
+            cfg = VllmConfig()
+
+            def run():
+                with set_current_vllm_config(cfg):
+                    return [fused_moe(a, w1_q, w2_q, score, topk_, renormalize=False, global_num_experts=e, quant_config=qc)]
+            tag = "fp16" if dtype == torch.float16 else "bf16"
+            kind = "cuda" if m / e <= 6 else "triton"
+            ok &= run_twice(f"moe_wna16_{kind}_m{m}_e{e}_{tag}", run, repeats=5, extra={"m": m, "e": e, "n": n, "k": k, "dtype": tag, "kernel": kind})
+    return ok
+
+
 def marlin_atomic() -> bool:
     """vLLM's Marlin GEMM on random 4-bit weights with use_atomic_add off and on.
 
@@ -111,13 +156,13 @@ def deepgemm_bmk_bnk_mn() -> bool:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--which", required=True, choices=["vllm_moe_wna16", "vllm_lora_shrink", "sglang_marlin", "sglang_fp8_blockwise", "sglang_lora_shrink", "deepgemm_bmk_bnk_mn", "marlin_atomic"])
+    ap.add_argument("--which", required=True, choices=["vllm_moe_wna16", "vllm_lora_shrink", "sglang_marlin", "sglang_fp8_blockwise", "sglang_lora_shrink", "deepgemm_bmk_bnk_mn", "marlin_atomic", "vllm_moe_wna16_kernel"])
     args = ap.parse_args()
     torch.manual_seed(0)
     torch.cuda.manual_seed_all(0)
     fn = {"vllm_moe_wna16": vllm_moe_wna16, "vllm_lora_shrink": vllm_lora_shrink, "sglang_marlin": sglang_marlin,
           "sglang_fp8_blockwise": sglang_fp8_blockwise, "sglang_lora_shrink": sglang_lora_shrink, "deepgemm_bmk_bnk_mn": deepgemm_bmk_bnk_mn,
-          "marlin_atomic": marlin_atomic}[args.which]
+          "marlin_atomic": marlin_atomic, "vllm_moe_wna16_kernel": vllm_moe_wna16_kernel}[args.which]
     return 0 if fn() else 1
 
 
