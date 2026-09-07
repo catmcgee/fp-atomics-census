@@ -1,0 +1,91 @@
+{
+  "probe": "cublaslt_mm_m128_n11008_k4096_bf16",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92000,
+    "packages": {
+      "vllm": "0.28.0",
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.16.post3",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.7.1",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "a",
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA B200",
+    "sm": "100",
+    "sm_count": 148,
+    "gpu_count": 1,
+    "driver": "580.167.08"
+  },
+  "extra": {
+    "shape": [
+      128,
+      11008,
+      4096
+    ],
+    "dtype": "bf16",
+    "variant": "mm",
+    "heuristic": {
+      "entries": [
+        {
+          "api": "cublasLtTSTMatmul",
+          "smCountTarget": "148",
+          "algoId": "66",
+          "tile": "MATMUL_TILE_192x64",
+          "stages": "MATMUL_STAGES_64xAUTO",
+          "customOption": "3",
+          "clusterShape": "CLUSTER_SHAPE_2x2x1",
+          "workSpaceSizeInBytes": "0"
+        }
+      ],
+      "log_lines": 6,
+      "child_rc": 0,
+      "child_stderr_tail": ""
+    }
+  },
+  "runs": [
+    {
+      "run": 1,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 2,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 3,
+      "identical": true,
+      "diffs": []
+    }
+  ],
+  "first_hash": "f2212fb24a009ca149a7e85533acba608d77b91fd7586102e861d97b64ed88e5",
+  "verdict": "bitwise-identical"
+}

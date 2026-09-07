@@ -1,0 +1,99 @@
+{
+  "probe": "deepgemm_bmk_bnk_mn",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92000,
+    "packages": {
+      "vllm": null,
+      "sglang": "0.5.19",
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.18",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.7.1",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "a",
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA B200",
+    "sm": "100",
+    "sm_count": 148,
+    "gpu_count": 1,
+    "driver": "580.167.08"
+  },
+  "extra": {},
+  "runs": [
+    {
+      "run": 1,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 16,
+          "numel": 262144,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 15,
+          "numel": 262144,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 17,
+          "numel": 262144,
+          "shape": [
+            512,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ]
+    }
+  ],
+  "first_hash": "bfb447f1eca7ee056cd2363a7996e7664d5e3b240b603ce23fefc78f830cc857",
+  "verdict": "DIFFERS"
+}
