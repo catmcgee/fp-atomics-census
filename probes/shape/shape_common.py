@@ -50,7 +50,7 @@ def steps_by_request(steps: list[dict]) -> dict[str, list[tuple[int, str, str | 
         for r in s["requests"]:
             if str(r["req"]).startswith("_warmup"):
                 continue
-            out[r["req"]].append((s["step"], s["shape_vector"], r.get("h"), r.get("argmax")))
+            out[slot_of(r["req"])].append((s["step"], s["shape_vector"], r.get("h"), r.get("argmax")))
     return out
 
 

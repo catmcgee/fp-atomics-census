@@ -154,6 +154,61 @@ def _patch_router():
     FusedMoERouter.select_experts = select_experts
 
 
+def _hook_first_moe(model):
+    """Per-expert token counts of the first MoE layer, from the router logits the
+    layer receives: top-k of softmax(logits) reproduces the routing of the
+    softmax-then-topk models (Qwen1.5-MoE, Mixtral); other routers are
+    recorded as 'unsupported'."""
+    if getattr(model, "_shape_hook_moe", False):
+        return
+    model._shape_hook_moe = True
+    try:
+        from vllm.model_executor.layers.fused_moe.layer import FusedMoE
+    except Exception:  # noqa: BLE001
+        return
+    for name, mod in model.named_modules():
+        if isinstance(mod, FusedMoE):
+            def pre_hook(m, args, kwargs=None, _name=name):
+                if _state["moe_counts"] is not None:
+                    return
+                try:
+                    import torch
+                    logits = args[1] if len(args) > 1 else (kwargs or {}).get("router_logits")
+                    k = int(getattr(m, "top_k", 0) or 0)
+                    e = int(getattr(m, "global_num_experts", 0) or logits.shape[-1])
+                    if logits is None or k <= 0:
+                        _state["moe_counts"] = "unsupported"
+                        return
+                    scoring = str(getattr(m, "scoring_func", "softmax"))
+                    probs = torch.softmax(logits.float(), dim=-1) if scoring == "softmax" else logits.float()
+                    topk = torch.topk(probs, k, dim=-1).indices
+                    _state["moe_counts"] = torch.bincount(topk.flatten(), minlength=e).tolist()
+                except Exception as ex:  # noqa: BLE001
+                    _state["moe_counts"] = {"error": repr(ex)[:80]}
+            mod.register_forward_pre_hook(pre_hook, with_kwargs=True)
+            break
+
+
+def _patch_fp8_quant():
+    """Record the first dynamic per-tensor FP8 activation scale of each pass (arm X2)."""
+    try:
+        import vllm._custom_ops as ops
+    except Exception:  # noqa: BLE001
+        return
+    orig = ops.scaled_fp8_quant
+
+    def scaled_fp8_quant(*a, **kw):
+        out = orig(*a, **kw)
+        try:
+            if _state.get("fp8_scale") is None and isinstance(out, tuple) and len(out) >= 2 and out[1] is not None and out[1].numel() == 1:
+                _state["fp8_scale"] = float(out[1].float().item())
+        except Exception:  # noqa: BLE001
+            pass
+        return out
+
+    ops.scaled_fp8_quant = scaled_fp8_quant
+
+
 def _wrap_compute_logits(model):
     if getattr(model, "_shape_hook_wrapped", False):
         return
@@ -270,8 +325,10 @@ def _execute(self, orig, scheduler_output, *a, **kw):
         _state["moe_counts"] = None
         _state["dispatch"] = None
         _state["hashes"] = None
+        _state["fp8_scale"] = None
         try:
             _wrap_compute_logits(self.model)
+            _hook_first_moe(self.model)
         except Exception:  # noqa: BLE001
             pass
         _flush(path)  # a record left from a pass that had no sampling phase
@@ -370,7 +427,7 @@ def _record(runner, so) -> dict:
     rec = {"step": _state["step"], "rank": _rank(), "total_scheduled": int(getattr(so, "total_num_scheduled_tokens", sum(sched.values()))),
            "num_reqs": len(req_ids), "dispatch": _state["dispatch"], "attention_backend": backend,
            "parallel": {"tp": pc.tensor_parallel_size, "pp": pc.pipeline_parallel_size, "dp": getattr(pc, "data_parallel_size", 1), "ep": bool(getattr(pc, "enable_expert_parallel", False))},
-           "moe_expert_counts_first_layer": _state["moe_counts"], "requests": reqs}
+           "moe_expert_counts_first_layer": _state["moe_counts"], "fp8_scale_first_call": _state.get("fp8_scale"), "requests": reqs}
     rec["shape_vector"] = shape_vector(rec)
     return rec
 
@@ -415,4 +472,5 @@ def register():
     _patch_dispatcher()
     _patch_router()
     _patch_gather()
+    _patch_fp8_quant()
     _patch_runner()

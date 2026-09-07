@@ -1,0 +1,73 @@
+{
+  "experiment": "E4",
+  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix0",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92000,
+    "packages": {
+      "vllm": "0.28.0",
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.16.post3",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.7.1",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": null,
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "sm": "90",
+    "sm_count": 132,
+    "gpu_count": 2,
+    "driver": "580.126.09"
+  },
+  "repeats": 12,
+  "target_slot": 0,
+  "runs_joined_to_hook": 24,
+  "shape_histories_equal_across_all_runs": false,
+  "within_kind": {
+    "original": {
+      "hidden": true,
+      "output": true,
+      "shape": true
+    },
+    "dummy": {
+      "hidden": false,
+      "output": true,
+      "shape": false
+    }
+  },
+  "target_across_kinds": {
+    "hidden": false,
+    "argmax": false,
+    "tokens": true,
+    "logprobs": true
+  },
+  "moe_first_layer_expert_counts_changed": null,
+  "fp8_first_scale_changed_between_kinds": null,
+  "verdict_P3": "DIFFERS",
+  "first_divergent_step": null
+}

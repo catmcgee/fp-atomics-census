@@ -16,6 +16,8 @@ changed between kinds.
 from __future__ import annotations
 
 import argparse
+import json
+import json
 import os
 import sys
 from collections import Counter
@@ -23,13 +25,18 @@ from pathlib import Path
 
 os.environ.setdefault("VLLM_ENABLE_V1_MULTIPROCESSING", "0")
 
-from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, random_token_prompt, read_hook, steps_by_request, write_json
+from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, random_token_prompt, read_hook, slot_of, steps_by_request, write_json
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     add_common_args(ap)
     ap.add_argument("--target", type=int, default=0)
+    ap.add_argument("--analyse", type=Path, default=None, help="recompute summary.json for a saved arm directory")
+    if "--analyse" in sys.argv:
+        d = Path(sys.argv[sys.argv.index("--analyse") + 1])
+        runs = json.loads((d / "runs.json").read_text())
+        return analyse(d, d.name, max(r["repeat"] for r in runs) + 1, 0)
     args = ap.parse_args()
     args.prefix_caching = 0
     out = args.out / arm_name(args)
@@ -58,12 +65,19 @@ def main() -> int:
             target_rid = outs[args.target].request_id
             runs.append({"repeat": k, "kind": kind, "target_rid": target_rid, "target": rec[target_rid], "request_ids": [o.request_id for o in outs]})
             print(f"repeat {k} {kind}: target output hash {rec[target_rid]['hash']}")
+    write_json(out / "runs.json", runs)
+    return analyse(out, arm_name(args), args.repeats, args.target)
+
+
+def analyse(out: Path, arm: str, repeats: int, target: int) -> int:
+    runs = json.loads((out / "runs.json").read_text())
     steps = real_steps(read_hook(out / "hook"))
     by_req = steps_by_request(steps)
     step_moe = {s["step"]: s.get("moe_expert_counts_first_layer") for s in steps if "step" in s}
-    step_shape = {s["step"]: s.get("shape_vector") for s in steps if "step" in s}
+    step_fp8 = {s["step"]: s.get("fp8_scale_first_call") for s in steps if "step" in s}
     for r in runs:
-        seq = by_req.get(r["target_rid"], [])
+        seq = by_req.get(slot_of(r["target_rid"]), [])
+        r["fp8_scales"] = [step_fp8.get(st) for st, _, _, _ in seq]
         r["target_hidden_hashes"] = [h for _, _, h, _ in seq]
         r["target_argmax"] = [a for _, _, _, a in seq]
         r["shape_history"] = [sv for _, sv, _, _ in seq]
@@ -78,14 +92,20 @@ def main() -> int:
     moe_changed = None
     if any(r["moe_counts_first_step"] for r in runs):
         moe_changed = not all_same([r["moe_counts_first_step"] for r in runs])
+    joined = sum(1 for r in runs if r["target_hidden_hashes"])
+    fp8_changed = None
+    if any(any(v is not None for v in r["fp8_scales"]) for r in runs):
+        fp8_changed = not all_same([r["fp8_scales"] for r in runs])
     verdict = "IDENTICAL" if shapes_equal and all(across.values()) else "DIFFERS"
-    summary = {"experiment": "E4", "arm": arm_name(args), "env": environment(), "repeats": args.repeats, "target_slot": args.target,
+    if joined == 0:
+        verdict += " (outputs only: no hook record joined)"
+    env = json.loads((out / "summary.json").read_text()).get("env") if (out / "summary.json").exists() else None
+    summary = {"experiment": "E4", "arm": arm, "env": env or environment(), "repeats": repeats, "target_slot": target, "runs_joined_to_hook": joined,
                "shape_histories_equal_across_all_runs": shapes_equal, "within_kind": within, "target_across_kinds": across,
-               "moe_first_layer_expert_counts_changed": moe_changed, "verdict_P3": verdict,
+               "moe_first_layer_expert_counts_changed": moe_changed, "fp8_first_scale_changed_between_kinds": fp8_changed, "verdict_P3": verdict,
                "first_divergent_step": next((i for i, (x, y) in enumerate(zip(by_kind["original"][0]["target_hidden_hashes"], by_kind["dummy"][0]["target_hidden_hashes"])) if x != y), None)}
     write_json(out / "summary.json", summary)
-    write_json(out / "runs.json", runs)
-    print(f"E4 {arm_name(args)}: P3 {verdict}; shapes equal {shapes_equal}; across kinds {across}; moe counts changed {moe_changed}")
+    print(f"E4 {arm}: P3 {verdict}; joined {joined}; shapes equal {shapes_equal}; across kinds {across}; moe counts changed {moe_changed}; fp8 scale changed {fp8_changed}")
     return 0
 
 

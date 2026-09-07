@@ -1,0 +1,17 @@
+{
+  "experiment": "E5",
+  "a": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09",
+    "torch": "2.13.0+cu130"
+  },
+  "b": {
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "driver": "595.91.07",
+    "torch": "2.13.0+cu130"
+  },
+  "steps": 37,
+  "hidden_identical_steps": 0,
+  "argmax_identical_steps": 9,
+  "verdict_P5": "DIFFERS"
+}
