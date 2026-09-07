@@ -1,0 +1,203 @@
+{
+  "probe": "vllm_qwen2.5_1.5b_gptq_marlin_atomic_add_one_seq_x6",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92000,
+    "packages": {
+      "vllm": "0.28.0",
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.16.post3",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.7.1",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": "1",
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "b",
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "sm": "90",
+    "sm_count": 132,
+    "gpu_count": 2,
+    "driver": "580.126.09"
+  },
+  "extra": {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4",
+    "quantization": null,
+    "lora": null,
+    "tp": 1,
+    "extra_args": [
+      "max-num-seqs=1"
+    ]
+  },
+  "runs": [
+    {
+      "run": 1,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 30,
+          "numel": 512,
+          "shape": [
+            512
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "tensor": 1,
+          "mismatched_elements": 2537,
+          "numel": 2560,
+          "shape": [
+            2560
+          ],
+          "dtype": "torch.float32"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 90,
+          "numel": 512,
+          "shape": [
+            512
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "tensor": 1,
+          "mismatched_elements": 2541,
+          "numel": 2560,
+          "shape": [
+            2560
+          ],
+          "dtype": "torch.float32"
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 30,
+          "numel": 512,
+          "shape": [
+            512
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "tensor": 1,
+          "mismatched_elements": 2522,
+          "numel": 2560,
+          "shape": [
+            2560
+          ],
+          "dtype": "torch.float32"
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 60,
+          "numel": 512,
+          "shape": [
+            512
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "tensor": 1,
+          "mismatched_elements": 2544,
+          "numel": 2560,
+          "shape": [
+            2560
+          ],
+          "dtype": "torch.float32"
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 30,
+          "numel": 512,
+          "shape": [
+            512
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "tensor": 1,
+          "mismatched_elements": 2530,
+          "numel": 2560,
+          "shape": [
+            2560
+          ],
+          "dtype": "torch.float32"
+        }
+      ]
+    },
+    {
+      "run": 6,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 30,
+          "numel": 512,
+          "shape": [
+            512
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "tensor": 1,
+          "mismatched_elements": 2544,
+          "numel": 2560,
+          "shape": [
+            2560
+          ],
+          "dtype": "torch.float32"
+        }
+      ]
+    }
+  ],
+  "first_hash": "6a74169ce2530b15cf198628f2a499070eee3f02c7e80b0de45bac4a86121e45",
+  "verdict": "DIFFERS"
+}
