@@ -72,7 +72,7 @@ def vllm_moe_wna16_kernel() -> bool:
     should_moe_wna16_use_cuda); the m=64, e=8 case is the Triton control.
     """
     from vllm.config import VllmConfig, set_current_vllm_config
-    from vllm.model_executor.layers.fused_moe.fused_moe import fused_moe
+    from vllm.model_executor.layers.fused_moe.fused_moe import fused_experts
     from vllm.model_executor.layers.fused_moe.config import int4_w4a16_moe_quant_config
     from vllm.model_executor.layers.quantization.utils.quant_utils import quantize_weights
     from vllm.scalar_type import scalar_types
@@ -100,9 +100,12 @@ def vllm_moe_wna16_kernel() -> bool:
             qc = int4_w4a16_moe_quant_config(w1_scale=w1_s, w2_scale=w2_s, block_shape=[0, group_size])
             cfg = VllmConfig()
 
+            topk_weights, topk_ids = torch.topk(torch.softmax(score.float(), dim=-1), topk_, dim=-1)
+            topk_ids = topk_ids.to(torch.int32)
+
             def run():
                 with set_current_vllm_config(cfg):
-                    return [fused_moe(a, w1_q, w2_q, score, topk_, renormalize=False, global_num_experts=e, quant_config=qc)]
+                    return [fused_experts(a, w1_q, w2_q, topk_weights, topk_ids, global_num_experts=e, quant_config=qc)]
             tag = "fp16" if dtype == torch.float16 else "bf16"
             kind = "cuda" if m / e <= 6 else "triton"
             ok &= run_twice(f"moe_wna16_{kind}_m{m}_e{e}_{tag}", run, repeats=5, extra={"m": m, "e": e, "n": n, "k": k, "dtype": tag, "kernel": kind})
