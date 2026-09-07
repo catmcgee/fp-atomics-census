@@ -117,9 +117,8 @@ def engine_kwargs(args) -> dict:
     if getattr(args, "no_compile", False):
         # torch.compile inlines the model, so module hooks and the Python wrappers
         # of custom ops do not run; the mechanism arms (expert counts, FP8 scale)
-        # need the eager model. Verdicts are taken from the compiled arms.
+        # need the uncompiled model. CUDA graphs stay under --cudagraph.
         kw["compilation_config"] = {"mode": 0}
-        kw["enforce_eager"] = True
     return kw
 
 

@@ -47,7 +47,7 @@
   "repeats": 12,
   "target_slot": 0,
   "runs_joined_to_hook": 24,
-  "shape_histories_equal_across_all_runs": true,
+  "shape_histories_equal_across_all_runs": false,
   "within_kind": {
     "original": {
       "hidden": true,
@@ -57,7 +57,7 @@
     "dummy": {
       "hidden": false,
       "output": false,
-      "shape": true
+      "shape": false
     }
   },
   "target_across_kinds": {
@@ -69,15 +69,5 @@
   "moe_first_layer_expert_counts_changed": null,
   "fp8_first_scale_changed_between_kinds": null,
   "verdict_P3": "DIFFERS",
-  "first_divergent_step": 0,
-  "distinct_hidden_sequences_per_kind": {
-    "original": 1,
-    "dummy": 12
-  },
-  "distinct_shape_histories_per_kind": {
-    "original": 1,
-    "dummy": 1
-  },
-  "steps_compared": 32,
-  "runs_missing_final_record": 24
+  "first_divergent_step": 0
 }

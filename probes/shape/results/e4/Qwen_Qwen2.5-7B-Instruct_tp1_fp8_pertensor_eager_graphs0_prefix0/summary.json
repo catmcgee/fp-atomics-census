@@ -1,6 +1,6 @@
 {
   "experiment": "E4",
-  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix0",
+  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_eager_graphs0_prefix0",
   "env": {
     "python": "3.12.3",
     "torch": "2.13.0+cu130",
@@ -44,8 +44,9 @@
     "gpu_count": 2,
     "driver": "580.126.09"
   },
-  "repeats": 12,
+  "repeats": 6,
   "target_slot": 0,
+  "runs_joined_to_hook": 12,
   "shape_histories_equal_across_all_runs": true,
   "within_kind": {
     "original": {
@@ -54,18 +55,29 @@
       "shape": true
     },
     "dummy": {
-      "hidden": true,
-      "output": true,
+      "hidden": false,
+      "output": false,
       "shape": true
     }
   },
   "target_across_kinds": {
-    "hidden": true,
-    "argmax": true,
-    "tokens": true,
-    "logprobs": true
+    "hidden": false,
+    "argmax": false,
+    "tokens": false,
+    "logprobs": false
   },
   "moe_first_layer_expert_counts_changed": null,
-  "verdict_P3": "IDENTICAL",
-  "first_divergent_step": null
+  "fp8_first_scale_changed_between_kinds": true,
+  "verdict_P3": "DIFFERS",
+  "first_divergent_step": 0,
+  "distinct_hidden_sequences_per_kind": {
+    "original": 1,
+    "dummy": 6
+  },
+  "distinct_shape_histories_per_kind": {
+    "original": 1,
+    "dummy": 1
+  },
+  "steps_compared": 33,
+  "runs_missing_final_record": 0
 }

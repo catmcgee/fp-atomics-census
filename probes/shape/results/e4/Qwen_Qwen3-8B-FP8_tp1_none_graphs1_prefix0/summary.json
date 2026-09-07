@@ -46,7 +46,6 @@
   },
   "repeats": 12,
   "target_slot": 0,
-  "runs_joined_to_hook": 24,
   "shape_histories_equal_across_all_runs": true,
   "within_kind": {
     "original": {
@@ -67,17 +66,6 @@
     "logprobs": true
   },
   "moe_first_layer_expert_counts_changed": null,
-  "fp8_first_scale_changed_between_kinds": null,
   "verdict_P3": "IDENTICAL",
-  "first_divergent_step": null,
-  "distinct_hidden_sequences_per_kind": {
-    "original": 1,
-    "dummy": 1
-  },
-  "distinct_shape_histories_per_kind": {
-    "original": 1,
-    "dummy": 1
-  },
-  "steps_compared": 32,
-  "runs_missing_final_record": 24
+  "first_divergent_step": null
 }

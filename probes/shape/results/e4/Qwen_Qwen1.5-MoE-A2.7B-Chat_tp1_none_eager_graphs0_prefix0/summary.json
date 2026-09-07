@@ -1,6 +1,6 @@
 {
   "experiment": "E4",
-  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix0",
+  "arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_eager_graphs0_prefix0",
   "env": {
     "python": "3.12.3",
     "torch": "2.13.0+cu130",
@@ -44,8 +44,9 @@
     "gpu_count": 2,
     "driver": "580.126.09"
   },
-  "repeats": 12,
+  "repeats": 6,
   "target_slot": 0,
+  "runs_joined_to_hook": 12,
   "shape_histories_equal_across_all_runs": true,
   "within_kind": {
     "original": {
@@ -65,7 +66,18 @@
     "tokens": true,
     "logprobs": true
   },
-  "moe_first_layer_expert_counts_changed": null,
+  "moe_first_layer_expert_counts_changed": true,
+  "fp8_first_scale_changed_between_kinds": null,
   "verdict_P3": "IDENTICAL",
-  "first_divergent_step": null
+  "first_divergent_step": null,
+  "distinct_hidden_sequences_per_kind": {
+    "original": 1,
+    "dummy": 1
+  },
+  "distinct_shape_histories_per_kind": {
+    "original": 1,
+    "dummy": 1
+  },
+  "steps_compared": 33,
+  "runs_missing_final_record": 0
 }
