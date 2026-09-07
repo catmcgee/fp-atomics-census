@@ -18,7 +18,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from shape_common import add_common_args, arm_name, engine_kwargs, env_with_hook, environment, history_key, mixed_prompts, outputs_record, read_hook, steps_by_request, write_json
+from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, history_key, mixed_prompts, outputs_record, read_hook, steps_by_request, write_json
 
 
 def main() -> int:
@@ -40,7 +40,7 @@ def main() -> int:
         rec = outputs_record(outs)
         per_repeat.append({"repeat": k, "request_ids": [o.request_id for o in outs], "outputs": rec})
         print(f"repeat {k}: output hashes {[rec[o.request_id]['hash'][:8] for o in outs][:6]}...")
-    steps = read_hook(out / "hook")
+    steps = real_steps(read_hook(out / "hook"))
     by_req = steps_by_request(steps)
     # slot = position of the request in its repeat; join per (slot, step index in request)
     table: dict[tuple[int, int], dict[str, set]] = defaultdict(lambda: defaultdict(set))

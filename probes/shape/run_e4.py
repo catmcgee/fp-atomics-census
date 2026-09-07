@@ -23,7 +23,7 @@ from pathlib import Path
 
 os.environ.setdefault("VLLM_ENABLE_V1_MULTIPROCESSING", "0")
 
-from shape_common import add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, random_token_prompt, read_hook, steps_by_request, write_json
+from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, random_token_prompt, read_hook, steps_by_request, write_json
 
 
 def main() -> int:
@@ -58,7 +58,7 @@ def main() -> int:
             target_rid = outs[args.target].request_id
             runs.append({"repeat": k, "kind": kind, "target_rid": target_rid, "target": rec[target_rid], "request_ids": [o.request_id for o in outs]})
             print(f"repeat {k} {kind}: target output hash {rec[target_rid]['hash']}")
-    steps = read_hook(out / "hook")
+    steps = real_steps(read_hook(out / "hook"))
     by_req = steps_by_request(steps)
     step_moe = {s["step"]: s.get("moe_expert_counts_first_layer") for s in steps if "step" in s}
     step_shape = {s["step"]: s.get("shape_vector") for s in steps if "step" in s}

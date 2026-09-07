@@ -30,7 +30,7 @@ import platform
 import subprocess
 import time
 
-_state = {"registered": False, "step": 0, "moe_counts": None, "dispatch": None, "hashes": None, "seen": set(), "env": None}
+_state = {"registered": False, "step": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "seen": set(), "env": None}
 
 
 def _env_record() -> dict:
@@ -151,11 +151,79 @@ def _wrap_compute_logits(model):
     model._shape_hook_wrapped = True
 
 
+def _patch_gather():
+    """vLLM 0.28.0 gathers the scheduled batch's CPU state in batch order in
+    GPUModelRunner.gather_batch_req_state; capture it, with the computed-token
+    counts read at that moment (before the pass runs)."""
+    from vllm.v1.worker.gpu_model_runner import GPUModelRunner
+    if not hasattr(GPUModelRunner, "gather_batch_req_state"):
+        return
+    orig = GPUModelRunner.gather_batch_req_state
+
+    def gather(self, scheduler_output, dummy_run, *a, **kw):
+        return _gather_impl(self, orig, scheduler_output, dummy_run, *a, **kw)
+
+    global _gather_wrapper
+    _gather_wrapper = gather
+    GPUModelRunner.gather_batch_req_state = gather
+
+
+_gather_wrapper = None
+
+
+def _gather_impl(self, orig, scheduler_output, dummy_run, *a, **kw):
+    if True:
+        out = orig(self, scheduler_output, dummy_run, *a, **kw)
+        try:
+            b = out[0] if isinstance(out, tuple) else out
+            if b is not None and not dummy_run:
+                import numpy as np
+                rs = self.req_states
+                idx = np.asarray(b.idx_mapping_np)[: len(b.req_ids)]
+                computed = np.asarray(rs.num_computed_tokens_np)[idx].tolist()
+                _state["batch"] = {"req_ids": list(b.req_ids), "q": np.asarray(b.num_scheduled_tokens)[: len(b.req_ids)].tolist(),
+                                   "computed": computed, "prompt": np.asarray(b.prefill_len_np)[: len(b.req_ids)].tolist() if hasattr(b, "prefill_len_np") else None,
+                                   "prefilling": np.asarray(b.is_prefilling_np)[: len(b.req_ids)].tolist() if hasattr(b, "is_prefilling_np") else None}
+        except Exception as e:  # noqa: BLE001
+            _state["batch"] = {"error": repr(e)[:120]}
+        return out
+
+
 def _patch_runner():
     from vllm.v1.worker.gpu_model_runner import GPUModelRunner
     orig = GPUModelRunner.execute_model
 
     def execute_model(self, scheduler_output, *a, **kw):
+        return _execute(self, orig, scheduler_output, *a, **kw)
+
+    GPUModelRunner.execute_model = execute_model
+    # Something in the worker's initialisation rebinds the class attribute after
+    # plugins load (observed on 0.28.0), so the worker entry point also installs
+    # the wrapper on the runner instance the first time it runs a batch.
+    try:
+        from vllm.v1.worker.gpu_worker import Worker
+        worig = Worker.execute_model
+
+        def worker_execute_model(self, scheduler_output, *a, **kw):
+            mr = getattr(self, "model_runner", None)
+            if mr is not None and not getattr(mr, "_shape_hook_instance", False):
+                import functools
+                bound = mr.execute_model
+                if getattr(bound, "__func__", None) is not execute_model:
+                    mr.execute_model = functools.partial(_execute, mr, lambda _self, so, *aa, **kk: bound(so, *aa, **kk))
+                gb = getattr(mr, "gather_batch_req_state", None)
+                if gb is not None and getattr(gb, "__func__", None) is not _gather_wrapper:
+                    mr.gather_batch_req_state = functools.partial(_gather_impl, mr, lambda _self, so, dr, *aa, **kk: gb(so, dr, *aa, **kk))
+                mr._shape_hook_instance = True
+            return worig(self, scheduler_output, *a, **kw)
+
+        Worker.execute_model = worker_execute_model
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _execute(self, orig, scheduler_output, *a, **kw):
+    if True:
         path = _out_path()
         if path is None:
             return orig(self, scheduler_output, *a, **kw)
@@ -182,14 +250,31 @@ def _patch_runner():
         _state["step"] += 1
         return out
 
-    GPUModelRunner.execute_model = execute_model
+
+def _batch_rows(runner, so) -> list[dict]:
+    """(req id, query len, computed, prompt len, prefilling) per batch position."""
+    sched = dict(getattr(so, "num_scheduled_tokens", {}) or {})
+    b = _state.get("batch")
+    if b and "req_ids" in b:  # vLLM 0.28.0 layout
+        rows = []
+        for i, rid in enumerate(b["req_ids"]):
+            q = int(b["q"][i]) if i < len(b["q"]) else int(sched.get(rid, 0))
+            computed = int(b["computed"][i])
+            prompt = int(b["prompt"][i]) if b.get("prompt") is not None else None
+            prefilling = bool(b["prefilling"][i]) if b.get("prefilling") is not None else (prompt is not None and computed < prompt)
+            rows.append({"req": rid, "q": q, "computed": computed, "prompt": prompt, "prefilling": prefilling})
+        return rows
+    ib = runner.input_batch  # pinned-sha layout (5769a7382cb1)
+    num_reqs = getattr(ib, "num_reqs", None) or len(ib.req_ids)
+    rows = []
+    for i, rid in enumerate(list(ib.req_ids[:num_reqs])):
+        computed = int(ib.num_computed_tokens_cpu[i])
+        prompt = int(ib.num_prompt_tokens[i]) if hasattr(ib, "num_prompt_tokens") else None
+        rows.append({"req": rid, "q": int(sched.get(rid, 0)), "computed": computed, "prompt": prompt, "prefilling": prompt is not None and computed < prompt})
+    return rows
 
 
 def _record(runner, so) -> dict:
-    ib = runner.input_batch
-    num_reqs = getattr(ib, "num_reqs", None) or len(ib.req_ids)
-    req_ids = list(ib.req_ids[:num_reqs])
-    sched = dict(getattr(so, "num_scheduled_tokens", {}) or {})
     new_hits = {}
     for r in getattr(so, "scheduled_new_reqs", []) or []:
         new_hits[r.req_id] = int(getattr(r, "num_computed_tokens", 0))
@@ -197,15 +282,16 @@ def _record(runner, so) -> dict:
     hashes = _state["hashes"] or {}
     rows = hashes.get("hidden_rows") or []
     am = hashes.get("argmax") or []
-    for i, rid in enumerate(req_ids):
-        q = int(sched.get(rid, 0))
-        computed = int(ib.num_computed_tokens_cpu[i])
-        prompt = int(ib.num_prompt_tokens[i]) if hasattr(ib, "num_prompt_tokens") else None
+    batch_rows = _batch_rows(runner, so)
+    req_ids = [r["req"] for r in batch_rows]
+    sched = dict(getattr(so, "num_scheduled_tokens", {}) or {})
+    for i, br in enumerate(batch_rows):
+        rid = br["req"]
         first = rid not in _state["seen"]
         if first:
             _state["seen"].add(rid)
-        reqs.append({"req": rid, "q": q, "computed": computed, "kv": computed + q, "prompt": prompt,
-                     "phase": "prefill" if (prompt is not None and computed < prompt) else "decode",
+        reqs.append({"req": rid, "q": br["q"], "computed": br["computed"], "kv": br["computed"] + br["q"], "prompt": br["prompt"],
+                     "phase": "prefill" if br["prefilling"] else "decode",
                      "cache_hit": new_hits.get(rid) if first else None,
                      "h": rows[i] if i < len(rows) else None, "argmax": am[i] if i < len(am) else None})
     pc = runner.vllm_config.parallel_config
@@ -260,4 +346,5 @@ def register():
         return
     _patch_dispatcher()
     _patch_router()
+    _patch_gather()
     _patch_runner()

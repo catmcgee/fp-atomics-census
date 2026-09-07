@@ -48,8 +48,15 @@ def steps_by_request(steps: list[dict]) -> dict[str, list[tuple[int, str, str | 
         if "requests" not in s:
             continue
         for r in s["requests"]:
+            if str(r["req"]).startswith("_warmup"):
+                continue
             out[r["req"]].append((s["step"], s["shape_vector"], r.get("h"), r.get("argmax")))
     return out
+
+
+def real_steps(steps: list[dict]) -> list[dict]:
+    """Drop warm-up and profiling passes (request ids starting with _warmup)."""
+    return [s for s in steps if "requests" in s and not all(str(r["req"]).startswith("_warmup") for r in s["requests"])]
 
 
 def history_key(seq: list[tuple], upto: int) -> str:
