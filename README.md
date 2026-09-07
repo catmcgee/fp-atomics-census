@@ -182,7 +182,8 @@ least one repeat was not bitwise identical to the first.
 | vLLM the same with `VLLM_BATCH_INVARIANT=1`, or with `max_num_seqs=1` on the stock kernels | identical, 24 of 24 | |
 | vLLM GPTQ through Marlin (atomic add off) and through Machete, fp16 and bf16 | identical | vllm-0010 and vllm-0187 as read |
 | vLLM LoRA with the default split-K | differs, 2 to 24 sampled tokens per run | vllm-0018 confirmed; identical with `VLLM_BATCH_INVARIANT=1` |
-| vLLM GPTQ MoE through Marlin MoE, 12 repeats | identical | vllm-0022 null; the `moe_wna16` kernel (vllm-0014) could not be selected in 0.28.0, the method crashes at load, and the batch-invariant MoE kernels refuse this model's block shape |
+| vLLM GPTQ MoE through Marlin MoE, 12 repeats | identical | vllm-0022 null; the `moe_wna16` method cannot be selected from the CLI in 0.28.0 and the batch-invariant MoE kernels refuse this model's block shape |
+| `moe_wna16` CUDA kernel on random 4-bit weights, 16 tokens over 8 experts (the regime that selects it), fp16 and bf16, 6 runs per process | differs; the Triton path of the same method at 64 tokens is identical | vllm-0014 confirmed at kernel level |
 | SGLang Qwen3-8B bf16 with radix cache and overlap scheduler off | 3 of 6 repeats differ, exactly one request | batch composition; identical with `--enable-deterministic-inference` |
 | Marlin kernel on random 4-bit weights, `use_atomic_add=True`, with and without fp32 reduce | differs on every shape, fp16 and bf16 | sglang-0008, vllm-0010: the kernel is order-dependent whenever the flag is on |
 | SGLang GPTQ 7B through Marlin at TP=1 | identical, 12 of 12 | every fused projection has `n >= 2048`, so the stub never engages |
@@ -230,6 +231,81 @@ this stack: the atomics the census found are avoidable by configuration,
 and what remains is batch invariance, which both engines offer only as an
 opt-in mode with a performance cost.
 
+## Batch shape, not content
+
+`docs/SHAPE_HYPOTHESIS.md` states the hypothesis and its predictions as
+they were written before the runs; `probes/shape/` holds the hook, the
+runners and the raw results; `make shape-tables` regenerates the tables.
+Every verdict is IDENTICAL or DIFFERS with its run count; identical in
+twelve runs is evidence, not proof.
+
+**The shape vector.** For one forward pass: the CUDA-graph mode and the
+padded token count the dispatcher chose, the scheduled-token total, the
+number of requests, TP, PP and EP, the attention backend, and for each
+request its query length, KV length, computed-token count and phase. The
+hook (`probes/shape/shape_hook_pkg`, a vLLM general plugin) records it
+per pass together with a hash of each request's last hidden-state row
+and the argmax of its logits. A request's shape history is the sequence
+of shape vectors of the passes it took part in.
+
+**E2, bucket attribution** (stock multiprocess engine, 12 repeats of the
+16-request mixed set per arm, hidden-state hashes joined to shape
+histories):
+
+| Arm | Hook steps | Distinct shape vectors | Slots with more than one output | Histories mapping to more than one hash | P1 |
+|---|---|---|---|---|---|
+| Qwen2.5-7B bf16, graphs on, prefix cache on | 429 | 170 | 16 | 0 | IDENTICAL |
+| Qwen2.5-7B bf16, graphs on, prefix cache off | 429 | 102 | 16 | 0 | IDENTICAL |
+| Qwen2.5-7B bf16, graphs off, prefix cache on | 419 | 34 | 0 | 0 | IDENTICAL |
+| Qwen2.5-7B bf16, graphs off, prefix cache off | 419 | 34 | 0 | 0 | IDENTICAL |
+| Qwen1.5-MoE-A2.7B bf16, graphs on, prefix cache on | 420 | 68 | 16 | 0 | IDENTICAL |
+
+Every request slot that produced more than one output did so under more
+than one shape history, and no shape history produced more than one
+hash. With CUDA graphs on there are three to five times as many distinct
+shape vectors as with them off, which is the padding to capture sizes
+showing up in the vector.
+
+**E3, logged replay** (in-process engine, staged arrival, two fresh
+processes): 37 steps in the plain trajectory and 42 in the chunked-prefill
+one, which has six steps mixing decode rows with prefill chunks, all with
+identical shape vectors, identical per-request hidden hashes and identical
+argmax between the two processes. P2 IDENTICAL. The scheduler was forced
+to one composition by synchronous in-process arrival; the model-runner
+entry point was not used.
+
+**E4, dummy-neighbour replay** (target request unchanged, every neighbour
+replaced by random token ids of the same length, prefix caching off,
+`ignore_eos`, 12 original and 12 dummy runs per arm, 32 common steps):
+
+| Arm | Shape histories equal | Target hidden hashes identical across kinds | Target tokens and top-5 logprobs identical | P3 |
+|---|---|---|---|---|
+| Qwen2.5-7B bf16, graphs on | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B bf16, graphs off | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B bf16, TP=2 | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B FP8, per-token dynamic scales | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B FP8, per-tensor dynamic scales (forced; verified as `scale(f32,dynamic,per_tensor)`) | yes | yes | yes | IDENTICAL |
+| Qwen3-8B-FP8, blockwise | yes | yes | yes | IDENTICAL |
+| Qwen1.5-MoE-A2.7B bf16 | yes | no, from step 0 | no | DIFFERS |
+
+For dense models the consequence is direct: a verifier can re-run one
+request bit for bit with length-matched filler in place of the
+neighbours, and does not need the neighbours' tokens, only the shape
+history. The MoE model fails from the first step, as predicted for
+exception X1; the per-tensor FP8 prediction (X2) did not hold on this
+model, which is recorded as a failed prediction below.
+
+**E5, cross-SKU.** The same 37-step trajectory on an H100 and on an
+RTX PRO 6000: hidden hashes identical in 0 of 37 steps, argmax identical
+in 9 of 37. P5 DIFFERS, as predicted. Nothing in this repository implies
+cross-SKU identity.
+
+**Predictions that failed.** P4 said per-tensor dynamic FP8 would couple
+the target to its neighbours through the batch-wide scale. It did not:
+with the forced per-tensor path the target's bits were unchanged by
+dummy neighbours in 12 of 12 runs. The mechanism arm below records the
+scale itself.
+
 ## Layout
 
 ```
@@ -253,6 +329,7 @@ make census-all               # re-run on all eight
 make validate                 # schema, sha, snippet, reference and provenance checks
 make summary                  # the counts quoted above, from the inventory
 make csv                      # regenerate inventory.csv
+make shape-tables             # tables of the batch-shape experiments from probes/shape/results
 python -m triage.coverage_table candidates/*.coverage.json
 ```
 
