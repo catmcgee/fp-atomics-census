@@ -72,7 +72,7 @@ def vllm_moe_wna16_kernel() -> bool:
     should_moe_wna16_use_cuda); the m=64, e=8 case is the Triton control.
     """
     from vllm.config import VllmConfig, set_current_vllm_config
-    from vllm.model_executor.layers.fused_moe import fused_moe
+    from vllm.model_executor.layers.fused_moe.fused_moe import fused_moe
     from vllm.model_executor.layers.fused_moe.config import int4_w4a16_moe_quant_config
     from vllm.model_executor.layers.quantization.utils.quant_utils import quantize_weights
     from vllm.scalar_type import scalar_types
