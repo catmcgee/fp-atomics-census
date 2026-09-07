@@ -89,8 +89,11 @@ Gates whose default selects the atomic side:
 - vllm-0018, vllm-0019: LoRA shrink uses split-K with `tl.atomic_add`
   unless `VLLM_BATCH_INVARIANT=1`.
 - sglang-0008: `should_use_atomic_add_reduce` contains an `if not True:`
-  stub, so Marlin's atomic-add reduction is on for every `n < 2048,
-  k >= 2048` shape on CUDA.
+  stub, so Marlin's atomic-add reduction is on for every projection with
+  `n < 2048, k >= 2048` as the kernel sees it, after fusion and
+  tensor-parallel sharding: the down projection of small models and the
+  output projection of a 7B model at TP=2, but no projection of a 7B
+  model at TP=1.
 - flashinfer-0001: `cutlass_fused_moe` defaults to `use_fused_finalize=True`,
   a `red.global.add` on `f16x2`. vLLM and SGLang reach it only when their
   MoE backend is set to `flashinfer_cutlass`, which is opt-in in both.
@@ -135,7 +138,7 @@ generated kernels are outside them.
 | vLLM | `VLLM_MARLIN_USE_ATOMIC_ADD` unset (default) | vllm-0010 |
 | vLLM | no mean-pooling models, no Moondream3, no DiffusionGemma | vllm-0045, vllm-0046, vllm-0050 |
 | vLLM | no gfx1100 ROCm build | vllm-0032 to vllm-0037 |
-| SGLang | no Marlin for shapes with `n < 2048, k >= 2048` until the stub at `marlin_utils.py:476` is fixed | sglang-0008 |
+| SGLang | no GPTQ or AWQ model through Marlin whose fused, sharded projections have `n < 2048, k >= 2048` (small models, TP of 2 or more) until the stub at `marlin_utils.py:476` is fixed; the deterministic-inference mode does not cover it | sglang-0008 |
 | SGLang | DeepGEMM installed, or no FP8 blockwise shapes with `k > 3n` | sglang-0011 |
 | SGLang | LoRA without `--lora-use-virtual-experts` and without `SGLANG_EXPERIMENTAL_LORA_OPTI` | sglang-0019, sglang-0021 |
 | SGLang | `--moe-runner-backend` not `flashinfer_cutlass` | flashinfer-0001 |
@@ -154,12 +157,13 @@ performance.
 
 ## Runtime results on one stack
 
-The probes were run on 6 September 2026 on one RunPod H100 SXM (driver
-580.126.09, CUDA 13.0, torch 2.13.0, vLLM 0.28.0, SGLang 0.5.19,
-FlashInfer 0.6.16). The JSON reports are in `probes/results/`, the table
-below is condensed from `python probes/report.py`, and every inventory row
-a probe bears on carries the verdict in its `runtime_evidence` field. Each
-probe ran at least four times in each of two processes; "differs" means at
+The probes were run on 6 and 7 September 2026 on RunPod: one H100 SXM, a
+two-H100 SXM pod, and one B200, all with driver 580.1xx, CUDA 13.0, torch
+2.13.0, vLLM 0.28.0, SGLang 0.5.19 and FlashInfer 0.6.16. The JSON reports
+are in `probes/results/`, one directory per stack; the table below is
+condensed from `python probes/report.py`, and every inventory row a probe
+bears on carries the verdict in its `runtime_evidence` field. Each probe
+ran at least four times in each of two processes; "differs" means at
 least one repeat was not bitwise identical to the first.
 
 | Probe | Verdict | Reading |
@@ -179,14 +183,26 @@ least one repeat was not bitwise identical to the first.
 | vLLM LoRA with the default split-K | differs, 2 to 24 sampled tokens per run | vllm-0018 confirmed; identical with `VLLM_BATCH_INVARIANT=1` |
 | vLLM GPTQ MoE through Marlin MoE, 12 repeats | identical | vllm-0022 null; the `moe_wna16` kernel (vllm-0014) could not be selected in 0.28.0, the method crashes at load, and the batch-invariant MoE kernels refuse this model's block shape |
 | SGLang Qwen3-8B bf16 with radix cache and overlap scheduler off | 3 of 6 repeats differ, exactly one request | batch composition; identical with `--enable-deterministic-inference` |
-| SGLang GPTQ through Marlin with the `if not True:` stub live | identical, 12 of 12 | sglang-0008 null on this model and stack |
+| Marlin kernel on random 4-bit weights, `use_atomic_add=True`, with and without fp32 reduce | differs on every shape, fp16 and bf16 | sglang-0008, vllm-0010: the kernel is order-dependent whenever the flag is on |
+| SGLang GPTQ 7B through Marlin at TP=1 | identical, 12 of 12 | every fused projection has `n >= 2048`, so the stub never engages |
+| SGLang GPTQ 1.5B (down_proj `n=1536, k=8960`), and 7B at TP=2 | differs, first hashes differ between processes, sampled tokens change | sglang-0008 confirmed; `--enable-deterministic-inference` does not remove it |
+| vLLM GPTQ 1.5B, one sequence per batch: Machete, Marlin, Marlin with `VLLM_MARLIN_USE_ATOMIC_ADD=1` | identical, identical, differs | vllm-0010: with composition fixed only the atomic-add path differs |
+| NCCL two-rank all-reduce, default and tree, NVLink multicast off | identical | vllm-0182, sglang-0269; the container cannot bind multicast memory, so NVLS stays unprobed |
+| vLLM TP=2, custom all-reduce and NCCL, one sequence per batch | identical, same hash for both | with the stock scheduler both differed by whole requests, as at TP=1 |
+| vLLM Mixtral GPTQ through Marlin MoE, one sequence per batch | identical | vllm-0022 null; `moe_wna16` cannot be selected explicitly in 0.28.0 |
+| DeepGEMM `bmk,bnk->mn` einsum on sm90 | differs | DeepGEMM-0001 confirmed |
+| FlashInfer TensorRT-LLM decode cubin on B200 | identical, 8 runs | flashinfer-0038: first runtime evidence for a class-C cubin |
+| FlashInfer fused MoE finalize on B200, autotuned | identical at top-k 2 and 8, differs at top-k 4 | same pattern as on the H100 |
 | SGLang FP8 blockwise | identical | sglang-0011 is unreachable: 0.5.19 builds its CUTLASS FP8 GEMM for SM120 only and routes Hopper to DeepGEMM or Triton |
-| TensorRT-LLM attention cubins, NCCL, cuDNN | not run | the cubins refuse H100; one GPU; no cuDNN path exercised |
+| FlashInfer all-reduce fusion, NVLink multicast, cuDNN | not run | the fusion probe fails in workspace setup; multicast is blocked by the container; no cuDNN path exercised |
 
-Two readings did not reproduce and are recorded as nulls with the probe
-names: SGLang's Marlin atomic-add path and vLLM's Marlin MoE. A null after
-twelve runs is not proof of order-invariance, but the verifier's forbid
-list can carry both as "not observed" rather than "forbidden".
+One reading is recorded as a null with the probe names: vLLM's Marlin MoE
+was identical in every run, including with batch composition fixed. A
+null after twelve runs is not proof of order-invariance, but the
+verifier's forbid list can carry it as "not observed" rather than
+"forbidden". The SGLang Marlin null of the first day turned out to be a
+shape effect: the stub's condition is evaluated on the fused, sharded
+weight, and a 7B model at TP=1 never meets it.
 
 The residual differences in the dense path are not kernel randomness. With
 the batch-invariant mode on, or with one sequence per batch on the stock
