@@ -276,35 +276,60 @@ entry point was not used.
 
 **E4, dummy-neighbour replay** (target request unchanged, every neighbour
 replaced by random token ids of the same length, prefix caching off,
-`ignore_eos`, 12 original and 12 dummy runs per arm, 32 common steps):
+`ignore_eos`, original and dummy runs alternating, 32 or 33 common steps):
 
-| Arm | Shape histories equal | Target hidden hashes identical across kinds | Target tokens and top-5 logprobs identical | P3 |
-|---|---|---|---|---|
-| Qwen2.5-7B bf16, graphs on | yes | yes | yes | IDENTICAL |
-| Qwen2.5-7B bf16, graphs off | yes | yes | yes | IDENTICAL |
-| Qwen2.5-7B bf16, TP=2 | yes | yes | yes | IDENTICAL |
-| Qwen2.5-7B FP8, per-token dynamic scales | yes | yes | yes | IDENTICAL |
-| Qwen2.5-7B FP8, per-tensor dynamic scales (forced; verified as `scale(f32,dynamic,per_tensor)`) | yes | yes | yes | IDENTICAL |
-| Qwen3-8B-FP8, blockwise | yes | yes | yes | IDENTICAL |
-| Qwen1.5-MoE-A2.7B bf16 | yes | no, from step 0 | no | DIFFERS |
+| Arm | Runs | Shape histories equal | Target hidden hashes identical across kinds | Target tokens and top-5 logprobs identical | P3 |
+|---|---|---|---|---|---|
+| Qwen2.5-7B bf16, compile on, graphs on | 24 | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B bf16, compile on, graphs off | 24 | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B bf16, TP=2 | 24 | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B FP8, per-token dynamic scales | 24 | yes | yes | yes | IDENTICAL |
+| Qwen3-8B-FP8, blockwise | 24 | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B FP8, per-tensor dynamic scales, compile on, graphs on | 24 | yes | yes | yes | IDENTICAL |
+| Qwen2.5-7B FP8, per-tensor dynamic scales, compile on, graphs off | 12 | yes | no | no | DIFFERS |
+| Qwen2.5-7B FP8, per-tensor dynamic scales, compile off, graphs on | 12 | yes | no | no | DIFFERS |
+| Qwen2.5-7B FP8, per-tensor dynamic scales, compile off, graphs off | 12 | yes | no | no | DIFFERS |
+| Qwen1.5-MoE-A2.7B bf16, compile on, graphs on | 24 | yes | no, from step 0 | no | DIFFERS |
+| Qwen1.5-MoE-A2.7B bf16, compile on, graphs off | 12 | yes | yes | yes | IDENTICAL |
+| Qwen1.5-MoE-A2.7B bf16, compile off, graphs on | 12 | yes | yes | yes | IDENTICAL |
+| Qwen1.5-MoE-A2.7B bf16, compile off, graphs off | 12 | yes | yes | yes | IDENTICAL |
 
-For dense models the consequence is direct: a verifier can re-run one
-request bit for bit with length-matched filler in place of the
-neighbours, and does not need the neighbours' tokens, only the shape
-history. The MoE model fails from the first step, as predicted for
-exception X1; the per-tensor FP8 prediction (X2) did not hold on this
-model, which is recorded as a failed prediction below.
+The per-tensor arm was verified to run
+`QuantKey(f8e4m3fn, scale(f32, dynamic, per_tensor))` activations, and the
+`compile off` arms are `compilation_config={"mode": 0}`; `graphs off` is
+`enforce_eager`. In the arms where the hook could observe them (the
+`compile off` arms, since `torch.compile` inlines the model past module
+hooks), the first-layer per-expert token counts of the MoE model changed
+between original and dummy batches in every run, and the first dynamic
+per-tensor FP8 scale of each pass changed between original and dummy
+batches in every run.
+
+For dense models on the default engine the consequence is direct: a
+verifier can re-run one request bit for bit with length-matched filler in
+place of the neighbours, and does not need the neighbours' tokens, only
+the shape history. That held for bf16, FP8 per-token and FP8 blockwise,
+with and without CUDA graphs, and at TP=2.
+
+**Two results that depend on the compile and graph settings, and are
+not explained.** Prediction P4 said per-tensor dynamic FP8 would couple a
+request to its neighbours through the batch-wide scale, and that MoE
+routing would couple it through per-expert counts. Both mechanisms were
+observed to operate: the scale changes, the counts change. But the
+coupling reached the target's bits in opposite settings. Per-tensor FP8
+changed the target's output whenever `torch.compile` or CUDA graphs was
+off, and not when both were on, in 12 of 12 runs. The MoE model changed
+the target's output only when both were on, in 24 of 24 runs, and not
+when either was off. The census did not establish what the combination
+of `torch.compile` and CUDA graphs does to the per-tensor quantisation
+path or to the fused MoE path in vLLM 0.28.0; both are recorded as
+unexplained. A verifier facing either configuration should treat the
+default engine's behaviour, both on, as the one that applies: per-tensor
+FP8 did not couple there, the MoE model did.
 
 **E5, cross-SKU.** The same 37-step trajectory on an H100 and on an
 RTX PRO 6000: hidden hashes identical in 0 of 37 steps, argmax identical
 in 9 of 37. P5 DIFFERS, as predicted. Nothing in this repository implies
 cross-SKU identity.
-
-**Predictions that failed.** P4 said per-tensor dynamic FP8 would couple
-the target to its neighbours through the batch-wide scale. It did not:
-with the forced per-tensor path the target's bits were unchanged by
-dummy neighbours in 12 of 12 runs. The mechanism arm below records the
-scale itself.
 
 ## Layout
 
