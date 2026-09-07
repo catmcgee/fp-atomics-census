@@ -4,7 +4,7 @@ One command per experiment and arm; every command takes a results
 directory. Install the hook once per machine and per virtualenv:
 
 ```
-pip install -e probes/shape/shape_hook      # registers the vllm.general_plugins entry point
+pip install -e probes/shape/shape_hook_pkg      # registers the vllm.general_plugins entry point
 ```
 
 The hook is inert unless `SHAPE_HOOK_OUT` is set, which the runners do.
