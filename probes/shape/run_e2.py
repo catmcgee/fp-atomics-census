@@ -18,7 +18,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from common import add_common_args, arm_name, engine_kwargs, env_with_hook, environment, history_key, mixed_prompts, outputs_record, read_hook, steps_by_request, write_json
+from shape_common import add_common_args, arm_name, engine_kwargs, env_with_hook, environment, history_key, mixed_prompts, outputs_record, read_hook, steps_by_request, write_json
 
 
 def main() -> int:

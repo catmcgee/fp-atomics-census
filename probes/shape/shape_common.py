@@ -10,8 +10,15 @@ from collections import defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent))  # probes/common.py for the environment record
-from common import environment  # noqa: E402
+
+
+def environment() -> dict:
+    """The environment record the other probes write (probes/common.py), loaded under a distinct name."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("probes_common", HERE.parent / "common.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.environment()
 
 PROMPTS = [
     "The verifier re-runs a sampled computation and compares hashes.",

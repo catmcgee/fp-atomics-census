@@ -11,7 +11,7 @@ import json
 import sys
 from pathlib import Path
 
-from common import write_json
+from shape_common import write_json
 
 
 def main(argv: list[str]) -> int:
