@@ -158,8 +158,9 @@ performance.
 ## Runtime results on one stack
 
 The probes were run on 6 and 7 September 2026 on RunPod: one H100 SXM, a
-two-H100 SXM pod, and one B200, all with driver 580.1xx, CUDA 13.0, torch
-2.13.0, vLLM 0.28.0, SGLang 0.5.19 and FlashInfer 0.6.16. The JSON reports
+two-H100 SXM pod and one B200 (driver 580.1xx, CUDA 13.0, torch 2.13.0,
+vLLM 0.28.0, SGLang 0.5.19, FlashInfer 0.6.16), and an RTX PRO 6000 for
+the SM120 rows (driver 595.91, torch 2.14.0, FlashInfer 0.6.18). The JSON reports
 are in `probes/results/`, one directory per stack; the table below is
 condensed from `python probes/report.py`, and every inventory row a probe
 bears on carries the verdict in its `runtime_evidence` field. Each probe
@@ -196,6 +197,9 @@ least one repeat was not bitwise identical to the first.
 | vLLM on B200: Qwen3-8B-FP8 through the FlashInfer FP8 path; Qwen3-8B bf16 with the batch-invariant mode; bf16 MoE on the Triton backend with one sequence per batch | identical | the Blackwell defaults are clean once composition is pinned |
 | vLLM on B200, stock scheduler: Qwen3-8B bf16 (FlashInfer attention backend); bf16 MoE | 1 of 12 repeats per process differed by 2 to 5 logprob values; 1 of 6 differed in generation length | batch composition again; the B200 FlashInfer CUTLASS MoE backend refuses unquantised weights, so flashinfer-0001 was not reached through vLLM |
 | SGLang on B200: bf16 (default attention is `trtllm_mha`), FP8 blockwise default | identical in 23 of 24 and 12 of 12 | sglang-0267: the TensorRT-LLM attention cubins gave no difference in 24 engine runs |
+| FlashInfer SM120 CuTe DSL fused MoE on an RTX PRO 6000 (NVFP4 weights, bf16 output), 16 to 4096 tokens, top-k 2, 4 and 8 | differs in every configuration, by 1 to 2 bf16 ULPs in about 70 percent of outputs | flashinfer-0006 to 0008, 0010, 0011 confirmed; the kernel output matches a bf16 reference to NVFP4 quantisation error (correlation 0.97). Differences at top-k 2 mean the order dependence is inside the grouped GEMM's bf16 atomic accumulation, not only the per-token finalize |
+| cuBLASLt on the RTX PRO 6000, 60 shapes bf16 | identical on all, although the heuristic chose `REDUCTION_SCHEME_INPLACE`, the atomic scheme, on some shapes | the one configuration where cuBLASLt's own documentation allows order to vary; 8 runs saw none |
+| PyTorch operators, FlashInfer renormalisers and radix top-k on the RTX PRO 6000 | same verdicts as on H100 and B200 | third stack |
 | SGLang FP8 blockwise | identical | sglang-0011 is unreachable: 0.5.19 builds its CUTLASS FP8 GEMM for SM120 only and routes Hopper to DeepGEMM or Triton |
 | FlashInfer all-reduce fusion, NVLink multicast, cuDNN | not run | the fusion probe fails in workspace setup; multicast is blocked by the container; no cuDNN path exercised |
 

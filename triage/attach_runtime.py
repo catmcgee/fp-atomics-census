@@ -79,8 +79,7 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^vllm_zephyr_lora_split_k_x6$", ["vllm-0018"], "LoRA adapter with the default split-K shrink, 6 repeats"),
     (r"^moe_wna16_cuda_", ["vllm-0014"], "moe_wna16 CUDA kernel on random 4-bit weights, 16 tokens over 8 experts (tokens per expert <= 6 selects it)"),
     (r"^moe_wna16_triton_", ["vllm-0014"], "the Triton path of the same method at 64 tokens over 8 experts, as a control"),
-    (r"^fi_b12x_moe_nvfp4_tokens\d+_topk2$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010"], "SM120 CuTe DSL MoE, NVFP4, top-k 2: two addends per row commute"),
-    (r"^fi_b12x_moe_nvfp4_tokens\d+_topk[48]$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010"], "SM120 CuTe DSL MoE, NVFP4, top-k 4 or 8: the bf16x2 scatter-add finalize with three or more addends per row"),
+    (r"^fi_b12x_moe_nvfp4_tokens\d+_topk\d+$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010", "flashinfer-0011"], "SM120 CuTe DSL MoE, NVFP4 weights, bf16 output: run-to-run differences of 1 to 2 bf16 ULPs in most outputs at every token count and top-k, including top-k 2, so the order dependence sits in the bf16 atomic accumulation of the GEMM itself, not only in the per-token finalize; the output agrees with a bf16 reference to NVFP4 quantisation error"),
     (r"^sglang_qwen3_8b_fp8_blockwise_default$", ["sglang-0011"], "FP8 block-quantised model; the release wheel routes Hopper to DeepGEMM, and its CUTLASS FP8 GEMM is SM120-only, so the stream-K kernel is not reached"),
 ]
 

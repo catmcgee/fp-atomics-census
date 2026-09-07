@@ -1,0 +1,90 @@
+{
+  "probe": "cublaslt_linear_m32_n12288_k4096_bf16",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.14.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92400,
+    "packages": {
+      "vllm": null,
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.18.post1",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.8.0",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "b",
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "sm": "120",
+    "sm_count": 188,
+    "gpu_count": 1,
+    "driver": "595.91.07"
+  },
+  "extra": {
+    "shape": [
+      32,
+      12288,
+      4096
+    ],
+    "dtype": "bf16",
+    "variant": "linear",
+    "heuristic": {
+      "entries": [
+        {
+          "api": "cublasLtMatmul",
+          "algoId": "21",
+          "tile": "MATMUL_TILE_128x64",
+          "stages": "MATMUL_STAGES_64x4",
+          "reductionScheme": "REDUCTION_SCHEME_INPLACE",
+          "numSplitsK": "3",
+          "workSpaceSizeInBytes": "1048576"
+        }
+      ],
+      "log_lines": 25,
+      "child_rc": 0,
+      "child_stderr_tail": ""
+    }
+  },
+  "runs": [
+    {
+      "run": 1,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 2,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 3,
+      "identical": true,
+      "diffs": []
+    }
+  ],
+  "first_hash": "4733f42bfac939156d8d9bb647390fc810eabcb10f99324c1a832988c2ce3b3d",
+  "verdict": "bitwise-identical"
+}

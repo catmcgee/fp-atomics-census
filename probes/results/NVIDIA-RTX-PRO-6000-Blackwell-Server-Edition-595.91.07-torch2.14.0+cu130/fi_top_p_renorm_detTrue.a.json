@@ -1,0 +1,66 @@
+{
+  "probe": "fi_top_p_renorm_detTrue",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.14.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92400,
+    "packages": {
+      "vllm": null,
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.18.post1",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.8.0",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "a",
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "sm": "120",
+    "sm_count": 188,
+    "gpu_count": 1,
+    "driver": "595.91.07"
+  },
+  "extra": {},
+  "runs": [
+    {
+      "run": 1,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 2,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 3,
+      "identical": true,
+      "diffs": []
+    }
+  ],
+  "first_hash": "116dc88512d3b3f1d659d0be2a4c080674eb56cdb9407ea5acd85645496a6ac0",
+  "verdict": "bitwise-identical"
+}

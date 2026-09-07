@@ -1,0 +1,88 @@
+{
+  "probe": "cublaslt_linear_m128_n4096_k4096_bf16",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.14.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92400,
+    "packages": {
+      "vllm": null,
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.18.post1",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.8.0",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "b",
+    "pinned_shas": {
+      "vllm": "5769a7382cb1",
+      "sglang": "b41552334d46",
+      "flashinfer": "c0d920d3270c",
+      "flash-attention": "1f7ce2f7cb50",
+      "marlin": "1f25790bdd49",
+      "DeepGEMM": "1f6f3f378920",
+      "DeepEP": "099d5f2bad48",
+      "cutlass": "4cbaaae4c70d"
+    },
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "sm": "120",
+    "sm_count": 188,
+    "gpu_count": 1,
+    "driver": "595.91.07"
+  },
+  "extra": {
+    "shape": [
+      128,
+      4096,
+      4096
+    ],
+    "dtype": "bf16",
+    "variant": "linear",
+    "heuristic": {
+      "entries": [
+        {
+          "api": "cublasLtMatmul",
+          "algoId": "21",
+          "tile": "MATMUL_TILE_64x64",
+          "stages": "MATMUL_STAGES_32x6",
+          "workSpaceSizeInBytes": "1048576"
+        }
+      ],
+      "log_lines": 25,
+      "child_rc": 0,
+      "child_stderr_tail": ""
+    }
+  },
+  "runs": [
+    {
+      "run": 1,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 2,
+      "identical": true,
+      "diffs": []
+    },
+    {
+      "run": 3,
+      "identical": true,
+      "diffs": []
+    }
+  ],
+  "first_hash": "c0096290973777d5e3243b6b5b112d180ee74e01251d0e42fe9304002f12bee1",
+  "verdict": "bitwise-identical"
+}
