@@ -1,0 +1,39 @@
+Marlin atomic-add reduction is always enabled for n < 2048, k >= 2048 (dead `if not True:` guard) and makes GPTQ/AWQ inference non-deterministic, including under --enable-deterministic-inference
+
+## Summary
+
+`should_use_atomic_add_reduce` in `python/sglang/srt/layers/quantization/marlin_utils.py` contains
+
+```python
+    # disable atomicAdd reduce by default,
+    # one can enable it with VLLM_MARLIN_USE_ATOMIC_ADD=1
+    # TODO: Need to add sglang's MARLIN_USE_ATOMIC_ADD: bool = False
+    if not True:
+        maybe_warn_marlin_atomic_add_env()
+        return False
+```
+
+so the intended "off by default" branch is dead and `use_atomic_add=True` is passed to the Marlin kernel for every projection with `n < 2048` and `k >= 2048` on CUDA. The kernel then reduces K-slices into the output with `atomicAdd` on half2/bf162, whose order depends on CTA scheduling. vLLM gates the same kernel behind `VLLM_MARLIN_USE_ATOMIC_ADD`, default off.
+
+The condition is evaluated on the fused, tensor-parallel-sharded weight, so a 7B model at TP=1 never hits it (fused qkv and gate_up have n >= 2048), which is probably why it went unnoticed. It does hit for the down projection of small models and for sharded projections at TP >= 2.
+
+## Reproduction (sglang 0.5.19, H100 SXM, driver 580.126, torch 2.13.0+cu130)
+
+Greedy decoding, 16 fixed prompts, 32 new tokens, radix cache disabled, top-5 logprobs compared bit for bit across 6 repeats in each of 2 fresh processes.
+
+| Model | Result |
+|---|---|
+| Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4, TP=1 | identical, 12/12 (no projection meets the condition) |
+| Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4, TP=1 (down_proj n=1536, k=8960) | differs in 12/12 repeats; 30 to 60 of 512 sampled tokens change; first-run hashes differ between processes |
+| Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4, TP=2 (o_proj shard n=1792, k=3584) | differs in 3/12 repeats |
+| Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 with `--enable-deterministic-inference` | still differs in 12/12 repeats |
+
+Kernel-level control (vLLM's `ops.marlin_gemm` on random 4-bit weights, m=16, n=512, k=3584, and three other shapes, fp16 and bf16, 6 runs each): `use_atomic_add=False` is bitwise identical every time; `use_atomic_add=True` differs every time, with or without `use_fp32_reduce=True` (the pair `apply_gptq_marlin_linear` passes).
+
+## Expected
+
+Atomic-add reduction off unless explicitly enabled, matching the comment and vLLM's behaviour; at minimum, forced off when `--enable-deterministic-inference` is set.
+
+## Suggested fix
+
+Replace `if not True:` with a real switch, e.g. an `SGLANG_MARLIN_USE_ATOMIC_ADD` env (default false), and have `enable_deterministic_inference` force it false.
