@@ -27,6 +27,8 @@ def load(files: list[Path]) -> list[dict]:
 def summarise(rows: list[dict]) -> dict:
     per: dict[str, Counter] = defaultdict(Counter)
     for r in rows:
+        if r.get("definition_only"):
+            continue
         per[r["engine"]][r["class"]] += 1
     findings = [r for r in rows if not r.get("definition_only")]
     inference = [r for r in findings if r["path"].get("direction") != "backward"]
@@ -41,7 +43,7 @@ def summarise(rows: list[dict]) -> dict:
     low = [r for r in rows if r["confidence"] == "low"]
     unchecked = [r for r in default_a if not r.get("cross_checked")]
     return {
-        "rows": len(rows), "per_engine": {e: dict(per[e]) for e in ENGINE_ORDER if e in per},
+        "rows": len(rows), "sites": len(findings), "per_engine": {e: dict(per[e]) for e in ENGINE_ORDER if e in per},
         "totals": dict(sum((per[e] for e in per), Counter())),
         "definition_only": sum(1 for r in rows if r.get("definition_only")),
         "default_path_A_inference": [r["id"] for r in default_a],

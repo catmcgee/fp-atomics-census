@@ -16,7 +16,7 @@ routes it through cublasGemmEx, which reaches cuBLASLt as cublasLtTSTMatmul
 with no workspace) and `F.linear(a, w, bias)` (the cublasLtMatmul path with a
 bias epilogue and a workspace), because the engines' linear layers use both.
 
-Class C rows: vllm-0180, vllm-0181, sglang-0264 to sglang-0266,
+Related ordinary GEMM class C rows (not the FP8 scaled_mm site): vllm-0180, sglang-0264 to sglang-0266,
 flashinfer-0040, flashinfer-0041, DeepGEMM-0009, flash-attention-0014.
 """
 from __future__ import annotations
@@ -78,7 +78,7 @@ def heuristic_from_log(m: int, n: int, k: int, dtype: str, variant: str) -> dict
             entry = {"api": api.group(1) if api else "?"}
             entry.update({key: val for key, val in re.findall(r"(\w+)=([\w.:-]+)", line) if key in _LOG_KEYS})
             entries.append(entry)
-    return {"entries": entries[:8], "log_lines": len(text.splitlines()), "child_rc": proc.returncode,
+    return {"relation": "separate-process diagnostic; not the measured call kernel identity", "entries": entries[:8], "log_lines": len(text.splitlines()), "child_rc": proc.returncode,
             "child_stderr_tail": proc.stderr[-400:] if proc.returncode else ""}
 
 

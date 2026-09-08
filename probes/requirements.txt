@@ -1,6 +1,8 @@
-# Installed on the probe machine on top of the RunPod PyTorch image. Versions
-# are not pinned here on purpose: the reports record what was installed, and
-# the point of the probes is to test a named stack, not to prescribe one.
+# Exploratory GPU dependencies, not a historic-stack reconstruction lock.
+# Install engines separately when their dependency constraints conflict.
+# Legacy observed versions and missing provenance are in probes/stacks.json.
+# For a new campaign, resolve explicit versions for the chosen GPU image,
+# archive pip freeze, model revisions and binary hashes with the reports.
 vllm
 flashinfer-python
 sglang[all]

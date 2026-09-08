@@ -5,3 +5,5 @@ __pycache__/
 repos/*
 !repos/.gitignore
 candidates/*.raw.jsonl
+
+*.egg-info/

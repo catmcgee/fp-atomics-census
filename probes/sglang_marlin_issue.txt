@@ -1,4 +1,4 @@
-Marlin atomic-add reduction is always enabled for n < 2048, k >= 2048 (dead `if not True:` guard) and makes GPTQ/AWQ inference non-deterministic, including under --enable-deterministic-inference
+Marlin atomic-add reduction is always enabled for n < 2048, k >= 2048 (dead `if not True:` guard) and coincides with differences in selected GPTQ runs, including under --enable-deterministic-inference
 
 ## Summary
 
@@ -15,11 +15,11 @@ Marlin atomic-add reduction is always enabled for n < 2048, k >= 2048 (dead `if 
 
 so the intended "off by default" branch is dead and `use_atomic_add=True` is passed to the Marlin kernel for every projection with `n < 2048` and `k >= 2048` on CUDA. The kernel then reduces K-slices into the output with `atomicAdd` on half2/bf162, whose order depends on CTA scheduling. vLLM gates the same kernel behind `VLLM_MARLIN_USE_ATOMIC_ADD`, default off.
 
-The condition is evaluated on the fused, tensor-parallel-sharded weight, so a 7B model at TP=1 never hits it (fused qkv and gate_up have n >= 2048), which is probably why it went unnoticed. It does hit for the down projection of small models and for sharded projections at TP >= 2.
+The condition is evaluated on the fused, tensor-parallel-sharded weight, so a 7B model at TP=1 never hits it (fused qkv and gate_up have n >= 2048). It does hit for the down projection of small models and for sharded projections at TP >= 2.
 
 ## Reproduction (sglang 0.5.19, H100 SXM, driver 580.126, torch 2.13.0+cu130)
 
-Greedy decoding, 16 fixed prompts, 32 new tokens, radix cache disabled, top-5 logprobs compared bit for bit across 6 repeats in each of 2 fresh processes.
+Greedy decoding, 16 fixed prompts, 32 new tokens, radix cache disabled, top-5 logprobs compared bit for bit across 6 comparisons against a baseline in each of 2 fresh processes (14 total evaluations). Legacy hashes flatten top-5 values without vocabulary labels; sampled token IDs are retained. No AWQ model was measured here.
 
 | Model | Result |
 |---|---|
@@ -28,7 +28,11 @@ Greedy decoding, 16 fixed prompts, 32 new tokens, radix cache disabled, top-5 lo
 | Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4, TP=2 (o_proj shard n=1792, k=3584) | differs in 3/12 repeats |
 | Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 with `--enable-deterministic-inference` | still differs in 12/12 repeats |
 
-Kernel-level control (vLLM's `ops.marlin_gemm` on random 4-bit weights, m=16, n=512, k=3584, and three other shapes, fp16 and bf16, 6 runs each): `use_atomic_add=False` is bitwise identical every time; `use_atomic_add=True` differs every time, with or without `use_fp32_reduce=True` (the pair `apply_gptq_marlin_linear` passes).
+Kernel-level control (vLLM's `ops.marlin_gemm` on random 4-bit weights, m=16, n=512, k=3584, and three other shapes, fp16 and bf16, six comparisons plus a baseline per process): `use_atomic_add=False` is bitwise identical every time; `use_atomic_add=True` differs every time, with or without `use_fp32_reduce=True` (the pair `apply_gptq_marlin_linear` passes).
+
+## Limits of the evidence
+
+The source guard is demonstrably dead. The direct operator experiment uses vLLM's Marlin implementation and different inputs; it is not a same-engine SGLang ablation. End-to-end differences may include scheduling effects. To isolate the contribution, repeat SGLang with the same installed build, model/weights, prompt IDs and forced schedule, changing only the atomic guard and recording actual dispatch. This control remains unrun. The numerical results above are evidence on the named stack, not proof for every shape or build.
 
 ## Expected
 

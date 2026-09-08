@@ -1,0 +1,1 @@
+{"candidate_id": "marlin-c00001", "sha": "1f25790bdd49fba53106164a24666dade68d7c90", "file": "marlin/marlin_cuda_kernel.cu", "line": 184, "status": "linked", "inventory_ids": ["marlin-0002"], "reason": "Explicit inventory provenance link; see that row's source evidence."}

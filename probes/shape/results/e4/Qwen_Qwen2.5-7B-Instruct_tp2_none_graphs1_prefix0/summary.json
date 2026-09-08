@@ -46,6 +46,7 @@
   },
   "repeats": 12,
   "target_slot": 0,
+  "runs_joined_to_hook": 24,
   "shape_histories_equal_across_all_runs": true,
   "within_kind": {
     "original": {
@@ -66,6 +67,28 @@
     "logprobs": true
   },
   "moe_first_layer_expert_counts_changed": null,
+  "fp8_first_scale_changed_between_kinds": null,
   "verdict_P3": "IDENTICAL",
-  "first_divergent_step": null
+  "first_divergent_step": null,
+  "distinct_hidden_sequences_per_kind": {
+    "original": 1,
+    "dummy": 1
+  },
+  "distinct_shape_histories_per_kind": {
+    "original": 1,
+    "dummy": 1
+  },
+  "steps_compared": 32,
+  "runs_missing_final_record": 0,
+  "analysis_schema": 2,
+  "analyser_sha256": "4d40ef34ffee9c674fbd64ab0dccab21bb415d44b7b32de6278f2c31e0aee84a",
+  "input_sha256": {
+    "hook/rank0.jsonl": "8c2620d8a386ee56a2d7572b338e8add94d14545f04ac446527b224ab024c9a2",
+    "hook/rank1.jsonl": "30feb71d2e8146d1037222d8b1d7d99a8d9eca8feac0302d7ea756fd4a915a32",
+    "runs.json": "22aecb29297fce440d0d4c654345550e411e1ee80ec2a1f7634c8ad34658a31f"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay.",
+  "validation_errors": [],
+  "claim_scope": "Selected target slot, prompts, 32-token legacy continuations, prefix caching off and controlled synchronous arrivals; no proof for other positions or histories.",
+  "mechanism_isolated": false
 }

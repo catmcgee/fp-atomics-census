@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import json
 import os
 import sys
 from collections import Counter
@@ -25,7 +24,7 @@ from pathlib import Path
 
 os.environ.setdefault("VLLM_ENABLE_V1_MULTIPROCESSING", "0")
 
-from shape_common import real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, random_token_prompt, read_hook, slot_of, steps_by_request, write_json
+from shape_common import analysis_metadata, saved_env, trace_errors, record_run, real_steps, add_common_args, arm_name, engine_kwargs, env_with_hook, environment, mixed_prompts, outputs_record, random_token_prompt, read_hook, slot_of, steps_by_request, write_json
 
 
 def main() -> int:
@@ -36,7 +35,9 @@ def main() -> int:
     if "--analyse" in sys.argv:
         d = Path(sys.argv[sys.argv.index("--analyse") + 1])
         runs = json.loads((d / "runs.json").read_text())
-        return analyse(d, d.name, max(r["repeat"] for r in runs) + 1, 0)
+        meta = json.loads((d / "run.json").read_text()) if (d / "run.json").exists() else {}
+        target = meta.get("args", {}).get("target", runs[0]["request_ids"].index(runs[0]["target_rid"]))
+        return analyse(d, d.name, max(r["repeat"] for r in runs) + 1, target)
     args = ap.parse_args()
     args.prefix_caching = 0
     out = args.out / arm_name(args)
@@ -51,6 +52,9 @@ def main() -> int:
     tok = llm.get_tokenizer()
     sp = SamplingParams(temperature=0.0, max_tokens=args.max_tokens, logprobs=5, ignore_eos=True)
     prompts = mixed_prompts()
+    if not 0 <= args.target < len(prompts):
+        raise ValueError("target slot outside batch")
+    record_run(out, args, llm, prompts)
     ids = [tok.encode(p) for p in prompts]
     original = [TokensPrompt(prompt_token_ids=i) for i in ids]
     runs = []
@@ -74,26 +78,36 @@ def analyse(out: Path, arm: str, repeats: int, target: int) -> int:
     runs = json.loads((out / "runs.json").read_text())
     steps = real_steps(read_hook(out / "hook"))
     by_req = steps_by_request(steps)
+    errors = trace_errors(steps)
+    if any("error" in s for s in read_hook(out / "hook")):
+        errors.append("hook recorded instrumentation errors")
+    expected_ids = []
     step_moe = {s["step"]: s.get("moe_expert_counts_first_layer") for s in steps if "step" in s}
     step_fp8 = {s["step"]: s.get("fp8_scale_first_call") for s in steps if "step" in s}
     for r in runs:
+        expected_ids.extend(slot_of(rid) for rid in r["request_ids"])
+        if r["request_ids"].index(r["target_rid"]) != target:
+            errors.append("target slot mismatch")
         seq = by_req.get(slot_of(r["target_rid"]), [])
+        if not seq or len(seq) != len(r["target"]["tokens"]) or not r["target"].get("hash"):
+            errors.append(f"incomplete target {r['target_rid']}")
         r["fp8_scales"] = [step_fp8.get(st) for st, _, _, _ in seq]
         r["target_hidden_hashes"] = [h for _, _, h, _ in seq]
         r["target_argmax"] = [a for _, _, _, a in seq]
         r["shape_history"] = [sv for _, sv, _, _ in seq]
         r["moe_counts_first_step"] = step_moe.get(seq[0][0]) if seq else None
     by_kind = {k: [r for r in runs if r["kind"] == k] for k in ("original", "dummy")}
-    # The record of a run's final step can be flushed after the log is read (it is
-    # written at the next sampling phase), so compare on the common prefix and
-    # report how many runs are short.
-    n_common = min(len(r["target_hidden_hashes"]) for r in runs) if runs else 0
-    short_runs = sum(1 for r in runs if len(r["target_hidden_hashes"]) > n_common or len(r["target_hidden_hashes"]) < max(len(x["target_hidden_hashes"]) for x in runs))
-    for r in runs:
-        r["target_hidden_hashes"] = r["target_hidden_hashes"][:n_common]
-        r["target_argmax"] = r["target_argmax"][:n_common]
-        r["shape_history"] = r["shape_history"][:n_common]
-        r["fp8_scales"] = r["fp8_scales"][:n_common]
+    lengths = [len(r["target_hidden_hashes"]) for r in runs]
+    if not lengths or len(set(lengths)) != 1:
+        errors.append("target trace lengths differ or empty run set")
+    if len(set(expected_ids)) != len(expected_ids) or set(expected_ids) != set(by_req):
+        errors.append("duplicate or mismatched hook/output requests")
+    if any(len(rs) != repeats or {r["repeat"] for r in rs} != set(range(repeats)) for rs in by_kind.values()):
+        errors.append("missing, duplicate or misnumbered arm repeats")
+    if repeats < 2:
+        errors.append("fewer than two repeats per kind")
+    n_common = lengths[0] if lengths and len(set(lengths)) == 1 else 0
+    short_runs = sum(len(r["target_hidden_hashes"]) != len(r["target"]["tokens"]) for r in runs)
     def all_same(items):
         return len({str(x) for x in items}) == 1
     within = {k: {"hidden": all_same([r["target_hidden_hashes"] for r in rs]), "output": all_same([r["target"]["hash"] for r in rs]), "shape": all_same([r["shape_history"] for r in rs])} for k, rs in by_kind.items()}
@@ -108,21 +122,28 @@ def analyse(out: Path, arm: str, repeats: int, target: int) -> int:
     if any(any(v is not None for v in r["fp8_scales"]) for r in runs):
         fp8_changed = not all_same([r["fp8_scales"] for r in runs])
     verdict = "IDENTICAL" if shapes_equal and all(across.values()) else "DIFFERS"
-    if joined == 0:
-        verdict += " (outputs only: no hook record joined)"
-    env = json.loads((out / "summary.json").read_text()).get("env") if (out / "summary.json").exists() else None
-    summary = {"experiment": "E4", "arm": arm, "env": env or environment(), "repeats": repeats, "target_slot": target, "runs_joined_to_hook": joined,
+    if errors:
+        verdict = "INVALID"
+    elif not shapes_equal:
+        verdict = "NOT COMPARABLE"
+    env = saved_env(out)
+    summary = {"experiment": "E4", "arm": arm, "env": env, "repeats": repeats, "target_slot": target, "runs_joined_to_hook": joined,
                "shape_histories_equal_across_all_runs": shapes_equal, "within_kind": within, "target_across_kinds": across,
                "moe_first_layer_expert_counts_changed": moe_changed, "fp8_first_scale_changed_between_kinds": fp8_changed, "verdict_P3": verdict,
-               "first_divergent_step": next((i for i, (x, y) in enumerate(zip(by_kind["original"][0]["target_hidden_hashes"], by_kind["dummy"][0]["target_hidden_hashes"])) if x != y), None)}
+               "first_divergent_step": next((i for i in range(n_common)
+                    if len({r["target_hidden_hashes"][i] for r in runs}) > 1), None)}
     summary["distinct_hidden_sequences_per_kind"] = {k: len({json.dumps(r["target_hidden_hashes"]) for r in rs}) for k, rs in by_kind.items()}
     summary["distinct_shape_histories_per_kind"] = {k: len({json.dumps(r["shape_history"]) for r in rs}) for k, rs in by_kind.items()}
     summary["steps_compared"] = n_common
     summary["runs_missing_final_record"] = short_runs
+    summary.update(analysis_metadata(out, [out / "runs.json", *sorted((out / "hook").glob("rank*.jsonl"))]))
+    summary["validation_errors"] = sorted(set(errors))
+    summary["claim_scope"] = "Selected target slot, prompts, 32-token legacy continuations, prefix caching off and controlled synchronous arrivals; no proof for other positions or histories."
+    # Correlation with a mechanism observable is not an intervention on it.
+    summary["mechanism_isolated"] = False
     write_json(out / "summary.json", summary)
-    write_json(out / "runs.json", runs)
     print(f"E4 {arm}: P3 {verdict}; joined {joined}; shapes equal {shapes_equal}; across kinds {across}; moe counts changed {moe_changed}; fp8 scale changed {fp8_changed}; distinct hidden seqs {summary['distinct_hidden_sequences_per_kind']}; steps compared {n_common}; short runs {short_runs}")
-    return 0
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":

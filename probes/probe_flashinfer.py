@@ -5,7 +5,8 @@
 attention: BatchDecodeWithPagedKVCacheWrapper with the FA2 template (expected
     identical) and, on sm90+/sm100, the trtllm-gen backend (flashinfer-0038, class C).
 moe: cutlass_fused_moe with use_fused_finalize=True (flashinfer-0001) and False,
-    at top-k 2, 4 and 8; order can only matter from three addends per row.
+    at top-k 2, 4 and 8. Two fixed finite rounded contributions onto zero
+    commute; this does not constrain upstream GEMM behaviour.
 renorm: top_p_renorm_probs with is_deterministic False and True (flashinfer-0014)
     and top_k_renorm_probs with a vocabulary large enough to span several CTAs
     (flashinfer-0015).
@@ -95,8 +96,7 @@ def b12x_moe() -> bool:
 
     Weight preparation follows benchmarks/routines/moe.py (backend "b12x"):
     NVFP4 weights with swizzled block scales converted to the MMA layout, bf16
-    activations, external top-k routing. Token counts pick the micro, static
-    and dynamic backends; top-k 2, 4 and 8 vary the number of reduction-adds
+    activations, external top-k routing. Backend selection is not instrumented; top-k 1, 2, 4 and 8 vary the number of reduction-adds
     per output row in the bf16x2 scatter-add finalize.
     """
     import flashinfer
@@ -121,7 +121,7 @@ def b12x_moe() -> bool:
     for tokens in (16, 512, 4096):
         x = torch.randn(tokens, hidden, dtype=torch.bfloat16, device=device) / 10
         logits = torch.randn(tokens, experts, device=device)
-        for topk_ in (2, 4, 8):
+        for topk_ in (1, 2, 4, 8):
             weights, ids = torch.topk(torch.softmax(logits, -1), topk_, dim=-1)
             ids = ids.to(torch.int32); weights = weights.to(torch.float32)
             # bf16 reference from the unquantised weights, to check the kernel output is sane
@@ -132,7 +132,7 @@ def b12x_moe() -> bool:
                 if rows.numel() == 0:
                     continue
                 h = x[rows].float() @ w1_bf16[e].float().t()
-                u, g = h[:, :inter], h[:, inter:]  # b12x FC1 layout is [up; gate] (checked against the kernel: corr 0.97)
+                u, g = h[:, :inter], h[:, inter:]  # FC1 layout [up; gate]; this unquantised reference is diagnostic only
                 act = torch.nn.functional.silu(g) * u
                 y = act @ w2_bf16[e].float().t()
                 wsum = (weights[rows] * sel[rows]).sum(dim=1, keepdim=True)
@@ -146,9 +146,9 @@ def b12x_moe() -> bool:
             first = run()[0].float()
             err = (first - ref).abs().max().item() / (ref.abs().max().item() + 1e-6)
             corr = torch.corrcoef(torch.stack([first.flatten(), ref.flatten()]))[0, 1].item()
-            print(f"  sanity tokens={tokens} topk={topk_}: rel max err vs bf16 reference = {err:.3f} corr={corr:.3f} (NVFP4 weights and activations, so ~0.2 is expected)")
+            print(f"  sanity tokens={tokens} topk={topk_}: rel max err vs bf16 reference = {err:.3f} corr={corr:.3f} (unquantised diagnostic; no validated quantisation error bound)")
             ok &= run_twice(f"fi_b12x_moe_nvfp4_tokens{tokens}_topk{topk_}", run,
-                            extra={"tokens": tokens, "topk": topk_, "experts": experts, "rel_max_err_vs_reference": err, "corr_vs_reference": corr})
+                            extra={"tokens": tokens, "topk": topk_, "experts": experts, "rel_max_err_vs_reference": err, "corr_vs_reference": corr, "reference_status": "unquantised diagnostic, correctness not established", "selected_backend": None, "cause_isolated": False})
     return ok
 
 

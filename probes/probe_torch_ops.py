@@ -1,4 +1,4 @@
-"""Settle the PyTorch library operators the census could not classify.
+"""Exercise generic PyTorch operators; this does not confirm engine call sites.
 
     python probes/probe_torch_ops.py
 
@@ -28,8 +28,8 @@ def main() -> int:
     weights = torch.rand(1 << 20, device="cuda")
     results = []
     for det in (False, True):
-        torch.use_deterministic_algorithms(det, warn_only=True)
-        tag = "det" if det else "default"
+        torch.use_deterministic_algorithms(det, warn_only=False)
+        tag = "det_strict" if det else "default"
         results.append(run_twice(f"index_add_{tag}", lambda: [torch.zeros(n_seg, hidden, device="cuda").index_add_(0, seg, x)]))
         results.append(run_twice(f"scatter_add_{tag}", lambda: [torch.zeros(n_seg, hidden, device="cuda").scatter_add_(0, seg[:, None].expand_as(x), x)]))
         results.append(run_twice(f"cumsum_float_{tag}", lambda: [torch.cumsum(probs, dim=-1)]))

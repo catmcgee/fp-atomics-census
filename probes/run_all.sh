@@ -8,6 +8,7 @@
 #   bash probes/run_all.sh engines    # engine probes only
 #   bash probes/run_all.sh cublaslt   # the cuBLASLt sweeps only
 set -u
+failures=0
 cd "$(dirname "$0")"
 PY=${PYTHON:-python}
 MODE=${1:-full}
@@ -16,7 +17,9 @@ export CUBLAS_WORKSPACE_CONFIG=${CUBLAS_WORKSPACE_CONFIG:-}
 twice() {  # run a probe under RUN_TAG=a then RUN_TAG=b; never abort the suite
   for tag in a b; do
     echo "== RUN_TAG=$tag $*"
-    RUN_TAG=$tag $PY "$@" || echo "!! probe exited $? : $*"
+    if ! RUN_TAG=$tag "$PY" invoke.py "$@"; then
+      failures=$((failures + 1))
+    fi
   done
 }
 
@@ -45,6 +48,7 @@ if [ "$MODE" = "full" ] || [ "$MODE" = "engines" ]; then
   VLLM_BATCH_INVARIANT=1 twice probe_engine_logits.py --engine vllm --model HuggingFaceH4/zephyr-7b-beta --lora typeof/zephyr-7b-beta-lora --name vllm_zephyr_lora_batch_invariant
 fi
 
-$PY report.py
+"$PY" report.py
 
-echo SUITE_DONE
+echo "SUITE_DONE: $failures failed, differing or rejected invocations"
+[ "$failures" -eq 0 ]

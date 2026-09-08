@@ -1,22 +1,15 @@
 # Findings notes
 
-The findings themselves are in the README. This file holds analytic notes
-that the README's tables point at.
+The README records the bounded source and runtime findings. The following argument concerns a proposed verifier, not a measured attack or a proved security property.
 
-## Bucket outputs are not a safe tolerance
+## Distinguishable batch histories
 
-The batch-shape experiments (`probes/shape/`) show that a request's bits
-depend on the shape of every batch it took part in. A verifier that does
-not control batching might be tempted to accept any of the K outputs the
-request could have produced under the K shape histories a scheduler can
-plausibly give it, and to treat a match with any of them as a pass.
+Suppose an operator can choose among K feasible **complete shape histories**, and those choices induce D distinct output trajectories for a fixed target. Then D ≤ K and the choice can encode at most log2(D) ≤ log2(K) bits per trajectory, assuming all choices can be deliberately selected and distinguished. This is an upper bound on a choice set, not an experimentally established channel capacity. Many histories may produce the same output, and scheduling constraints may prevent choices from being realised reliably.
 
-That tolerance is not safe against an operator who controls batching.
-The operator selects the shape history, so at every step the operator
-chooses which of the K admissible outputs the request emits. A request of
-T tokens then carries up to T times log2(K) bits of operator-chosen
-information in its choice of bucket, invisible to a verifier who accepts
-every bucket. That is a covert channel, and its capacity grows with the
-number of buckets the verifier tolerates. The remedy is to record the
-shape history and verify against that one bucket, or to require a
-batch-invariant deployment so that K is 1, not to enumerate buckets.
+A T-step bound of sum over t of log2(K_t), or T log2(K) when each step has K choices, requires a different assumption: independently realisable, distinguishable choices at each step. It cannot be obtained by multiplying the number of complete histories by the number of tokens. The current experiments do not establish those independence, feasibility or distinguishability conditions.
+
+## Reproduction and scheduler freedom
+
+Accepting any output in a set of admissible histories can leave freedom to an operator who controls scheduling. Recording or committing a history and checking only that history may bind a later replay to an earlier execution. It does not remove the information encoded by the operator's original choice of history.
+
+Reducing that freedom would require an independently prescribed schedule, trusted or verifiably constrained scheduling, or a demonstrated batch-invariant output for the relevant deployment. Each option needs an explicit threat model, commitment timing, target-state authentication and treatment of model, sampler, cache and neighbour dependencies. A deterministic kernel alone does not provide these protocol properties. None is proved by the present census or repeated-run observations.

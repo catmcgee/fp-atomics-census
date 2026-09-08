@@ -1,0 +1,186 @@
+[
+  {
+    "directory": "NVIDIA-B200-580.167.08-torch2.13.0+cu130",
+    "recorded_environments": [
+      {
+        "gpu": "NVIDIA B200",
+        "gpu_count": 1,
+        "driver": "580.167.08",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": "0.28.0",
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.16.post3",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      },
+      {
+        "gpu": "NVIDIA B200",
+        "gpu_count": 1,
+        "driver": "580.167.08",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": "0.5.19",
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.18",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      }
+    ],
+    "provenance_status": "legacy partial metadata; model, tokenizer, installed source and cubin content hashes unavailable"
+  },
+  {
+    "directory": "NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130",
+    "recorded_environments": [
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 1,
+        "driver": "580.126.09",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": "0.28.0",
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.16.post3",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      },
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 2,
+        "driver": "580.126.09",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": "0.5.19",
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.18",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      },
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 2,
+        "driver": "580.126.09",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": "0.28.0",
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.16.post3",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      },
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 1,
+        "driver": "580.126.09",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": "0.5.19",
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.18",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      }
+    ],
+    "provenance_status": "legacy partial metadata; model, tokenizer, installed source and cubin content hashes unavailable"
+  },
+  {
+    "directory": "NVIDIA-H100-80GB-HBM3-580.159.04-torch2.13.0+cu130",
+    "recorded_environments": [
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 2,
+        "driver": "580.159.04",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": "0.28.0",
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.16.post3",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      }
+    ],
+    "provenance_status": "legacy partial metadata; model, tokenizer, installed source and cubin content hashes unavailable"
+  },
+  {
+    "directory": "NVIDIA-RTX-PRO-6000-Blackwell-Server-Edition-595.91.07-torch2.14.0+cu130",
+    "recorded_environments": [
+      {
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "gpu_count": 1,
+        "driver": "595.91.07",
+        "python": "3.12.3",
+        "torch": "2.14.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.18.post1",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.8.0",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null
+        }
+      }
+    ],
+    "provenance_status": "legacy partial metadata; model, tokenizer, installed source and cubin content hashes unavailable"
+  }
+]

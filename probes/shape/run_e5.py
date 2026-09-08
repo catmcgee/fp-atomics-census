@@ -15,23 +15,33 @@ from shape_common import slot_of, write_json
 
 
 def main(argv: list[str]) -> int:
-    a, b = Path(argv[0]), Path(argv[1])
-    sa = json.loads((a / "steps.json").read_text())
-    sb = json.loads((b / "steps.json").read_text())
+    a, b = Path(argv[0]).resolve(), Path(argv[1]).resolve()
+    from comparison import compare_traces, load_steps, normalise_outputs, output_trace_errors
+    from shape_common import analysis_metadata
+    sa, sb = load_steps(a), load_steps(b)
+    comparison = compare_traces(sa, sb)
+    for tag, run, steps in (("a", a, sa), ("b", b, sb)):
+        outputs = normalise_outputs(json.loads((run / "outputs.json").read_text()))
+        comparison["validation_errors"].extend(f"{tag}: {e}" for e in output_trace_errors(steps, outputs))
+    if comparison["validation_errors"]:
+        comparison["verdict"] = "INVALID"
     ea = json.loads((a / "env.json").read_text())
     eb = json.loads((b / "env.json").read_text())
-    rows = []
-    for x, y in zip(sa, sb):
-        hx = {slot_of(r["req"]): (r["h"], r["argmax"]) for r in x["requests"]}
-        hy = {slot_of(r["req"]): (r["h"], r["argmax"]) for r in y["requests"]}
-        rows.append({"step": x["step"], "shape_identical": x["shape_vector"] == y["shape_vector"], "hidden_identical": {k: hx[k][0] for k in hx} == {k: hy.get(k, (None,))[0] for k in hx},
-                     "argmax_identical": {k: hx[k][1] for k in hx} == {k: hy.get(k, (None, None))[1] for k in hx}})
-    summary = {"experiment": "E5", "a": {"gpu": ea.get("gpu"), "driver": ea.get("driver"), "torch": ea.get("torch")}, "b": {"gpu": eb.get("gpu"), "driver": eb.get("driver"), "torch": eb.get("torch")},
-               "steps": len(rows), "hidden_identical_steps": sum(r["hidden_identical"] for r in rows), "argmax_identical_steps": sum(r["argmax_identical"] for r in rows),
-               "verdict_P5": "IDENTICAL" if all(r["hidden_identical"] for r in rows) else "DIFFERS"}
+    rows = comparison["rows"]
+    summary = {"experiment": "E5", "a": {k: ea.get(k) for k in ("gpu", "driver", "torch")},
+               "b": {k: eb.get(k) for k in ("gpu", "driver", "torch")},
+               "steps": len(rows), "hidden_identical_steps": sum(r["hidden_identical"] for r in rows),
+               "argmax_identical_steps": sum(r["argmax_identical"] for r in rows),
+               "shape_histories_equal": comparison["shape_histories_equal"],
+               "validation_errors": comparison["validation_errors"],
+               "verdict_recorded_stacks": comparison["verdict"], "verdict_P5": "NOT ISOLATED",
+               "claim_scope": "Free-running trajectories on two recorded stacks; drivers and GPU differ. After token divergence later model inputs differ; this is not a teacher-forced GPU-only comparison."}
+    common = Path(__import__("os").path.commonpath([a.resolve(), b.resolve()]))
+    summary.update(analysis_metadata(common, [p for run in (a, b) for p in
+                   [run / "steps.json", run / "env.json", run / "outputs.json", *sorted((run / "hook").glob("rank*.jsonl"))]]))
     write_json(a.parent / f"e5_vs_{eb.get('gpu', 'b').replace(' ', '-')}.json", summary)
     print(json.dumps(summary, indent=1))
-    return 0
+    return 1 if comparison["validation_errors"] else 0
 
 
 if __name__ == "__main__":

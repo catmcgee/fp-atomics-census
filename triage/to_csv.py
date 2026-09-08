@@ -40,14 +40,14 @@ def flatten(row: dict) -> dict:
         "definition_only": row.get("definition_only", False), "provenance": row.get("provenance", ""),
         "candidate_ids": ";".join(row.get("candidate_ids", [])), "entry_points": ";".join(p.get("entry_points", [])),
         "cross_checked": row.get("cross_checked", False),
-        "runtime_evidence": " | ".join(f"{e['probe']}: {e['in_process']}/{e['fresh_process']} ({e['stack']})" for e in row.get("runtime_evidence", [])),
+        "runtime_evidence": " | ".join(f"{e['probe']}: {e['in_process']}/{e['fresh_process']} ({e['stack']}; relation={e['relation']}; evaluations={e['evaluations']}; kernel_identity_verified={e['kernel_identity_verified']})" for e in row.get("runtime_evidence", [])),
         "notes": row.get("notes", ""), "sha": row["sha"],
     }
 
 
 def main(argv: list[str] | None = None) -> int:
     files = [Path(a) for a in (argv if argv is not None else sys.argv[1:])]
-    w = csv.DictWriter(sys.stdout, fieldnames=COLUMNS)
+    w = csv.DictWriter(sys.stdout, fieldnames=COLUMNS, lineterminator="\n")
     w.writeheader()
     for f in files:
         for line in f.read_text().splitlines():

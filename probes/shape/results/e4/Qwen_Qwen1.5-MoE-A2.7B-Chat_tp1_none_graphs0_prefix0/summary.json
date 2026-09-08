@@ -78,6 +78,16 @@
     "original": 1,
     "dummy": 1
   },
-  "steps_compared": 33,
-  "runs_missing_final_record": 0
+  "steps_compared": 32,
+  "runs_missing_final_record": 0,
+  "analysis_schema": 2,
+  "analyser_sha256": "4d40ef34ffee9c674fbd64ab0dccab21bb415d44b7b32de6278f2c31e0aee84a",
+  "input_sha256": {
+    "hook/rank0.jsonl": "d2ec4bf54df63b3f996118bc097825c7a6d0feb36c33f98ec9127800fb99d536",
+    "runs.json": "12f9270afd1156e463dfa23f7129360684e52064762bc81142b3bbf0b3a1a56a"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay.",
+  "validation_errors": [],
+  "claim_scope": "Selected target slot, prompts, 32-token legacy continuations, prefix caching off and controlled synchronous arrivals; no proof for other positions or histories.",
+  "mechanism_isolated": false
 }

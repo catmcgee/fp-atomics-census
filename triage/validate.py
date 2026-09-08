@@ -15,6 +15,7 @@ import argparse
 import json
 import re
 import sys
+import subprocess
 from pathlib import Path
 
 import jsonschema
@@ -35,22 +36,42 @@ def load_rows(path: Path) -> list[dict]:
 
 
 class Checkouts:
-    def __init__(self, repos_dir: Path):
+    def __init__(self, repos_dir: Path, manifest: dict | None = None):
         self.repos_dir = repos_dir
-        self._lines: dict[Path, list[str] | None] = {}
+        self.manifest = manifest or {r["name"]: r for r in json.loads(Path("scan-manifest.json").read_text())["repos"]}
+        self._lines = {}
+        self._heads = {}
 
     def lines(self, engine: str, rel: str) -> list[str] | None:
-        # A ref may point into another pinned repo as repos/<engine>/<path>.
         if rel.startswith("repos/"):
-            p = self.repos_dir / rel[len("repos/"):]
-        else:
-            p = self.repos_dir / engine / rel
-        if p not in self._lines:
-            self._lines[p] = p.read_text(errors="replace").split("\n") if p.is_file() else None
-        return self._lines[p]
+            engine, rel = rel[len("repos/"):].split("/", 1)
+        if engine not in self.manifest or Path(rel).is_absolute() or ".." in Path(rel).parts:
+            return None
+        key = (engine, rel)
+        if key not in self._lines:
+            try:
+                blob = subprocess.check_output(["git", "-C", str(self.repos_dir / engine), "show",
+                                                f"{self.manifest[engine]['sha']}:{rel}"], stderr=subprocess.DEVNULL)
+                self._lines[key] = blob.decode(errors="replace").split("\n")
+            except (OSError, subprocess.CalledProcessError):
+                self._lines[key] = None
+        return self._lines[key]
 
     def available(self, engine: str) -> bool:
-        return (self.repos_dir / engine).is_dir()
+        if engine not in self._heads:
+            try:
+                self._heads[engine] = subprocess.check_output(["git", "-C", str(self.repos_dir / engine), "rev-parse", "HEAD"], stderr=subprocess.DEVNULL, text=True).strip()
+            except (OSError, subprocess.CalledProcessError):
+                self._heads[engine] = None
+        return engine in self.manifest and self._heads[engine] == self.manifest[engine]["sha"]
+
+
+def candidate_matches(row: dict, candidate: dict) -> bool:
+    if candidate.get("engine") != row.get("engine") or candidate.get("sha") != row.get("sha") or candidate.get("file") != row.get("file"):
+        return False
+    refs = [f"{row['file']}:{row['line_start']}-{row['line_end']}"] + [e["ref"] for e in row.get("evidence", [])]
+    return any(m and m["file"] == candidate["file"] and int(m["start"]) <= candidate["line"] <= int(m["end"] or m["start"])
+               for ref in refs if (m := _REF.match(ref)))
 
 
 def check_ref(co: Checkouts, engine: str, ref: str) -> str | None:
@@ -58,8 +79,9 @@ def check_ref(co: Checkouts, engine: str, ref: str) -> str | None:
     m = _REF.match(ref)
     if not m:
         return f"reference {ref!r} is not file:line or file:start-end"
-    if not co.available(engine) and not ref.startswith("repos/"):
-        return None
+    start, end = int(m["start"]), int(m["end"] or m["start"])
+    if start < 1 or end < start:
+        return f"reference {ref!r}: invalid line range"
     lines = co.lines(engine, m["file"])
     if lines is None:
         return f"reference {ref!r}: file not found in the checkout"
@@ -75,18 +97,23 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--manifest", type=Path, default=Path("scan-manifest.json"))
     ap.add_argument("--repos-dir", type=Path, default=Path("repos"))
     ap.add_argument("--candidates-dir", type=Path, default=Path("candidates"))
+    ap.add_argument("--schema-only", action="store_true", help="explicitly omit source, candidate and disposition checks")
+    ap.add_argument("--dispositions-dir", type=Path)
     ap.add_argument("files", nargs="+", type=Path)
     args = ap.parse_args(argv)
 
     schema = json.loads(args.schema.read_text())
     validator = jsonschema.Draft202012Validator(schema)
     manifest = {r["name"]: r for r in json.loads(args.manifest.read_text())["repos"]}
-    co = Checkouts(args.repos_dir)
+    co = Checkouts(args.repos_dir, manifest)
     candidate_ids: dict[str, set[str]] = {}
     errors = 0
     seen_ids: dict[str, str] = {}
+    all_rows = []
+    checked_engines = set()
     for f in args.files:
         rows = load_rows(f)
+        all_rows.extend(rows)
         for i, row in enumerate(rows, start=1):
             where = f"{f}:{i}"
             for err in validator.iter_errors(row):
@@ -98,6 +125,11 @@ def main(argv: list[str] | None = None) -> int:
                 errors += 1
             seen_ids[rid] = where
             eng = row.get("engine")
+            if not args.schema_only and eng not in checked_engines:
+                checked_engines.add(eng)
+                if not co.available(eng):
+                    print(f"{where}: missing checkout or HEAD does not match pinned manifest for {eng}")
+                    errors += 1
             if eng in manifest and row.get("sha") != manifest[eng]["sha"]:
                 print(f"{where}: sha {row.get('sha')} does not match manifest sha for {eng}")
                 errors += 1
@@ -109,8 +141,8 @@ def main(argv: list[str] | None = None) -> int:
             if not (2 <= len(snippet_lines) <= 8):
                 print(f"{where}: snippet has {len(snippet_lines)} lines; expected 2 to 8")
                 errors += 1
-            lines = co.lines(eng, row["file"]) if eng and co.available(eng) else None
-            if eng and co.available(eng) and lines is None:
+            lines = co.lines(eng, row["file"]) if eng and not args.schema_only else None
+            if eng and not args.schema_only and lines is None:
                 print(f"{where}: {row['file']} not found in the checkout")
                 errors += 1
             if lines is not None:
@@ -118,35 +150,49 @@ def main(argv: list[str] | None = None) -> int:
                     print(f"{where}: line_end {le} beyond end of {row['file']} ({len(lines)} lines)")
                     errors += 1
                 else:
-                    window = [l.strip() for l in lines[max(0, ls - 4): le + 3]]
-                    missing = [s for s in snippet_lines if s.strip() and s.strip() not in window]
-                    if missing:
-                        print(f"{where}: {len(missing)} snippet line(s) not found near {row['file']}:{ls}-{le}: {missing[0][:60]!r}")
+                    if row["snippet"] != "\n".join(lines[ls - 1:le]):
+                        print(f"{where}: snippet is not the exact, ordered pinned source range {row['file']}:{ls}-{le}")
                         errors += 1
             for ev in row.get("evidence", []):
-                msg = check_ref(co, eng, ev.get("ref", ""))
+                msg = None if args.schema_only else check_ref(co, eng, ev.get("ref", ""))
                 if msg:
                     print(f"{where}: evidence {msg}")
                     errors += 1
             for ep in (row.get("path") or {}).get("entry_points", []):
-                msg = check_ref(co, eng, ep)
+                msg = None if args.schema_only else check_ref(co, eng, ep)
                 if msg:
                     print(f"{where}: entry point {msg}")
                     errors += 1
-            if row.get("provenance") == "scanner":
+            if row.get("provenance") == "scanner" and not args.schema_only:
                 if eng not in candidate_ids:
                     cf = args.candidates_dir / f"{eng}.jsonl"
-                    candidate_ids[eng] = {json.loads(l)["id"] for l in cf.read_text().splitlines() if l.strip()} if cf.is_file() else set()
+                    candidate_ids[eng] = {c["id"]: c for c in load_rows(cf)} if cf.is_file() else {}
+                    if not cf.is_file():
+                        print(f"{where}: missing candidate file {cf}")
+                        errors += 1
                 for cid in row.get("candidate_ids", []):
-                    if candidate_ids[eng] and cid not in candidate_ids[eng]:
+                    if cid not in candidate_ids[eng]:
                         print(f"{where}: candidate id {cid} not in candidates/{eng}.jsonl")
                         errors += 1
+                    elif not candidate_matches(row, candidate_ids[eng][cid]):
+                        print(f"{where}: candidate {cid} does not match the pinned file and cited source range")
+                        errors += 1
+            if row.get("gate") and row["gate"].get("scope") != "external_runtime" and not args.schema_only:
+                msg = check_ref(co, eng, row["gate"]["read_at"])
+                if msg:
+                    print(f"{where}: gate {msg}")
+                    errors += 1
             if row.get("class") == "A3" and row.get("default_path") is True and "default_is_atomic" not in (row.get("gate") or {}):
                 print(f"{where}: default-path A3 row {rid} does not say whether the gate default is the atomic side")
                 errors += 1
             if row.get("class") == "A" and row.get("default_path") is True and not row.get("cross_checked"):
                 print(f"{where}: note: default-path class-A row {rid} is not yet cross_checked")
-    print(f"{len(seen_ids)} rows, {errors} errors")
+    if args.dispositions_dir and not args.schema_only:
+        from triage.dispositions import validate_dispositions
+        for message in validate_dispositions(all_rows, args.candidates_dir, args.dispositions_dir):
+            print(message)
+            errors += 1
+    print(f"{len(seen_ids)} rows, {errors} errors" + (" (schema only; source provenance NOT checked)" if args.schema_only else ""))
     return 1 if errors else 0
 
 

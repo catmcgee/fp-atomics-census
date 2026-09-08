@@ -18,10 +18,13 @@ from __future__ import annotations
 
 import argparse
 import sys
+import hashlib
+import json
 
 import torch
 
-from common import maybe_print_hash, run_twice
+from common import maybe_print_hash, run_twice, record_status
+from observations import canonical_bytes, sparse_output
 
 PROMPTS = [
     "The verifier re-runs a sampled computation and compares hashes.",
@@ -50,6 +53,8 @@ def vllm_fn(args):
     from vllm import LLM, SamplingParams
 
     kw = _kw(args.extra_arg)
+    if args.revision:
+        kw.update(revision=args.revision, tokenizer_revision=args.revision)
     lora_request = None
     if args.lora:
         from vllm.lora.request import LoRARequest
@@ -57,16 +62,16 @@ def vllm_fn(args):
         lora_request = LoRARequest("probe", 1, args.lora)
     llm = LLM(model=args.model, tensor_parallel_size=args.tp, quantization=args.quantization, seed=0,
               enable_prefix_caching=False, max_model_len=args.max_model_len, **kw)
+    args.resolved_config = str(llm.llm_engine.vllm_config)
+    args.resolved_model_revision = getattr(llm.llm_engine.vllm_config.model_config.hf_config, "_commit_hash", None)
     sp = SamplingParams(temperature=0.0, max_tokens=args.max_tokens, logprobs=5)
 
     def run():
         outs = llm.generate(PROMPTS, sp, lora_request=lora_request, use_tqdm=False)
-        tokens, vals = [], []
-        for o in outs:
-            tokens.extend(o.outputs[0].token_ids)
-            for pos in o.outputs[0].logprobs:
-                vals.extend(sorted(lp.logprob for lp in pos.values()))
-        return [torch.tensor(tokens, dtype=torch.int64), torch.tensor(vals, dtype=torch.float32)]
+        observations = [sparse_output(o.outputs[0].token_ids,
+                                       [((t, lp.logprob) for t, lp in pos.items())
+                                        for pos in o.outputs[0].logprobs]) for o in outs]
+        return [torch.tensor(list(canonical_bytes(observations)), dtype=torch.uint8)]
     return run
 
 
@@ -74,20 +79,22 @@ def sglang_fn(args):
     import sglang as sgl
 
     kw = _kw(args.extra_arg)
+    if args.revision:
+        kw["revision"] = args.revision
     if args.lora:
         kw["lora_paths"] = [args.lora]
     kw.setdefault("disable_radix_cache", True)  # prefix caching changes the batch shape between runs; not a kernel property
     engine = sgl.Engine(model_path=args.model, tp_size=args.tp, quantization=args.quantization, random_seed=0, **kw)
 
+    args.resolved_config = str(getattr(engine, "server_args", None))
+    args.resolved_model_revision = None  # must not substitute the requested revision for an observed hash
+
     def run():
         params = {"temperature": 0, "max_new_tokens": args.max_tokens}
         outs = engine.generate(PROMPTS, params, return_logprob=True, top_logprobs_num=5)
-        tokens, vals = [], []
-        for o in outs:
-            tokens.extend(tok[1] for tok in o["meta_info"]["output_token_logprobs"])
-            for pos in o["meta_info"]["output_top_logprobs"]:
-                vals.extend(sorted(lp[0] for lp in pos))
-        return [torch.tensor(tokens, dtype=torch.int64), torch.tensor(vals, dtype=torch.float32)]
+        observations = [sparse_output([tok[1] for tok in o["meta_info"]["output_token_logprobs"]],
+                                       [[(lp[1], lp[0]) for lp in pos] for pos in o["meta_info"]["output_top_logprobs"]]) for o in outs]
+        return [torch.tensor(list(canonical_bytes(observations)), dtype=torch.uint8)]
     return run
 
 
@@ -95,6 +102,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--engine", choices=["vllm", "sglang"], required=True)
     ap.add_argument("--model", required=True)
+    ap.add_argument("--revision", default=None)
     ap.add_argument("--quantization", default=None)
     ap.add_argument("--lora", default=None, help="LoRA adapter path or HF id")
     ap.add_argument("--tp", type=int, default=1)
@@ -105,10 +113,15 @@ def main() -> int:
     ap.add_argument("--name", default=None, help="override the report name")
     ap.add_argument("--print-hash", action="store_true")
     args = ap.parse_args()
-    fn = vllm_fn(args) if args.engine == "vllm" else sglang_fn(args)
     name = args.name or f"{args.engine}_{args.model.replace('/', '_')}_{args.quantization or 'none'}{'_lora' if args.lora else ''}_tp{args.tp}"
-    ok = run_twice(name, fn, repeats=args.repeats, extra={"model": args.model, "quantization": args.quantization, "lora": args.lora, "tp": args.tp, "extra_args": args.extra_arg})
-    maybe_print_hash(fn())
+    try:
+        fn = vllm_fn(args) if args.engine == "vllm" else sglang_fn(args)
+    except Exception as exc:
+        record_status(name, "ERROR", f"engine initialisation: {type(exc).__name__}: {exc}", vars(args))
+        return 2
+    ok = run_twice(name, fn, repeats=args.repeats, extra={**vars(args), "prompts": PROMPTS, "input_sha256": hashlib.sha256(canonical_bytes(PROMPTS)).hexdigest(), "weight_content_hash": None, "tokenizer_content_hash": None, "observation_schema": "labelled-topk-v2"})
+    if args.print_hash:
+        maybe_print_hash(fn())  # explicitly requested diagnostic evaluation, outside the measured repeats
     return 0 if ok else 1
 
 

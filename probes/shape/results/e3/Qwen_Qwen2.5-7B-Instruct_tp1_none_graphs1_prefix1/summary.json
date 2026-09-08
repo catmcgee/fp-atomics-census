@@ -2,49 +2,62 @@
   "experiment": "E3",
   "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1",
   "steps_compared": 37,
-  "all_steps_identical": false,
+  "all_steps_identical": true,
   "outputs_identical": true,
+  "shape_histories_equal": true,
   "selected_steps": [
     {
+      "offset": 0,
       "step": 5,
       "shape_identical": true,
-      "hashes_identical": false,
+      "hashes_identical": true,
+      "hidden_identical": true,
+      "argmax_identical": true,
       "num_reqs": 8,
       "phase_mix": [
         "prefill"
       ]
     },
     {
-      "step": 20,
+      "offset": 5,
+      "step": 10,
       "shape_identical": true,
-      "hashes_identical": false,
+      "hashes_identical": true,
+      "hidden_identical": true,
+      "argmax_identical": true,
+      "num_reqs": 16,
+      "phase_mix": [
+        "decode",
+        "prefill"
+      ]
+    },
+    {
+      "offset": 18,
+      "step": 23,
+      "shape_identical": true,
+      "hashes_identical": true,
+      "hidden_identical": true,
+      "argmax_identical": true,
       "num_reqs": 16,
       "phase_mix": [
         "decode"
       ]
     }
   ],
-  "differing_steps": [
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24
-  ],
-  "verdict_P2": "DIFFERS"
+  "differing_steps": [],
+  "verdict_repeatability": "IDENTICAL",
+  "verdict_P2": "NOT TESTED",
+  "validation_errors": [],
+  "claim_scope": "Fresh-process reruns of the same arrival script; no recorded-schedule reconstruction, teacher forcing or midstream KV reconstruction.",
+  "analysis_schema": 2,
+  "analyser_sha256": "4d40ef34ffee9c674fbd64ab0dccab21bb415d44b7b32de6278f2c31e0aee84a",
+  "input_sha256": {
+    "a/hook/rank0.jsonl": "5e122c30c7401f9f2cec744192f929482ae0cdf58b1ba229a4a5e2d4433c9aa3",
+    "a/outputs.json": "e2ae4ab458e3a0b0d6c3e6995712cfb69115385103d52bcb6abef5e272fb357f",
+    "a/steps.json": "d6b3e9b8e7ab0d63876dfa43f83c068af0eb9d1e6011a359bdd7303f87372933",
+    "b/hook/rank0.jsonl": "955d47da582fe72875d87a43c6d52e19bea8f3038b69c107c3990fca5568543c",
+    "b/outputs.json": "e2ae4ab458e3a0b0d6c3e6995712cfb69115385103d52bcb6abef5e272fb357f",
+    "b/steps.json": "9ed66b551daa6debabf3181cee25aa6ecf029bb39c1f330f2aab6c49049baede"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
 }

@@ -4,20 +4,40 @@
   "steps_compared": 42,
   "all_steps_identical": true,
   "outputs_identical": true,
+  "shape_histories_equal": true,
   "selected_steps": [
     {
+      "offset": 0,
       "step": 5,
       "shape_identical": true,
       "hashes_identical": true,
+      "hidden_identical": true,
+      "argmax_identical": true,
       "num_reqs": 8,
       "phase_mix": [
         "prefill"
       ]
     },
     {
-      "step": 23,
+      "offset": 5,
+      "step": 10,
       "shape_identical": true,
       "hashes_identical": true,
+      "hidden_identical": true,
+      "argmax_identical": true,
+      "num_reqs": 9,
+      "phase_mix": [
+        "decode",
+        "prefill"
+      ]
+    },
+    {
+      "offset": 21,
+      "step": 26,
+      "shape_identical": true,
+      "hashes_identical": true,
+      "hidden_identical": true,
+      "argmax_identical": true,
       "num_reqs": 16,
       "phase_mix": [
         "decode"
@@ -25,5 +45,19 @@
     }
   ],
   "differing_steps": [],
-  "verdict_P2": "IDENTICAL"
+  "verdict_repeatability": "IDENTICAL",
+  "verdict_P2": "NOT TESTED",
+  "validation_errors": [],
+  "claim_scope": "Fresh-process reruns of the same arrival script; no recorded-schedule reconstruction, teacher forcing or midstream KV reconstruction.",
+  "analysis_schema": 2,
+  "analyser_sha256": "4d40ef34ffee9c674fbd64ab0dccab21bb415d44b7b32de6278f2c31e0aee84a",
+  "input_sha256": {
+    "a/hook/rank0.jsonl": "e3c63a65a5d7d8b025bf1bdc3b0c279ece6d1eb46aea776678a91c53430e201e",
+    "a/outputs.json": "30c082f07a5c4f4637662780cdf533f3648040b22369b24fd8823ae6896e4fbb",
+    "a/steps.json": "e055984c6d51da7eba669dc6c5b40beab1e53b3791fa7254de87ce90c3c46544",
+    "b/hook/rank0.jsonl": "e4615a9ed83f8575d4002108ff4ed661c5c6f55d668b3c851816698c29268c40",
+    "b/outputs.json": "30c082f07a5c4f4637662780cdf533f3648040b22369b24fd8823ae6896e4fbb",
+    "b/steps.json": "26d33a6a2138a6d8f0b8e089b62d022dc71c5546e2b2600d85bb7d8665b8af68"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
 }

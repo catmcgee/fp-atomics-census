@@ -87,7 +87,8 @@ def _row_hash(t) -> str:
         b = t.view(torch.int32).cpu().numpy().tobytes()
     else:
         b = t.cpu().numpy().tobytes()
-    return hashlib.sha256(b).hexdigest()[:16]
+    header = json.dumps({"dtype": str(t.dtype), "shape": list(t.shape)}, sort_keys=True).encode()
+    return hashlib.sha256(header + b"\0" + b).hexdigest()
 
 
 def _dispatch_record(out) -> dict:
@@ -142,11 +143,12 @@ def _patch_router():
     def select_experts(self, *a, **kw):
         out = orig(self, *a, **kw)
         try:
-            if _state["moe_counts"] is None:
+            if _state.get("moe_source") != "actual_router":
                 import torch
                 topk_ids = out[1]
                 n = int(getattr(self, "global_num_experts", 0) or getattr(getattr(self, "moe", None), "num_experts", 0) or int(topk_ids.max().item()) + 1)
                 _state["moe_counts"] = torch.bincount(topk_ids.flatten().to(torch.int64), minlength=n).tolist()
+                _state["moe_source"] = "actual_router"
         except Exception as e:  # noqa: BLE001
             _state["moe_counts"] = {"error": repr(e)[:80]}
         return out
@@ -183,6 +185,7 @@ def _hook_first_moe(model):
                     probs = torch.softmax(logits.float(), dim=-1) if scoring == "softmax" else logits.float()
                     topk = torch.topk(probs, k, dim=-1).indices
                     _state["moe_counts"] = torch.bincount(topk.flatten(), minlength=e).tolist()
+                    _state["moe_source"] = "estimated_from_router_logits"
                 except Exception as ex:  # noqa: BLE001
                     _state["moe_counts"] = {"error": repr(ex)[:80]}
             mod.register_forward_pre_hook(pre_hook, with_kwargs=True)
@@ -219,9 +222,14 @@ def _wrap_compute_logits(model):
         try:
             import torch
             hs = hidden_states
+            if not bool(torch.isfinite(hs).all()):
+                raise ValueError("nonfinite hidden states")
+            if logits is not None and (bool(torch.isnan(logits).any()) or bool(torch.isposinf(logits).any()) or not bool(torch.isfinite(logits).any(dim=-1).all())):
+                raise ValueError("invalid logits (NaN, positive infinity or no finite token)")
             rows = [_row_hash(hs[i]) for i in range(hs.shape[0])]
             am = torch.argmax(logits.float(), dim=-1).tolist() if logits is not None else None
-            _state["hashes"] = {"hidden_rows": rows, "argmax": am}
+            _state["hashes"] = {"hidden_rows": rows, "argmax": am,
+                                "logit_rows": [_row_hash(logits[i]) for i in range(logits.shape[0])] if logits is not None else []}
         except Exception as e:  # noqa: BLE001
             _state["hashes"] = {"error": repr(e)[:80]}
         return logits
@@ -322,16 +330,21 @@ def _execute(self, orig, scheduler_output, *a, **kw):
         path = _out_path()
         if path is None:
             return orig(self, scheduler_output, *a, **kw)
-        _state["moe_counts"] = None
-        _state["dispatch"] = None
-        _state["hashes"] = None
-        _state["fp8_scale"] = None
+        _flush(path)  # preserve the previous pass before clearing step-local state
+        for key in ("moe_counts", "moe_source", "dispatch", "hashes", "fp8_scale", "batch"):
+            _state[key] = None
+        if int(getattr(scheduler_output, "total_num_scheduled_tokens", sum(getattr(scheduler_output, "num_scheduled_tokens", {}).values()))) == 0:
+            out = orig(self, scheduler_output, *a, **kw)
+            with open(path, "a") as f:
+                f.write(json.dumps({"event": "empty_scheduler_call", "step": _state["step"],
+                                    "total_scheduled": 0, "requests": []}) + "\n")
+            _state["step"] += 1
+            return out
         try:
             _wrap_compute_logits(self.model)
             _hook_first_moe(self.model)
         except Exception:  # noqa: BLE001
             pass
-        _flush(path)  # a record left from a pass that had no sampling phase
         t0 = time.time()
         out = orig(self, scheduler_output, *a, **kw)
         try:
@@ -357,11 +370,14 @@ def _flush(path: str) -> None:
     hashes = _state.get("hashes") or {}
     rows = hashes.get("hidden_rows") or []
     am = hashes.get("argmax") or []
+    logits = hashes.get("logit_rows") or []
     for i, r in enumerate(rec.get("requests", [])):
         if r.get("h") is None and i < len(rows):
             r["h"] = rows[i]
         if r.get("argmax") is None and i < len(am):
             r["argmax"] = am[i]
+        if i < len(logits):
+            r["logits_h"] = logits[i]
     with open(path, "a") as f:
         f.write(json.dumps(rec) + "\n")
     _state["pending"] = None
@@ -419,27 +435,36 @@ def _record(runner, so) -> dict:
                      "phase": "prefill" if br["prefilling"] else "decode",
                      "cache_hit": new_hits.get(rid) if first else None,
                      "h": rows[i] if i < len(rows) else None, "argmax": am[i] if i < len(am) else None})
+    if set(req_ids) != set(sched) or sum(r["q"] for r in reqs) != sum(sched.values()):
+        raise ValueError("captured batch does not match scheduled requests and token counts")
+    cc = runner.vllm_config.compilation_config
+    actual_compile = int(cc.mode) != 0
+    actual_graphs = str(getattr(cc.cudagraph_mode, "name", cc.cudagraph_mode)) != "NONE"
+    for env_key, actual in (("SHAPE_EXPECT_COMPILE", actual_compile), ("SHAPE_EXPECT_GRAPHS", actual_graphs)):
+        if env_key in os.environ and actual != bool(int(os.environ[env_key])):
+            raise ValueError(f"worker resolved configuration contradicts {env_key}")
     pc = runner.vllm_config.parallel_config
     try:
         backend = runner.attn_groups[0][0].backend.get_name()
     except Exception:  # noqa: BLE001
         backend = None
-    rec = {"step": _state["step"], "rank": _rank(), "total_scheduled": int(getattr(so, "total_num_scheduled_tokens", sum(sched.values()))),
+    rec = {"schema": 2, "event": "forward", "run_id": os.environ.get("SHAPE_RUN_ID"),
+           "hash_schema": "sha256-dtype-shape-bytes", "resolved_compile": str(cc.mode), "resolved_cudagraph": str(cc.cudagraph_mode),
+           "step": _state["step"], "rank": _rank(), "total_scheduled": int(getattr(so, "total_num_scheduled_tokens", sum(sched.values()))),
            "num_reqs": len(req_ids), "dispatch": _state["dispatch"], "attention_backend": backend,
            "parallel": {"tp": pc.tensor_parallel_size, "pp": pc.pipeline_parallel_size, "dp": getattr(pc, "data_parallel_size", 1), "ep": bool(getattr(pc, "enable_expert_parallel", False))},
-           "moe_expert_counts_first_layer": _state["moe_counts"], "fp8_scale_first_call": _state.get("fp8_scale"), "requests": reqs}
+           "moe_counts_source": _state.get("moe_source"), "moe_expert_counts_first_layer": _state["moe_counts"], "fp8_scale_first_call": _state.get("fp8_scale"), "requests": reqs}
     rec["shape_vector"] = shape_vector(rec)
     return rec
 
 
 def shape_vector(rec: dict) -> str:
-    """The integers the hypothesis is about, as a canonical string, content-free."""
-    d = rec.get("dispatch") or {}
-    parts = [f"pad={d.get('padded_num_tokens')}", f"mode={d.get('cudagraph_mode')}", f"tot={rec['total_scheduled']}", f"n={rec['num_reqs']}",
-             f"tp={rec['parallel']['tp']}", f"pp={rec['parallel']['pp']}", f"ep={rec['parallel']['ep']}", f"attn={rec.get('attention_backend')}"]
-    seqs = sorted((r["q"], r["kv"], r["computed"], r["phase"]) for r in rec["requests"])
-    parts.append("seqs=" + ";".join(f"{q}/{kv}/{c}/{p[0]}" for q, kv, c, p in seqs))
-    return "|".join(parts)
+    """Ordered recorded shape. No assertion that this exhausts planner state."""
+    return json.dumps({"schema": 2, "total": rec["total_scheduled"], "num_reqs": rec["num_reqs"],
+                       "dispatch": rec.get("dispatch"), "parallel": rec["parallel"],
+                       "attention_backend": rec.get("attention_backend"),
+                       "ordered_rows": [[r[k] for k in ("q", "kv", "computed", "phase")] for r in rec["requests"]]},
+                      sort_keys=True, separators=(",", ":"))
 
 
 def _force_fp8_per_tensor():

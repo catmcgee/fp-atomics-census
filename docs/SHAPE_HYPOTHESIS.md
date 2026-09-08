@@ -1,8 +1,6 @@
-# Batch shape, not content: hypothesis and predictions
+# Batch shape and content: hypothesis and predictions
 
-Written before any of the experiments in `probes/shape/` were run. The
-predictions below are predictions; the results section of the README
-records what happened.
+These are the research predictions retained from the experiment plan, with scope corrections. They are not established properties. The README distinguishes measured outcomes from untested predictions; repository commit dates alone do not establish preregistration.
 
 ## Hypothesis
 
@@ -17,7 +15,10 @@ engine hands to its kernels at a forward pass:
 - each request's computed-token count, which absorbs prefix-cache hits
   and chunked prefill;
 - the scheduled-token total;
-- the parallelism configuration (TP, PP, EP, DP).
+- the parallelism configuration (TP, PP, EP, DP);
+- batch row order, target placement and the actual attention/GEMM plan.
+
+The current key contains only recorded planner state. It is an approximation, not a sufficient execution-state specification.
 
 Two forward passes with the same shape vector and the same tokens for one
 request should give that request the same bits, whatever the other
@@ -29,15 +30,14 @@ The census pins vLLM at `5769a7382cb1`, FlashInfer at `c0d920d3270c` and
 SGLang at `b41552334d46`; the wheels the probes run are vLLM 0.28.0,
 FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
 
-- **cuBLASLt selects the kernel from (M, N, K).** The trace lines the
+- **cuBLASLt algorithm choice can depend on (M, N, K).** The trace lines the
   cuBLASLt probe captured (`probes/results/*/cublaslt_sweep_7b_bf16.json`)
-  show the heuristic changing algorithm, split-K count and reduction
+  from separate diagnostic processes show the heuristic changing algorithm, split-K count and reduction
   scheme with M for fixed N and K, for example split-K 2 with the
   workspace reduction at M of 1, 4 and 8 for N = K = 4096 and no split at
-  M of 32 and above. M is the number of tokens in the pass. Every
-  unquantised linear layer goes through this call
+  M of 32 and above. M is the number of tokens in the pass. Ordinary dense linear layers can use these GEMM paths
   (`vllm/model_executor/layers/quantization/utils/w8a8_utils.py`,
-  inventory rows vllm-0180 and vllm-0181).
+  inventory row vllm-0180; vllm-0181 is the different FP8 scaled_mm path).
 - **vLLM pads decode batches to captured CUDA-graph sizes.** The capture
   sizes are `cudagraph_capture_sizes` in
   `vllm/config/compilation.py:631`, rounded at `:1488-1514`; the
@@ -45,8 +45,9 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
   uniform decode in `vllm/v1/cudagraph_dispatcher.py:235-248`, reading the
   capture sizes at `:75`; the model runner pads to `num_tokens_padded` in
   `vllm/v1/worker/gpu_model_runner.py:2242-2262` and dispatches at `:2887`.
-  A batch of 13 decode requests and a batch of 16 therefore run the same
-  padded shape.
+  A batch of 13 decode requests and a batch of 16 may use the same padded
+  token count under a capture configuration containing that bucket. Equal
+  padded counts alone do not imply equal attention plans or target placement.
 - **FlashInfer plans split-KV per request from the batch's KV lengths.**
   `include/flashinfer/attention/scheduler.cuh:150-191` decides `split_kv`
   and `max_num_pages_per_batch` from the batch size times the number of
@@ -100,9 +101,9 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
 
 ## Predictions
 
-- **P1.** Two runs with identical shape vectors produce identical hashes,
-  always. Every hash difference in the stock runs is explained by a shape
-  difference. Mixtral's two outputs correspond to two shape vectors.
+- **P1.** Repeated observations with identical recorded target history, target inputs and
+  environment should produce identical hashes in the tested scope. This is tested only for repeated history groups. Singleton groups have no
+  comparison power, and a matching key does not establish complete planner state.
 - **P2.** A logged mid-stream step, rebuilt and re-run in a fresh process
   with the same shape vector and the same tokens, reproduces the hash.
 - **P3.** Dummy-neighbour replay: replace every neighbour's tokens with
@@ -118,8 +119,10 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
 
 ## Experiments
 
-E1 instrumentation, E2 bucket attribution, E3 logged replay, E4
-dummy-neighbour replay and E5 cross-SKU are specified in
+E1 instrumentation, E2 bucket attribution, E3 scripted repeatability, E4
+dummy-neighbour comparisons and E5 recorded-stack comparison are specified in
 `probes/shape/RUNBOOK.md`, with one command per experiment and a results
-directory argument. Verdicts are IDENTICAL or DIFFERS with the run count;
-identical in twelve runs is evidence, not proof.
+directory argument. Comparisons can also be INVALID, NOT COMPARABLE or NOT TESTED. P2 is
+untested because E3 does not reconstruct a recorded schedule or teacher-force
+a continuation. E5 does not isolate GPU from driver or input divergence.
+Identical in a few repeats is evidence only for those observations.

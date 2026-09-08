@@ -13,5 +13,22 @@
   "steps": 37,
   "hidden_identical_steps": 0,
   "argmax_identical_steps": 9,
-  "verdict_P5": "DIFFERS"
+  "shape_histories_equal": true,
+  "validation_errors": [],
+  "verdict_recorded_stacks": "DIFFERS",
+  "verdict_P5": "NOT ISOLATED",
+  "claim_scope": "Free-running trajectories on two recorded stacks; drivers and GPU differ. After token divergence later model inputs differ; this is not a teacher-forced GPU-only comparison.",
+  "analysis_schema": 2,
+  "analyser_sha256": "4d40ef34ffee9c674fbd64ab0dccab21bb415d44b7b32de6278f2c31e0aee84a",
+  "input_sha256": {
+    "results/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/env.json": "14cabf8e3537385143e3b471ed403e424d4b0d201f3e31fe1aa285bf443f8acc",
+    "results/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/hook/rank0.jsonl": "5e122c30c7401f9f2cec744192f929482ae0cdf58b1ba229a4a5e2d4433c9aa3",
+    "results/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/outputs.json": "e2ae4ab458e3a0b0d6c3e6995712cfb69115385103d52bcb6abef5e272fb357f",
+    "results/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/steps.json": "d6b3e9b8e7ab0d63876dfa43f83c068af0eb9d1e6011a359bdd7303f87372933",
+    "results_sm120/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/env.json": "d15f7a1820d597e25f0176e3ce2962489ae336f455e4e0404de0249def6b07e1",
+    "results_sm120/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/hook/rank0.jsonl": "56efa98bd39eae889c4c3fafc2f02974b70c8c73e3b298019bd1856c29135d38",
+    "results_sm120/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/outputs.json": "618bf60c8d1e393c129222f2203acab97a39877711966ea832a650bc8f7f56ee",
+    "results_sm120/e3/Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1/a/steps.json": "9b723eeadfb03d9ccffa8116e686a1c1d194726392ea6e023e191223bbb5e3a7"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
 }

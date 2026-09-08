@@ -4,8 +4,8 @@
 
 Reads every report under probes/results/<stack>/ and writes a
 ``runtime_evidence`` list into the rows named in ROWS below. The mapping is
-by hand: a probe name (regex) to the rows it settles and a one-line note on
-how. Rows not named keep whatever they had. Idempotent: existing evidence
+by hand: a probe name (regex) to related rows, with an explicit evidence relation and a one-line note on
+how. Generated evidence is rebuilt, including removal of withdrawn mappings. Idempotent: existing evidence
 for the same stack and probe is replaced.
 """
 from __future__ import annotations
@@ -19,36 +19,37 @@ from pathlib import Path
 
 # (probe name regex, [row ids], note)
 ROWS: list[tuple[str, list[str], str]] = [
+    (r"^(index_add|scatter_add|cumsum_float)_det_strict$", [], "strict deterministic operator control; rejected operations are recorded separately"),
     (r"^index_add_default$", ["vllm-0045", "vllm-0046"], "index_add_ on contended indices, stock mode"),
-    (r"^index_add_det$", ["vllm-0045", "vllm-0046"], "index_add_ with torch.use_deterministic_algorithms(True)"),
+    (r"^index_add_det$", ["vllm-0045", "vllm-0046"], "legacy index_add_ with deterministic=True, warn_only=True; unsupported operations were allowed"),
     (r"^scatter_add_default$", ["flash-attention-0026"], "scatter_add_ on contended indices, stock mode"),
     (r"^cumsum_float_default$", ["vllm-0049", "vllm-0050", "sglang-0031", "sglang-0035", "flash-attention-0027", "flashinfer-0048"], "float cumsum on CUDA, stock mode"),
     (r"^fi_top_p_renorm_detFalse$", ["flashinfer-0015"], "top_p_renorm_probs with the default is_deterministic=False"),
     (r"^fi_top_p_renorm_detTrue$", ["flashinfer-0015"], "top_p_renorm_probs with is_deterministic=True"),
     (r"^fi_top_k_renorm_multicta$", ["flashinfer-0016"], "top_k_renorm_probs on a 262144-wide vocabulary"),
-    (r"^fi_radix_topk_order_detFalse$", ["flashinfer-0017", "flashinfer-0018", "vllm-0038", "vllm-0039", "vllm-0040", "vllm-0041", "vllm-0042", "vllm-0043", "vllm-0044", "sglang-0017"], "radix top-k output order with deterministic=False; the selected set is the same, its order is not"),
+    (r"^fi_radix_topk_order_detFalse$", ["flashinfer-0017", "flashinfer-0018"], "radix top-k output order with deterministic=False; the selected set is the same, its order is not"),
     (r"^fi_radix_topk_order_detTrue$", ["flashinfer-0017", "flashinfer-0018"], "radix top-k with deterministic=True"),
     (r"^fi_decode_fa2$", [], "FA2 decode template, no atomics expected"),
     (r"^fi_cutlass_fused_moe_autotuned_fused_finalize_True_topk4$", ["flashinfer-0001", "flashinfer-0002"], "fused finalize selected by autotuning, top-k 4: three or more red.add contributions per row"),
-    (r"^fi_cutlass_fused_moe_autotuned_fused_finalize_True_topk2$", ["flashinfer-0001"], "fused finalize at top-k 2: two addends onto zero commute, so no order dependence is possible"),
+    (r"^fi_cutlass_fused_moe_autotuned_fused_finalize_True_topk2$", ["flashinfer-0001"], "fused finalize at top-k 2: two fixed, finite, already-rounded contributions onto zero commute; this does not establish determinism of upstream GEMMs"),
     (r"^fi_cutlass_fused_moe_autotuned_fused_finalize_True_topk8$", ["flashinfer-0001"], "fused finalize at top-k 8 of 8 experts, 3 repeats"),
     (r"^fi_cutlass_fused_moe_autotuned_fused_finalize_False_topk8$", ["flashinfer-0001"], "unfused finalize (fixed-order sum), top-k 8"),
-    (r"^cuBLASLt (mm|linear) (bf16|fp16)$", ["vllm-0180", "vllm-0181", "sglang-0264", "sglang-0265", "sglang-0266", "flashinfer-0040", "flashinfer-0041", "DeepGEMM-0009", "flash-attention-0014"], "cuBLASLt sweep over 60 projection shapes; the algorithm chosen is in the sweep JSON"),
+    (r"^cuBLASLt (mm|linear) (bf16|fp16)$", ["vllm-0180", "sglang-0264", "sglang-0265", "sglang-0266", "flashinfer-0040", "flashinfer-0041", "DeepGEMM-0009", "flash-attention-0014"], "ordinary bf16/fp16 GEMM shape sweep; algorithm logs are from a separate diagnostic process, not the measured calls"),
     (r"^vllm_qwen2.5_7b_gptq_marlin$", ["vllm-0010"], "GPTQ model through Marlin with VLLM_MARLIN_USE_ATOMIC_ADD unset"),
     (r"^vllm_qwen2.5_7b_gptq_machete_fp16_x6$", ["vllm-0187"], "GPTQ model through Machete (stream-K, CUTLASS default reduction), fp16, 6 repeats"),
     (r"^vllm_zephyr_lora_split_k$", ["vllm-0018"], "LoRA adapter with the default split-K shrink"),
     (r"^vllm_zephyr_lora_batch_invariant$", ["vllm-0018"], "LoRA adapter with VLLM_BATCH_INVARIANT=1 (split_k = 1)"),
     (r"^vllm_qwen1.5_moe_gptq_marlin_x6$", ["vllm-0022", "vllm-0016", "marlin-0001"], "GPTQ MoE through the Marlin MoE backend, 6 repeats"),
     (r"^sglang_qwen2.5_7b_gptq_marlin_x6$", ["sglang-0008"], "GPTQ 7B through SGLang's Marlin at TP=1: every fused projection has n >= 2048, so should_use_atomic_add_reduce returns False and the stub is not exercised"),
-    (r"^batch_composition_", ["vllm-0180", "vllm-0181"], "in-process scheduler instrumentation: 12 repeats with all prompts in the first step and 12 with one held back; each composition signature gives one bitwise-identical output, and the two compositions give different outputs"),
-    (r"^vllm_qwen3_8b_bf16_x12$", ["vllm-0180", "vllm-0181"], "dense bf16 default path, stock kernels, 12 repeats per process; differences, when present, are whole requests and track batch composition"),
-    (r"^vllm_qwen3_8b_bf16_batch_invariant_x12$", ["vllm-0180", "vllm-0181"], "dense bf16 default path with VLLM_BATCH_INVARIANT=1, 12 repeats per process"),
-    (r"^vllm_qwen2.5_7b_dense_bf16_one_seq_per_batch_x6$", ["vllm-0180", "vllm-0181"], "dense bf16 with max_num_seqs=1, stock kernels: batch composition fixed by construction"),
+    (r"^batch_composition_", ["vllm-0180"], "in-process scheduler instrumentation: 12 repeats with all prompts in the first step and 12 with one held back; each composition signature gives one bitwise-identical output, and the two compositions give different outputs"),
+    (r"^vllm_qwen3_8b_bf16_x12$", ["vllm-0180"], "dense bf16 default path, stock kernels, 12 repeats per process; differences, when present, are whole requests and track batch composition"),
+    (r"^vllm_qwen3_8b_bf16_batch_invariant_x12$", ["vllm-0180"], "dense bf16 default path with VLLM_BATCH_INVARIANT=1, 12 repeats per process"),
+    (r"^vllm_qwen2.5_7b_dense_bf16_one_seq_per_batch_x6$", ["vllm-0180"], "dense bf16 with max_num_seqs=1, stock kernels: batch composition fixed by construction"),
     (r"^sglang_qwen3_8b_bf16_no_overlap_x6$", ["sglang-0264"], "dense bf16 default path, radix cache off, overlap scheduler off, stock kernels"),
     (r"^sglang_qwen3_8b_bf16_deterministic_mode_x6$", ["sglang-0264"], "dense bf16 with --enable-deterministic-inference"),
-    (r"^nccl_allreduce_rank\d+_default$", ["vllm-0182", "sglang-0269", "flashinfer-0043", "DeepEP-0012"], "NCCL all-reduce, two ranks, default algorithm and protocol"),
-    (r"^nccl_allreduce_rank\d+_Tree$", ["vllm-0182", "sglang-0269", "flashinfer-0043", "DeepEP-0012"], "NCCL all-reduce, two ranks, NCCL_ALGO=Tree NCCL_PROTO=Simple, one channel"),
-    (r"^flashinfer_allreduce_fusion_rank\d+$", ["flashinfer-0023"], "trtllm all-reduce fusion in plain all-reduce mode, two ranks"),
+    (r"^nccl_allreduce_rank\d+_default(_random|_cancellation)?$", ["vllm-0182", "sglang-0269", "flashinfer-0043", "DeepEP-0012"], "NCCL all-reduce with default algorithm/protocol; legacy reports use two ranks, new rank counts and patterns are recorded in extra"),
+    (r"^nccl_allreduce_rank\d+_Tree(_random|_cancellation)?$", ["vllm-0182", "sglang-0269", "flashinfer-0043", "DeepEP-0012"], "NCCL all-reduce with Tree/Simple and one channel; legacy reports use two ranks, new rank counts and patterns are recorded in extra"),
+    (r"^flashinfer_allreduce_fusion_rank\d+(_random|_cancellation)?$", ["flashinfer-0023"], "trtllm all-reduce fusion in plain all-reduce mode; legacy reports use two ranks, new rank counts and patterns are recorded in extra"),
     (r"^marlin_gemm_atomicTrue_fp32reduce_", ["sglang-0008", "vllm-0010"], "Marlin GEMM with use_atomic_add=True and use_fp32_reduce=True, the pair SGLang's apply_gptq_marlin_linear passes, at an n < 2048, k >= 2048 shape"),
     (r"^marlin_gemm_atomicTrue_m", ["sglang-0008", "vllm-0010"], "Marlin GEMM on random 4-bit weights with use_atomic_add=True at an n < 2048, k >= 2048 shape"),
     (r"^sglang_qwen2.5_1.5b_gptq_marlin_x6$", ["sglang-0008"], "SGLang GPTQ 1.5B model: down_proj has n=1536, k=8960, so the stub turns atomic add on"),
@@ -63,9 +64,9 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^marlin_gemm_atomicFalse_", ["vllm-0010"], "Marlin GEMM with use_atomic_add=False (fp32 global reduce)"),
     (r"^deepgemm_bmk_bnk_mn$", ["DeepGEMM-0001", "DeepGEMM-0002"], "deep_gemm.einsum bmk,bnk->mn, batch reduced across CTAs with float atomicAdd"),
     (r"^fi_decode_trtllm-gen$", ["flashinfer-0038", "sglang-0267", "vllm-0183"], "paged decode through the TensorRT-LLM cubin backend"),
-    (r"^vllm_qwen3_8b_bf16_tp2_custom_allreduce_x6$", ["vllm-0182"], "TP=2 with vLLM's custom all-reduce, stock scheduler, 6 repeats"),
+    (r"^vllm_qwen3_8b_bf16_tp2_custom_allreduce_x6$", [], "TP=2 with vLLM's custom all-reduce, stock scheduler, 6 repeats"),
     (r"^vllm_qwen3_8b_bf16_tp2_nccl_x6$", ["vllm-0182"], "TP=2 with custom all-reduce disabled (NCCL, NVLS off), stock scheduler, 6 repeats"),
-    (r"^vllm_qwen3_8b_bf16_tp2_custom_allreduce_one_seq_x6$", ["vllm-0182"], "TP=2 custom all-reduce, one sequence per batch"),
+    (r"^vllm_qwen3_8b_bf16_tp2_custom_allreduce_one_seq_x6$", [], "TP=2 custom all-reduce, one sequence per batch"),
     (r"^vllm_qwen3_8b_bf16_tp2_nccl_one_seq_x6$", ["vllm-0182"], "TP=2 NCCL all-reduce (NVLS off), one sequence per batch"),
     (r"^vllm_qwen3_8b_bf16_tp2_batch_invariant_x6$", ["vllm-0182"], "TP=2 with VLLM_BATCH_INVARIANT=1"),
     (r"^vllm_mixtral_gptq_auto_x6$", ["vllm-0022", "vllm-0016", "marlin-0001"], "Mixtral 4-bit GPTQ through the Marlin MoE backend, stock scheduler"),
@@ -80,51 +81,107 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^vllm_zephyr_lora_split_k_x6$", ["vllm-0018"], "LoRA adapter with the default split-K shrink, 6 repeats"),
     (r"^moe_wna16_cuda_", ["vllm-0014"], "moe_wna16 CUDA kernel on random 4-bit weights, 16 tokens over 8 experts (tokens per expert <= 6 selects it)"),
     (r"^moe_wna16_triton_", ["vllm-0014"], "the Triton path of the same method at 64 tokens over 8 experts, as a control"),
-    (r"^fi_b12x_moe_nvfp4_tokens\d+_topk\d+$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010", "flashinfer-0011"], "SM120 CuTe DSL MoE, NVFP4 weights, bf16 output: run-to-run differences of 1 to 2 bf16 ULPs in most outputs at every token count and top-k, including top-k 2, so the order dependence sits in the bf16 atomic accumulation of the GEMM itself, not only in the per-token finalize; the output agrees with a bf16 reference to NVFP4 quantisation error"),
+    (r"^fi_b12x_moe_nvfp4_tokens\d+_topk\d+$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010"], "SM120 fused MoE API probe; backend identity and cause are unisolated in the legacy differing runs. Legacy reports do not record ULP distances; the unquantised reference is a diagnostic, not a correctness bound."),
     (r"^sglang_qwen3_8b_fp8_blockwise_default$", ["sglang-0011"], "FP8 block-quantised model; the release wheel routes Hopper to DeepGEMM, and its CUTLASS FP8 GEMM is SM120-only, so the stream-K kernel is not reached"),
 ]
 
 
 def load_reports(results: Path) -> dict[str, dict[str, dict[str, dict]]]:
-    """stack -> probe -> tag -> report"""
-    out: dict[str, dict[str, dict[str, dict]]] = defaultdict(lambda: defaultdict(dict))
+    """stack -> probe -> report path -> report. Never overwrite a duplicate tag."""
+    out = defaultdict(lambda: defaultdict(dict))
     for stack_dir in sorted(p for p in results.iterdir() if p.is_dir()):
-        for f in stack_dir.glob("*.json"):
+        for f in sorted(stack_dir.rglob("*.json")):
             if f.name.startswith("cublaslt_sweep_"):
                 continue
             d = json.loads(f.read_text())
             if "probe" not in d:
                 continue
-            out[stack_dir.name][d["probe"]][d["env"].get("run_tag") or "-"] = d
+            d = {**d, "report_file": str(f.relative_to(results))}
+            out[stack_dir.name][d["probe"]][str(f.relative_to(stack_dir))] = d
     return out
 
 
+def evaluations(report: dict) -> int:
+    if "members" in report:
+        return sum(evaluations(r) for r in report["members"].values())
+    if "evaluations" in report:
+        return report["evaluations"]
+    if "runs" in report:
+        return len(report["runs"]) + bool(report.get("first_hash"))
+    return sum(len(v) for v in report.get("modes", {}).values())
+
+
+def baseline_hash(report: dict):
+    return report.get("first_hash") or next((r.get("output_hash") for r in report.get("modes", {}).get("sync", []) if r.get("output_hash")), None)
+
+
 def summarise(by_tag: dict[str, dict]) -> tuple[str, str, int]:
-    inproc = "identical" if all(r["verdict"] == "bitwise-identical" for r in by_tag.values()) else "DIFFERS"
-    hashes = {r.get("first_hash") or r.get("modes", {}).get("sync", [{}])[0].get("output_hash") for r in by_tag.values()}
-    fresh = "n/a" if len(by_tag) < 2 else ("identical" if len(hashes) == 1 else "DIFFERS")
-    repeats = sum(len(r["runs"]) + 1 if "runs" in r else sum(len(v) for v in r.get("modes", {}).values()) for r in by_tag.values())
-    return inproc, fresh, repeats
+    if not by_tag:
+        return "INVALID", "n/a", 0
+    # Aggregates retain all member shapes, counts and report paths.
+    if all("members" in r for r in by_tag.values()):
+        members = defaultdict(dict)
+        for tag, r in by_tag.items():
+            for name, member in r["members"].items():
+                members[name][tag] = member
+        parts = [summarise(rs) for rs in members.values()]
+        def combine(index):
+            values = {p[index] for p in parts}
+            if "INVALID" in values:
+                return "INVALID"
+            if "DIFFERS" in values:
+                return "DIFFERS"
+            return "identical" if values == {"identical"} else "n/a"
+        return combine(0), combine(1), sum(p[2] for p in parts)
+    valid = {"bitwise-identical", "DIFFERS"}
+    statuses = {r.get("verdict", "INVALID") for r in by_tag.values()}
+    if not statuses <= valid or not all(baseline_hash(r) for r in by_tag.values()):
+        return "INVALID", "n/a", sum(evaluations(r) for r in by_tag.values())
+    inproc = "DIFFERS" if "DIFFERS" in statuses else "identical"
+    keys = {r.get("comparison_key", "legacy-unverified-inputs") for r in by_tag.values()}
+    identities = {r.get("env", {}).get("run_id") or r.get("env", {}).get("run_tag") for r in by_tag.values()}
+    identities.discard(None)
+    fresh = "n/a"
+    if len(identities) >= 2 and len(keys) == 1:
+        fresh = "identical" if len({baseline_hash(r) for r in by_tag.values()}) == 1 else "DIFFERS"
+    return inproc, fresh, sum(evaluations(r) for r in by_tag.values())
 
 
 def collapse_cublaslt(probes: dict[str, dict[str, dict]]) -> dict[str, dict[str, dict]]:
-    """Fold cublaslt_<variant>_m.._n.._k.._<dtype> probes into one synthetic entry per variant and dtype."""
-    groups: dict[str, list[tuple[str, dict[str, dict]]]] = defaultdict(list)
-    rest: dict[str, dict[str, dict]] = {}
-    for name, by_tag in probes.items():
+    groups, rest = defaultdict(lambda: defaultdict(lambda: {"members": {}})), {}
+    for name, reports in sorted(probes.items()):
         m = re.match(r"^cublaslt_(mm|linear)_m\d+_n\d+_k\d+_(\w+)$", name)
-        if m:
-            groups[f"cuBLASLt {m.group(1)} {m.group(2)}"].append((name, by_tag))
-        else:
-            rest[name] = by_tag
-    for key, members in groups.items():
-        verdict = "bitwise-identical" if all(r["verdict"] == "bitwise-identical" for _, bt in members for r in bt.values()) else "DIFFERS"
-        tags: dict[str, dict] = {}
-        for tag in ("a", "b"):
-            if all(tag in bt for _, bt in members):
-                tags[tag] = {"verdict": verdict, "first_hash": "".join(bt[tag]["first_hash"] for _, bt in members), "runs": [{}] * 3}
-        rest[key] = tags or {"-": {"verdict": verdict, "first_hash": "x", "runs": [{}] * 3}}
-    return rest
+        if not m:
+            rest[name] = reports
+            continue
+        for path, r in reports.items():
+            # A process may contain many shapes; tag alone is insufficient for new runs.
+            key = r.get("env", {}).get("run_id") or r.get("env", {}).get("run_tag") or "legacy-untagged"
+            member_key = name
+            if member_key in groups[f"cuBLASLt {m[1]} {m[2]}"][key]["members"]:
+                member_key += ":" + path
+            groups[f"cuBLASLt {m[1]} {m[2]}"][key]["members"][member_key] = r
+    return {**rest, **groups}
+
+
+def relation_for(name: str, note: str) -> str:
+    if "not reached" in note or "not involved" in note or "not exercised" in note:
+        return "not_reached"
+    if "control" in note or "atomicFalse" in name or "fused_finalize_False" in name:
+        return "control"
+    if name.startswith(("vllm_", "sglang_qwen", "batch_composition_")):
+        return "end_to_end_configuration"
+    # The legacy reports lack identities proving the pinned source kernel ran.
+    return "operator_example"
+
+
+def related_rows(name: str) -> list[tuple[str, str, str]]:
+    return [(rid, relation_for(name, note), note) for pattern, ids, note in ROWS if re.search(pattern, name) for rid in ids]
+
+
+def report_files(reports: dict) -> list[str]:
+    return sorted({r["report_file"] for report in reports.values()
+                   for r in (report.get("members") or {"self": report}).values() if "report_file" in r})
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -137,17 +194,18 @@ def main(argv: list[str] | None = None) -> int:
     for stack, probes in reports.items():
         for name, by_tag in collapse_cublaslt(probes).items():
             inproc, fresh, repeats = summarise(by_tag)
-            for pat, rows, note in ROWS:
-                if re.search(pat, name):
-                    for rid in rows:
-                        evidence[rid].append({"stack": stack, "probe": name, "in_process": inproc, "fresh_process": fresh, "repeats": repeats, "note": note})
+            for rid, relation, note in related_rows(name):
+                evidence[rid].append({"stack": stack, "probe": name, "in_process": inproc, "fresh_process": fresh,
+                                      "evaluations": repeats, "relation": relation, "kernel_identity_verified": False,
+                                      "report_files": report_files(by_tag), "note": note,
+                                      "fresh_process_scope": "legacy inputs/configuration not fully attested" if any("schema" not in r for r in by_tag.values()) else "matching comparison key"})
     touched = 0
     for f in args.files:
         rows = [json.loads(l) for l in f.read_text().splitlines() if l.strip()]
         for r in rows:
-            if r["id"] in evidence:
-                keep = [e for e in r.get("runtime_evidence", []) if (e["stack"], e["probe"]) not in {(x["stack"], x["probe"]) for x in evidence[r["id"]]}]
-                r["runtime_evidence"] = keep + evidence[r["id"]]
+            r.pop("runtime_evidence", None)
+            if evidence.get(r["id"]):
+                r["runtime_evidence"] = evidence[r["id"]]
                 touched += 1
         f.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     print(f"attached runtime evidence to {touched} rows from {sum(len(p) for p in reports.values())} reports")
