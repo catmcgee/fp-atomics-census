@@ -1,8 +1,10 @@
 """Direct kernel probes for the engine-specific class-A and low-confidence rows.
 
-    python probes/probe_kernels.py --which vllm_moe_wna16|vllm_lora_shrink|sglang_marlin|sglang_fp8_blockwise|sglang_lora_shrink|deepgemm_bmk_bnk_mn|marlin_atomic
+    python probes/probe_kernels.py --which vllm_moe_wna16|vllm_moe_wna16_kernel|vllm_lora_shrink|sglang_marlin|sglang_fp8_blockwise|sglang_lora_shrink|deepgemm_bmk_bnk_mn|marlin_atomic
 
-vllm_moe_wna16: vllm._custom_ops.moe_wna16_gemm with tokens/experts <= 6 (vllm-0014).
+vllm_moe_wna16: instructions for the engine-level probe of vllm._custom_ops.moe_wna16_gemm, selected when
+    M * top_k / E <= 6 (vllm-0014); needs vLLM v0.26.0 or earlier to reach the kernel from the engine.
+vllm_moe_wna16_kernel: the same kernel called directly through fused_experts with an int4 W4A16 config (vllm-0014).
 vllm_lora_shrink: vllm.lora.ops.triton_ops lora_shrink with the default config (vllm-0018).
 sglang_marlin: sgl_kernel gptq_marlin_gemm with n < 2048, k >= 2048 (sglang-0008).
 sglang_fp8_blockwise: sgl_kernel.fp8_blockwise_scaled_mm with k > 3n (sglang-0011).
@@ -48,7 +50,9 @@ def sglang_marlin() -> bool:
 
 def vllm_moe_wna16() -> bool:
     print("Use probe_engine_logits.py with --quantization moe_wna16 on a 4-bit GPTQ MoE checkpoint (group size 128) and a")
-    print("batch of at most 6 * num_experts tokens; the CUDA kernel is selected only in that regime (fused_moe.py:1227-1235).")
+    print("batch with M * top_k / E <= 6 routed assignments per expert; the CUDA kernel is selected only in that regime")
+    print("(fused_moe.py:1227-1235). The engine-level probe needs vLLM v0.26.0 or earlier: from v0.27.0 MoeWNA16Method uses")
+    print("TritonWNA16Experts and never reaches the CUDA kernel. Use --which vllm_moe_wna16_kernel to call it through fused_experts.")
     return True
 
 
@@ -67,9 +71,11 @@ def sglang_lora_shrink() -> bool:
 def vllm_moe_wna16_kernel() -> bool:
     """vLLM's moe_wna16 CUDA kernel (vllm-0014) on random 4-bit weights.
 
-    Mirrors tests/kernels/moe/test_moe.py::test_fused_moe_wn16. fused_moe
-    selects the CUDA kernel when tokens per expert <= 6 (fused_moe.py
+    Mirrors tests/kernels/moe/test_moe.py::test_fused_moe_wn16. fused_experts
+    selects the CUDA kernel when M * top_k / E <= 6 (fused_moe.py
     should_moe_wna16_use_cuda); the m=64, e=8 case is the Triton control.
+    This reaches the kernel on any release, unlike the engine's moe_wna16
+    method, which uses TritonWNA16Experts from vLLM v0.27.0.
     """
     from vllm.config import VllmConfig, set_current_vllm_config
     from vllm.model_executor.layers.fused_moe.fused_moe import fused_experts
@@ -107,7 +113,7 @@ def vllm_moe_wna16_kernel() -> bool:
                 with set_current_vllm_config(cfg):
                     return [fused_experts(a, w1_q, w2_q, topk_weights, topk_ids, global_num_experts=e, quant_config=qc)]
             tag = "fp16" if dtype == torch.float16 else "bf16"
-            kind = "cuda" if m / e <= 6 else "triton"
+            kind = "cuda" if m * topk_ / e <= 6 else "triton"
             ok &= run_twice(f"moe_wna16_{kind}_m{m}_e{e}_{tag}", run, repeats=5, extra={"m": m, "e": e, "n": n, "k": k, "dtype": tag, "kernel": kind})
     return ok
 

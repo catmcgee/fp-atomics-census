@@ -72,15 +72,18 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^vllm_mixtral_gptq_auto_x6$", ["vllm-0022", "vllm-0016", "marlin-0001"], "Mixtral 4-bit GPTQ through the Marlin MoE backend, stock scheduler"),
     (r"^vllm_mixtral_gptq_marlin_moe_one_seq_x6$", ["vllm-0022", "vllm-0016", "marlin-0001"], "Mixtral 4-bit GPTQ through the Marlin MoE backend, one sequence per batch"),
     (r"^sglang_qwen3_8b_bf16_tp2_x6$", ["sglang-0269"], "SGLang TP=2 bf16 dense, stock scheduler"),
-    (r"^vllm_mixtral_gptq_moe_wna16_x6$", ["vllm-0014"], "4-bit GPTQ Mixtral through the moe_wna16 method, small batch, 6 repeats"),
+    # A rule mapping vllm_mixtral_gptq_moe_wna16_x6 to vllm-0014 was withdrawn: no such report exists, and on vLLM
+    # 0.27.0 and later the moe_wna16 method uses TritonWNA16Experts and does not reach that CUDA kernel, so an
+    # engine-level run on such a release would be not_reached rather than operator_example. Add a rule conditioned
+    # on the recorded vLLM version if such a report is produced.
     (r"^vllm_qwen1.5_moe_bf16_flashinfer_cutlass_x6$", ["flashinfer-0001"], "bf16 MoE through vLLM's flashinfer_cutlass MoE backend, 6 repeats"),
     (r"^sglang_qwen3_8b_bf16_trtllm_mha_x6$", ["sglang-0267"], "SGLang with the trtllm_mha attention backend, 6 repeats"),
     (r"^sglang_qwen3_8b_fp8_default_x6$", ["sglang-0011"], "FP8 block-quantised model on the auto backend for this GPU; the SM90 stream-K kernel is not involved"),
     (r"^vllm_qwen1.5_moe_bf16_x6$", ["vllm-0016"], "bf16 MoE through vLLM's default MoE backend on this GPU, stock scheduler"),
     (r"^vllm_qwen1.5_moe_bf16_one_seq_x6$", ["vllm-0016"], "bf16 MoE through vLLM's default MoE backend, one sequence per batch"),
     (r"^vllm_zephyr_lora_split_k_x6$", ["vllm-0018"], "LoRA adapter with the default split-K shrink, 6 repeats"),
-    (r"^moe_wna16_cuda_", ["vllm-0014"], "moe_wna16 CUDA kernel on random 4-bit weights, 16 tokens over 8 experts (tokens per expert <= 6 selects it)"),
-    (r"^moe_wna16_triton_", ["vllm-0014"], "the Triton path of the same method at 64 tokens over 8 experts, as a control"),
+    (r"^moe_wna16_cuda_", ["vllm-0014"], "moe_wna16 CUDA kernel through fused_experts on random 4-bit weights: 16 tokens, top-k 2, 8 experts (M * top_k / E = 4 <= 6 selects it). Run on the vLLM 0.28.0 wheel, not the pinned sha; the kernel file and should_moe_wna16_use_cuda are byte-identical at both."),
+    (r"^moe_wna16_triton_", ["vllm-0014"], "the Triton kernel through the same fused_experts call at 64 tokens, top-k 2, 8 experts (ratio 16 > 6), as a control"),
     (r"^fi_b12x_moe_nvfp4_tokens\d+_topk\d+$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010"], "SM120 fused MoE API probe; backend identity and cause are unisolated in the legacy differing runs. Legacy reports do not record ULP distances; the unquantised reference is a diagnostic, not a correctness bound."),
     (r"^sglang_qwen3_8b_fp8_blockwise_default$", ["sglang-0011"], "FP8 block-quantised model; the release wheel routes Hopper to DeepGEMM, and its CUTLASS FP8 GEMM is SM120-only, so the stream-K kernel is not reached"),
 ]

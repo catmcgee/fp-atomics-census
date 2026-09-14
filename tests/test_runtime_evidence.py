@@ -41,6 +41,7 @@ def test_wrong_kernel_mappings_are_withdrawn():
     assert "vllm-0181" not in {r for r, _, _ in related_rows("cuBLASLt mm bf16")}
     assert not related_rows("vllm_qwen3_8b_bf16_tp2_custom_allreduce_x6")
     assert all(relation != "exact_kernel" for _, relation, _ in related_rows("fi_b12x_moe_nvfp4_tokens16_topk2"))
+    assert not related_rows("vllm_mixtral_gptq_moe_wna16_x6")
     assert [relation for _, relation, _ in related_rows("sglang_qwen2.5_7b_gptq_marlin_tp2_x6")] == ["not_reached"]
 
 

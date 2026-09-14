@@ -43,6 +43,8 @@ fi
 if [ "$MODE" = "full" ] || [ "$MODE" = "engines" ]; then
   twice probe_engine_logits.py --engine vllm --model Qwen/Qwen3-8B
   twice probe_engine_logits.py --engine vllm --model Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4
+  # Reaches the moe_wna16 CUDA kernel (vllm-0014) only on vLLM v0.26.0 or earlier; from v0.27.0 the moe_wna16 method
+  # uses TritonWNA16Experts. On later releases use probe_kernels.py --which vllm_moe_wna16_kernel instead.
   twice probe_engine_logits.py --engine vllm --model Qwen/Qwen1.5-MoE-A2.7B-Chat-GPTQ-Int4 --quantization moe_wna16 --name vllm_qwen1.5_moe_wna16
   twice probe_engine_logits.py --engine vllm --model HuggingFaceH4/zephyr-7b-beta --lora typeof/zephyr-7b-beta-lora --name vllm_zephyr_lora_split_k
   VLLM_BATCH_INVARIANT=1 twice probe_engine_logits.py --engine vllm --model HuggingFaceH4/zephyr-7b-beta --lora typeof/zephyr-7b-beta-lora --name vllm_zephyr_lora_batch_invariant

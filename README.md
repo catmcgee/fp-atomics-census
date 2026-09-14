@@ -56,7 +56,7 @@ These are precautions for the reviewed paths, not sufficient conditions for bit-
 | Engine or path | Configuration to exclude or control | Source or evidence |
 |---|---|---|
 | vLLM LoRA | Disable LoRA, or test `VLLM_BATCH_INVARIANT=1` on the exact model | vllm-0018, vllm-0019 |
-| vLLM quantised MoE | Exclude the `moe_wna16` CUDA path | vllm-0014 |
+| vLLM quantised MoE | Exclude the `moe_wna16_gemm` CUDA kernel: on vLLM v0.26.0 and earlier this means avoiding the `moe_wna16` method, the GPTQ/AWQ MoE fallback to it and compressed-tensors WNA16 MoE at decode-sized batches; from v0.27.0 those methods use the Triton kernel and only direct `fused_experts` callers with int4 W4A16 weights reach it | vllm-0014 |
 | vLLM Marlin | Keep `VLLM_MARLIN_USE_ATOMIC_ADD` unset | vllm-0010 |
 | vLLM model-specific paths | Exclude mean pooling, Moondream3 and DiffusionGemma until their operator paths are controlled | vllm-0045, vllm-0046, vllm-0050 |
 | vLLM ROCm gfx1100 | Exclude the reviewed packed GPTQ add loops pending a separate ROCm evaluation | vllm-0032–0037 |
@@ -121,6 +121,7 @@ Several qualifications matter when interpreting the legacy records:
 - The SM120 fused MoE outputs differed with 16, 512 and 4096 tokens and top-k 2, 4 and 8. Those reports did not store ULP distributions or selected backends. Their correlation with an unquantised reference does not establish quantised-kernel correctness or identify the cause. Importing helpers from a dense split-K module does not execute its epilogue. The revised probe adds top-k 1 and ULP/finite diagnostics; those new arms have not been run on a GPU here.
 - Two fixed, finite, already-rounded contributions added to zero commute; this narrow observation about finalisation does not prove the upstream GEMM deterministic. Two-rank all-reduce is similarly a weak smoke test for associativity. The new cancellation case requires at least three ranks.
 - FlashInfer plain all-reduce fusion **was run** on two H100s and returned matching hashes. NVLS and cuDNN are not established by those records. SGLang's default B200 bf16 arm has differences; the separately forced `trtllm_mha` arm has a null result. These are separate configurations.
+- The `moe_wna16_cuda_*` results were obtained by calling `fused_experts` directly with an int4 W4A16 quant config on the vLLM 0.28.0 wheel. On that release the engine's `moe_wna16` quantisation method no longer reaches the CUDA kernel (from v0.27.0 it uses `TritonWNA16Experts`), so they are evidence about the kernel, not about stock `--quantization moe_wna16` serving on 0.27.0 or later.
 
 ## Batch-shape experiments
 
