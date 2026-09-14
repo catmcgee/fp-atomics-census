@@ -47,7 +47,7 @@ def environment() -> dict:
         "cuda": torch.version.cuda if torch else None,
         "cudnn": torch.backends.cudnn.version() if torch and torch.backends.cudnn.is_available() else None,
         "packages": {p: _version(p) for p in ("vllm", "sglang", "sgl-kernel", "flashinfer-python", "flash-attn", "deep-gemm", "deep-ep", "triton", "nvidia-cublas-cu12", "nvidia-nccl-cu12", "nvidia-cublas-cu13", "nvidia-nccl-cu13")},
-        "env": {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG", "NCCL_ALGO", "NCCL_PROTO", "NCCL_MAX_NCHANNELS", "NCCL_P2P_DISABLE", "VLLM_BATCH_INVARIANT", "VLLM_MARLIN_USE_ATOMIC_ADD", "VLLM_ATTENTION_BACKEND")},
+        "env": {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG", "NCCL_ALGO", "NCCL_PROTO", "NCCL_MAX_NCHANNELS", "NCCL_P2P_DISABLE", "VLLM_BATCH_INVARIANT", "VLLM_MARLIN_USE_ATOMIC_ADD", "VLLM_ATTENTION_BACKEND", "SGLANG_MARLIN_USE_ATOMIC_ADD", "SGLANG_ENABLE_DETERMINISTIC_INFERENCE")},
         "run_tag": os.environ.get("RUN_TAG"), "run_id": RUN_ID,
         "recorded_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": source_identity(),

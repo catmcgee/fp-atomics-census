@@ -1,0 +1,24 @@
+{
+  "invocation_id": "1ca97e35-74d9-4d0f-aa0e-3ddaf94df929",
+  "started_at_utc": "2026-09-14T20:08:25.217317+00:00",
+  "argv": [
+    "probe_engine_logits.py",
+    "--engine",
+    "sglang",
+    "--model",
+    "Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4",
+    "--revision",
+    "4f5a0e31008e2966e8f787964bcc4e1105e03dc3",
+    "--repeats",
+    "6",
+    "--tp",
+    "1",
+    "--name",
+    "sglang_qwen2.5_1.5b_gptq_marlin_stock_x6"
+  ],
+  "returncode": 1,
+  "status": "NONIDENTICAL_OR_REJECTED",
+  "measurement_statuses": [
+    "DIFFERS"
+  ]
+}

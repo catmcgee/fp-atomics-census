@@ -1,0 +1,19 @@
+--- /workspace/logs/marlin_utils.py.stock	2026-09-14 19:46:54.000000000 +0000
++++ /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py	2026-09-14 20:09:02.829711907 +0000
+@@ -5,6 +5,7 @@
+ from __future__ import annotations
+ 
+ import logging
++import os
+ from dataclasses import dataclass
+ from typing import TYPE_CHECKING, Any, Optional
+ 
+@@ -472,7 +473,7 @@
+     # disable atomicAdd reduce by default,
+     # one can enable it with VLLM_MARLIN_USE_ATOMIC_ADD=1
+     # TODO: Need to add sglang's MARLIN_USE_ATOMIC_ADD: bool = False
+-    if not True:
++    if not os.environ.get("SGLANG_MARLIN_USE_ATOMIC_ADD", "0") == "1":
+         maybe_warn_marlin_atomic_add_env()
+         return False
+ 

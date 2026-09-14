@@ -1,0 +1,109 @@
+20:10:49 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:10:49 18291 grep -v ^\s*$ 
+20:10:49 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:10:49 18293 tail -40 
+20:10:49 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:10:54 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:10:54 18291 grep -v ^\s*$ 
+20:10:54 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:10:54 18293 tail -40 
+20:10:54 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:10:58 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:10:58 18291 grep -v ^\s*$ 
+20:10:58 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:10:58 18293 tail -40 
+20:10:58 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:10:58 18499 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:10:58 18500 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:10:58 18501 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:02 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:02 18291 grep -v ^\s*$ 
+20:11:02 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:02 18293 tail -40 
+20:11:02 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:02 18499 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:02 18500 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:02 18501 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:06 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:06 18291 grep -v ^\s*$ 
+20:11:06 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:06 18293 tail -40 
+20:11:07 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:07 18499 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:11 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:11 18291 grep -v ^\s*$ 
+20:11:11 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:11 18293 tail -40 
+20:11:11 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:11 18499 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:15 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:15 18291 grep -v ^\s*$ 
+20:11:15 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:15 18293 tail -40 
+20:11:15 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:15 18499 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:19 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:19 18291 grep -v ^\s*$ 
+20:11:19 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:19 18293 tail -40 
+20:11:19 18294 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:19 18499 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:23 18290 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:23 18291 grep -v ^\s*$ 
+20:11:23 18292 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:23 18293 tail -40 
+20:11:27 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:27 19299 grep -v ^\s*$ 
+20:11:27 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:27 19301 tail -40 
+20:11:27 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:31 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:31 19299 grep -v ^\s*$ 
+20:11:32 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:32 19301 tail -40 
+20:11:32 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:36 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:36 19299 grep -v ^\s*$ 
+20:11:36 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:36 19301 tail -40 
+20:11:36 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:36 19515 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:36 19516 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:36 19517 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:40 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:40 19299 grep -v ^\s*$ 
+20:11:40 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:40 19301 tail -40 
+20:11:40 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:40 19515 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:41 19516 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:41 19517 /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+20:11:45 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:45 19299 grep -v ^\s*$ 
+20:11:45 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:45 19301 tail -40 
+20:11:45 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:45 19515 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:49 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:49 19299 grep -v ^\s*$ 
+20:11:49 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:49 19301 tail -40 
+20:11:49 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:49 19515 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:54 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:54 19299 grep -v ^\s*$ 
+20:11:54 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:54 19301 tail -40 
+20:11:54 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:54 19515 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:11:58 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:11:58 19299 grep -v ^\s*$ 
+20:11:58 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:11:58 19301 tail -40 
+20:11:58 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+20:11:58 19515 /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21) 
+20:12:02 19298 python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+20:12:02 19299 grep -v ^\s*$ 
+20:12:02 19300 grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+20:12:02 19301 tail -40 
+20:12:02 19302 /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision

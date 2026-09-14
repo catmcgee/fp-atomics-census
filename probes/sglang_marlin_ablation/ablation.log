@@ -1,0 +1,102 @@
+[2026-09-14T20:03:55Z] guard test on the stock wheel:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = None
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = True
+maybe_warn_marlin_atomic_add_env() returned without error
+1f0529ca2b24e2af804eaaf51fe72d76484cf5c7ff91a768612c5c9ddfba0bf3  /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+[2026-09-14T20:04:05Z] ARM 1 stock
+[2026-09-14T20:04:07Z] == RUN_TAG=a sglang_qwen2.5_1.5b_gptq_marlin_stock_x6  (SGLANG_MARLIN_USE_ATOMIC_ADD=unset)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_stock_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/42746091-58cc-4d8e-8e5e-9368a47760f4/sglang_qwen2.5_1.5b_gptq_marlin_stock_x6.a.json
+[2026-09-14T20:08:22Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_stock_x6 a
+[2026-09-14T20:08:24Z] == RUN_TAG=b sglang_qwen2.5_1.5b_gptq_marlin_stock_x6  (SGLANG_MARLIN_USE_ATOMIC_ADD=unset)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_stock_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/1ca97e35-74d9-4d0f-aa0e-3ddaf94df929/sglang_qwen2.5_1.5b_gptq_marlin_stock_x6.b.json
+[2026-09-14T20:09:02Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_stock_x6 b
+[2026-09-14T20:09:02Z] patching the installed wheel
+patched /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+removed '/root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/__pycache__/marlin_utils.cpython-312.pyc'
+[2026-09-14T20:09:02Z] patch (19 lines):
+--- /workspace/logs/marlin_utils.py.stock	2026-09-14 19:46:54.000000000 +0000
++++ /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py	2026-09-14 20:09:02.829711907 +0000
+@@ -5,6 +5,7 @@
+ from __future__ import annotations
+ 
+ import logging
++import os
+ from dataclasses import dataclass
+ from typing import TYPE_CHECKING, Any, Optional
+ 
+@@ -472,7 +473,7 @@
+     # disable atomicAdd reduce by default,
+     # one can enable it with VLLM_MARLIN_USE_ATOMIC_ADD=1
+     # TODO: Need to add sglang's MARLIN_USE_ATOMIC_ADD: bool = False
+-    if not True:
++    if not os.environ.get("SGLANG_MARLIN_USE_ATOMIC_ADD", "0") == "1":
+         maybe_warn_marlin_atomic_add_env()
+         return False
+ 
+c3386c20db959445c2326461bc0cf0e77c353b962bf718d0e752558f6e6f2507  /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+[2026-09-14T20:09:02Z] guard test on the patched wheel, env unset:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = None
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = False
+maybe_warn_marlin_atomic_add_env() returned without error
+[2026-09-14T20:09:12Z] guard test on the patched wheel, env=1:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = 1
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = True
+maybe_warn_marlin_atomic_add_env() returned without error
+[2026-09-14T20:09:21Z] guard test on the patched wheel, env=0:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = 0
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = False
+maybe_warn_marlin_atomic_add_env() returned without error
+[2026-09-14T20:09:29Z] pycache now:
+-rw-r--r-- 1 root root  33314 Sep 14 20:09 marlin_utils.cpython-312.pyc
+[2026-09-14T20:09:29Z] ARM 2 guard_off
+[2026-09-14T20:09:31Z] == RUN_TAG=a sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6  (SGLANG_MARLIN_USE_ATOMIC_ADD=unset)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/d9194bde-a283-41bf-8f25-30c6475bce9d/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6.a.json
+[2026-09-14T20:10:06Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6 a
+[2026-09-14T20:10:08Z] == RUN_TAG=b sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6  (SGLANG_MARLIN_USE_ATOMIC_ADD=unset)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/3bc69bfa-f213-4dcd-90a4-1bbb5cdf4128/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6.b.json
+[2026-09-14T20:10:45Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6 b
+[2026-09-14T20:10:45Z] ARM 3 guard_env_on
+[2026-09-14T20:10:47Z] == RUN_TAG=a sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6  (SGLANG_MARLIN_USE_ATOMIC_ADD=1)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/7b7c452c-cc3f-4dac-a68b-ef08d656caf9/sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6.a.json
+[2026-09-14T20:11:23Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6 a
+[2026-09-14T20:11:25Z] == RUN_TAG=b sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6  (SGLANG_MARLIN_USE_ATOMIC_ADD=1)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/aa4e4d2c-9dca-4a95-a2d6-9f95bb3c253e/sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6.b.json
+[2026-09-14T20:12:03Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6 b
+[2026-09-14T20:12:03Z] processes that carried SGLANG_MARLIN_USE_ATOMIC_ADD=1 during arm 3 (count, cmdline):
+     18   tail -40
+     18   python invoke.py probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision 4f5a0e31
+     18   grep -v ^\s*$
+     18   grep -E PROBE |Traceback|Error|error|Warning: .*atomic|marlin|Marlin|use_atomic|Load weight|max_total_num_tokens|Capture
+     17   /root/venv-sgl/bin/python probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --revision
+     12   /root/venv-sgl/bin/python -c from multiprocessing.resource_tracker import main;main(21)
+      8   /root/venv-sgl/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=22, pipe_handle=24) --m
+[2026-09-14T20:12:03Z] ARM 4 guard_off_det
+[2026-09-14T20:12:05Z] == RUN_TAG=a sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6 --extra-arg enable-deterministic-inference=true (SGLANG_MARLIN_USE_ATOMIC_ADD=unset)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/49ad57cb-cb05-4e8b-863f-8df1cddb0ddd/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6.a.json
+[2026-09-14T20:12:48Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6 a
+[2026-09-14T20:12:50Z] == RUN_TAG=b sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6 --extra-arg enable-deterministic-inference=true (SGLANG_MARLIN_USE_ATOMIC_ADD=unset)
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6 DIFFERS -> /workspace/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/97bd1bef-5978-466e-8958-fe8935a983b0/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6.b.json
+[2026-09-14T20:13:32Z] == exit=1 sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6 b
+[2026-09-14T20:13:32Z] pip freeze
+[2026-09-14T20:13:32Z] new result files:
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/1ca97e35-74d9-4d0f-aa0e-3ddaf94df929/sglang_qwen2.5_1.5b_gptq_marlin_stock_x6.b.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/3bc69bfa-f213-4dcd-90a4-1bbb5cdf4128/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6.b.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/42746091-58cc-4d8e-8e5e-9368a47760f4/sglang_qwen2.5_1.5b_gptq_marlin_stock_x6.a.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/49ad57cb-cb05-4e8b-863f-8df1cddb0ddd/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6.a.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/7b7c452c-cc3f-4dac-a68b-ef08d656caf9/sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6.a.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/97bd1bef-5978-466e-8958-fe8935a983b0/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6.b.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/aa4e4d2c-9dca-4a95-a2d6-9f95bb3c253e/sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6.b.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/d9194bde-a283-41bf-8f25-30c6475bce9d/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6.a.json
+results/invocations/1ca97e35-74d9-4d0f-aa0e-3ddaf94df929/status.json
+results/invocations/3bc69bfa-f213-4dcd-90a4-1bbb5cdf4128/status.json
+results/invocations/42746091-58cc-4d8e-8e5e-9368a47760f4/status.json
+results/invocations/49ad57cb-cb05-4e8b-863f-8df1cddb0ddd/status.json
+results/invocations/7b7c452c-cc3f-4dac-a68b-ef08d656caf9/status.json
+results/invocations/97bd1bef-5978-466e-8958-fe8935a983b0/status.json
+results/invocations/aa4e4d2c-9dca-4a95-a2d6-9f95bb3c253e/status.json
+results/invocations/d9194bde-a283-41bf-8f25-30c6475bce9d/status.json
+[2026-09-14T20:13:33Z] ABLATION_DONE

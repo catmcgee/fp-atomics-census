@@ -1,0 +1,73 @@
+{
+  "diagnostic": "guard_off",
+  "env_SGLANG_MARLIN_USE_ATOMIC_ADD": null,
+  "extra_kwargs": {
+    "log_level": "info",
+    "disable_radix_cache": true
+  },
+  "prompts": 16,
+  "max_new_tokens": 32,
+  "repeats": [
+    {
+      "repeat": 1,
+      "identical": false,
+      "sampled_tokens_changed": 0,
+      "requests_changed": 0,
+      "first_divergence_positions": [],
+      "top5_positions_changed": 32,
+      "top5_positions_changed_before_any_token_divergence": 32,
+      "total_generated_tokens": 512
+    },
+    {
+      "repeat": 2,
+      "identical": false,
+      "sampled_tokens_changed": 0,
+      "requests_changed": 0,
+      "first_divergence_positions": [],
+      "top5_positions_changed": 32,
+      "top5_positions_changed_before_any_token_divergence": 32,
+      "total_generated_tokens": 512
+    },
+    {
+      "repeat": 3,
+      "identical": false,
+      "sampled_tokens_changed": 0,
+      "requests_changed": 0,
+      "first_divergence_positions": [],
+      "top5_positions_changed": 32,
+      "top5_positions_changed_before_any_token_divergence": 32,
+      "total_generated_tokens": 512
+    },
+    {
+      "repeat": 4,
+      "identical": false,
+      "sampled_tokens_changed": 0,
+      "requests_changed": 0,
+      "first_divergence_positions": [],
+      "top5_positions_changed": 32,
+      "top5_positions_changed_before_any_token_divergence": 32,
+      "total_generated_tokens": 512
+    },
+    {
+      "repeat": 5,
+      "identical": false,
+      "sampled_tokens_changed": 0,
+      "requests_changed": 0,
+      "first_divergence_positions": [],
+      "top5_positions_changed": 32,
+      "top5_positions_changed_before_any_token_divergence": 32,
+      "total_generated_tokens": 512
+    },
+    {
+      "repeat": 6,
+      "identical": false,
+      "sampled_tokens_changed": 0,
+      "requests_changed": 0,
+      "first_divergence_positions": [],
+      "top5_positions_changed": 32,
+      "top5_positions_changed_before_any_token_divergence": 32,
+      "total_generated_tokens": 512
+    }
+  ],
+  "baseline_total_tokens": 512
+}
