@@ -1,0 +1,25 @@
+{
+  "invocation_id": "d2460a91-66b0-48cb-8af8-e7627ad5d03a",
+  "started_at_utc": "2026-09-14T21:37:45.691529+00:00",
+  "argv": [
+    "probe_flashinfer.py",
+    "--which",
+    "b12x_moe"
+  ],
+  "returncode": 1,
+  "status": "NONIDENTICAL_OR_REJECTED",
+  "measurement_statuses": [
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS",
+    "DIFFERS"
+  ]
+}
