@@ -128,4 +128,5 @@ untested because E3 does not reconstruct a recorded schedule or teacher-force
 a continuation. E6 is the P2 experiment: it records admissions and per-pass
 token ids, replays the recorded schedule in a fresh process with teacher
 forcing and compares every pass; it is unrun. E5 does not isolate GPU from driver or input divergence.
+The compiled MoE E4 arms are excluded from P4 evidence: a hook-free check on the same stack showed that torch.compile alone, not CUDA graphs, the hook or the compile cache, turns Qwen1.5-MoE-A2.7B-Chat's output degenerate on vLLM 0.28.0, so their DIFFERS verdicts describe a mis-compiled model, while the uncompiled MoE arms, which are not degenerate, were IDENTICAL under neighbour replacement on that one stack.
 Identical in a few repeats is evidence only for those observations.

@@ -1,6 +1,6 @@
 # Batch-shape experiments
 
-The revised harness targets vLLM 0.28.0. Its CPU analysis and integrity checks are tested locally; the changed GPU controls and hook require a new GPU campaign. Do not mix new observations with the legacy September 2026 arms.
+The revised harness targets vLLM 0.28.0. Its CPU analysis and integrity checks are tested locally, and the GPU controls and hook were run unchanged on one H100 stack on 14 September 2026; those arms carry `_v2_` in their names and sit beside the legacy arms under `probes/shape/results/e4/`. Do not reuse legacy arm directories or names.
 
 Install the hook in the chosen GPU environment:
 
@@ -24,6 +24,8 @@ The controls are independent requests. For vLLM 0.28.0, the harness supplies exp
 Full graph capture without compilation is model/backend dependent. Configuration resolution is recorded and checked at the driver and worker. A rejected or downgraded configuration is a failed arm, not a replacement for the requested arm. Recorded dispatch must also be reviewed to determine which modes actually ran; an enabled graph setting does not mean every pass uses a graph. Python hooks can be bypassed by compilation or graph replay, so absent mechanism observations are not zeros.
 
 Legacy `graphs0` arms used `enforce_eager=True`, which disabled both features. Legacy `eager_graphs1` arms also resolved to no graphs. They cannot supply a four-arm factorial. New names include `v2` and distinguish compilation explicitly.
+
+The four-arm factorial was run on 14 September 2026 on one H100 stack; the arms, their resolved modes and the audit's findings are in [campaigns/2026-09-14-h100.md](campaigns/2026-09-14-h100.md). The compiled MoE arms of that run executed a mis-compiled model: a hook-free check described there showed that torch.compile alone, not CUDA graphs, the hook or the compile cache, turns Qwen1.5-MoE-A2.7B-Chat's output degenerate on vLLM 0.28.0 on that stack, so their verdicts describe a degenerate configuration. vLLM 0.28.0 also reloads compiled graphs from `~/.cache/vllm/torch_compile_cache`, keyed by its configuration only; a forced quantisation choice made outside that configuration does not change the key, and the legacy compiled per-tensor FP8 arm executed the per-token graph. Run arms with `VLLM_DISABLE_COMPILE_CACHE=1` or clear the cache between arms, and keep the engine log, which prints `Directly load AOT compilation` on a hit.
 
 ## E2: conditional repeatability with the stock scheduler
 
