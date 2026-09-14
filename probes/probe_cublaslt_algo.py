@@ -84,8 +84,10 @@ def heuristic_from_log(m: int, n: int, k: int, dtype: str, variant: str) -> dict
 
 def probe(m: int, n: int, k: int, dtype: str, variant: str) -> tuple[bool, dict]:
     h = heuristic_from_log(m, n, k, dtype, variant)
+    # The child-process log parse (line counts, return code, stderr) varies between processes; it is a
+    # diagnostic, not part of the configuration that pairs fresh processes.
     ok = run_twice(f"cublaslt_{variant}_m{m}_n{n}_k{k}_{dtype}", _make(m, n, k, dtype, variant),
-                   extra={"shape": [m, n, k], "dtype": dtype, "variant": variant, "heuristic": h})
+                   extra={"shape": [m, n, k], "dtype": dtype, "variant": variant}, diagnostics={"heuristic": h})
     return ok, h
 
 

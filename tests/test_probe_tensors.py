@@ -28,6 +28,37 @@ def test_ulp_measurement_includes_adjacent_positive_and_negative_values(dtype):
     assert diagnostics["ulp_counts"]["1"] == 3
 
 
+def test_ulp_diagnostics_record_sign_changes_and_absolute_differences():
+    a = torch.tensor([1.0, -1.0, 0.5, 0.0, 2.0], dtype=torch.bfloat16)
+    b = torch.tensor([-1.0, -1.0, 0.50390625, 0.0, 2.0], dtype=torch.bfloat16)  # 0.5 + one bf16 ULP
+    d = common.ulp_diagnostics(a, b)
+    assert d["sign_changes"] == 1
+    assert d["max_abs_diff"] == 2.0
+    assert d["max_abs_diff_over_max_abs_baseline"] == 1.0
+    assert d["abs_diff_counts"] == {"0": 3, "le_1e-6": 0, "le_1e-3": 0, "le_1e-1": 1, "le_1": 0, "gt_1": 1}
+    # Existing fields are unchanged: the sign flip is a large ordinal distance, the 1-ULP step is 1.
+    assert d["ulp_counts"] == {"0": 3, "1": 1, "2": 0, "3_or_more": 1}
+    assert d["max_ulp"] == 2 * 16256 and d["nonfinite_pairs"] == 0
+    assert "sign_changes" not in common.ulp_diagnostics(torch.tensor([1]), torch.tensor([2]))
+
+
+def test_run_dependent_diagnostics_are_recorded_but_not_hashed(tmp_path, monkeypatch):
+    from triage.attach_runtime import summarise
+    monkeypatch.setattr(common, "RESULTS", tmp_path)
+    fn = lambda: [torch.tensor([1.0])]
+    assert common.run_twice("first", fn, repeats=1, extra={"tokens": 16}, diagnostics={"corr_vs_reference": 0.97})
+    assert common.run_twice("second", fn, repeats=1, extra={"tokens": 16}, diagnostics={"corr_vs_reference": 0.98})
+    assert common.run_twice("third", fn, repeats=1, extra={"tokens": 32}, diagnostics={"corr_vs_reference": 0.97})
+    first, second, third = (json.loads(next(tmp_path.rglob(f"{n}.json")).read_text()) for n in ("first", "second", "third"))
+    assert first["diagnostics"] == {"corr_vs_reference": 0.97}
+    assert first["comparison_key"] == second["comparison_key"]  # diagnostics never enter the key
+    assert first["comparison_key"] != third["comparison_key"]  # extra still does
+    # Two processes of one configuration that differ only in diagnostics pair for the fresh-process column.
+    a = {**first, "env": {**first["env"], "run_id": "a"}}
+    b = {**second, "env": {**second["env"], "run_id": "b"}}
+    assert summarise({"a": a, "b": b}) == ("identical", "identical", 4)
+
+
 def test_reports_record_rejections_nonfinite_outputs_and_actual_evaluation_counts(tmp_path, monkeypatch):
     monkeypatch.setattr(common, "RESULTS", tmp_path)
     assert common.run_twice("identity", lambda: [torch.tensor([1.0])], repeats=2)

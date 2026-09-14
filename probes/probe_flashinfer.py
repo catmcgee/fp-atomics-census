@@ -97,7 +97,8 @@ def b12x_moe() -> bool:
     Weight preparation follows benchmarks/routines/moe.py (backend "b12x"):
     NVFP4 weights with swizzled block scales converted to the MMA layout, bf16
     activations, external top-k routing. Backend selection is not instrumented; top-k 1, 2, 4 and 8 vary the number of reduction-adds
-    per output row in the bf16x2 scatter-add finalize.
+    per output row in the bf16x2 scatter-add finalize. In flashinfer 0.6.18.post1 each 128-wide intermediate slice
+    contributes one rounded bf16x2 partial per routed expert, so top-k 1 still has several adds per element.
     """
     import flashinfer
     from flashinfer.fp4_quantization import fp4_quantize
@@ -147,8 +148,11 @@ def b12x_moe() -> bool:
             err = (first - ref).abs().max().item() / (ref.abs().max().item() + 1e-6)
             corr = torch.corrcoef(torch.stack([first.flatten(), ref.flatten()]))[0, 1].item()
             print(f"  sanity tokens={tokens} topk={topk_}: rel max err vs bf16 reference = {err:.3f} corr={corr:.3f} (unquantised diagnostic; no validated quantisation error bound)")
+            # err and corr come from one extra unmeasured kernel call and change between processes; they are
+            # recorded as diagnostics so that they never enter the comparison key.
             ok &= run_twice(f"fi_b12x_moe_nvfp4_tokens{tokens}_topk{topk_}", run,
-                            extra={"tokens": tokens, "topk": topk_, "experts": experts, "rel_max_err_vs_reference": err, "corr_vs_reference": corr, "reference_status": "unquantised diagnostic, correctness not established", "selected_backend": None, "cause_isolated": False})
+                            extra={"tokens": tokens, "topk": topk_, "experts": experts, "reference_status": "unquantised diagnostic, correctness not established", "selected_backend": None, "cause_isolated": False},
+                            diagnostics={"rel_max_err_vs_reference": err, "corr_vs_reference": corr})
     return ok
 
 

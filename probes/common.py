@@ -137,7 +137,16 @@ def bitwise_equal(a: Sequence[torch.Tensor], b: Sequence[torch.Tensor]) -> tuple
 
 
 def ulp_diagnostics(x, y) -> dict:
-    """ULP distances for finite binary16/bfloat16/binary32 outputs."""
+    """ULP distances, sign changes and absolute differences for finite binary16/bfloat16/binary32 outputs.
+
+    ``max_ulp`` is an ordinal distance: a pair of opposite signs is about
+    ordinal(|a|) + ordinal(|b|) apart, so a value near 30,000 in bfloat16
+    marks a sign change, not a relative error of that size. ``sign_changes``
+    counts finite pairs of opposite sign with both members non-zero. The
+    absolute differences are taken in float64 over finite pairs and bucketed
+    by decade; ``max_abs_diff_over_max_abs_baseline`` scales the largest one
+    by the largest baseline magnitude.
+    """
     if x.dtype not in (torch.float16, torch.bfloat16, torch.float32):
         return {}
     finite = torch.isfinite(x) & torch.isfinite(y)
@@ -146,10 +155,21 @@ def ulp_diagnostics(x, y) -> dict:
     ox = torch.where(bits_x < 0, sign - bits_x, bits_x)
     oy = torch.where(bits_y < 0, sign - bits_y, bits_y)
     distances = (ox - oy).abs()[finite]
+    xf, yf = x.detach().double()[finite], y.detach().double()[finite]
+    abs_diff = (xf - yf).abs()
+    max_abs_diff = float(abs_diff.max()) if abs_diff.numel() else None
+    max_abs_baseline = float(xf.abs().max()) if xf.numel() else None
+    edges = [("le_1e-6", 0.0, 1e-6), ("le_1e-3", 1e-6, 1e-3), ("le_1e-1", 1e-3, 1e-1), ("le_1", 1e-1, 1.0)]
+    abs_counts = {"0": int((abs_diff == 0).sum()), **{name: int(((abs_diff > lo) & (abs_diff <= hi)).sum()) for name, lo, hi in edges},
+                  "gt_1": int((abs_diff > 1.0).sum())}
     return {"nonfinite_pairs": int((~finite).sum()),
             "max_ulp": int(distances.max()) if distances.numel() else None,
             "ulp_counts": {"0": int((distances == 0).sum()), "1": int((distances == 1).sum()),
-                           "2": int((distances == 2).sum()), "3_or_more": int((distances >= 3).sum())}}
+                           "2": int((distances == 2).sum()), "3_or_more": int((distances >= 3).sum())},
+            "sign_changes": int(((xf * yf) < 0).sum()),
+            "max_abs_diff": max_abs_diff,
+            "max_abs_diff_over_max_abs_baseline": max_abs_diff / max_abs_baseline if max_abs_diff is not None and max_abs_baseline else None,
+            "abs_diff_counts": abs_counts}
 
 
 def write_report(report: dict) -> Path:
@@ -190,12 +210,20 @@ def captured_tensor_inputs(fn) -> dict:
     return captured
 
 
-def run_twice(name: str, fn: Callable[[], Sequence[torch.Tensor]], repeats: int = 3, extra: dict | None = None) -> bool:
-    """Compare a baseline with repeats; persist failures separately from differences."""
+def run_twice(name: str, fn: Callable[[], Sequence[torch.Tensor]], repeats: int = 3, extra: dict | None = None,
+              diagnostics: dict | None = None) -> bool:
+    """Compare a baseline with repeats; persist failures separately from differences.
+
+    ``extra`` describes the configuration and enters the comparison key that
+    pairs fresh processes. ``diagnostics`` is recorded but never hashed: put
+    run-dependent values there (a reference error, a child-process log
+    parse), otherwise two processes of the same configuration get different
+    keys and their fresh-process comparison is lost.
+    """
     if repeats < 1:
         raise ValueError("at least one comparison is required")
     env = environment()
-    report = {"schema": 2, "probe": name, "env": env, "extra": extra or {}, "runs": [],
+    report = {"schema": 2, "probe": name, "env": env, "extra": extra or {}, "diagnostics": diagnostics or {}, "runs": [],
               "hash_schema": "sha256-dtype-shape-bytes", "evaluations": 0,
               "independent_processes": 1, "seed": 0}
     report["captured_tensor_input_sha256"] = captured_tensor_inputs(fn)
