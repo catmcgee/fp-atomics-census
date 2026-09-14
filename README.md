@@ -161,15 +161,23 @@ E5 compares H100 and RTX PRO 6000 free-running trajectories: hidden hashes diffe
 
 | Arm | Execution | Repeats | Shapes equal | Target hidden identical across kinds | Target tokens identical | MoE counts changed | First divergent step | P3 |
 |---|---|---|---|---|---|---|---|---|
+| Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0 | compile on, graphs off | 6 | True | False | False | True | 0 | DIFFERS |
+| Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs1_prefix0 | compile on, graphs requested | 6 | True | False | False | True | 0 | DIFFERS |
 | Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_eager_graphs0_prefix0 | legacy eager (compile/graphs off) | 6 | True | True | True | True | None | IDENTICAL |
 | Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_eager_graphs1_prefix0 | legacy eager (compile/graphs off) | 6 | True | True | True | True | None | IDENTICAL |
 | Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_graphs0_prefix0 | legacy eager (compile/graphs off) | 6 | True | True | True | True | None | IDENTICAL |
 | Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | False | False | None | 0 | DIFFERS |
+| Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0 | compile off, graphs off | 6 | True | True | True | True | None | IDENTICAL |
+| Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 | compile off, graphs requested | 6 | True | True | True | True | None | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp1_fp8_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | True | True | None | None | IDENTICAL |
+| Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs0_prefix0 | compile on, graphs off | 6 | True | False | False | None | 0 | DIFFERS |
+| Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 | compile on, graphs requested | 6 | True | False | False | None | 0 | DIFFERS |
 | Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_eager_graphs0_prefix0 | legacy eager (compile/graphs off) | 6 | True | False | False | None | 0 | DIFFERS |
 | Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_eager_graphs1_prefix0 | legacy eager (compile/graphs off) | 6 | True | False | False | None | 0 | DIFFERS |
 | Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_graphs0_prefix0 | legacy eager (compile/graphs off) | 6 | True | False | False | None | 0 | DIFFERS |
 | Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | True | True | None | None | IDENTICAL |
+| Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_nocompile_v2_graphs0_prefix0 | compile off, graphs off | 6 | True | False | False | None | 0 | DIFFERS |
+| Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_nocompile_v2_graphs1_prefix0 | compile off, graphs requested | 6 | True | False | False | None | 0 | DIFFERS |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs0_prefix0 | legacy eager (compile/graphs off) | 12 | True | True | True | None | None | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | True | True | None | None | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp2_none_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | True | True | None | None | IDENTICAL |
