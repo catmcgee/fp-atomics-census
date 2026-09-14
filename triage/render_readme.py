@@ -26,7 +26,8 @@ def render() -> dict[str, str]:
     runtime = ["| Stack | Probe | In process | Fresh process | Evaluations |", "|---|---|---|---|---|"]
     patterns = [r"^cuBLASLt", r"^flashinfer_allreduce_fusion_rank0$", r"^sglang_qwen3_8b_bf16(_trtllm_mha)?_x6$",
                 r"^fi_b12x_moe_nvfp4_tokens16_topk2$", r"^sglang_qwen2.5_1.5b_gptq_marlin(_deterministic_mode)?_x6$",
-                r"^moe_wna16_(cuda|triton)_", r"^deepgemm_bmk_bnk_mn$", r"^fi_top_p_renorm_", r"^nccl_allreduce_rank0_default$"]
+                r"^moe_wna16_(cuda|triton)_", r"^deepgemm_bmk_bnk_mn$", r"^fi_top_p_renorm_", r"^nccl_allreduce_rank0_default$",
+                r"^fi_b12x_moe_nvfp4_tokens16_topk1$", r"^nccl_allreduce_rank0_(default|Tree)_cancellation$"]
     for stack, probes in sorted(load_reports(ROOT / "probes/results").items()):
         short = stack.replace("NVIDIA-", "").replace("-Blackwell-Server-Edition", "").replace("-80GB-HBM3", "")
         for name, campaign, several, reports in campaign_rows(probes):

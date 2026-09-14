@@ -1,0 +1,22 @@
+{
+  "invocation_id": "51e7fe6e-b11b-4c84-b93b-7a810d9d9bcf",
+  "started_at_utc": "2026-09-14T19:38:31.810219+00:00",
+  "argv": [
+    "-m",
+    "torch.distributed.run",
+    "--standalone",
+    "--nproc_per_node=3",
+    "probe_collectives.py",
+    "--which",
+    "nccl",
+    "--pattern",
+    "random"
+  ],
+  "returncode": 0,
+  "status": "COMPLETED",
+  "measurement_statuses": [
+    "bitwise-identical",
+    "bitwise-identical",
+    "bitwise-identical"
+  ]
+}

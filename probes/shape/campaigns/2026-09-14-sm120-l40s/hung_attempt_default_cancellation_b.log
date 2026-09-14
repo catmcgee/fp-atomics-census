@@ -1,0 +1,57 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+W0914 19:33:10.987000 1596 torch/distributed/elastic/agent/server/api.py:725] Received 15 death signal, shutting down workers
+W0914 19:33:10.989000 1596 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 1664 closing signal SIGTERM
+W0914 19:33:10.990000 1596 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 1665 closing signal SIGTERM
+W0914 19:33:10.991000 1596 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 1666 closing signal SIGTERM
+W0914 19:33:10.992000 1596 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 1664 closing signal SIGTERM
+W0914 19:33:10.993000 1596 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 1665 closing signal SIGTERM
+W0914 19:33:10.994000 1596 torch/distributed/elastic/multiprocessing/api.py:908] Sending process 1666 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 717, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 881, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 85, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 1596 got signal: 15
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 940, in <module>
+    main()
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 936, in main
+    run(args)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 927, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 156, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 284, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/metrics/api.py", line 138, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 726, in run
+    self._shutdown(e.sigval)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/local_elastic_agent.py", line 369, in _shutdown
+    self._pcontext.close(death_sig)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 578, in close
+    self._close(death_sig=death_sig, timeout=timeout)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 913, in _close
+    handler.close(death_sig=death_sig)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/subprocess_handler/subprocess_handler.py", line 87, in close
+    os.killpg(self.proc.pid, death_sig)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 85, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 1596 got signal: 15

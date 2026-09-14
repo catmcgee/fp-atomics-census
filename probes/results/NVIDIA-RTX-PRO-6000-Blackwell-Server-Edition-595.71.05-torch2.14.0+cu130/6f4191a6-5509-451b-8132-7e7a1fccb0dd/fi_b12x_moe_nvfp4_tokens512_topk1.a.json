@@ -1,0 +1,256 @@
+{
+  "schema": 2,
+  "probe": "fi_b12x_moe_nvfp4_tokens512_topk1",
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.14.0+cu130",
+    "cuda": "13.0",
+    "cudnn": 92400,
+    "packages": {
+      "vllm": null,
+      "sglang": null,
+      "sgl-kernel": null,
+      "flashinfer-python": "0.6.18.post1",
+      "flash-attn": null,
+      "deep-gemm": null,
+      "deep-ep": null,
+      "triton": "3.8.0",
+      "nvidia-cublas-cu12": null,
+      "nvidia-nccl-cu12": null,
+      "nvidia-cublas-cu13": null,
+      "nvidia-nccl-cu13": "2.30.7"
+    },
+    "env": {
+      "CUBLAS_WORKSPACE_CONFIG": null,
+      "NCCL_ALGO": null,
+      "NCCL_PROTO": null,
+      "NCCL_MAX_NCHANNELS": null,
+      "VLLM_BATCH_INVARIANT": null,
+      "VLLM_MARLIN_USE_ATOMIC_ADD": null,
+      "VLLM_ATTENTION_BACKEND": null
+    },
+    "run_tag": "a",
+    "run_id": "6f4191a6-5509-451b-8132-7e7a1fccb0dd",
+    "recorded_at_utc": "2026-09-14T19:29:58.310319+00:00",
+    "source": {
+      "git_head": null,
+      "git_dirty": false,
+      "probe_source_sha256": "a5ae92bd92c40e4094171ff2af8bd586145a728a74ba07b34061d2da71603aad",
+      "files": {
+        "probes/._common.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._invoke.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._observations.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_batch_composition.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_collectives.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_cublaslt_algo.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_engine_logits.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_flashinfer.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_kernels.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._probe_torch_ops.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/._report.py": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+        "probes/common.py": "8e89e7f4b081b8c1825682c247fc3e95235586a37a8921bc507246faf623468f",
+        "probes/invoke.py": "2687397ec63b3ab6d3b7fd2aef9852b8500c69443e5ce3b1eda5de86caac872a",
+        "probes/observations.py": "dc90d11c50fa3d138d510168555c9c215f2aba244210250ff349599ae8c97b52",
+        "probes/probe_batch_composition.py": "4953401cdba665805719cb3eb9ce0d1eb1a62f36676684adc1753ced66c99639",
+        "probes/probe_collectives.py": "5b0403dd10c76ce7d423910bad068e6f56d70084567de4ec193b7bd679d8fc1a",
+        "probes/probe_cublaslt_algo.py": "f1f6bbbee333f76a045227a8986e227171305001360cb647c59d853501031128",
+        "probes/probe_engine_logits.py": "c78d0997eb2c00981afe20da101d0eb8b2258af15f4e04d6a03f7074e781c6f9",
+        "probes/probe_flashinfer.py": "aeacc1bfd2049908a06dbe760fb77e516584564819d9530b40936b9a8e0cf8cd",
+        "probes/probe_kernels.py": "ad457918da18d33b96016cc5292eb841f647b4f66ac1d5f64628dc1b0a41f8c2",
+        "probes/probe_torch_ops.py": "98cea7016092dde73715ceef5c4582003cb2658e6a769154545bc4f5dd4a0337",
+        "probes/report.py": "cf3efb94064202822268ad57a928ea966d57f0c3fff1bfcf3ded6114671a294e"
+      }
+    },
+    "installed_distributions": {
+      "Jinja2": "3.1.6",
+      "MarkupSafe": "3.0.3",
+      "apache-tvm-ffi": "0.1.13.post3",
+      "certifi": "2026.7.22",
+      "charset-normalizer": "3.5.1",
+      "click": "8.5.0",
+      "cuda-bindings": "13.4.1",
+      "cuda-core": "1.2.0",
+      "cuda-pathfinder": "1.6.0",
+      "cuda-python": "13.4.1",
+      "cuda-tile": "1.6.0",
+      "cuda-toolkit": "13.0.3.0",
+      "einops": "0.8.2",
+      "filelock": "3.32.3",
+      "flashinfer-python": "0.6.18.post1",
+      "fsspec": "2026.7.0",
+      "idna": "3.19",
+      "mpmath": "1.3.0",
+      "nccl4py": "0.5.0",
+      "networkx": "3.6.1",
+      "ninja": "1.13.2",
+      "numpy": "2.5.3",
+      "nvidia-cublas": "13.1.1.3",
+      "nvidia-cuda-cupti": "13.0.85",
+      "nvidia-cuda-nvdisasm": "13.4.49",
+      "nvidia-cuda-nvrtc": "13.0.88",
+      "nvidia-cuda-runtime": "13.0.96",
+      "nvidia-cudnn-cu13": "9.24.0.43",
+      "nvidia-cudnn-frontend": "1.29.0",
+      "nvidia-cufft": "12.0.0.61",
+      "nvidia-cufile": "1.15.1.6",
+      "nvidia-curand": "10.4.0.35",
+      "nvidia-cusolver": "12.0.4.66",
+      "nvidia-cusparse": "12.6.3.3",
+      "nvidia-cusparselt-cu13": "0.8.1",
+      "nvidia-cutlass-dsl": "4.8.0.dev0",
+      "nvidia-cutlass-dsl-libs-base": "4.8.0.dev0",
+      "nvidia-cutlass-dsl-libs-core": "4.8.0.dev0",
+      "nvidia-cutlass-dsl-libs-cu12": "4.8.0.dev0",
+      "nvidia-cutlass-dsl-libs-cu13": "4.8.0.dev0",
+      "nvidia-ml-py": "13.610.43",
+      "nvidia-nccl-cu13": "2.30.7",
+      "nvidia-nvjitlink": "13.3.33",
+      "nvidia-nvshmem-cu13": "3.4.5",
+      "nvidia-nvtx": "13.0.85",
+      "packaging": "26.3",
+      "pip": "26.2.1",
+      "protobuf": "7.36.1",
+      "requests": "2.34.2",
+      "setuptools": "78.1.0",
+      "sympy": "1.14.0",
+      "tabulate": "0.10.0",
+      "torch": "2.14.0+cu130",
+      "tqdm": "4.70.1",
+      "triton": "3.8.0",
+      "typing_extensions": "4.16.0",
+      "urllib3": "2.7.0"
+    },
+    "deterministic_algorithms": false,
+    "deterministic_warn_only": false,
+    "seed_policy": "torch seed 0 immediately before each evaluation; input construction seed must also be recorded",
+    "selected_kernel_identity": null,
+    "loaded_cubin_hashes": null,
+    "pinned_shas": {
+      "vllm": "5769a7382cb111288a9c2927342ca908943b9793",
+      "sglang": "b41552334d46b9d83a6d834be361cb20b31d2137",
+      "flashinfer": "c0d920d3270ce28e0d7db8cc2163a76245e63712",
+      "flash-attention": "1f7ce2f7cb503473559f3d44d575ae05b1ed8557",
+      "marlin": "1f25790bdd49fba53106164a24666dade68d7c90",
+      "DeepGEMM": "1f6f3f378920ccb5cc036ef43eb3f5972e921713",
+      "DeepEP": "099d5f2bad488b9c534ea785062b12f2e91d1d41",
+      "cutlass": "4cbaaae4c70dbb2b3e07844010a381b97217ed76"
+    },
+    "nccl_runtime_version": [
+      2,
+      30,
+      7
+    ],
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "sm": "120",
+    "sm_count": 188,
+    "gpu_count": 1,
+    "driver": "595.71.05"
+  },
+  "extra": {
+    "tokens": 512,
+    "topk": 1,
+    "experts": 8,
+    "rel_max_err_vs_reference": 0.25802960204386605,
+    "corr_vs_reference": 0.974146842956543,
+    "reference_status": "unquantised diagnostic, correctness not established",
+    "selected_backend": null,
+    "cause_isolated": false
+  },
+  "runs": [
+    {
+      "run": 1,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 606886,
+          "numel": 1048576,
+          "shape": [
+            512,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "nonfinite_pairs": 0,
+          "max_ulp": 29984,
+          "ulp_counts": {
+            "0": 441690,
+            "1": 356407,
+            "2": 131281,
+            "3_or_more": 119198
+          }
+        }
+      ],
+      "hash": "a8b49818a445a63e776858f1d4609ae09bfd2350ca2564bd67f5b735970f288a"
+    },
+    {
+      "run": 2,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 613563,
+          "numel": 1048576,
+          "shape": [
+            512,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "nonfinite_pairs": 0,
+          "max_ulp": 30112,
+          "ulp_counts": {
+            "0": 435013,
+            "1": 356890,
+            "2": 136232,
+            "3_or_more": 120441
+          }
+        }
+      ],
+      "hash": "0ed72f1070af5fed4226d90e8778bb361f1e056bfb7561e0f23e8aa7461b552b"
+    },
+    {
+      "run": 3,
+      "identical": false,
+      "diffs": [
+        {
+          "tensor": 0,
+          "mismatched_elements": 627018,
+          "numel": 1048576,
+          "shape": [
+            512,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "nonfinite_pairs": 0,
+          "max_ulp": 30016,
+          "ulp_counts": {
+            "0": 421558,
+            "1": 371836,
+            "2": 132383,
+            "3_or_more": 122799
+          }
+        }
+      ],
+      "hash": "d6bba34fdd666c1277c9fe99bcae251cf6e6fdddaaee89b2fcc13ab6ddbfb44b"
+    }
+  ],
+  "hash_schema": "sha256-dtype-shape-bytes",
+  "evaluations": 4,
+  "independent_processes": 1,
+  "seed": 0,
+  "captured_tensor_input_sha256": {
+    "alpha": "7b36bf247d1e8677036ed906933343ef438db93985159bf7c399e13dbfdfd62e",
+    "gs": "0d36105bad98c4f581aea525a0d176b0653f0cc48e9e562619e685d1d106ba61",
+    "ids": "c7eb6e3584497c7dac85e992339ff3ba0e2d3af6207fb45268a7903b01cec776",
+    "w1_weight": "775ee03c3c9f27fd83ba4fff8bf63a0b8b2577b0b42d27e53ea4bd975b181417",
+    "w1_weight_sf": "7958a8156954c3199251d1589c513521caec4e8146ae344a768237bf49190ecd",
+    "w2_weight": "a1611326823340d79ed11added547886e4d55313138bae7a20332c8037a0daf7",
+    "w2_weight_sf": "c1f922887c9c704840ae53654155dff21083f6e63cbf6d3a91ce5eb205d7c1e0",
+    "weights": "dbcd2b298369d1eda6ed22e05fc5c221b7ab8ca7bfdda1168dfbee8180313ac1",
+    "x": "f8f9f2d57e20e45d26f677cc552fb4c0d2254c65af4504f46a616cb2ba5f4a3e"
+  },
+  "input_scope": "direct tensor closures and explicit extra metadata; engine internals/weights require separate commitments",
+  "comparison_key": "644ad6b8332278baa2fdd384a1529f801b648130165834d39ff25a75d8084733",
+  "first_hash": "5c12edef74ab709114ce159165362552b4b41a855680d1d7cb368f782f9a8971",
+  "verdict": "DIFFERS",
+  "warnings": []
+}

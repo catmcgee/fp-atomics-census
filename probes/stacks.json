@@ -214,5 +214,103 @@
       }
     ],
     "provenance_status": "legacy partial metadata; model, tokenizer, installed source and cubin content hashes unavailable"
+  },
+  {
+    "directory": "NVIDIA-RTX-PRO-6000-Blackwell-Server-Edition-595.71.05-torch2.14.0+cu130",
+    "recorded_environments": [
+      {
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "gpu_count": 1,
+        "driver": "595.71.05",
+        "python": "3.12.3",
+        "torch": "2.14.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.18.post1",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.8.0",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null,
+          "nvidia-cublas-cu13": null,
+          "nvidia-nccl-cu13": "2.30.7"
+        },
+        "other_packages": {
+          "nvidia-cutlass-dsl": "4.8.0.dev0",
+          "numpy": "2.5.3"
+        },
+        "recorded_at": "2026-09-14",
+        "campaign_note": "probes/shape/campaigns/2026-09-14-sm120-l40s.md",
+        "run_ids": [
+          "6f4191a6-5509-451b-8132-7e7a1fccb0dd",
+          "b083db55-94fa-4c18-804b-2823c4a17d39",
+          "abc8c70f-e3fe-4fd0-96cf-77744de3c67e",
+          "1293a36c-398e-488a-96c1-0230b8f1b8d9"
+        ],
+        "probe_source_sha256": "a5ae92bd92c40e4094171ff2af8bd586145a728a74ba07b34061d2da71603aad",
+        "git_head": null,
+        "template_image": "runpod/pytorch:1.0.7-cu1300-torch291-ubuntu2404-cluster (torch replaced in a virtual environment)"
+      }
+    ],
+    "provenance_status": "run id, probe source digest, installed distributions and deterministic flags recorded in each report; git_head is null because the probes were shipped without .git, and the payload is byte-identical to census commit 6478153; selected backend, kernel identity and cubin content hashes not captured; the driver differs from the legacy RTX PRO 6000 stack (595.91.07), hence a separate directory"
+  },
+  {
+    "directory": "NVIDIA-L40S-580.178.04-torch2.9.1+cu130",
+    "recorded_environments": [
+      {
+        "gpu": "NVIDIA L40S",
+        "gpu_count": 3,
+        "driver": "580.178.04",
+        "python": "3.12.3",
+        "torch": "2.9.1+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": null,
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.5.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null,
+          "nvidia-cublas-cu13": null,
+          "nvidia-nccl-cu13": "2.27.7"
+        },
+        "other_packages": {
+          "numpy": "2.5.3"
+        },
+        "nccl_runtime_version": [
+          2,
+          27,
+          7
+        ],
+        "env": {
+          "NCCL_P2P_DISABLE": "1"
+        },
+        "recorded_at": "2026-09-14",
+        "campaign_note": "probes/shape/campaigns/2026-09-14-sm120-l40s.md",
+        "run_ids": [
+          "310e87a6-8ef4-43f6-aebe-fd8d89663033",
+          "ffeb940c-6601-42bb-bb57-89c765c441d5",
+          "c936637d-d74e-4ad7-8d18-82382ad736b5",
+          "a2503f70-4648-4e8c-afbc-267f710d63ec",
+          "36002c3b-ec19-4607-aa14-1de5eb2865b8",
+          "51e7fe6e-b11b-4c84-b93b-7a810d9d9bcf",
+          "4bf34c80-3238-4a45-90ea-66456fef8c92",
+          "fe12ccb3-f535-4f41-8029-79faef72c7b7"
+        ],
+        "probe_source_sha256": "b280319eabd85300b01ec8ab48934c214f2200bb290fdf744d5105e38f741632",
+        "git_head": null,
+        "template_image": "runpod/pytorch:1.0.7-cu1300-torch291-ubuntu2404-cluster (template torch used directly)",
+        "topology": "probes/shape/campaigns/2026-09-14-sm120-l40s/l40s_topology.txt"
+      }
+    ],
+    "provenance_status": "run id, probe source digest, installed distributions and deterministic flags recorded in each report; git_head is null because the probes were shipped without .git; the payload equals census commit 6478153 plus the one-line NCCL_P2P_DISABLE recording change now in probes/common.py, which is why its digest differs from the SM120 run; topology recorded in the campaign directory, not in the reports"
   }
 ]

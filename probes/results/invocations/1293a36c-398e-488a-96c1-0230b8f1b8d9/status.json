@@ -1,0 +1,16 @@
+{
+  "invocation_id": "1293a36c-398e-488a-96c1-0230b8f1b8d9",
+  "started_at_utc": "2026-09-14T19:31:01.198351+00:00",
+  "argv": [
+    "probe_flashinfer.py",
+    "--which",
+    "renorm"
+  ],
+  "returncode": 1,
+  "status": "NONIDENTICAL_OR_REJECTED",
+  "measurement_statuses": [
+    "DIFFERS",
+    "bitwise-identical",
+    "DIFFERS"
+  ]
+}

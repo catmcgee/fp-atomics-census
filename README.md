@@ -104,6 +104,12 @@ Reports in [probes/results](probes/results/) cover H100, B200 and RTX PRO 6000 s
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_deterministic_mode_x6` | DIFFERS | DIFFERS | 14 |
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_x6` | DIFFERS | DIFFERS | 14 |
 | H100-580.159.04-torch2.13.0+cu130 | `flashinfer_allreduce_fusion_rank0` | identical | identical | 8 |
+| L40S-580.178.04-torch2.9.1+cu130 | `nccl_allreduce_rank0_Tree_cancellation` | identical | identical | 8 |
+| L40S-580.178.04-torch2.9.1+cu130 | `nccl_allreduce_rank0_default_cancellation` | identical | identical | 8 |
+| RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk1` | DIFFERS | n/a | 8 |
+| RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` | DIFFERS | n/a | 8 |
+| RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_top_p_renorm_detFalse` | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_top_p_renorm_detTrue` | identical | identical | 8 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `cuBLASLt linear bf16` | identical | identical | 240 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `cuBLASLt mm bf16` | identical | identical | 240 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` | DIFFERS | DIFFERS | 8 |

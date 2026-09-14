@@ -1,0 +1,34 @@
++ PY=/root/venv/bin/python
++ cd /root/census/probes
+++ wc -l
+++ nvidia-smi -L
++ N=3
++ echo nproc_per_node=3
+nproc_per_node=3
++ for pattern in cancellation random
++ for tag in a b
++ echo '== default RUN_TAG=a pattern=cancellation'
+== default RUN_TAG=a pattern=cancellation
++ RUN_TAG=a
++ /root/venv/bin/python invoke.py -m torch.distributed.run --standalone --nproc_per_node=3 probe_collectives.py --which nccl --pattern cancellation
+Terminated
++ echo exit=143
+exit=143
++ grep -E 'PROBE |Traceback|Error' /root/census/log_nccl_default_cancellation_a.txt
++ head -20
++ for tag in a b
++ echo '== default RUN_TAG=b pattern=cancellation'
+== default RUN_TAG=b pattern=cancellation
++ RUN_TAG=b
++ /root/venv/bin/python invoke.py -m torch.distributed.run --standalone --nproc_per_node=3 probe_collectives.py --which nccl --pattern cancellation
+Terminated
++ echo exit=143
+exit=143
++ grep -E 'PROBE |Traceback|Error' /root/census/log_nccl_default_cancellation_b.txt
++ head -20
++ for pattern in cancellation random
++ for tag in a b
++ echo '== default RUN_TAG=a pattern=random'
+== default RUN_TAG=a pattern=random
++ RUN_TAG=a
++ /root/venv/bin/python invoke.py -m torch.distributed.run --standalone --nproc_per_node=3 probe_collectives.py --which nccl --pattern random
