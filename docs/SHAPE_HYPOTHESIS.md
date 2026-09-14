@@ -123,10 +123,6 @@ E1 instrumentation, E2 bucket attribution, E3 scripted repeatability, E4
 dummy-neighbour comparisons, E5 recorded-stack comparison and E6 recorded-schedule
 reconstruction are specified in
 `probes/shape/RUNBOOK.md`, with one command per experiment and a results
-directory argument. Comparisons can also be INVALID, NOT COMPARABLE or NOT TESTED. P2 is
-untested because E3 does not reconstruct a recorded schedule or teacher-force
-a continuation. E6 is the P2 experiment: it records admissions and per-pass
-token ids, replays the recorded schedule in a fresh process with teacher
-forcing and compares every pass; it is unrun. E5 does not isolate GPU from driver or input divergence.
+directory argument. Comparisons can also be INVALID, NOT COMPARABLE or NOT TESTED. E3 does not test P2 because it neither reconstructs a recorded schedule nor teacher-forces a continuation. E6 is the P2 experiment: it records admissions and per-pass token ids, replays the recorded schedule in a fresh process with teacher forcing and compares every pass. It has been run once, on one H100 stack with vLLM 0.28.0 and Qwen2.5-7B-Instruct, in a plain arm and a chunked-prefill arm; both replays were IDENTICAL in every row of every pass, so P2 has supporting evidence for those two recorded schedules and no evidence for any other schedule, model or stack. A boundary rebuild of one decode pass from a single prefill of the recorded prefixes was DIFFERS with the argmax unchanged; the RUNBOOK explains why that mode cannot attribute a difference. E5 does not isolate GPU from driver or input divergence.
 The compiled MoE E4 arms are excluded from P4 evidence: a hook-free check on the same stack showed that torch.compile alone, not CUDA graphs, the hook or the compile cache, turns Qwen1.5-MoE-A2.7B-Chat's output degenerate on vLLM 0.28.0, so their DIFFERS verdicts describe a mis-compiled model, while the uncompiled MoE arms, which are not degenerate, were IDENTICAL under neighbour replacement on that one stack.
 Identical in a few repeats is evidence only for those observations.
