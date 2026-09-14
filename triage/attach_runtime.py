@@ -53,7 +53,7 @@ ROWS: list[tuple[str, list[str], str]] = [
     (r"^marlin_gemm_atomicTrue_fp32reduce_", ["sglang-0008", "vllm-0010"], "Marlin GEMM with use_atomic_add=True and use_fp32_reduce=True, the pair SGLang's apply_gptq_marlin_linear passes, at an n < 2048, k >= 2048 shape"),
     (r"^marlin_gemm_atomicTrue_m", ["sglang-0008", "vllm-0010"], "Marlin GEMM on random 4-bit weights with use_atomic_add=True at an n < 2048, k >= 2048 shape"),
     (r"^sglang_qwen2.5_1.5b_gptq_marlin_x6$", ["sglang-0008"], "SGLang GPTQ 1.5B model: down_proj has n=1536, k=8960, so the stub turns atomic add on"),
-    (r"^sglang_qwen2.5_7b_gptq_marlin_tp2_x6$", ["sglang-0008"], "SGLang GPTQ 7B at TP=2: o_proj shard has n=1792, k=3584"),
+    (r"^sglang_qwen2.5_7b_gptq_marlin_tp2_x6$", ["sglang-0008"], "SGLang GPTQ 7B at TP=2: no projection meets n < 2048, k >= 2048 (the row-parallel o_proj shard is n=3584, k=1792; the qkv_proj shard is n=2304), so should_use_atomic_add_reduce returns False and the stub is not exercised; the recorded differences (3 of 12 comparisons, top-5 values only) are not attributed to this guard"),
     (r"^vllm_qwen2.5_1.5b_gptq_marlin_atomic_add_x6$", ["vllm-0010"], "vLLM Marlin with VLLM_MARLIN_USE_ATOMIC_ADD=1 on the 1.5B GPTQ model"),
     (r"^vllm_qwen2.5_1.5b_gptq_marlin_x6$", ["vllm-0010"], "vLLM Marlin with the flag unset on the 1.5B GPTQ model"),
     (r"^vllm_qwen2.5_1.5b_gptq_marlin_one_seq_x6$", ["vllm-0010"], "vLLM Marlin, flag unset, one sequence per batch (composition fixed)"),
