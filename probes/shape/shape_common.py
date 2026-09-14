@@ -5,12 +5,26 @@ import hashlib
 import json
 import os
 import random
+import struct
 import uuid
 import sys
 from collections import defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+
+
+def prompt_sha256(token_ids) -> str:
+    """Analysis-side twin of shape_hook.prompt_sha256: SHA-256 over u32 little-endian ids."""
+    ids = [int(t) for t in token_ids]
+    if any(t < 0 or t >= 2**32 for t in ids):
+        raise ValueError("token id outside the unsigned 32-bit range")
+    return hashlib.sha256(struct.pack(f"<{len(ids)}I", *ids)).hexdigest()
+
+
+def record_schema(step: dict) -> int:
+    """Declared record schema; legacy records without the field are schema 1."""
+    return int(step.get("schema") or 1)
 
 
 def environment() -> dict:
@@ -98,8 +112,16 @@ def trace_errors(steps: list[dict]) -> list[str]:
             if prior and prior.get("kv") is not None and r.get("computed") != prior["kv"]:
                 errors.append(f"request {rid} has a missing or discontinuous forward observation")
             previous_by_request[rid] = r
-            if s.get("schema") == 2 and (not r.get("logits_h") or len(r.get("h") or "") != 64):
+            if record_schema(s) >= 2 and (not r.get("logits_h") or len(r.get("h") or "") != 64):
                 errors.append(f"missing version-2 full hashes in step {key}")
+            if record_schema(s) >= 3:
+                # Schema 3 rows carry the consumed token ids; a row the hook marked
+                # invalid, or one whose ids do not cover its q positions, is an error.
+                if r.get("invalid"):
+                    errors.append(f"invalid row {rid} in step {key}: {r['invalid']}")
+                ids = r.get("new_token_ids")
+                if not isinstance(ids, list) or len(ids) != r.get("q") or any((not isinstance(t, int)) or t < 0 for t in ids):
+                    errors.append(f"row {rid} in step {key} lacks {r.get('q')} recorded token ids")
         if s.get("num_reqs", len(reqs)) != len(reqs):
             errors.append(f"request count disagrees in step {key}")
     if not steps:
@@ -194,7 +216,8 @@ def engine_kwargs(args) -> dict:
     return kw
 
 
-def record_run(out: Path, args, llm, prompts) -> None:
+def record_run(out: Path, args, llm, prompts, extra: dict | None = None) -> None:
+    """Write run.json and env.json; ``extra`` adds experiment-specific fields (E6)."""
     config = llm.llm_engine.vllm_config
     cc = config.compilation_config
     compile_on = int(cc.mode) != 0
@@ -210,6 +233,8 @@ def record_run(out: Path, args, llm, prompts) -> None:
               "tokenizer_revision": getattr(config.model_config, "tokenizer_revision", None),
               "weight_content_hash": None, "kernel_content_hash": None,
               "status": "configured" if actual == expected else "INVALID"}
+    if extra:
+        record.update(extra)
     write_json(out / "run.json", record)
     env = environment()
     env["run_id"] = os.environ["SHAPE_RUN_ID"]

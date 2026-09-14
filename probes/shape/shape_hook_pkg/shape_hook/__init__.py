@@ -20,6 +20,64 @@ references):
 
 Output: one JSON line per forward pass in ``$SHAPE_HOOK_OUT/rank<r>.jsonl``.
 Nothing is written when ``SHAPE_HOOK_OUT`` is unset.
+
+Record schema 3 (line references are to the vLLM 0.28.0 release tag). Every
+schema 2 field keeps its name and meaning; schema 3 adds, per row:
+
+* ``new_token_ids``: the token ids the row consumes in this pass, positions
+  ``computed .. computed+q-1`` of the request's token sequence. vLLM 0.28.0
+  has two GPU model runners, selected by ``VllmConfig.use_v2_model_runner``
+  (vllm/config/vllm.py:615-664; the worker picks the class at
+  vllm/v1/worker/gpu_worker.py:424-438). The ids are read from the runner's
+  own per-request host state after the pass: on the V1 runner from
+  ``self.requests[req_id]`` (``dict[str, CachedRequestState]``,
+  gpu_model_runner.py:725; ``CachedRequestState.get_token_id`` joins
+  ``prompt_token_ids`` and ``output_token_ids``, gpu_input_batch.py:79-89,
+  and returns -1 beyond the known tokens); on the V2 runner from
+  ``self.req_states.all_token_ids`` (a host-visible UVA tensor of shape
+  ``[max_num_reqs, max_model_len]``, vllm/v1/worker/gpu/states.py:34-39,
+  indexed through ``req_id_to_index``, states.py:27; the sampled token of
+  the previous pass was written into it by ``postprocess_sampled``,
+  vllm/v1/worker/gpu/model_runner.py:1367-1391). A row whose ids cannot be
+  read, whose count is not ``q``, that contains a negative id (the V1
+  runner's async-scheduling placeholder, gpu_model_runner.py:3900 and
+  4993-4994), or whose prompt positions disagree with the admitted
+  ``prompt_token_ids`` carries ``invalid`` with a reason.
+* ``prompt_sha256``: SHA-256 over the request's full prompt token ids as
+  unsigned 32-bit little-endian integers, computed once per request from
+  ``NewRequestData.prompt_token_ids`` (vllm/v1/core/sched/output.py:35-37)
+  and cached until the request finishes.
+
+and per record:
+
+* ``admitted``: requests scheduled for the first time in this pass, taken
+  from ``SchedulerOutput.scheduled_new_reqs`` (output.py:194-197), each with
+  its full ``prompt_token_ids``, ``num_computed_tokens`` (the prefix-cache
+  hit, output.py:42) and ``prompt_sha256``. The prompt ids are recorded once,
+  in the forward record of the admitting pass.
+* ``resumed``: requests rescheduled after preemption. The V1 path lists them
+  in ``scheduled_cached_reqs.resumed_req_ids`` (output.py:121,
+  scheduler.py:1508-1509); the V2 path folds them into
+  ``scheduled_new_reqs`` (scheduler.py:1195-1204), so a request in
+  ``scheduled_new_reqs`` that this hook has seen before is resumed, not
+  admitted.
+* ``finished``: ``SchedulerOutput.finished_req_ids``, the requests that
+  finished between the previous and this scheduler call (output.py:221-224).
+* ``preempted``: ``SchedulerOutput.preempted_req_ids``. The field comment
+  says it is used only by the V2 runner (output.py:231-233), but the
+  scheduler fills it for both runners from ``reset_preempted_req_ids``
+  (scheduler.py:1279, added in ``_preempt_request`` at scheduler.py:1377 and
+  cleared at scheduler.py:1427). Preemption is therefore observable in
+  0.28.0 through this field.
+* ``model_runner`` (``"v1"`` or ``"v2"``) and ``scheduler`` (``max_num_seqs``,
+  ``max_num_batched_tokens``, ``enable_chunked_prefill``,
+  ``async_scheduling``), so a replay can check it ran the same runner and
+  scheduler limits.
+
+Empty scheduler calls (``total_num_scheduled_tokens == 0``) keep their
+``event: "empty_scheduler_call"`` record and additionally carry ``finished``
+and ``preempted``, because a request that finishes in the last forward pass
+is reported in the following scheduler call.
 """
 from __future__ import annotations
 
@@ -27,10 +85,13 @@ import hashlib
 import json
 import os
 import platform
+import struct
 import subprocess
 import time
 
-_state = {"registered": False, "step": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "pending": None, "seen": set(), "env": None}
+SCHEMA = 3
+
+_state = {"registered": False, "step": 0, "forward_passes": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "pending": None, "seen": set(), "prompts": {}, "env": None}
 
 
 def _env_record() -> dict:
@@ -41,7 +102,7 @@ def _env_record() -> dict:
     except Exception:  # noqa: BLE001
         pk = {}
     rec = {"python": platform.python_version(), "torch": torch.__version__, "cuda": torch.version.cuda, "packages": pk,
-           "env": {k: os.environ.get(k) for k in ("VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND", "VLLM_MARLIN_USE_ATOMIC_ADD", "CUBLAS_WORKSPACE_CONFIG", "VLLM_ENABLE_V1_MULTIPROCESSING")}}
+           "env": {k: os.environ.get(k) for k in ("VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND", "VLLM_MARLIN_USE_ATOMIC_ADD", "CUBLAS_WORKSPACE_CONFIG", "VLLM_ENABLE_V1_MULTIPROCESSING", "VLLM_USE_V2_MODEL_RUNNER")}}
     if torch.cuda.is_available():
         p = torch.cuda.get_device_properties(0)
         rec.update({"gpu": p.name, "sm": f"{p.major}{p.minor}", "gpu_count": torch.cuda.device_count()})
@@ -89,6 +150,38 @@ def _row_hash(t) -> str:
         b = t.cpu().numpy().tobytes()
     header = json.dumps({"dtype": str(t.dtype), "shape": list(t.shape)}, sort_keys=True).encode()
     return hashlib.sha256(header + b"\0" + b).hexdigest()
+
+
+def prompt_sha256(token_ids) -> str:
+    """SHA-256 over token ids packed as unsigned 32-bit little-endian integers.
+
+    Raises on anything that is not a sequence of ids in [0, 2**32); a prompt
+    digest is never computed from placeholders or embeddings.
+    """
+    ids = [int(t) for t in token_ids]
+    if any(t < 0 or t >= 2**32 for t in ids):
+        raise ValueError("token id outside the unsigned 32-bit range")
+    return hashlib.sha256(struct.pack(f"<{len(ids)}I", *ids)).hexdigest()
+
+
+def row_validity(new_token_ids, q: int, computed: int, prompt_token_ids) -> str | None:
+    """Reason a schema 3 row is invalid, or None.
+
+    ``prompt_token_ids`` is the admitted prompt (None when unknown); the
+    positions of the row that fall inside the prompt must reproduce it.
+    """
+    if new_token_ids is None:
+        return "token ids unavailable from the runner's per-request state"
+    if not isinstance(new_token_ids, list) or len(new_token_ids) != q:
+        return f"len(new_token_ids) {None if new_token_ids is None else len(new_token_ids)} != q {q}"
+    if any((not isinstance(t, int)) or t < 0 for t in new_token_ids):
+        return "negative or non-integer token id (placeholder for a token not materialised on the host)"
+    if prompt_token_ids is None:
+        return "prompt token ids unavailable for this request"
+    inside = max(0, min(computed + q, len(prompt_token_ids)) - computed)
+    if inside > 0 and new_token_ids[:inside] != [int(t) for t in prompt_token_ids[computed:computed + inside]]:
+        return "new_token_ids disagree with the admitted prompt token ids"
+    return None
 
 
 def _dispatch_record(out) -> dict:
@@ -325,6 +418,10 @@ def _patch_runner():
         pass
 
 
+def _ids(values) -> list[str]:
+    return sorted(str(v) for v in (values or []))
+
+
 def _execute(self, orig, scheduler_output, *a, **kw):
     if True:
         path = _out_path()
@@ -336,8 +433,11 @@ def _execute(self, orig, scheduler_output, *a, **kw):
         if int(getattr(scheduler_output, "total_num_scheduled_tokens", sum(getattr(scheduler_output, "num_scheduled_tokens", {}).values()))) == 0:
             out = orig(self, scheduler_output, *a, **kw)
             with open(path, "a") as f:
-                f.write(json.dumps({"event": "empty_scheduler_call", "step": _state["step"],
-                                    "total_scheduled": 0, "requests": []}) + "\n")
+                f.write(json.dumps({"schema": SCHEMA, "event": "empty_scheduler_call", "step": _state["step"],
+                                    "total_scheduled": 0, "requests": [],
+                                    "finished": _ids(getattr(scheduler_output, "finished_req_ids", None)),
+                                    "preempted": _ids(getattr(scheduler_output, "preempted_req_ids", None))}) + "\n")
+            _forget_finished(scheduler_output)
             _state["step"] += 1
             return out
         try:
@@ -354,13 +454,21 @@ def _execute(self, orig, scheduler_output, *a, **kw):
                 _state["env"] = _env_record()
                 rec["env"] = _state["env"]
             _state["pending"] = rec
+            if not all(str(r["req"]).startswith("_warmup") for r in rec["requests"]):
+                _state["forward_passes"] += 1
             if _state["hashes"]:  # logits were computed inside execute_model (pinned-sha layout)
                 _flush(path)
         except Exception as e:  # noqa: BLE001
             with open(path, "a") as f:
                 f.write(json.dumps({"error": repr(e)[:200], "step": _state["step"]}) + "\n")
+        _forget_finished(scheduler_output)
         _state["step"] += 1
         return out
+
+
+def _forget_finished(scheduler_output) -> None:
+    for rid in getattr(scheduler_output, "finished_req_ids", None) or []:
+        _state["prompts"].pop(str(rid), None)
 
 
 def _flush(path: str) -> None:
@@ -396,7 +504,7 @@ def _batch_rows(runner, so) -> list[dict]:
     """(req id, query len, computed, prompt len, prefilling) per batch position."""
     sched = dict(getattr(so, "num_scheduled_tokens", {}) or {})
     b = _state.get("batch")
-    if b and "req_ids" in b:  # vLLM 0.28.0 layout
+    if b and "req_ids" in b:  # vLLM 0.28.0 V2 runner layout
         rows = []
         for i, rid in enumerate(b["req_ids"]):
             q = int(b["q"][i]) if i < len(b["q"]) else int(sched.get(rid, 0))
@@ -405,7 +513,7 @@ def _batch_rows(runner, so) -> list[dict]:
             prefilling = bool(b["prefilling"][i]) if b.get("prefilling") is not None else (prompt is not None and computed < prompt)
             rows.append({"req": rid, "q": q, "computed": computed, "prompt": prompt, "prefilling": prefilling})
         return rows
-    ib = runner.input_batch  # pinned-sha layout (5769a7382cb1)
+    ib = runner.input_batch  # pinned-sha and 0.28.0 V1 runner layout (gpu_input_batch.py:165-172)
     num_reqs = getattr(ib, "num_reqs", None) or len(ib.req_ids)
     rows = []
     for i, rid in enumerate(list(ib.req_ids[:num_reqs])):
@@ -415,10 +523,60 @@ def _batch_rows(runner, so) -> list[dict]:
     return rows
 
 
+def _model_runner_layout(runner) -> str:
+    """'v2' for vllm/v1/worker/gpu/model_runner.py (has req_states), else 'v1'."""
+    return "v2" if hasattr(runner, "req_states") else "v1"
+
+
+def _row_token_ids(runner, rid: str, computed: int, q: int) -> list[int] | None:
+    """Token ids at positions computed..computed+q-1 from the runner's host state.
+
+    V1: gpu_model_runner.py:725 ``self.requests`` and gpu_input_batch.py:79-89
+    ``get_token_id`` (returns -1 for unknown positions, which row_validity
+    rejects). V2: vllm/v1/worker/gpu/states.py:34-39 ``all_token_ids`` (UVA,
+    host-visible) indexed by states.py:27 ``req_id_to_index``; the device is
+    synchronised first so the previous pass's sampled token write
+    (vllm/v1/worker/gpu/model_runner.py:1367-1391) is complete.
+    """
+    if _model_runner_layout(runner) == "v2":
+        rs = runner.req_states
+        idx = rs.req_id_to_index.get(rid)
+        if idx is None:
+            return None
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        return [int(t) for t in rs.all_token_ids.gpu[idx, computed:computed + q].to("cpu").tolist()]
+    req = getattr(runner, "requests", {}).get(rid)
+    if req is None:
+        return None
+    return [int(req.get_token_id(p)) for p in range(computed, computed + q)]
+
+
+def _scheduler_limits(runner) -> dict:
+    sc = getattr(runner.vllm_config, "scheduler_config", None)
+    return {k: getattr(sc, k, None) for k in ("max_num_seqs", "max_num_batched_tokens", "enable_chunked_prefill", "async_scheduling")}
+
+
 def _record(runner, so) -> dict:
     new_hits = {}
+    admitted, resumed = [], []
     for r in getattr(so, "scheduled_new_reqs", []) or []:
-        new_hits[r.req_id] = int(getattr(r, "num_computed_tokens", 0))
+        rid = str(r.req_id)
+        new_hits[rid] = int(getattr(r, "num_computed_tokens", 0))
+        if rid in _state["seen"]:
+            resumed.append(rid)  # V2 folds resumed requests into scheduled_new_reqs (scheduler.py:1195-1204)
+            continue
+        ids = getattr(r, "prompt_token_ids", None)
+        ids = [int(t) for t in ids] if ids is not None else None
+        digest = prompt_sha256(ids) if ids is not None else None
+        _state["prompts"][rid] = {"ids": ids, "sha256": digest}
+        admitted.append({"req": rid, "prompt_token_ids": ids, "prompt_len": len(ids) if ids is not None else None,
+                         "num_computed_tokens": new_hits[rid], "prompt_sha256": digest})
+    cached = getattr(so, "scheduled_cached_reqs", None)
+    for rid in getattr(cached, "resumed_req_ids", None) or []:
+        if str(rid) not in resumed:
+            resumed.append(str(rid))
     reqs = []
     hashes = _state["hashes"] or {}
     rows = hashes.get("hidden_rows") or []
@@ -431,10 +589,24 @@ def _record(runner, so) -> dict:
         first = rid not in _state["seen"]
         if first:
             _state["seen"].add(rid)
-        reqs.append({"req": rid, "q": br["q"], "computed": br["computed"], "kv": br["computed"] + br["q"], "prompt": br["prompt"],
-                     "phase": "prefill" if br["prefilling"] else "decode",
-                     "cache_hit": new_hits.get(rid) if first else None,
-                     "h": rows[i] if i < len(rows) else None, "argmax": am[i] if i < len(am) else None})
+        row = {"req": rid, "q": br["q"], "computed": br["computed"], "kv": br["computed"] + br["q"], "prompt": br["prompt"],
+               "phase": "prefill" if br["prefilling"] else "decode",
+               "cache_hit": new_hits.get(rid) if first else None,
+               "h": rows[i] if i < len(rows) else None, "argmax": am[i] if i < len(am) else None}
+        if not str(rid).startswith("_warmup"):
+            prompt = _state["prompts"].get(rid) or {"ids": None, "sha256": None}
+            try:
+                ids = _row_token_ids(runner, rid, int(br["computed"]), int(br["q"]))
+            except Exception as e:  # noqa: BLE001
+                ids, reason = None, f"token id read failed: {repr(e)[:80]}"
+            else:
+                reason = None
+            row["new_token_ids"] = ids
+            row["prompt_sha256"] = prompt["sha256"]
+            invalid = reason or row_validity(ids, int(br["q"]), int(br["computed"]), prompt["ids"])
+            if invalid:
+                row["invalid"] = invalid
+        reqs.append(row)
     if set(req_ids) != set(sched) or sum(r["q"] for r in reqs) != sum(sched.values()):
         raise ValueError("captured batch does not match scheduled requests and token counts")
     cc = runner.vllm_config.compilation_config
@@ -448,11 +620,14 @@ def _record(runner, so) -> dict:
         backend = runner.attn_groups[0][0].backend.get_name()
     except Exception:  # noqa: BLE001
         backend = None
-    rec = {"schema": 2, "event": "forward", "run_id": os.environ.get("SHAPE_RUN_ID"),
+    rec = {"schema": SCHEMA, "event": "forward", "run_id": os.environ.get("SHAPE_RUN_ID"),
            "hash_schema": "sha256-dtype-shape-bytes", "resolved_compile": str(cc.mode), "resolved_cudagraph": str(cc.cudagraph_mode),
            "step": _state["step"], "rank": _rank(), "total_scheduled": int(getattr(so, "total_num_scheduled_tokens", sum(sched.values()))),
            "num_reqs": len(req_ids), "dispatch": _state["dispatch"], "attention_backend": backend,
            "parallel": {"tp": pc.tensor_parallel_size, "pp": pc.pipeline_parallel_size, "dp": getattr(pc, "data_parallel_size", 1), "ep": bool(getattr(pc, "enable_expert_parallel", False))},
+           "model_runner": _model_runner_layout(runner), "scheduler": _scheduler_limits(runner),
+           "admitted": admitted, "resumed": sorted(resumed),
+           "finished": _ids(getattr(so, "finished_req_ids", None)), "preempted": _ids(getattr(so, "preempted_req_ids", None)),
            "moe_counts_source": _state.get("moe_source"), "moe_expert_counts_first_layer": _state["moe_counts"], "fp8_scale_first_call": _state.get("fp8_scale"), "requests": reqs}
     rec["shape_vector"] = shape_vector(rec)
     return rec
@@ -491,6 +666,11 @@ def flush() -> None:
     path = _out_path()
     if path is not None:
         _flush(path)
+
+
+def forward_passes() -> int:
+    """Number of non-warmup forward passes recorded so far in this process."""
+    return int(_state["forward_passes"])
 
 
 def register():
