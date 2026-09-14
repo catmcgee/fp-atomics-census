@@ -2,7 +2,7 @@
 
 A source census of floating-point atomic operations in LLM inference engines, with runtime observations on selected GPU stacks. It identifies potential obstacles to bit-exact replay; it does not certify a deployment or establish a complete verification protocol.
 
-Eight repositories are pinned to 6 July 2026 commits in [scan-manifest.json](scan-manifest.json): vLLM, SGLang, FlashInfer, FlashAttention, Marlin, DeepGEMM, DeepEP and selected CUTLASS reduction paths. The [inventory](inventory/) contains source classifications and supporting references. Scanner matches and unresolved triage are recorded separately. The GPU measurements were made on 6–7 and 14 September 2026 against installed wheels, whose versions differ from the source census; the 14 September campaigns are described in [probes/shape/campaigns](probes/shape/campaigns/).
+Eight repositories are pinned to 6 July 2026 commits in [scan-manifest.json](scan-manifest.json): vLLM, SGLang, FlashInfer, FlashAttention, Marlin, DeepGEMM, DeepEP and selected CUTLASS reduction paths. The [inventory](inventory/) contains source classifications and supporting references. Scanner matches and unresolved triage are recorded separately. The GPU measurements were made on 6, 7 and 14 September 2026 against installed wheels, whose versions differ from the source census; the 14 September campaigns are described in [probes/shape/campaigns](probes/shape/campaigns/).
 
 ## What this adds
 
@@ -59,7 +59,7 @@ These are precautions for the reviewed paths, not sufficient conditions for bit-
 | vLLM quantised MoE | Exclude the `moe_wna16_gemm` CUDA kernel: on vLLM v0.26.0 and earlier this means avoiding the `moe_wna16` method, the GPTQ/AWQ MoE fallback to it and compressed-tensors WNA16 MoE at decode-sized batches; from v0.27.0 those methods use the Triton kernel and only direct `fused_experts` callers with int4 W4A16 weights reach it | vllm-0014 |
 | vLLM Marlin | Keep `VLLM_MARLIN_USE_ATOMIC_ADD` unset | vllm-0010 |
 | vLLM model-specific paths | Exclude mean pooling, Moondream3 and DiffusionGemma until their operator paths are controlled | vllm-0045, vllm-0046, vllm-0050 |
-| vLLM ROCm gfx1100 | Exclude the reviewed packed GPTQ add loops pending a separate ROCm evaluation | vllm-0032–0037 |
+| vLLM ROCm gfx1100 | Exclude the reviewed packed GPTQ add loops pending a separate ROCm evaluation | vllm-0032 to vllm-0037 |
 | SGLang Marlin | Avoid fused, sharded projections with `n < 2048, k >= 2048`, or disable and verify the atomic branch in the same engine | sglang-0008; same-wheel guard-off arms remove the token-level and cross-process differences and the env-on arm restores them (H100, 0.5.19); deterministic-inference mode alone did not remove the recorded differences; same-length in-process differences remain with the atomic path off and are unattributed |
 | SGLang FP8 blockwise | Check actual dispatch before assuming the SM90 stream-K path is reached; avoid its nondeterministic branch | sglang-0011; the tested release wheels did not reach this source path |
 | SGLang LoRA | Keep experimental virtual-expert and LoRA optimisation paths off | sglang-0019, sglang-0021 |
@@ -67,7 +67,7 @@ These are precautions for the reviewed paths, not sufficient conditions for bit-
 | FlashInfer CUTLASS fused MoE, including callers in engines | Use and verify the unfused finalisation path | flashinfer-0001 |
 | FlashInfer SM120 fused MoE (`b12x_fused_moe`, NVFP4) | Avoid for bit-exact use; a single routed expert per token does not remove the order dependence | Outputs differed in process at 16, 512 and 4096 tokens and top-k 1, 2, 4 and 8 on RTX PRO 6000 with drivers 595.91.07 and 595.71.05 (flashinfer 0.6.18.post1). In that release the static and dynamic kernels scatter-add one bf16x2 partial per 128-wide intermediate slice with a relaxed reduction, so each output element receives eight reduction adds per routed expert. Executed kernel identity not verified; cause not isolated. |
 | FlashInfer SM120 dense split-K GEMM | Treat its opt-in atomic epilogue as a separate source risk requiring its own direct probe | flashinfer-0011; the fused MoE probes, including top-k 1, do not call the dense GEMM's split-K path |
-| FlashInfer sampling | Use deterministic top-p renormalisation; avoid uncontrolled multi-CTA top-k renormalisation and output-order dependence | flashinfer-0015–0018 |
+| FlashInfer sampling | Use deterministic top-p renormalisation; avoid uncontrolled multi-CTA top-k renormalisation and output-order dependence | flashinfer-0015 to flashinfer-0018 |
 | FlashAttention | Distinguish forward from backward; use and verify deterministic backward when training | backward rows are not inference evidence |
 | DeepGEMM | Avoid the cross-batch `bmk,bnk->mn` einsum reduction | DeepGEMM-0001, DeepGEMM-0002 |
 | CUTLASS callers | Do not select `ReductionMode::Nondeterministic` when order matters | Source defaults do not attest every caller or compiled specialisation |

@@ -1,4 +1,5 @@
 Filed as https://github.com/sgl-project/sglang/issues/39455 on 2026-09-14; fix proposed in https://github.com/sgl-project/sglang/pull/39456.
+The same-engine control described under "Limits of the evidence" as not run was run after filing; see probes/sglang_marlin_ablation/NOTES.md.
 
 [Bug] Marlin atomicAdd K-slice reduction is always on for n < 2048, k >= 2048 (dead `if not True:` guard) and is not disabled by --enable-deterministic-inference
 
