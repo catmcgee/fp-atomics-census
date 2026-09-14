@@ -47,7 +47,8 @@ def rebuild(base: Path) -> int:
 
 
 def derived(base):
-    paths = [*base.glob("results/*/*/summary.json"), *base.glob("results/e3/*/e5_vs_*.json"), *base.glob("results/e6/*/boundary_*.json")]
+    paths = [*base.glob("results/*/*/summary.json"), *base.glob("results/e3/*/e5_vs_*.json"),
+             *base.glob("results/e6/*/summary_*.json"), *base.glob("results/e6/*/boundary_*.json")]
     return {str(p.relative_to(base)): p.read_bytes() for p in paths}
 
 

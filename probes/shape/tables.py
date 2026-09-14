@@ -34,7 +34,7 @@ def main(argv: list[str]) -> int:
         else:
             print("| Arm | Passes | Requirements met | Rows compared | Rows differing | First divergence (pass, slot) | Passes where free running would diverge | P2 (replay) |")
             print("|---|---|---|---|---|---|---|---|")
-        for s in sorted(d.glob("*/summary.json")):
+        for s in sorted(d.glob("*/summary*.json") if exp == "e6" else d.glob("*/summary.json")):
             j = json.loads(s.read_text())
             if exp == "e2":
                 n_multi = sum(1 for v in j["distinct_output_hashes_per_slot"].values() if v > 1)
