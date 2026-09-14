@@ -108,6 +108,8 @@ def test_differs_names_first_pass_and_slot_and_counts_free_running_divergence():
     ("attention_backend", {"pass": 1, "slot": None, "field": "attention_backend"}),
     ("finished", {"pass": 2, "slot": None, "field": "finished"}),
     ("model_runner", {"pass": 0, "slot": None, "field": "model_runner"}),
+    ("scheduler", {"pass": 1, "slot": None, "field": "scheduler"}),
+    ("preempted", {"pass": 0, "slot": None, "field": "preempted"}),
     ("new_token_ids", {"pass": 1, "slot": "0", "field": "new_token_ids"}),
 ])
 def test_requirement_violations_are_not_comparable(mutation, expected):
@@ -131,6 +133,10 @@ def test_requirement_violations_are_not_comparable(mutation, expected):
         rep[2]["finished"] = ["0-b"]
     if mutation == "model_runner":
         rep[0]["model_runner"] = "v2"
+    if mutation == "scheduler":
+        rep[1]["scheduler"] = {**rep[1]["scheduler"], "max_num_batched_tokens": 128}
+    if mutation == "preempted":
+        rep[0]["preempted"] = ["1-b"]
     if mutation == "new_token_ids":
         rep[1]["requests"][0]["new_token_ids"] = [999]
     result = run_e6.compare_replay(make_record("a"), rep)
@@ -279,7 +285,7 @@ def test_hook_records_schema3_fields_on_the_v1_runner_layout(monkeypatch):
     assert all("invalid" not in r for r in rec["requests"])
     assert rec["finished"] == [] and rec["preempted"] == [] and rec["resumed"] == []
     assert rec["scheduler"]["async_scheduling"] is False
-    for k in ("q", "computed", "kv", "prompt", "phase", "cache_hit", "h", "argmax", "shape_vector" if False else "q"):
+    for k in ("q", "computed", "kv", "prompt", "phase", "cache_hit", "h", "argmax"):
         assert k in rec["requests"][0]
     # decode pass: the sampled token is in output_token_ids; a request whose id is unknown to the host is invalid
     requests["0-x"].output_token_ids.append(100)
@@ -423,6 +429,15 @@ def test_boundary_comparison_excludes_prompt_but_requires_the_rest():
     result = run_e6.compare_boundary(rec, 2, wrong)
     assert result["verdict_P2_boundary"] == "NOT COMPARABLE" and result["first_mismatch"]["field"] == "rebuilt_prefill_shape"
     assert run_e6.compare_boundary(rec, 2, rebuilt_boundary()[:1])["first_mismatch"]["field"] == "trace_length"
+    tampered = rebuilt_boundary()  # the prefix is derived from the record, never trusted from boundary.json
+    tampered[0]["requests"][1]["new_token_ids"] = [20, 21, 999]
+    result = run_e6.compare_boundary(rec, 2, tampered)
+    assert result["verdict_P2_boundary"] == "NOT COMPARABLE"
+    assert result["first_mismatch"] == {"pass": 0, "slot": "1", "field": "rebuilt_prefix_token_ids", "recorded": [20, 21, 200], "replayed": [20, 21, 999]}
+    other_limits = decode_record()
+    for s in other_limits:
+        s["scheduler"] = {**s["scheduler"], "max_num_batched_tokens": 4096}
+    assert run_e6.compare_boundary(other_limits, 2, rebuilt_boundary())["first_mismatch"]["field"] == "scheduler"
 
 
 def write_arm(d: Path, steps, outs, meta, forcing=None):
@@ -434,15 +449,16 @@ def write_arm(d: Path, steps, outs, meta, forcing=None):
         (d / "hook/forcing_rank0.jsonl").write_text("\n".join(json.dumps(c) for c in forcing) + "\n")
 
 
-def replay_meta(mode="replay", **kw):
-    return {**RUN_META, "run_id": "rep-1", "mode": mode, "recorded_run_id": "rec-1", **kw}
+def replay_meta(record_dir: Path, mode="replay", **kw):
+    digests = run_e6._digests(run_e6._record_files(record_dir))
+    return {**RUN_META, "run_id": "rep-1", "mode": mode, "recorded_run_id": "rec-1", "record_sha256": digests, **kw}
 
 
 def test_compare_writes_summary_without_rewriting_raw_files(tmp_path):
     arm = tmp_path / "results/e6/arm"
     write_arm(arm / "record", make_record("a"), outputs("a"), RUN_META)
     rep = make_record("b")
-    write_arm(arm / "replay", rep, outputs("b"), replay_meta(), forcing_log_for(rep))
+    write_arm(arm / "replay", rep, outputs("b"), replay_meta(arm / "record"), forcing_log_for(rep))
     raw = {p: p.read_bytes() for p in arm.rglob("*") if p.is_file()}
     assert run_e6.compare(arm / "record", arm / "replay") == 0
     summary = json.loads((arm / "summary.json").read_text())
@@ -457,17 +473,42 @@ def test_compare_writes_summary_without_rewriting_raw_files(tmp_path):
 def test_compare_is_invalid_without_forcing_log_or_with_schema2_record(tmp_path):
     arm = tmp_path / "results/e6/arm"
     write_arm(arm / "record", make_record("a"), outputs("a"), RUN_META)
-    write_arm(arm / "replay", make_record("b"), outputs("b"), replay_meta())
+    write_arm(arm / "replay", make_record("b"), outputs("b"), replay_meta(arm / "record"))
     assert run_e6.compare(arm / "record", arm / "replay") == 1
     summary = json.loads((arm / "summary.json").read_text())
     assert summary["verdict_P2"] == "INVALID" and any("no teacher-forcing log" in e for e in summary["validation_errors"])
     legacy = tmp_path / "results/e6/legacy"
     write_arm(legacy / "record", strip_to_schema2(make_record("a")), outputs("a"), RUN_META)
     rep = make_record("b")
-    write_arm(legacy / "replay", rep, outputs("b"), replay_meta(), forcing_log_for(rep))
+    write_arm(legacy / "replay", rep, outputs("b"), replay_meta(legacy / "record"), forcing_log_for(rep))
     assert run_e6.compare(legacy / "record", legacy / "replay") == 1
     summary = json.loads((legacy / "summary.json").read_text())
     assert summary["verdict_P2"] == "INVALID" and any("schema 2 records" in e for e in summary["validation_errors"])
+
+
+def test_compare_is_invalid_when_provenance_fails(tmp_path):
+    arm = tmp_path / "results/e6/arm"
+    write_arm(arm / "record", make_record("a"), outputs("a"), RUN_META)
+    rep = make_record("b")
+    # A second replay directory gets its own summary name, so it does not overwrite the first's.
+    write_arm(arm / "replay_tampered", rep, outputs("b"), {**replay_meta(arm / "record"), "record_sha256": {"run.json": "0" * 64}}, forcing_log_for(rep))
+    assert run_e6.compare(arm / "record", arm / "replay_tampered") == 1
+    summary = json.loads((arm / "summary_replay_tampered.json").read_text())
+    assert summary["verdict_P2"] == "INVALID" and any("digests the replay run.json recorded" in e for e in summary["validation_errors"])
+    # The digests were right when the replay ran; the record changed afterwards.
+    write_arm(arm / "replay", rep, outputs("b"), replay_meta(arm / "record"), forcing_log_for(rep))
+    (arm / "record/outputs.json").write_text(json.dumps(outputs("a")) + "\n")
+    assert run_e6.compare(arm / "record", arm / "replay") == 1
+    summary = json.loads((arm / "summary.json").read_text())
+    assert summary["verdict_P2"] == "INVALID" and any("raw record files must not change" in e for e in summary["validation_errors"])
+    (arm / "record/outputs.json").write_text(json.dumps(outputs("a")))
+    write_arm(arm / "replay_wrong_run", rep, outputs("b"), {**replay_meta(arm / "record"), "recorded_run_id": "other", "resolved_model_runner": "v2"}, forcing_log_for(rep))
+    assert run_e6.compare(arm / "record", arm / "replay_wrong_run") == 1
+    errors = json.loads((arm / "summary_replay_wrong_run.json").read_text())["validation_errors"]
+    assert any("recorded run id" in e for e in errors) and any("different model runners" in e for e in errors)
+    out = _tables(tmp_path / "results")
+    assert out.count("| arm |") == 3 and out.count("INVALID") == 3
+    assert set(reanalyse.derived(tmp_path)) == {"results/e6/arm/summary.json", "results/e6/arm/summary_replay_tampered.json", "results/e6/arm/summary_replay_wrong_run.json"}
 
 
 def test_compare_boundary_arm_writes_boundary_summary(tmp_path):
@@ -475,7 +516,7 @@ def test_compare_boundary_arm_writes_boundary_summary(tmp_path):
     write_arm(arm / "record", decode_record("a"), {f"{s}-a": {"hash": h("o" + s), "tokens": t} for s, t in {"0": [100, 101, 102], "1": [200, 201, 202]}.items()},
               {**RUN_META, "args": {**RUN_META["args"], "max_tokens": 3}})
     reb = rebuilt_boundary()
-    write_arm(arm / "boundary_2", reb, {"0-r": {"hash": h("b0"), "tokens": [101, 102]}, "1-r": {"hash": h("b1"), "tokens": [201, 202]}}, replay_meta("boundary"), forcing_log_for(reb))
+    write_arm(arm / "boundary_2", reb, {"0-r": {"hash": h("b0"), "tokens": [101, 102]}, "1-r": {"hash": h("b1"), "tokens": [201, 202]}}, replay_meta(arm / "record", "boundary"), forcing_log_for(reb))
     plan = run_e6.boundary_plan(decode_record("a"), 2, RUN_META["resolved_scheduler"])
     (arm / "boundary_2/boundary.json").write_text(json.dumps(plan))
     assert run_e6.compare(arm / "record", arm / "boundary_2") == 0
