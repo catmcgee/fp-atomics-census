@@ -27,7 +27,9 @@ through ``teacher_forcing.TeacherForcingLogitsProcessor`` so the replayed
 inputs equal the recorded ones even after a numerical divergence; the hook's
 per-row ``argmax`` in the replay is the free-running choice, and comparing it
 with the recorded ``argmax`` (the forced token) says, per pass and row,
-whether free running would have diverged.
+whether the free-running choice at that pass differs from the recorded one
+given the identical forced inputs (after the first such row an actual free
+run would have had different inputs).
 
 ``--compare`` fails closed: equal trace lengths, request slot order per pass,
 record-level dispatch and configuration fields, every row's recorded shape
@@ -64,7 +66,7 @@ from shape_common import (add_common_args, analysis_metadata, arm_name, engine_k
 from teacher_forcing import EXTRA_ARGS_KEY, TeacherForcingLogitsProcessor, read_forcing_log
 
 RECORD_FIELDS = ("num_reqs", "total_scheduled", "dispatch", "attention_backend", "parallel", "resolved_compile", "resolved_cudagraph",
-                 "model_runner", "finished", "resumed", "preempted")
+                 "model_runner", "scheduler", "finished", "resumed", "preempted")
 ROW_FIELDS = ("q", "computed", "prompt", "kv", "cache_hit")
 BOUNDARY_ROW_FIELDS = ("q", "computed", "kv", "phase")  # prompt is the rebuilt prefix length by construction
 HASH_FIELDS = ("h", "argmax", "logits_h")
@@ -417,10 +419,20 @@ def compare_boundary(recorded: list[dict], T: int, rebuilt: list[dict]) -> dict:
             mismatch = {"pass": 0 if name == "prefill" else 1, "slot": None, "field": "request_order", "recorded": slots_recorded, "replayed": got}
             break
     if mismatch is None:
+        # The prefix each rebuilt row must have consumed is derived from the record here, never taken from boundary.json.
+        schedule = extract_schedule(recorded[:T + 1])
+        sequences, sequence_errors = token_sequences(recorded[:T + 1], schedule["requests"])
+        if schedule["errors"] or sequence_errors:
+            result["validation_errors"] += [f"recorded: {e}" for e in schedule["errors"] + sequence_errors]
+            return result
         for ra, rb in zip(target["requests"], prefill["requests"]):
             if rb.get("computed") != 0 or rb.get("q") != ra.get("computed") or rb.get("phase") != "prefill":
                 mismatch = {"pass": 0, "slot": slot_of(ra["req"]), "field": "rebuilt_prefill_shape",
                             "recorded": {"computed": ra.get("computed")}, "replayed": {"computed": rb.get("computed"), "q": rb.get("q"), "phase": rb.get("phase")}}
+                break
+            prefix = sequences.get(slot_of(ra["req"]), [])[: int(ra["computed"])]
+            if rb.get("new_token_ids") != prefix:
+                mismatch = {"pass": 0, "slot": slot_of(ra["req"]), "field": "rebuilt_prefix_token_ids", "recorded": prefix, "replayed": rb.get("new_token_ids")}
                 break
     if mismatch is None:
         for key in [k for k in RECORD_FIELDS if k not in ID_FIELDS]:
@@ -461,8 +473,17 @@ def _record_files(d: Path) -> list[Path]:
 
 
 def _summary_path(record_dir: Path, replay_dir: Path, boundary: dict | None) -> Path:
-    name = f"boundary_{boundary['pass']}.json" if boundary else "summary.json"
-    return (replay_dir.parent / name) if replay_dir.parent.resolve() == record_dir.parent.resolve() else (replay_dir / name)
+    """Derived file per replay directory, so two replays of one record never overwrite each other's summary:
+    ``summary.json`` for a directory named ``replay`` and ``summary_<name>.json`` otherwise; ``boundary_<T>.json``
+    for a directory named ``boundary_<T>`` and ``boundary_<T>_<name>.json`` otherwise. Written next to the arms
+    when they are siblings, else inside the replay directory."""
+    name = replay_dir.name
+    if boundary:
+        expected = f"boundary_{boundary['pass']}"
+        file = f"{expected}.json" if name == expected else f"{expected}_{name}.json"
+    else:
+        file = "summary.json" if name == "replay" else f"summary_{name}.json"
+    return (replay_dir.parent / file) if replay_dir.parent.resolve() == record_dir.parent.resolve() else (replay_dir / file)
 
 
 def _load_json(p: Path, default=None):
@@ -491,6 +512,10 @@ def compare(record_dir: Path, replay_dir: Path) -> int:
         provenance.append(f"replay run.json status is {rep_meta.get('status')!r}, not 'configured'")
     if rec_meta.get("resolved_model_runner") != rep_meta.get("resolved_model_runner"):
         provenance.append("recorded and replayed arms resolved different model runners")
+    if rep_meta.get("record_sha256") != _digests(_record_files(record_dir)):
+        provenance.append("record files differ from the digests the replay run.json recorded; raw record files must not change after a replay")
+    if rec_meta.get("status") != "configured":
+        provenance.append(f"recorded run.json status is {rec_meta.get('status')!r}, not 'configured'")
     if load_error:
         provenance.append(load_error)
     forcing = forcing_consistency(replayed, read_forcing_log(replay_dir / "hook"), expect_forcing=True) if replayed else {"errors": [], "calls": 0, "forced_rows": 0, "rows_where_forced_equalled_argmax": 0}
