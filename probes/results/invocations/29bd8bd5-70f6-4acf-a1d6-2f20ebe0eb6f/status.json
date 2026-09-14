@@ -1,0 +1,19 @@
+{
+  "invocation_id": "29bd8bd5-70f6-4acf-a1d6-2f20ebe0eb6f",
+  "started_at_utc": "2026-09-14T19:27:12.838854+00:00",
+  "argv": [
+    "probe_torch_ops.py"
+  ],
+  "returncode": 1,
+  "status": "NONIDENTICAL_OR_REJECTED",
+  "measurement_statuses": [
+    "REJECTED",
+    "bitwise-identical",
+    "bitwise-identical",
+    "bitwise-identical",
+    "DIFFERS",
+    "bitwise-identical",
+    "DIFFERS",
+    "DIFFERS"
+  ]
+}

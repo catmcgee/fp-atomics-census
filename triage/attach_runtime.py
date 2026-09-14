@@ -7,6 +7,13 @@ Reads every report under probes/results/<stack>/ and writes a
 by hand: a probe name (regex) to related rows, with an explicit evidence relation and a one-line note on
 how. Generated evidence is rebuilt, including removal of withdrawn mappings. Idempotent: existing evidence
 for the same stack and probe is replaced.
+
+Fresh-process comparisons are paired within one campaign only. A campaign is
+the set of reports sharing a probe source digest (``env.source.probe_source_sha256``);
+legacy reports carry neither a digest nor a comparison key and form the
+``legacy`` campaign. Mixing campaigns would leave no shared comparison key and
+turn every fresh-process verdict into n/a, so each campaign is summarised and
+attached as its own entry.
 """
 from __future__ import annotations
 
@@ -16,6 +23,7 @@ import re
 import sys
 from collections import defaultdict
 from pathlib import Path
+from typing import Iterator
 
 # (probe name regex, [row ids], note)
 ROWS: list[tuple[str, list[str], str]] = [
@@ -167,6 +175,40 @@ def collapse_cublaslt(probes: dict[str, dict[str, dict]]) -> dict[str, dict[str,
     return {**rest, **groups}
 
 
+def campaign_of(report: dict) -> str:
+    """Pairing label: the recorded probe source digest prefix, or "legacy" for reports without one.
+
+    An aggregate carries its members' labels; the members of one run share a source.
+    """
+    if "members" in report:
+        return "+".join(sorted({campaign_of(r) for r in report["members"].values()})) or "legacy"
+    digest = ((report.get("env") or {}).get("source") or {}).get("probe_source_sha256")
+    return digest[:12] if digest else "legacy"
+
+
+def campaigns(by_tag: dict[str, dict]) -> dict[str, dict[str, dict]]:
+    """Split one probe's reports by campaign, legacy first.
+
+    Reports from different probe sources never share a comparison key, so a
+    merged group could not support a fresh-process verdict and would hide the
+    verdict each campaign supports on its own. Nothing is merged across
+    campaigns and no verdict is derived from the split; every group is
+    summarised by ``summarise`` exactly as a single campaign was before.
+    """
+    groups: dict[str, dict[str, dict]] = defaultdict(dict)
+    for path, report in by_tag.items():
+        groups[campaign_of(report)][path] = report
+    return dict(sorted(groups.items(), key=lambda item: (item[0] != "legacy", item[0])))
+
+
+def campaign_rows(probes: dict[str, dict[str, dict]]) -> Iterator[tuple[str, str, bool, dict[str, dict]]]:
+    """(probe name, campaign, whether the probe has several campaigns on this stack, reports)."""
+    for name, reports in sorted(collapse_cublaslt(probes).items()):
+        groups = campaigns(reports)
+        for label, group in groups.items():
+            yield name, label, len(groups) > 1, group
+
+
 def relation_for(name: str, note: str) -> str:
     if "not reached" in note or "not involved" in note or "not exercised" in note:
         return "not_reached"
@@ -195,10 +237,10 @@ def main(argv: list[str] | None = None) -> int:
     reports = load_reports(args.results)
     evidence: dict[str, list[dict]] = defaultdict(list)
     for stack, probes in reports.items():
-        for name, by_tag in collapse_cublaslt(probes).items():
+        for name, campaign, _, by_tag in campaign_rows(probes):
             inproc, fresh, repeats = summarise(by_tag)
             for rid, relation, note in related_rows(name):
-                evidence[rid].append({"stack": stack, "probe": name, "in_process": inproc, "fresh_process": fresh,
+                evidence[rid].append({"stack": stack, "probe": name, "campaign": campaign, "in_process": inproc, "fresh_process": fresh,
                                       "evaluations": repeats, "relation": relation, "kernel_identity_verified": False,
                                       "report_files": report_files(by_tag), "note": note,
                                       "fresh_process_scope": "legacy inputs/configuration not fully attested" if any("schema" not in r for r in by_tag.values()) else "matching comparison key"})

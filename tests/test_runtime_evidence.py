@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from triage.attach_runtime import collapse_cublaslt, load_reports, related_rows, summarise
+from triage.attach_runtime import campaign_of, campaign_rows, campaigns, collapse_cublaslt, load_reports, related_rows, summarise
 from triage.summary import summarise as inventory_summary
 from triage.validate import candidate_matches, check_ref
 
@@ -18,6 +18,35 @@ def test_missing_hash_and_errors_are_not_identical_or_differences():
 
 def test_different_configuration_does_not_count_as_fresh_process_test():
     assert summarise({"a": report(comparison_key="x"), "b": report("b", comparison_key="y")})[1] == "n/a"
+
+
+def new_report(tag, run_id, digest="c71ba85c0851c29072a63c895cf98716707588fc35b3846f8a43b5c63d1e2be2", key="k", **kw):
+    return report(tag, schema=2, comparison_key=key, env={"run_tag": tag, "run_id": run_id, "source": {"probe_source_sha256": digest}}, **kw)
+
+
+def test_fresh_process_pairing_stays_within_one_campaign():
+    # The H100 det_strict runs share a stack directory with three legacy reports of the same probe.
+    legacy = {"x.a.json": report("a"), "x.b.json": report("b"), "x.json": report(None)}
+    new = {"run1/x.a.json": new_report("a", "run1"), "run2/x.b.json": new_report("b", "run2")}
+    merged = {**legacy, **new}
+    assert summarise(merged) == ("identical", "n/a", 20)  # mixed campaigns cannot share a comparison key
+    groups = campaigns(merged)
+    assert list(groups) == ["legacy", "c71ba85c0851"]
+    assert summarise(groups["legacy"]) == ("identical", "identical", 12)
+    assert summarise(groups["c71ba85c0851"]) == ("identical", "identical", 8)
+    assert [(label, several) for _, label, several, _ in campaign_rows({"name": merged})] == [("legacy", True), ("c71ba85c0851", True)]
+    assert [(label, several) for _, label, several, _ in campaign_rows({"name": new})] == [("c71ba85c0851", False)]
+
+
+def test_campaign_split_never_invents_a_verdict():
+    # Two processes from different probe sources: neither group has a second identity, so both stay n/a.
+    groups = campaigns({"run1/x.a.json": new_report("a", "run1", digest="a" * 64, key="k1"), "run2/x.b.json": new_report("b", "run2", digest="b" * 64, key="k2")})
+    assert [summarise(g)[1] for g in groups.values()] == ["n/a", "n/a"]
+    # Same source, different configuration: still one campaign and still n/a, as before.
+    assert summarise(campaigns({"a": new_report("a", "run1", key="k1"), "b": new_report("b", "run2", key="k2")})["c71ba85c0851"])[1] == "n/a"
+    # Aggregates carry their members' campaign.
+    probes = {f"cublaslt_mm_m{m}_n4_k4_bf16": {"a": report(), "b": report("b")} for m in (1, 2)}
+    assert campaign_of(collapse_cublaslt(probes)["cuBLASLt mm bf16"]["a"]) == "legacy"
 
 
 def test_sweep_preserves_real_counts_and_missing_members():

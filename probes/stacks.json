@@ -127,9 +127,41 @@
           "nvidia-cublas-cu12": null,
           "nvidia-nccl-cu12": null
         }
+      },
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 1,
+        "driver": "580.126.09",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": "0.28.0",
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.16.post3",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null,
+          "nvidia-cublas-cu13": null,
+          "nvidia-nccl-cu13": "2.29.7"
+        },
+        "recorded_at": "2026-09-14",
+        "campaign_note": "probes/shape/campaigns/2026-09-14-h100.md",
+        "run_ids": [
+          "fbee4a5d-28d7-4d60-abf5-91b8613cf629",
+          "29bd8bd5-70f6-4acf-a1d6-2f20ebe0eb6f"
+        ],
+        "shape_arms": "probes/shape/results/e4/*_v2_* (env.json in each arm)",
+        "probe_source_sha256": "c71ba85c0851c29072a63c895cf98716707588fc35b3846f8a43b5c63d1e2be2",
+        "git_head": null,
+        "provenance": "run id, probe source digest, installed distributions, deterministic flags and resolved configuration recorded in each report and env.json; git_head is null because the pod copy had no .git, and the digest equals that of census commit 6478153; weight, tokenizer and cubin content hashes not captured"
       }
     ],
-    "provenance_status": "legacy partial metadata; model, tokenizer, installed source and cubin content hashes unavailable"
+    "provenance_status": "legacy partial metadata for the 6 to 7 September 2026 environments; model, tokenizer, installed source and cubin content hashes unavailable; the 14 September 2026 environment records run ids, a probe source digest and installed distributions"
   },
   {
     "directory": "NVIDIA-H100-80GB-HBM3-580.159.04-torch2.13.0+cu130",

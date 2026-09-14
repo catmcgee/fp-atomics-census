@@ -9,7 +9,7 @@ import re
 import sys
 from pathlib import Path
 
-from triage.attach_runtime import collapse_cublaslt, load_reports, summarise
+from triage.attach_runtime import campaign_rows, load_reports, summarise
 from triage.summary import load, markdown_table, summarise as inventory_summary
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,11 +29,13 @@ def render() -> dict[str, str]:
                 r"^moe_wna16_(cuda|triton)_", r"^deepgemm_bmk_bnk_mn$", r"^fi_top_p_renorm_", r"^nccl_allreduce_rank0_default$"]
     for stack, probes in sorted(load_reports(ROOT / "probes/results").items()):
         short = stack.replace("NVIDIA-", "").replace("-Blackwell-Server-Edition", "").replace("-80GB-HBM3", "")
-        for name, reports in sorted(collapse_cublaslt(probes).items()):
+        for name, campaign, several, reports in campaign_rows(probes):
             if not any(re.search(p, name) for p in patterns):
                 continue
             inside, fresh, count = summarise(reports)
-            runtime.append(f"| {short} | `{name}` | {inside} | {fresh} | {count} |")
+            # One row per campaign; the label appears only when a probe has several on the stack.
+            cell = f"`{name}` ({campaign})" if several else f"`{name}`"
+            runtime.append(f"| {short} | {cell} | {inside} | {fresh} | {count} |")
     sys.path.insert(0, str(ROOT / "probes/shape"))
     from tables import main as shape_tables
     output = io.StringIO()
