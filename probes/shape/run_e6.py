@@ -521,11 +521,16 @@ def compare(record_dir: Path, replay_dir: Path) -> int:
     forcing = forcing_consistency(replayed, read_forcing_log(replay_dir / "hook"), expect_forcing=True) if replayed else {"errors": [], "calls": 0, "forced_rows": 0, "rows_where_forced_equalled_argmax": 0}
     common = Path(os.path.commonpath([record_dir.resolve(), replay_dir.resolve()]))
     arm = record_dir.parent.name if record_dir.name == "record" else record_dir.name
+
+    def located(d: Path) -> str:
+        # Derived files must not depend on where the tree is checked out, or the isolated check in
+        # reanalyse.py --check could never match them: name the arms relative to their common parent.
+        return str(d.resolve().relative_to(common.parent))
     if boundary is not None:
         comparison = compare_boundary(recorded, int(boundary["pass"]), rebuilt=replayed) if not load_error else {"validation_errors": [], "verdict_P2_boundary": "INVALID", "rows_compared": 0, "rows_differing": 0, "first_mismatch": None, "differing_slots": []}
         errors = comparison["validation_errors"] + provenance + forcing["errors"]
         verdict = "INVALID" if errors else comparison["verdict_P2_boundary"]
-        summary = {"experiment": "E6", "mode": "boundary", "arm": arm, "recorded_arm": str(record_dir), "replay_arm": str(replay_dir),
+        summary = {"experiment": "E6", "mode": "boundary", "arm": arm, "recorded_arm": located(record_dir), "replay_arm": located(replay_dir),
                    "pass": boundary["pass"], "recorded_step": boundary.get("step"), "rows": len(boundary.get("rows", [])),
                    "prefix_tokens_total": boundary.get("prefix_tokens_total"), **{k: v for k, v in comparison.items() if k != "validation_errors"},
                    "verdict_P2_boundary": verdict, "forcing_log": {k: v for k, v in forcing.items() if k != "errors"},
@@ -544,7 +549,7 @@ def compare(record_dir: Path, replay_dir: Path) -> int:
         if replayed and not plan["errors"]:
             errors += [f"replayed: {e}" for e in replay_output_errors(replayed, outputs_b, {s: v["forced"] for s, v in plan["requests"].items()})]
         verdict = "INVALID" if errors else comparison["verdict_P2"]
-        summary = {"experiment": "E6", "mode": "replay", "arm": arm, "recorded_arm": str(record_dir), "replay_arm": str(replay_dir),
+        summary = {"experiment": "E6", "mode": "replay", "arm": arm, "recorded_arm": located(record_dir), "replay_arm": located(replay_dir),
                    **{k: v for k, v in comparison.items() if k not in ("validation_errors", "verdict_P2")},
                    "requirements_met": comparison["first_mismatch"] is None and not errors,
                    "outputs_identical": bool(outputs_a) and outputs_a == outputs_b,

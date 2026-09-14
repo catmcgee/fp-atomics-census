@@ -1,0 +1,58 @@
+{
+  "experiment": "E6",
+  "mode": "replay",
+  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0",
+  "recorded_arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/record",
+  "replay_arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/replay",
+  "passes_recorded": 37,
+  "passes_replayed": 37,
+  "first_mismatch": null,
+  "first_divergence": null,
+  "rows_compared": 512,
+  "rows_differing": 0,
+  "passes_differing": 0,
+  "hidden_identical_rows": 512,
+  "argmax_identical_rows": 512,
+  "logits_identical_rows": 512,
+  "free_running_divergence": {
+    "rows": 0,
+    "passes": 0,
+    "first": null
+  },
+  "requirements_met": true,
+  "outputs_identical": true,
+  "forcing_log": {
+    "calls": 37,
+    "forced_rows": 512,
+    "rows_where_forced_equalled_argmax": 512
+  },
+  "notes": [],
+  "verdict_P2": "IDENTICAL",
+  "validation_errors": [],
+  "claim_scope": "One recorded schedule replayed in one fresh process on the same stack with teacher forcing; identical means the recorded passes were reproduced from the record, not that every schedule or stack would be.",
+  "record_sha256": {
+    "run.json": "ae64e0eee42cb302f1d79ff00ffcd2cd73032877f572aee5e020f23e56ac138e",
+    "outputs.json": "b66862b1053d9f3839ac9ae49e37f7f43407fcba78329f5ee1e6e00354e04a79",
+    "rank0.jsonl": "0c69344b353e1476eeb37ac45bca943632c50f5620ebb0906ca02ae29a295810",
+    "forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08"
+  },
+  "replay_sha256": {
+    "run.json": "4bbdcb4cad3abf367f21552afe79aad71fe6523db0ffbd1962ccf3022da6ba07",
+    "outputs.json": "b66862b1053d9f3839ac9ae49e37f7f43407fcba78329f5ee1e6e00354e04a79",
+    "rank0.jsonl": "f176b59ffae854136553014c1c35a807e8109c1e24f08fded224a84b065ef669",
+    "forcing_rank0.jsonl": "fe44f50e43a0698cf68fa57d0a8946cdd201e708ffb6ac90a52c8f92e8a0511e"
+  },
+  "analysis_schema": 2,
+  "analyser_sha256": "6b7c8332a8edf873b34748bb69d8beabaf440867e09bdc4c576886c5d8882e0b",
+  "input_sha256": {
+    "record/hook/forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+    "record/hook/rank0.jsonl": "0c69344b353e1476eeb37ac45bca943632c50f5620ebb0906ca02ae29a295810",
+    "record/outputs.json": "b66862b1053d9f3839ac9ae49e37f7f43407fcba78329f5ee1e6e00354e04a79",
+    "record/run.json": "ae64e0eee42cb302f1d79ff00ffcd2cd73032877f572aee5e020f23e56ac138e",
+    "replay/hook/forcing_rank0.jsonl": "fe44f50e43a0698cf68fa57d0a8946cdd201e708ffb6ac90a52c8f92e8a0511e",
+    "replay/hook/rank0.jsonl": "f176b59ffae854136553014c1c35a807e8109c1e24f08fded224a84b065ef669",
+    "replay/outputs.json": "b66862b1053d9f3839ac9ae49e37f7f43407fcba78329f5ee1e6e00354e04a79",
+    "replay/run.json": "4bbdcb4cad3abf367f21552afe79aad71fe6523db0ffbd1962ccf3022da6ba07"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
+}

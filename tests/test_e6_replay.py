@@ -464,6 +464,8 @@ def test_compare_writes_summary_without_rewriting_raw_files(tmp_path):
     summary = json.loads((arm / "summary.json").read_text())
     assert summary["verdict_P2"] == "IDENTICAL" and summary["requirements_met"] is True and summary["outputs_identical"] is True
     assert summary["forcing_log"]["calls"] == 3 and summary["validation_errors"] == []
+    # Arms are named relative to their parent, never by absolute path, so reanalyse.py --check can rebuild in a copy.
+    assert (summary["recorded_arm"], summary["replay_arm"]) == ("arm/record", "arm/replay")
     assert set(summary["input_sha256"]) >= {"record/hook/rank0.jsonl", "replay/hook/forcing_rank0.jsonl", "replay/run.json"}
     assert {p: p.read_bytes() for p in arm.rglob("*") if p.is_file() and p.name != "summary.json"} == raw
     out = _tables(tmp_path / "results")

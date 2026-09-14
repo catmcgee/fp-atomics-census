@@ -26,7 +26,7 @@ def main(argv: list[str]) -> int:
             print("| Arm | Repeats | Forward passes | Distinct logged shape vectors | Slots with >1 output hash | Histories mapping to >1 hash | Conditional repeatability |")
             print("|---|---|---|---|---|---|---|")
         elif exp == "e3":
-            print("| Arm | Steps | All steps identical | Outputs identical | Differing steps | Scripted repeatability (P2 untested) |")
+            print("| Arm | Steps | All steps identical | Outputs identical | Differing steps | Scripted repeatability (not a P2 test) |")
             print("|---|---|---|---|---|---|")
         elif exp == "e4":
             print("| Arm | Execution | Repeats | Shapes equal | Target hidden identical across kinds | Target tokens identical | MoE counts changed | First divergent step | P3 |")

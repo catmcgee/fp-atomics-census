@@ -162,7 +162,7 @@ E5 compares H100 and RTX PRO 6000 free-running trajectories: hidden hashes diffe
 
 ### E3
 
-| Arm | Steps | All steps identical | Outputs identical | Differing steps | Scripted repeatability (P2 untested) |
+| Arm | Steps | All steps identical | Outputs identical | Differing steps | Scripted repeatability (not a P2 test) |
 |---|---|---|---|---|---|
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1 | 37 | True | True | [] | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1_mixed | 42 | True | True | [] | IDENTICAL |
@@ -193,7 +193,16 @@ E5 compares H100 and RTX PRO 6000 free-running trajectories: hidden hashes diffe
 | Qwen_Qwen2.5-7B-Instruct_tp2_none_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | True | True | None | None | IDENTICAL |
 | Qwen_Qwen3-8B-FP8_tp1_none_graphs1_prefix0 | legacy defaults (compile+graphs) | 12 | True | True | True | None | None | IDENTICAL |
 
+### E6
+
+| Arm | Passes | Requirements met | Rows compared | Rows differing | First divergence (pass, slot) | Passes where free running would diverge | P2 (replay) |
+|---|---|---|---|---|---|---|---|
+| Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
+| Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed | 77 | True | 555 | 0 | None | 0 | IDENTICAL |
+
 E5 Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1: NVIDIA H100 80GB HBM3 vs NVIDIA RTX PRO 6000 Blackwell Server Edition: hidden identical 0/37 steps, argmax identical 9/37: DIFFERS (GPU effect not isolated)
+
+E6 boundary Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 pass 12: 16 rows compared, 16 differing: DIFFERS (KV rebuilt by one prefill pass)
 <!-- generated:shape:end -->
 
 Legacy hidden hashes are truncated SHA-256 values; output hashes flatten sparse top-5 values without vocabulary labels. Those raw measurements cannot be upgraded retrospectively. New observations hash full SHA-256 with dtype/shape information and preserve vocabulary IDs, position boundaries and API float bits; the hook also hashes full logit rows. Neither version commits the full KV cache. Missing hashes, joins, requests, tails or mismatched shapes fail the relevant comparison instead of being accepted on a common prefix.
