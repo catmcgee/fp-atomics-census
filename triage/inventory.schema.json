@@ -405,6 +405,7 @@
         "required": [
           "stack",
           "probe",
+          "campaign",
           "in_process",
           "fresh_process",
           "relation",
@@ -418,6 +419,10 @@
           },
           "probe": {
             "type": "string"
+          },
+          "campaign": {
+            "type": "string",
+            "description": "Pairing group for the fresh-process column: the probe source digest prefix the paired reports share, or legacy for reports recorded without one."
           },
           "in_process": {
             "type": "string",
