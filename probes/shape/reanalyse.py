@@ -13,6 +13,7 @@ import run_e2
 import run_e3
 import run_e4
 import run_e5
+import run_e6
 
 HERE = Path(__file__).resolve().parent
 
@@ -20,6 +21,13 @@ HERE = Path(__file__).resolve().parent
 def rebuild(base: Path) -> int:
     errors = 0
     root = base / "results"
+    # E6: results/e6/<arm>/record plus replay*/ and boundary_*/ sibling arms; each
+    # comparison writes summary.json or boundary_<T>.json into <arm>. Schema 2
+    # records are rejected by the comparison itself and yield an INVALID summary.
+    for run in sorted((root / "e6").glob("*/record/run.json")):
+        arm = run.parent.parent
+        for replay in sorted([*arm.glob("replay*/run.json"), *arm.glob("boundary_*/run.json")]):
+            errors += run_e6.compare(run.parent, replay.parent)
     for out in sorted((root / "e2").glob("*/outputs.json")):
         repeats = len(json.loads(out.read_text()))
         errors += run_e2.analyse(out.parent, out.parent.name, repeats)
@@ -39,7 +47,7 @@ def rebuild(base: Path) -> int:
 
 
 def derived(base):
-    paths = [*base.glob("results/*/*/summary.json"), *base.glob("results/e3/*/e5_vs_*.json")]
+    paths = [*base.glob("results/*/*/summary.json"), *base.glob("results/e3/*/e5_vs_*.json"), *base.glob("results/e6/*/boundary_*.json")]
     return {str(p.relative_to(base)): p.read_bytes() for p in paths}
 
 
