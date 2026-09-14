@@ -120,9 +120,12 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
 ## Experiments
 
 E1 instrumentation, E2 bucket attribution, E3 scripted repeatability, E4
-dummy-neighbour comparisons and E5 recorded-stack comparison are specified in
+dummy-neighbour comparisons, E5 recorded-stack comparison and E6 recorded-schedule
+reconstruction are specified in
 `probes/shape/RUNBOOK.md`, with one command per experiment and a results
 directory argument. Comparisons can also be INVALID, NOT COMPARABLE or NOT TESTED. P2 is
 untested because E3 does not reconstruct a recorded schedule or teacher-force
-a continuation. E5 does not isolate GPU from driver or input divergence.
+a continuation. E6 is the P2 experiment: it records admissions and per-pass
+token ids, replays the recorded schedule in a fresh process with teacher
+forcing and compares every pass; it is unrun. E5 does not isolate GPU from driver or input divergence.
 Identical in a few repeats is evidence only for those observations.
