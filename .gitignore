@@ -7,4 +7,3 @@ repos/*
 candidates/*.raw.jsonl
 
 *.egg-info/
-.claude/
