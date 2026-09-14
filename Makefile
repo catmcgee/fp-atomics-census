@@ -1,6 +1,9 @@
 PYTHON ?= .venv/bin/python
 REPOS_DIR ?= repos
 MANIFEST ?= scan-manifest.json
+# Sorted bytewise by make, matching Python's sorted(); a shell glob follows the
+# locale and would reorder inventory.csv on macOS, making check-derived report it stale.
+INVENTORY := $(sort $(wildcard inventory/*.jsonl))
 
 .PHONY: docs check-derived reanalyse dispositions shape-tables attach-runtime summary help venv clone census census-all test validate csv
 
@@ -28,10 +31,10 @@ census-all:
 	$(PYTHON) -m scan.run --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --out candidates
 
 validate:
-	$(PYTHON) -m triage.validate --schema triage/inventory.schema.json --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --dispositions-dir triage/dispositions inventory/*.jsonl
+	$(PYTHON) -m triage.validate --schema triage/inventory.schema.json --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --dispositions-dir triage/dispositions $(INVENTORY)
 
 attach-runtime:
-	$(PYTHON) -m triage.attach_runtime inventory/*.jsonl
+	$(PYTHON) -m triage.attach_runtime $(INVENTORY)
 
 reanalyse:
 	$(PYTHON) probes/shape/reanalyse.py
@@ -40,10 +43,10 @@ shape-tables: reanalyse
 	$(PYTHON) probes/shape/tables.py probes/shape/results
 
 summary:
-	$(PYTHON) -m triage.summary inventory/*.jsonl
+	$(PYTHON) -m triage.summary $(INVENTORY)
 
 csv:
-	$(PYTHON) -m triage.to_csv inventory/*.jsonl > inventory.csv
+	$(PYTHON) -m triage.to_csv $(INVENTORY) > inventory.csv
 
 test:
 	$(PYTHON) -m pytest -q tests
@@ -52,7 +55,7 @@ dispositions:
 	$(PYTHON) -m triage.dispositions
 
 docs: reanalyse attach-runtime
-	$(PYTHON) -m triage.to_csv inventory/*.jsonl > inventory.csv
+	$(PYTHON) -m triage.to_csv $(INVENTORY) > inventory.csv
 	$(PYTHON) -m triage.render_readme
 
 check-derived:
