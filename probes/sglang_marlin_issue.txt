@@ -1,8 +1,18 @@
-Marlin atomic-add reduction is always enabled for n < 2048, k >= 2048 (dead `if not True:` guard) and coincides with differences in selected GPTQ runs, including under --enable-deterministic-inference
+Filed as https://github.com/sgl-project/sglang/issues/39455 on 2026-09-14; fix proposed in https://github.com/sgl-project/sglang/pull/39456.
 
-## Summary
+[Bug] Marlin atomicAdd K-slice reduction is always on for n < 2048, k >= 2048 (dead `if not True:` guard) and is not disabled by --enable-deterministic-inference
 
-`should_use_atomic_add_reduce` in `python/sglang/srt/layers/quantization/marlin_utils.py` contains
+## Checklist
+
+- [x] I searched related issues but found no solution. #22242 is related; PR #22616 fixed this guard but was closed without review (see below).
+- [x] The bug persists in the latest version (main at `5c2de3f35567ffceec6cea86ba18e075692e9101`, 2026-09-14).
+- [x] Issues without environment info and a minimal reproducible demo are hard to resolve and may receive no feedback.
+- [x] If this is not a bug report but a general question, please start a discussion at https://github.com/sgl-project/sglang/discussions. Otherwise, it will be closed.
+- [x] Please use English. Otherwise, it will be closed.
+
+## Describe the bug
+
+`should_use_atomic_add_reduce` in `python/sglang/srt/layers/quantization/marlin_utils.py` (main `5c2de3f35567ffceec6cea86ba18e075692e9101`, lines 441 to 463) contains
 
 ```python
     # disable atomicAdd reduce by default,
@@ -13,31 +23,135 @@ Marlin atomic-add reduction is always enabled for n < 2048, k >= 2048 (dead `if 
         return False
 ```
 
-so the intended "off by default" branch is dead and `use_atomic_add=True` is passed to the Marlin kernel for every projection with `n < 2048` and `k >= 2048` on CUDA. The kernel then reduces K-slices into the output with `atomicAdd` on half2/bf162, whose order depends on CTA scheduling. vLLM gates the same kernel behind `VLLM_MARLIN_USE_ATOMIC_ADD`, default off.
+so the intended "off by default" branch is dead and the function returns True for every projection with `n < 2048` and `k >= 2048` on CUDA (except bf16 on pre-SM90 parts). `maybe_warn_marlin_atomic_add_env` (lines 425 to 438) has the matching `if True: return` stub and still refers to `VLLM_MARLIN_USE_ATOMIC_ADD`. The result is passed as `use_atomic_add` to the kernel from `apply_gptq_marlin_linear` (line 484), `apply_awq_marlin_linear` (line 554), `marlin_utils_fp8.py` (line 74) and `marlin_utils_fp4.py` (line 103).
 
-The condition is evaluated on the fused, tensor-parallel-sharded weight, so a 7B model at TP=1 never hits it (fused qkv and gate_up have n >= 2048). It does hit for the down projection of small models and for sharded projections at TP >= 2.
+With `use_atomic_add` set, the Marlin write-out (`marlin_template.h`, `atomicAdd(&C_half2[a], sh_red_half2[a])` under `if (use_atomic_add && slice_count > 1)`) adds each K-slice's partial sum into C with half2 or bf162 atomics. The summation order follows CTA scheduling, so the output is not bitwise reproducible between runs. vLLM gates the same kernel behind `VLLM_MARLIN_USE_ATOMIC_ADD`, default off.
 
-## Reproduction (sglang 0.5.19, H100 SXM, driver 580.126, torch 2.13.0+cu130)
+The condition is evaluated on the fused, tensor-parallel-sharded weight (`n = output_size_per_partition`, `k = input_size_per_partition`). No projection of Qwen2.5-7B meets it at TP=1 or TP=2. The down projection of Qwen2.5-1.5B meets it at every tensor-parallel size the model admits (TP=1, 2 and 4: n=1536 with k=8960, 4480 and 2240), and so do narrow column-parallel shards such as Qwen2.5-7B `qkv_proj` at TP=4 (n=1152, k=3584).
 
-Greedy decoding, 16 fixed prompts, 32 new tokens, radix cache disabled, top-5 logprobs compared bit for bit across 6 comparisons against a baseline in each of 2 fresh processes (14 total evaluations). Legacy hashes flatten top-5 values without vocabulary labels; sampled token IDs are retained. No AWQ model was measured here.
+`--enable-deterministic-inference` does not change this. The flag is mirrored into `SGLANG_ENABLE_DETERMINISTIC_INFERENCE` by `arg_groups/serving_hook.py`, but nothing on the Marlin path reads it.
 
-| Model | Result |
-|---|---|
-| Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4, TP=1 | identical, 12/12 (no projection meets the condition) |
-| Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4, TP=1 (down_proj n=1536, k=8960) | differs in 12/12 repeats; 30 to 60 of 512 sampled tokens change; first-run hashes differ between processes |
-| Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4, TP=2 (o_proj shard n=1792, k=3584) | differs in 3/12 repeats |
-| Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 with `--enable-deterministic-inference` | still differs in 12/12 repeats |
+PR #22616 by @ianliuy (opened 12 April 2026) already contained the fix for this guard (`SGLANG_MARLIN_USE_ATOMIC_ADD`, default off) together with 8-bit GPTQ test coverage. It received no maintainer review (the only review activity is from the gemini-code-assist bot) and was closed by the idle-PR bot on 28 August 2026 because the author had six PRs open with none updated in seven days, over the soft cap of five for idle PRs. A fresh PR that re-lands the guard fix follows this issue.
 
-Kernel-level control (vLLM's `ops.marlin_gemm` on random 4-bit weights, m=16, n=512, k=3584, and three other shapes, fp16 and bf16, six comparisons plus a baseline per process): `use_atomic_add=False` is bitwise identical every time; `use_atomic_add=True` differs every time, with or without `use_fp32_reduce=True` (the pair `apply_gptq_marlin_linear` passes).
+## Reproduction
+
+Stack: sglang 0.5.19 (commit `b41552334d46`; the guard is byte-for-byte unchanged on main), NVIDIA H100 80GB HBM3 (SM90), driver 580.126.09, torch 2.13.0+cu130, CUDA 13.0, flashinfer-python 0.6.18, triton 3.7.1, Python 3.12.3.
+
+Method: `sgl.Engine(model_path=..., tp_size=..., random_seed=0, disable_radix_cache=True)`, greedy decoding (`temperature=0`, `max_new_tokens=32`) over a fixed batch of 16 prompts (4 distinct prompts, each repeated 4 times), `return_logprob=True, top_logprobs_num=5`. The 512 sampled token IDs and the 2560 top-5 logprob values are compared bit for bit against a baseline over six repeats, in each of two fresh processes (14 evaluations and 12 comparisons per configuration). Top-5 values are compared as a flat vector without vocabulary labels; token IDs are retained. Script: `probes/probe_engine_logits.py` in https://github.com/catmcgee/fp-atomics-census; reports under `probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/sglang_qwen2.5_*`.
+
+```
+python probes/probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4 --repeats 6
+python probes/probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --repeats 6
+python probes/probe_engine_logits.py --engine sglang --model Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4 --repeats 6 --extra-arg enable-deterministic-inference=true
+```
+
+| Configuration | Meets n < 2048, k >= 2048? | Result over 12 comparisons |
+|---|---|---|
+| Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4, TP=1 | no projection | bitwise identical in 12/12; same hash in both processes |
+| Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4, TP=1 | down_proj, n=1536, k=8960 | differs in 12/12; 30 or 60 of the 512 sampled tokens change in every comparison; first-run hashes differ between the two processes |
+| Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4, TP=1, `--enable-deterministic-inference` | down_proj, n=1536, k=8960 | differs in 12/12 (top-5 values in all 12, sampled tokens in 8 of 12) |
+
+Kernel-level control (vLLM 0.28.0 `ops.marlin_gemm`, the same Marlin kernel family, random 4-bit weights, group size 128, shapes (m, n, k) = (16, 512, 3584), (16, 1024, 8192), (64, 512, 8192) and (1, 512, 8192), fp16 and bf16, five comparisons plus a baseline in each of two processes, 12 evaluations per configuration): `use_atomic_add=False` with `use_fp32_reduce=True` is bitwise identical in every comparison for all eight shape and dtype combinations, with the same hash in both processes. `use_atomic_add=True` differs in every comparison, with and without `use_fp32_reduce=True` (the pair SGLang's `apply_gptq_marlin_linear` passes), and its hashes differ between processes.
+
+Engine-level control in vLLM (same 1.5B model and GPU, vLLM 0.28.0, `max_num_seqs=1`, otherwise the same method): with `VLLM_MARLIN_USE_ATOMIC_ADD` unset the run is bitwise identical in 12/12 with the same hash in both processes. With `VLLM_MARLIN_USE_ATOMIC_ADD=1` it differs in 12/12, and 30 to 90 of the 512 sampled tokens change in 9 of the 12 comparisons.
 
 ## Limits of the evidence
 
-The source guard is demonstrably dead. The direct operator experiment uses vLLM's Marlin implementation and different inputs; it is not a same-engine SGLang ablation. End-to-end differences may include scheduling effects. To isolate the contribution, repeat SGLang with the same installed build, model/weights, prompt IDs and forced schedule, changing only the atomic guard and recording actual dispatch. This control remains unrun. The numerical results above are evidence on the named stack, not proof for every shape or build.
+The source guard is demonstrably dead. The direct operator experiment uses vLLM's build of the Marlin kernel and random inputs; it is not a same-engine SGLang ablation. The SGLang end-to-end differences may include scheduling effects: in vLLM with atomic add off, the batched run (default `max_num_seqs`) still differed in 2 of 12 comparisons in top-5 values only, which is why the vLLM control above pins `max_num_seqs=1`. A Qwen2.5-7B TP=2 run also differed in 3 of 12 comparisons (top-5 values only, no token changes); since no 7B projection meets the shape condition at TP=2 (the `o_proj` shard is k=1792, n=3584), that result is not attributed to this guard. To isolate the contribution, SGLang would need to be repeated with the same build, weights, prompts and forced schedule, changing only the atomic guard and recording actual dispatch. That control has not been run. The numbers above are evidence on the named stack, not proof for every shape or build.
 
-## Expected
+## Expected behaviour
 
-Atomic-add reduction off unless explicitly enabled, matching the comment and vLLM's behaviour; at minimum, forced off when `--enable-deterministic-inference` is set.
+Atomic-add reduction off unless explicitly enabled, matching the comment in the code and vLLM's behaviour, and forced off when `--enable-deterministic-inference` is set.
 
 ## Suggested fix
 
-Replace `if not True:` with a real switch, e.g. an `SGLANG_MARLIN_USE_ATOMIC_ADD` env (default false), and have `enable_deterministic_inference` force it false.
+Replace the `if True: return` stub and the `if not True:` guard with a real switch: register `SGLANG_MARLIN_USE_ATOMIC_ADD = EnvBool(False)` in `python/sglang/srt/environ.py` and read it through `envs`, return False from `should_use_atomic_add_reduce` when `SGLANG_ENABLE_DETERMINISTIC_INFERENCE` is set (the serving hook sets it from `--enable-deterministic-inference`), and update the stale vLLM references in the comments and log message.
+
+## Environment
+
+The measurements were made on 2026-09-07. The `python3 -m sglang.check_env` output below was captured on 2026-09-14 on an H100 pod with the same driver, torch, sglang, sgl-kernel, FlashInfer and Triton versions as the measured stack (a fresh install from the same pins). GPU and driver used for the measurements: NVIDIA H100 80GB HBM3 (SM90, 132 SMs), driver 580.126.09; the reports also record the pinned source commit `b41552334d46`. The dead guard is unchanged on main at `5c2de3f35567ffceec6cea86ba18e075692e9101` (2026-09-14).
+
+<details>
+<summary>The output of <code>python3 -m sglang.check_env</code></summary>
+
+```text
+Python: 3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]
+CUDA available: True
+GPU 0: NVIDIA H100 80GB HBM3
+GPU 0 Compute Capability: 9.0
+CUDA_HOME: /usr/local/cuda
+NVCC: Cuda compilation tools, release 12.8, V12.8.93
+CUDA Driver Version: 580.126.09
+PyTorch: 2.13.0+cu130
+sglang: 0.5.19
+sglang-kernel: 0.4.6.post1
+flashinfer_python: 0.6.18
+flashinfer_cubin: Module Not Found
+flashinfer_jit_cache: Module Not Found
+triton: 3.7.1
+transformers: 5.12.1
+torchao: Module Not Found
+numpy: 2.3.5
+aiohttp: 3.14.3
+fastapi: 0.141.1
+huggingface_hub: 1.31.0
+interegular: 0.3.3
+modelscope: 1.40.0
+orjson: 3.12.0
+outlines: 0.1.11
+packaging: 26.3
+psutil: 7.2.2
+pydantic: 2.13.5
+python-multipart: 0.0.32
+pyzmq: 27.2.0
+uvicorn: 0.53.0
+uvloop: 0.22.1
+vllm: Module Not Found
+xgrammar: 0.2.1
+openai: 2.6.1
+tiktoken: 0.14.0
+anthropic: 1.5.0
+litellm: Module Not Found
+torchcodec: 0.15.0
+NVIDIA Topology: 
+	GPU0	NIC0	NIC1	NIC2	NIC3	NIC4	NIC5	NIC6	NIC7	NIC8	NIC9	CPU Affinity	NUMA Affinity	GPU NUMA ID
+GPU0	 X 	SYS	SYS	SYS	SYS	NODE	NODE	NODE	PIX	SYS	SYS	52-103,156-207	1		N/A
+NIC0	SYS	 X 	NODE	NODE	NODE	SYS	SYS	SYS	SYS	NODE	NODE				
+NIC1	SYS	NODE	 X 	NODE	NODE	SYS	SYS	SYS	SYS	NODE	NODE				
+NIC2	SYS	NODE	NODE	 X 	NODE	SYS	SYS	SYS	SYS	NODE	NODE				
+NIC3	SYS	NODE	NODE	NODE	 X 	SYS	SYS	SYS	SYS	NODE	NODE				
+NIC4	NODE	SYS	SYS	SYS	SYS	 X 	NODE	NODE	NODE	SYS	SYS				
+NIC5	NODE	SYS	SYS	SYS	SYS	NODE	 X 	NODE	NODE	SYS	SYS				
+NIC6	NODE	SYS	SYS	SYS	SYS	NODE	NODE	 X 	NODE	SYS	SYS				
+NIC7	PIX	SYS	SYS	SYS	SYS	NODE	NODE	NODE	 X 	SYS	SYS				
+NIC8	SYS	NODE	NODE	NODE	NODE	SYS	SYS	SYS	SYS	 X 	PIX				
+NIC9	SYS	NODE	NODE	NODE	NODE	SYS	SYS	SYS	SYS	PIX	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: ibp25s0
+  NIC1: ibp41s0
+  NIC2: ibp59s0
+  NIC3: ibp92s0
+  NIC4: ibp155s0
+  NIC5: ibp170s0
+  NIC6: ibp187s0
+  NIC7: ibp218s0
+  NIC8: rocep83s0f0
+  NIC9: rocep83s0f1
+
+
+ulimit soft: 1024
+```
+
+</details>
