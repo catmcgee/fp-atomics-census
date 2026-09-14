@@ -81,7 +81,7 @@
   "steps_compared": 32,
   "runs_missing_final_record": 0,
   "analysis_schema": 2,
-  "analyser_sha256": "4d40ef34ffee9c674fbd64ab0dccab21bb415d44b7b32de6278f2c31e0aee84a",
+  "analyser_sha256": "fbb4f7644629c45ccbf7f1ce6ab13803788af7e385fdbcd0d391b085dc914c07",
   "input_sha256": {
     "hook/rank0.jsonl": "22343be8d88840c884a0e9e3189e0804de9af16b3d83b8b848749acba7a39353",
     "runs.json": "6c2e2995f378d33a4f683a5bab09e35261a2f16ac1523db3a357dcca6f013d8e"
