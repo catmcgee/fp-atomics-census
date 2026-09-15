@@ -333,7 +333,7 @@
   "steps_compared": 32,
   "runs_missing_final_record": 0,
   "analysis_schema": 2,
-  "analyser_sha256": "6b7c8332a8edf873b34748bb69d8beabaf440867e09bdc4c576886c5d8882e0b",
+  "analyser_sha256": "569e6d1275c392b2d5d441ac3dd83953fb4e3e88e74e6f9d74e528dade611e17",
   "input_sha256": {
     "hook/rank0.jsonl": "5972463b349c6cca5fbeedeb8f0c47a5f1a95cba78bc4f093ff7ec88b3652cdc",
     "runs.json": "feacec43fbe01e4e91562d0c3d1fd8dec8f86b4b09bcb6d5d5d1cfcff88a5a76"

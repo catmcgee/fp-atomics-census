@@ -469,7 +469,20 @@ def test_compare_writes_summary_without_rewriting_raw_files(tmp_path):
     assert set(summary["input_sha256"]) >= {"record/hook/rank0.jsonl", "replay/hook/forcing_rank0.jsonl", "replay/run.json"}
     assert {p: p.read_bytes() for p in arm.rglob("*") if p.is_file() and p.name != "summary.json"} == raw
     out = _tables(tmp_path / "results")
-    assert "### E6" in out and "| arm | 3 | True | 6 | 0 | None | 0 | IDENTICAL |" in out
+    assert "### E6" in out and "| arm | replay | 3 | True | 6 | 0 | None | 0 | IDENTICAL |" in out
+
+
+def test_e6_table_names_each_replay_directory_and_its_gpu(tmp_path):
+    # Two replays of one record share the record's arm name; the replay column keeps their rows apart.
+    arm = tmp_path / "results/e6/arm"
+    write_arm(arm / "record", make_record("a"), outputs("a"), RUN_META)
+    for name, gpu in (("replay", "GPU A"), ("replay_other", "GPU B")):
+        rep = make_record("b")
+        write_arm(arm / name, rep, outputs("b"), replay_meta(arm / "record"), forcing_log_for(rep))
+        (arm / name / "env.json").write_text(json.dumps({"gpu": gpu}))
+        assert run_e6.compare(arm / "record", arm / name) == 0
+    out = _tables(tmp_path / "results")
+    assert "| arm | replay (GPU A) | 3 | True |" in out and "| arm | replay_other (GPU B) | 3 | True |" in out
 
 
 def test_compare_is_invalid_without_forcing_log_or_with_schema2_record(tmp_path):

@@ -32,8 +32,8 @@ def main(argv: list[str]) -> int:
             print("| Arm | Execution | Repeats | Shapes equal | Target hidden identical across kinds | Target tokens identical | MoE counts changed | First divergent step | P3 |")
             print("|---|---|---|---|---|---|---|---|---|")
         else:
-            print("| Arm | Passes | Requirements met | Rows compared | Rows differing | First divergence (pass, slot) | Passes where free running would diverge | P2 (replay) |")
-            print("|---|---|---|---|---|---|---|---|")
+            print("| Arm | Replay (GPU) | Passes | Requirements met | Rows compared | Rows differing | First divergence (pass, slot) | Passes where free running would diverge | P2 (replay) |")
+            print("|---|---|---|---|---|---|---|---|---|")
         for s in sorted(d.glob("*/summary*.json") if exp == "e6" else d.glob("*/summary.json")):
             j = json.loads(s.read_text())
             if exp == "e2":
@@ -48,7 +48,11 @@ def main(argv: list[str]) -> int:
                 first = j.get("first_divergence") or j.get("first_mismatch")
                 where = f"{first['pass']}, {first.get('slot')}" if first else "None"
                 free = j.get("free_running_divergence") or {}
-                print(f"| {j['arm']} | {j['passes_recorded']} | {j['requirements_met']} | {j['rows_compared']} | {j['rows_differing']} | {where} | {free.get('passes')} | {j['verdict_P2']} |")
+                replay = Path(j["replay_arm"]).name
+                env = s.parent / replay / "env.json"
+                gpu = json.loads(env.read_text()).get("gpu") if env.exists() else None
+                label = f"{replay} ({gpu})" if gpu else replay
+                print(f"| {j['arm']} | {label} | {j['passes_recorded']} | {j['requirements_met']} | {j['rows_compared']} | {j['rows_differing']} | {where} | {free.get('passes')} | {j['verdict_P2']} |")
     for f in sorted(root.glob("e3/*/e5_vs_*.json")):
         j = json.loads(f.read_text())
         print(f"\nE5 {f.parent.name}: {j['a']['gpu']} vs {j['b']['gpu']}: hidden identical {j['hidden_identical_steps']}/{j['steps']} steps, argmax identical {j['argmax_identical_steps']}/{j['steps']}: {j['verdict_recorded_stacks']} (GPU effect not isolated)")
