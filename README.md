@@ -104,6 +104,7 @@ Reports in [probes/results](probes/results/) cover H100, B200, RTX PRO 6000 and 
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_deterministic_mode_x6` | DIFFERS | DIFFERS | 14 |
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_guard_env_on_x6` | DIFFERS | DIFFERS | 14 |
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_guard_off_det_x6` | DIFFERS | identical | 14 |
+| H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6` | identical | identical | 14 |
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_guard_off_x6` | DIFFERS | identical | 14 |
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_stock_x6` | DIFFERS | DIFFERS | 14 |
 | H100-580.126.09-torch2.13.0+cu130 | `sglang_qwen2.5_1.5b_gptq_marlin_x6` | DIFFERS | DIFFERS | 14 |

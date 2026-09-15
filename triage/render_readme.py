@@ -25,7 +25,7 @@ def render() -> dict[str, str]:
         coverage.append(f"| {path.stem} | {len(rows)} | {linked} | {len(rows) - linked} |")
     runtime = ["| Stack | Probe | In process | Fresh process | Evaluations |", "|---|---|---|---|---|"]
     patterns = [r"^cuBLASLt", r"^flashinfer_allreduce_fusion_rank0$", r"^sglang_qwen3_8b_bf16(_trtllm_mha)?_x6$",
-                r"^fi_b12x_moe_nvfp4_tokens16_topk2$", r"^sglang_qwen2.5_1.5b_gptq_marlin(_deterministic_mode|_stock|_guard_off|_guard_env_on|_guard_off_det)?_x6$",
+                r"^fi_b12x_moe_nvfp4_tokens16_topk2$", r"^sglang_qwen2.5_1.5b_gptq_marlin(_deterministic_mode|_stock|_guard_off|_guard_env_on|_guard_off_det|_guard_off_fixed_composition)?_x6$",
                 r"^moe_wna16_(cuda|triton)_", r"^deepgemm_bmk_bnk_mn$", r"^fi_top_p_renorm_", r"^nccl_allreduce_rank0_default$",
                 r"^fi_b12x_moe_nvfp4_tokens16_topk1$", r"^fi_b12x_moe_nvfp4_tokens512_topk[24]$", r"^nccl_allreduce_rank0_(default|Tree)_cancellation$"]
     for stack, probes in sorted(load_reports(ROOT / "probes/results").items()):

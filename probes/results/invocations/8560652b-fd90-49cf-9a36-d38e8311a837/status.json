@@ -1,0 +1,24 @@
+{
+  "invocation_id": "8560652b-fd90-49cf-9a36-d38e8311a837",
+  "started_at_utc": "2026-09-15T03:01:02.326678+00:00",
+  "argv": [
+    "probe_engine_logits.py",
+    "--engine",
+    "sglang",
+    "--model",
+    "Qwen/Qwen2.5-1.5B-Instruct-GPTQ-Int4",
+    "--revision",
+    "4f5a0e31008e2966e8f787964bcc4e1105e03dc3",
+    "--repeats",
+    "6",
+    "--extra-arg",
+    "max_running_requests=1",
+    "--name",
+    "sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6"
+  ],
+  "returncode": 0,
+  "status": "COMPLETED",
+  "measurement_statuses": [
+    "bitwise-identical"
+  ]
+}

@@ -159,9 +159,44 @@
         "probe_source_sha256": "c71ba85c0851c29072a63c895cf98716707588fc35b3846f8a43b5c63d1e2be2",
         "git_head": null,
         "provenance": "run id, probe source digest, installed distributions, deterministic flags and resolved configuration recorded in each report and env.json; git_head is null because the pod copy had no .git, and the digest equals that of census commit 6478153; weight, tokenizer and cubin content hashes not captured"
+      },
+      {
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "gpu_count": 1,
+        "driver": "580.126.09",
+        "python": "3.12.3",
+        "torch": "2.13.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": "0.5.19",
+          "sgl-kernel": null,
+          "flashinfer-python": "0.6.18",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.7.1",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null,
+          "nvidia-cublas-cu13": null,
+          "nvidia-nccl-cu13": "2.29.7"
+        },
+        "recorded_at": "2026-09-15",
+        "campaign_note": "probes/shape/campaigns/2026-09-15-h100-e6-matrix2.md",
+        "run_ids": [
+          "8560652b-fd90-49cf-9a36-d38e8311a837",
+          "654429c2-f01a-48a4-b5d1-4fea0d847bd2"
+        ],
+        "other_packages": {
+          "sglang-kernel": "0.4.6.post1"
+        },
+        "probe_source_sha256": "e9b32f5ecfbc208bac3956da2618cdc968c8a37ed2ecfaf7b9672d0d51fb6588",
+        "git_head": null,
+        "template_image": "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404 (torch replaced in a virtual environment)",
+        "provenance": "run id, probe source digest, installed distributions and resolved configuration (including max_running_requests=1) recorded in each report; git_head is null because the pod copy had no .git, and the digest equals that of census commit 50aae53; the installed marlin_utils.py carried the ablation's wheel edit, attested by the digests in the campaign directory, not by the reports; SGLang kernels were JIT-compiled on the pod at first use; weight, tokenizer and cubin content hashes not captured"
       }
     ],
-    "provenance_status": "legacy partial metadata for the 6 to 7 September 2026 environments; model, tokenizer, installed source and cubin content hashes unavailable; the 14 September 2026 environment records run ids, a probe source digest and installed distributions"
+    "provenance_status": "legacy partial metadata for the 6 to 7 September 2026 environments; model, tokenizer, installed source and cubin content hashes unavailable; the 14 and 15 September 2026 environments record run ids, a probe source digest and installed distributions"
   },
   {
     "directory": "NVIDIA-H100-80GB-HBM3-580.159.04-torch2.13.0+cu130",
