@@ -94,6 +94,11 @@ def moe(fused: bool, topk_: int, autotune_first: bool = False) -> bool:
 def b12x_moe() -> bool:
     """FlashInfer's SM120/SM121 CuTe DSL fused MoE (flashinfer-0006 to 0008, 0010).
 
+    The b12x family also holds flashinfer-0101 to 0104, none of which this probe
+    reaches: the gated dynamic kernel needs an intermediate size of at most 512 and
+    this shape uses 1024, and the W4A16 TC-decode fused top-k sum is not on the
+    NVFP4 path called here.
+
     Weight preparation follows benchmarks/routines/moe.py (backend "b12x"):
     NVFP4 weights with swizzled block scales converted to the MMA layout, bf16
     activations, external top-k routing. Backend selection is not instrumented; top-k 1, 2, 4 and 8 vary the number of reduction-adds
