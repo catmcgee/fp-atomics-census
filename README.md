@@ -206,8 +206,11 @@ E5 compares H100 and RTX PRO 6000 free-running trajectories: hidden hashes diffe
 
 | Arm | Passes | Requirements met | Rows compared | Rows differing | First divergence (pass, slot) | Passes where free running would diverge | P2 (replay) |
 |---|---|---|---|---|---|---|---|
+| NousResearch_Meta-Llama-3.1-8B-Instruct_tp1_none_compile_v2_graphs1_prefix0 | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
+| Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0 | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed | 77 | True | 555 | 0 | None | 0 | IDENTICAL |
+| Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
 
 E5 Qwen_Qwen2.5-7B-Instruct_tp1_none_graphs1_prefix1: NVIDIA H100 80GB HBM3 vs NVIDIA RTX PRO 6000 Blackwell Server Edition: hidden identical 0/37 steps, argmax identical 9/37: DIFFERS (GPU effect not isolated)
 
