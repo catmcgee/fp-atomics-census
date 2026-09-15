@@ -105,8 +105,9 @@
     {
       "name": "DeepEP",
       "url": "https://github.com/deepseek-ai/DeepEP.git",
-      "sha": "099d5f2bad488b9c534ea785062b12f2e91d1d41",
-      "commit_date": "2026-07-03T02:53:50Z",
+      "sha": "01dc3aaac82068020353dce2c302e38153c0bfaa",
+      "commit_date": "2026-08-04T06:06:16Z",
+      "pin_rule": "main before 2026-09-15T00:00:00Z",
       "scan_paths": [
         "csrc",
         "deep_ep"

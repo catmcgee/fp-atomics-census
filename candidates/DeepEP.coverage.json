@@ -1,6 +1,6 @@
 {
   "engine": "DeepEP",
-  "sha": "099d5f2bad488b9c534ea785062b12f2e91d1d41",
+  "sha": "01dc3aaac82068020353dce2c302e38153c0bfaa",
   "scan_paths": [
     "csrc",
     "deep_ep"
@@ -55,8 +55,8 @@
       "skipped_extensions": {}
     },
     "csrc/jit": {
-      "files_walked": 8,
-      "files_scanned": 8,
+      "files_walked": 9,
+      "files_scanned": 9,
       "files_with_candidates": 1,
       "candidates": 1,
       "in_scope": true,
@@ -150,8 +150,8 @@
     }
   },
   "totals": {
-    "files_walked": 105,
-    "files_scanned": 84,
+    "files_walked": 106,
+    "files_scanned": 85,
     "candidates": 88,
     "candidates_in_scope": 79,
     "candidates_excluded": 11,
