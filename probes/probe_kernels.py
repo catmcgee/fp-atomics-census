@@ -7,7 +7,8 @@ vllm_moe_wna16: instructions for the engine-level probe of vllm._custom_ops.moe_
 vllm_moe_wna16_kernel: the same kernel called directly through fused_experts with an int4 W4A16 config (vllm-0014).
 vllm_lora_shrink: vllm.lora.ops.triton_ops lora_shrink with the default config (vllm-0018).
 sglang_marlin: sgl_kernel gptq_marlin_gemm with n < 2048, k >= 2048 (sglang-0008).
-sglang_fp8_blockwise: sgl_kernel.fp8_blockwise_scaled_mm with k > 3n (sglang-0011).
+sglang_fp8_blockwise: sgl_kernel.fp8_blockwise_scaled_mm with k > 3n; its inventory row
+    was dropped at v0.5.19, where the SM90/SM100 CUTLASS kernels no longer exist.
 sglang_lora_shrink: the trtllm_lora_temp sgemm_lora_a split-K path (sglang-0021).
 deepgemm_bmk_bnk_mn: deep_gemm.einsum bmk,bnk->mn (DeepGEMM-0001/0002).
 Each builds inputs of the shape that reaches the site, runs twice and compares bits.
@@ -27,11 +28,11 @@ def sglang_fp8_blockwise() -> bool:
         from sgl_kernel import fp8_blockwise_scaled_mm
     except ImportError:
         # sglang 0.5.19 moved the op into a JIT module and builds it for SM120 only; the
-        # SM90 stream-K dispatcher of the pinned sha (sglang-0011) is not in the release wheel.
+        # SM90 stream-K dispatcher at the former census pin is absent at the v0.5.19 pin.
         from sglang.kernels.ops.gemm.fp8_blockwise_gemm import fp8_blockwise_scaled_mm
         print("note: using sglang.kernels.ops.gemm.fp8_blockwise_gemm; at 0.5.19 this kernel is documented as SM120-only")
 
-    m, n, k = 512, 1024, 8192  # k > 3n selects the stream-K kernel
+    m, n, k = 512, 1024, 8192  # k > 3n selected stream-K in the former SM90 dispatcher
     a = (torch.randn(m, k, device="cuda") * 0.1).to(torch.float8_e4m3fn)
     b = (torch.randn(n, k, device="cuda") * 0.1).to(torch.float8_e4m3fn).t()
     sa = torch.rand(m, k // 128, device="cuda", dtype=torch.float32)

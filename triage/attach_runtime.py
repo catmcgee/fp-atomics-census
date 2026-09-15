@@ -93,14 +93,17 @@ ROWS: list[tuple[str, list[str], str]] = [
     # on the recorded vLLM version if such a report is produced.
     (r"^vllm_qwen1.5_moe_bf16_flashinfer_cutlass_x6$", ["flashinfer-0001"], "bf16 MoE through vLLM's flashinfer_cutlass MoE backend, 6 repeats"),
     (r"^sglang_qwen3_8b_bf16_trtllm_mha_x6$", ["sglang-0267"], "SGLang with the trtllm_mha attention backend, 6 repeats"),
-    (r"^sglang_qwen3_8b_fp8_default_x6$", ["sglang-0011"], "FP8 block-quantised model on the auto backend for this GPU; the SM90 stream-K kernel is not involved"),
+    # The sglang_qwen3_8b_fp8_default_x6 mapping was withdrawn at the v0.5.19 pin:
+    # its row was dropped with the deleted SM90/SM100 CUTLASS FP8 blockwise kernels.
+    # The SM120 replacement never sets scheduler.reduction_mode. The report remains
+    # a null control, with no current inventory row to attach to.
     (r"^vllm_qwen1.5_moe_bf16_x6$", ["vllm-0016"], "bf16 MoE through vLLM's default MoE backend on this GPU, stock scheduler"),
     (r"^vllm_qwen1.5_moe_bf16_one_seq_x6$", ["vllm-0016"], "bf16 MoE through vLLM's default MoE backend, one sequence per batch"),
     (r"^vllm_zephyr_lora_split_k_x6$", ["vllm-0018"], "LoRA adapter with the default split-K shrink, 6 repeats"),
     (r"^moe_wna16_cuda_", ["vllm-0014"], "moe_wna16 CUDA kernel through fused_experts on random 4-bit weights: 16 tokens, top-k 2, 8 experts (M * top_k / E = 4 <= 6 selects it). Run on the vLLM 0.28.0 wheel, not the pinned sha; the kernel file and should_moe_wna16_use_cuda are byte-identical at both. At the pinned release no quantisation method reaches the kernel, because the WNA16 backend oracle routes them to the Triton kernel, so this direct call is the only route."),
     (r"^moe_wna16_triton_", ["vllm-0014"], "the Triton kernel through the same fused_experts call at 64 tokens, top-k 2, 8 experts (ratio 16 > 6), as a control"),
     (r"^fi_b12x_moe_nvfp4_tokens\d+_topk\d+$", ["flashinfer-0006", "flashinfer-0007", "flashinfer-0008", "flashinfer-0010"], "SM120 fused MoE API probe; backend identity and cause are unisolated. In the executed wheel (flashinfer 0.6.18.post1) the static kernel (moe_static_kernel.py:2164) and the dynamic kernel (_moe_dynamic/generic.py:2552) scatter-add one rounded bf16x2 partial per 128-wide intermediate slice with a red.global.add.noftz.v4.bf16x2 reduction of eight bf16 lanes (helper at moe_w4a16_fp4_helpers.py:2096-2127), so a top-k 1 element still receives eight reduction adds; the pinned sha is that release, so those two citations are the pinned source. In the FlashInfer main build at 5ed46a9 (recorded as flashinfer-python 0.7.0) the static kernel, selected up to 1024 routed rows for NVFP4, stores one route-major contribution per route and sums them in a separate fixed-order finalise, and the dynamic kernel source is unchanged from 0.6.18.post1. Legacy reports do not record ULP distances; the 14 September reports record ULP buckets whose max_ulp of about 30,000 marks a sign change, not an error magnitude. The unquantised reference is a diagnostic, not a correctness bound."),
-    (r"^sglang_qwen3_8b_fp8_blockwise_default$", ["sglang-0011"], "FP8 block-quantised model; the release wheel routes Hopper to DeepGEMM, and its CUTLASS FP8 GEMM is SM120-only, so the stream-K kernel is not reached"),
+    # The sglang_qwen3_8b_fp8_blockwise_default mapping was withdrawn for the same reason.
 ]
 
 

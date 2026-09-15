@@ -1,9 +1,18 @@
 import json
 from pathlib import Path
 
-from triage.attach_runtime import campaign_of, campaign_rows, campaigns, collapse_cublaslt, load_reports, related_rows, summarise
+from triage.attach_runtime import ROWS, campaign_of, campaign_rows, campaigns, collapse_cublaslt, load_reports, related_rows, summarise
 from triage.summary import summarise as inventory_summary
 from triage.validate import candidate_matches, check_ref
+
+
+def test_runtime_mapping_targets_exist_in_current_inventory():
+    # A re-pin may drop a source row while leaving its probe mapping behind.
+    inventory = Path(__file__).resolve().parents[1] / "inventory"
+    ids = {json.loads(line)["id"] for path in inventory.glob("*.jsonl")
+           for line in path.read_text().splitlines() if line.strip()}
+    mapped = {rid for _, targets, _ in ROWS for rid in targets}
+    assert not mapped - ids, f"runtime mappings target removed rows: {sorted(mapped - ids)}"
 
 
 def report(tag="a", status="bitwise-identical", first="abc", **kw):

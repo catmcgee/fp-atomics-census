@@ -1064,9 +1064,11 @@ LIMITATIONS = [
     "unchanged line sends the linked row to review.",
     "The plan keeps each manifest's scan_paths and exclude unless `--scope` is given; scope drift is reported, not decided.",
     "Outside the inventory the tool changes nothing: the README pinning sentence, docs/SHAPE_HYPOTHESIS.md (which names the "
-    "vLLM, FlashInfer and SGLang pins and cites line numbers at them) and the note in triage/attach_runtime.py that the "
+    "vLLM, FlashInfer and SGLang pins and cites line numbers at them), the source references in "
+    "probes/shape/shape_hook_pkg/shape_hook/__init__.py and the note in triage/attach_runtime.py that the "
     "moe_wna16 kernel is byte-identical between the vLLM 0.28.0 wheel and the pinned sha need updating by hand when those "
-    "repositories move. Runtime evidence is attached by row id and moves with its row.",
+    "repositories move. Runtime evidence is attached by row id and moves with a retained row; when a row is dropped, "
+    "withdraw or remap its triage/attach_runtime.py rules and update probe descriptions and other references to it.",
 ]
 
 

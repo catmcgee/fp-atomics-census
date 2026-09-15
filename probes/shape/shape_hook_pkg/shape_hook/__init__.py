@@ -4,8 +4,8 @@ Loaded by vLLM in the engine core and in every worker process through the
 ``vllm.general_plugins`` entry point (vllm/plugins/__init__.py,
 vllm/v1/worker/worker_base.py:245-247), so it works with tensor
 parallelism. It stays outside the engine source: it monkeypatches four
-call sites of vLLM 0.28.0 (pinned census sha 5769a7382cb1 for line
-references):
+call sites of vLLM 0.28.0 (line references are to the former census pin,
+5769a7382cb1):
 
 * ``GPUModelRunner.execute_model`` (vllm/v1/worker/gpu_model_runner.py:4069):
   reads the scheduler output and the input batch for the shape vector.
@@ -79,9 +79,9 @@ Empty scheduler calls (``total_num_scheduled_tokens == 0``) keep their
 and ``preempted``, because a request that finishes in the last forward pass
 is reported in the following scheduler call.
 
-vLLM 0.29.0 (release tag v0.29.0, 9 September 2026; line numbers are from
-that release source tree, not from a census pin, which is still at
-5769a7382cb1). Every call site and field read above keeps its name,
+vLLM 0.29.0 (release tag v0.29.0 points to the commit of 8 September 2026;
+line numbers are from the current census pin, 98dff2a81d74, while the
+references above are to 5769a7382cb1). Every call site and field read above keeps its name,
 signature and meaning; only line numbers move. V1 runner: ``execute_model``
 at gpu_model_runner.py:4249, ``sample_tokens`` at :4628, the
 ``compute_logits`` call at :4560, ``self.requests`` at :725,
