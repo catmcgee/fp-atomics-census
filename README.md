@@ -211,6 +211,7 @@ E5 compares H100 and RTX PRO 6000 free-running trajectories: hidden hashes diffe
 | NousResearch_Meta-Llama-3.1-8B-Instruct_tp1_none_compile_v2_graphs1_prefix0 | replay (NVIDIA H100 80GB HBM3) | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
 | Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0 | replay (NVIDIA H100 80GB HBM3) | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 | replay (NVIDIA H100 80GB HBM3) | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
+| Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 | replay_sm120 (NVIDIA RTX PRO 6000 Blackwell Server Edition) | 37 | True | 512 | 512 | 0, 0 | 2 | DIFFERS |
 | Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed | replay (NVIDIA H100 80GB HBM3) | 77 | True | 555 | 0 | None | 0 | IDENTICAL |
 | Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 | replay (NVIDIA H100 80GB HBM3) | 37 | True | 512 | 0 | None | 0 | IDENTICAL |
 
