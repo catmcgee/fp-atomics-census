@@ -1102,9 +1102,15 @@ def apply_engine(plan: EnginePlan, root: Path, manifest: dict, resolutions: dict
     extra = set(resolutions) - {r.row_id for r in plan.worklist()}
     if extra:
         raise SystemExit(f"{plan.name}: resolutions for rows not on the worklist: {', '.join(sorted(extra))}")
+    pinned = {r["name"]: r["sha"] for r in manifest["repos"]}
     for rid, row in resolutions.items():
-        if row["engine"] == plan.name and row.get("sha") != plan.new:
-            raise SystemExit(f"{rid}: reviewed replacement is not at {plan.new}")
+        if row["engine"] == plan.name:
+            if row.get("sha") != plan.new:
+                raise SystemExit(f"{rid}: reviewed replacement is not at {plan.new}")
+        # A resolution may touch another engine's row, for prose that names this engine. Such a row must
+        # already be at that engine's pin, or applying it would silently revert that engine's own re-pin.
+        elif row.get("sha") != pinned.get(row["engine"]):
+            raise SystemExit(f"{rid}: {row['engine']} row is at {row.get('sha')}, not that engine's pin {pinned.get(row['engine'])}")
     replace = {**plan.auto_rows(), **resolutions}
     written = []
     for path in sorted((root / "inventory").glob("*.jsonl")):

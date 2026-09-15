@@ -1,6 +1,7 @@
 """Tests for scan/repin.py: line mapping from zero-context hunks, reference rewriting, candidate
 matching by location and pattern, and the review conditions, on a temporary git repository."""
 import subprocess
+import types
 from pathlib import Path
 
 import pytest
@@ -282,3 +283,34 @@ def test_manifest_records_the_rule_next_to_the_sha():
     assert manifest["notes"] == "Pinned. " + PIN_RULE_NOTE and manifest["generated"] == "2026-09-15"
     record_pin(manifest, EnginePlan("a", "2" * 40, "2" * 40, "", "", "main", 0, rule="tag v0.29.0"), "2026-09-15")
     assert manifest["notes"].count(PIN_RULE_NOTE) == 1
+
+
+def test_apply_refuses_another_engines_row_that_is_not_at_that_engines_pin(tmp_path):
+    """A resolution may touch another engine's row for prose, but only the row as it stands.
+
+    The vLLM re-pin carried a DeepEP row at the commit DeepEP had already moved off, and applying it
+    would have reverted that engine's own re-pin.
+    """
+    from scan.repin import apply_engine
+
+    class _Plan:
+        name, new = "vllm", "9" * 40
+        new_candidates_dir = tmp_path
+
+        def worklist(self):
+            return [types.SimpleNamespace(row_id="DeepEP-0001")]
+
+        def auto_rows(self):
+            return {}
+
+    manifest = {"repos": [{"name": "vllm", "sha": "9" * 40}, {"name": "DeepEP", "sha": "b" * 40}]}
+    stale = {"DeepEP-0001": {"id": "DeepEP-0001", "engine": "DeepEP", "sha": "a" * 40}}
+    with pytest.raises(SystemExit) as stale_err:
+        apply_engine(_Plan(), tmp_path, manifest, stale, "2026-09-15")
+    assert "not that engine's pin" in str(stale_err.value)
+    assert not (tmp_path / "scan-manifest.json").exists()  # refused before writing anything
+
+    current = {"DeepEP-0001": {"id": "DeepEP-0001", "engine": "DeepEP", "sha": "b" * 40}}
+    with pytest.raises(Exception) as passes_guard:  # fails later, on the empty tree, not at the guard
+        apply_engine(_Plan(), tmp_path, manifest, current, "2026-09-15")
+    assert "not that engine's pin" not in str(passes_guard.value)
