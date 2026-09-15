@@ -91,8 +91,9 @@
     {
       "name": "DeepGEMM",
       "url": "https://github.com/deepseek-ai/DeepGEMM.git",
-      "sha": "1f6f3f378920ccb5cc036ef43eb3f5972e921713",
-      "commit_date": "2026-07-06T02:30:16Z",
+      "sha": "78b69000794d0937b47ae3387eff7663410264d1",
+      "commit_date": "2026-09-14T05:46:03Z",
+      "pin_rule": "main before 2026-09-15T00:00:00Z",
       "scan_paths": [
         "csrc",
         "deep_gemm"
