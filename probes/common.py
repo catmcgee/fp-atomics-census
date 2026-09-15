@@ -47,7 +47,7 @@ def environment() -> dict:
         "cuda": torch.version.cuda if torch else None,
         "cudnn": torch.backends.cudnn.version() if torch and torch.backends.cudnn.is_available() else None,
         "packages": {p: _version(p) for p in ("vllm", "sglang", "sgl-kernel", "flashinfer-python", "flash-attn", "deep-gemm", "deep-ep", "triton", "nvidia-cublas-cu12", "nvidia-nccl-cu12", "nvidia-cublas-cu13", "nvidia-nccl-cu13")},
-        "env": {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG", "NCCL_ALGO", "NCCL_PROTO", "NCCL_MAX_NCHANNELS", "NCCL_P2P_DISABLE", "NCCL_NVLS_ENABLE", "VLLM_BATCH_INVARIANT", "VLLM_MARLIN_USE_ATOMIC_ADD", "VLLM_ATTENTION_BACKEND", "SGLANG_MARLIN_USE_ATOMIC_ADD", "SGLANG_ENABLE_DETERMINISTIC_INFERENCE")},
+        "env": {k: os.environ.get(k) for k in ("CUBLAS_WORKSPACE_CONFIG", "NCCL_ALGO", "NCCL_PROTO", "NCCL_MAX_NCHANNELS", "NCCL_P2P_DISABLE", "NCCL_NVLS_ENABLE", "VLLM_BATCH_INVARIANT", "VLLM_MARLIN_USE_ATOMIC_ADD", "VLLM_ATTENTION_BACKEND", "VLLM_DISABLE_COMPILE_CACHE", "TORCHINDUCTOR_DETERMINISTIC", "SGLANG_MARLIN_USE_ATOMIC_ADD", "SGLANG_ENABLE_DETERMINISTIC_INFERENCE")},
         # Every NCCL_* variable set in this process, recorded but outside the comparison key (NCCL_DEBUG, for one,
         # must not split two processes of one configuration); the keyed NCCL flags are the ones in "env" above.
         "nccl_env": {k: v for k, v in sorted(os.environ.items()) if k.startswith("NCCL_")},

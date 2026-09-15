@@ -113,3 +113,12 @@ def test_environment_records_every_nccl_variable_and_keys_nvls(monkeypatch):
     assert env["nccl_env"] == {"NCCL_DEBUG": "INFO", "NCCL_NVLS_ENABLE": "0"}
     assert env["env"]["NCCL_NVLS_ENABLE"] == "0"  # the 15 September TP=2 arms needed it and env.json did not say so
     assert "NCCL_DEBUG" not in env["env"]  # recorded, but a logging level never enters the comparison key
+
+
+def test_environment_keys_the_switches_that_change_compiled_artefacts(monkeypatch):
+    monkeypatch.setenv("VLLM_DISABLE_COMPILE_CACHE", "1")
+    monkeypatch.setenv("TORCHINDUCTOR_DETERMINISTIC", "1")
+    env = common.environment()
+    # Both decide what the compiled artefact is, so a pair that differs in them is a different configuration.
+    assert env["env"]["VLLM_DISABLE_COMPILE_CACHE"] == "1"
+    assert env["env"]["TORCHINDUCTOR_DETERMINISTIC"] == "1"
