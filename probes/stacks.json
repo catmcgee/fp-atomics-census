@@ -247,9 +247,46 @@
         "probe_source_sha256": "e9b32f5ecfbc208bac3956da2618cdc968c8a37ed2ecfaf7b9672d0d51fb6588",
         "git_head": null,
         "template_image": "runpod/pytorch:1.0.7-cu1300-torch291-ubuntu2404-cluster (torch replaced in a virtual environment)"
+      },
+      {
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "gpu_count": 1,
+        "driver": "595.91.07",
+        "python": "3.12.3",
+        "torch": "2.14.0+cu130",
+        "cuda": "13.0",
+        "packages": {
+          "vllm": null,
+          "sglang": null,
+          "sgl-kernel": null,
+          "flashinfer-python": "0.7.0",
+          "flash-attn": null,
+          "deep-gemm": null,
+          "deep-ep": null,
+          "triton": "3.8.0",
+          "nvidia-cublas-cu12": null,
+          "nvidia-nccl-cu12": null,
+          "nvidia-cublas-cu13": null,
+          "nvidia-nccl-cu13": "2.30.7"
+        },
+        "other_packages": {
+          "nvidia-cutlass-dsl": "4.7.1",
+          "numpy": "2.5.3",
+          "ninja": "1.13.2"
+        },
+        "flashinfer_source": "git+https://github.com/flashinfer-ai/flashinfer.git@5ed46a9ee125f167fd1070be9aa081d70e92b366 (main on 14 September 2026; 0.7.0 is the development version string of that build)",
+        "recorded_at": "2026-09-14",
+        "campaign_note": "probes/shape/campaigns/2026-09-14-sm120-crosssku.md",
+        "run_ids": [
+          "1c21ea59-d6ca-43d2-ae4f-63f16b82345b",
+          "294a97d9-d6ca-4dee-950f-2c5ac7ecdd4d"
+        ],
+        "probe_source_sha256": "e9b32f5ecfbc208bac3956da2618cdc968c8a37ed2ecfaf7b9672d0d51fb6588",
+        "git_head": null,
+        "template_image": "runpod/pytorch:1.0.7-cu1300-torch291-ubuntu2404-cluster (torch replaced in a virtual environment)"
       }
     ],
-    "provenance_status": "legacy partial metadata for the 6 to 7 September 2026 environment; model, tokenizer, installed source and cubin content hashes unavailable; the 14 September 2026 rerun records run ids, a probe source digest equal to the checkout's at e92088c and installed distributions; selected backend and kernel identity not captured"
+    "provenance_status": "legacy partial metadata for the 6 to 7 September 2026 environment; model, tokenizer, installed source and cubin content hashes unavailable; the 14 September 2026 rerun records run ids, a probe source digest equal to the checkout's at e92088c and installed distributions; selected backend and kernel identity not captured; a second 14 September 2026 run with FlashInfer built from main at 5ed46a9 shares the probe source digest and is kept apart by its recorded package versions"
   },
   {
     "directory": "NVIDIA-RTX-PRO-6000-Blackwell-Server-Edition-595.71.05-torch2.14.0+cu130",

@@ -112,13 +112,23 @@ Reports in [probes/results](probes/results/) cover H100, B200, RTX PRO 6000 and 
 | L40S-580.178.04-torch2.9.1+cu130 | `nccl_allreduce_rank0_default_cancellation` | identical | identical | 8 |
 | RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk1` | DIFFERS | n/a | 8 |
 | RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` | DIFFERS | n/a | 8 |
+| RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk2` | DIFFERS | n/a | 8 |
+| RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk4` | DIFFERS | n/a | 8 |
 | RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_top_p_renorm_detFalse` | DIFFERS | DIFFERS | 8 |
 | RTX-PRO-6000-595.71.05-torch2.14.0+cu130 | `fi_top_p_renorm_detTrue` | identical | identical | 8 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `cuBLASLt linear bf16` | identical | identical | 240 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `cuBLASLt mm bf16` | identical | identical | 240 |
-| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk1` | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk1` (e9b32f5ecfbc, flashinfer-python 0.6.18.post1) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk1` (e9b32f5ecfbc, flashinfer-python 0.7.0) | identical | identical | 8 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` (legacy) | DIFFERS | DIFFERS | 8 |
-| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` (e9b32f5ecfbc) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` (e9b32f5ecfbc, flashinfer-python 0.6.18.post1) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens16_topk2` (e9b32f5ecfbc, flashinfer-python 0.7.0) | identical | identical | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk2` (legacy) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk2` (e9b32f5ecfbc, flashinfer-python 0.6.18.post1) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk2` (e9b32f5ecfbc, flashinfer-python 0.7.0) | identical | identical | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk4` (legacy) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk4` (e9b32f5ecfbc, flashinfer-python 0.6.18.post1) | DIFFERS | DIFFERS | 8 |
+| RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_b12x_moe_nvfp4_tokens512_topk4` (e9b32f5ecfbc, flashinfer-python 0.7.0) | DIFFERS | DIFFERS | 8 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_top_p_renorm_detFalse` | DIFFERS | DIFFERS | 8 |
 | RTX-PRO-6000-595.91.07-torch2.14.0+cu130 | `fi_top_p_renorm_detTrue` | identical | identical | 8 |
 <!-- generated:runtime:end -->
