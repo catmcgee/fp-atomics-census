@@ -24,20 +24,25 @@
     {
       "name": "sglang",
       "url": "https://github.com/sgl-project/sglang.git",
-      "sha": "b41552334d46b9d83a6d834be361cb20b31d2137",
-      "commit_date": "2026-07-06T22:51:33Z",
+      "sha": "0bcd822377da7b5718e674eaf9c870d349424dd1",
+      "commit_date": "2026-09-03T21:22:46Z",
+      "pin_rule": "tag v0.5.19",
       "scan_paths": [
-        "sgl-kernel",
-        "python/sglang/srt"
+        "python/sglang/kernels/aot",
+        "python/sglang/srt",
+        "python/sglang/kernels/ops",
+        "python/sglang/kernels/jit"
       ],
       "exclude": [
         "test",
         "benchmark",
         "docs",
         "examples",
-        "sgl-kernel/tests",
-        "sgl-kernel/benchmark"
-      ]
+        "python/sglang/kernels/aot/tests",
+        "python/sglang/kernels/aot/benchmark",
+        "python/sglang/kernels/jit/benchmark"
+      ],
+      "scope_note": "python/sglang/kernels/jit is in scope because at v0.5.19 the kernels that run are JIT compiled from that tree: the Marlin GEMM the census measured and reported upstream is built from csrc/gemm/marlin, the MoE Marlin GEMM from csrc/gemm/marlin_moe, and the Inkling all-reduce's float switch reductions, which are on by default, from csrc/inkling. python/sglang/kernels/jit/benchmark is excluded so that the JIT tree is treated as the ahead-of-time tree is."
     },
     {
       "name": "flashinfer",
