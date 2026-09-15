@@ -102,3 +102,14 @@ def test_hidden_hash_includes_dtype_and_shape():
     x = torch.tensor([1.0], dtype=torch.float32)
     assert shape_hook._row_hash(x) != shape_hook._row_hash(x.view(torch.int32))
     assert shape_hook._row_hash(x) != shape_hook._row_hash(x.reshape(1, 1))
+
+
+def test_environment_records_every_nccl_variable_and_keys_nvls(monkeypatch):
+    for k in [k for k in common.os.environ if k.startswith("NCCL_")]:
+        monkeypatch.delenv(k)
+    monkeypatch.setenv("NCCL_NVLS_ENABLE", "0")
+    monkeypatch.setenv("NCCL_DEBUG", "INFO")
+    env = common.environment()
+    assert env["nccl_env"] == {"NCCL_DEBUG": "INFO", "NCCL_NVLS_ENABLE": "0"}
+    assert env["env"]["NCCL_NVLS_ENABLE"] == "0"  # the 15 September TP=2 arms needed it and env.json did not say so
+    assert "NCCL_DEBUG" not in env["env"]  # recorded, but a logging level never enters the comparison key
