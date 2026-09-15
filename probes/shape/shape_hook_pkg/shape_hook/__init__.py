@@ -78,6 +78,49 @@ Empty scheduler calls (``total_num_scheduled_tokens == 0``) keep their
 ``event: "empty_scheduler_call"`` record and additionally carry ``finished``
 and ``preempted``, because a request that finishes in the last forward pass
 is reported in the following scheduler call.
+
+vLLM 0.29.0 (release tag v0.29.0, 9 September 2026; line numbers are from
+that release source tree, not from a census pin, which is still at
+5769a7382cb1). Every call site and field read above keeps its name,
+signature and meaning; only line numbers move. V1 runner: ``execute_model``
+at gpu_model_runner.py:4249, ``sample_tokens`` at :4628, the
+``compute_logits`` call at :4560, ``self.requests`` at :725,
+``get_token_id`` at gpu_input_batch.py:79. V2 runner:
+``gather_batch_req_state`` at vllm/v1/worker/gpu/model_runner.py:1106, with
+``BatchReqState`` and ``vllm/v1/worker/gpu/states.py`` byte-identical to
+0.28.0. ``CudagraphDispatcher.dispatch``, the V2 ``CudaGraphManager.dispatch``
+return type, ``FusedMoERouter.select_experts``, the scheduler output fields
+(output.py:36-49, 137, 223-259), the logits-processor interface and loader,
+the sampler and the ``vllm.general_plugins`` loader are unchanged, the last
+six byte for byte. Two things differ:
+
+* the default runner. 0.29.0 selects V2 unless a feature V2 lacks is
+  configured (vllm/config/vllm.py:645-676 and :2539-2612); 0.28.0 first
+  required a dense generate model or one of eight listed architectures
+  (0.28.0 vllm.py:69-93 and :615-712). That list already held
+  ``Qwen2MoeForCausalLM``, so the census's own models resolve the same
+  runner on both releases. Custom logits processors remain a V2 gap (0.29.0
+  vllm.py:2606), so E6 with its processor resolves V1 on both, and 0.29.0
+  raises rather than falling back when a V1-only feature meets a V2-only one
+  (vllm.py:2614-2644, :2735). ``model_runner`` still says which ran.
+* batch-sharded sampling, new and opt-in on the V2 runner
+  (``ParallelConfig.enable_batch_sharded_sampling``, default off), computes
+  logits through ``compute_logits_local`` (gpu/model_runner.py:1405-1418),
+  which this hook does not wrap; a record in that configuration is refused
+  with an error line instead of being written without hashes.
+
+Additive per-record fields, no schema change:
+
+* ``linear_quant``: the linear method, activation quantisation key and GEMM
+  kernel class of the first quantised linear layer
+  (``quant_method.activation_quant_key`` and ``quant_method.fp8_linear``,
+  the same attributes in 0.28.0 and 0.29.0), or the first linear layer's
+  method when none is quantised. It records the resolved FP8 scheme that
+  earlier campaigns could only infer, which matters because 0.29.0 reorders
+  the CUDA FP8 kernel priority list, moving Marlin from first to sixth
+  (model_executor/kernels/linear/__init__.py:402-412).
+* ``fp8_forcing``: which modules the per-tensor arm rebound, or null when
+  the arm was not requested.
 """
 from __future__ import annotations
 
@@ -91,7 +134,7 @@ import time
 
 SCHEMA = 3
 
-_state = {"registered": False, "step": 0, "forward_passes": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "pending": None, "seen": set(), "prompts": {}, "env": None}
+_state = {"registered": False, "step": 0, "forward_passes": 0, "moe_counts": None, "dispatch": None, "hashes": None, "batch": None, "pending": None, "seen": set(), "prompts": {}, "env": None, "linear_quant": None, "fp8_forcing": None}
 
 
 def _env_record() -> dict:
@@ -102,7 +145,8 @@ def _env_record() -> dict:
     except Exception:  # noqa: BLE001
         pk = {}
     rec = {"python": platform.python_version(), "torch": torch.__version__, "cuda": torch.version.cuda, "packages": pk,
-           "env": {k: os.environ.get(k) for k in ("VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND", "VLLM_MARLIN_USE_ATOMIC_ADD", "CUBLAS_WORKSPACE_CONFIG", "VLLM_ENABLE_V1_MULTIPROCESSING", "VLLM_USE_V2_MODEL_RUNNER")}}
+           "env": {k: os.environ.get(k) for k in ("VLLM_BATCH_INVARIANT", "VLLM_ATTENTION_BACKEND", "VLLM_MARLIN_USE_ATOMIC_ADD", "CUBLAS_WORKSPACE_CONFIG", "VLLM_ENABLE_V1_MULTIPROCESSING", "VLLM_USE_V2_MODEL_RUNNER",
+                                                  "VLLM_USE_BREAKABLE_CUDAGRAPH", "VLLM_DISABLE_COMPILE_CACHE", "TORCHINDUCTOR_DETERMINISTIC")}}
     if torch.cuda.is_available():
         p = torch.cuda.get_device_properties(0)
         rec.update({"gpu": p.name, "sm": f"{p.major}{p.minor}", "gpu_count": torch.cuda.device_count()})
@@ -553,6 +597,36 @@ def _row_token_ids(runner, rid: str, computed: int, q: int) -> list[int] | None:
     return [int(req.get_token_id(p)) for p in range(computed, computed + q)]
 
 
+def linear_quant(model) -> dict:
+    """Resolved linear method of the first quantised linear layer, else the first linear layer's method.
+
+    Reads ``quant_method`` and, when present, ``quant_method.activation_quant_key`` and
+    ``quant_method.fp8_linear`` (0.28.0 and 0.29.0 quantization/fp8.py and online/fp8.py).
+    """
+    first = None
+    for name, mod in model.named_modules():
+        qm = getattr(mod, "quant_method", None)
+        if qm is None or not hasattr(qm, "apply") or "Linear" not in type(qm).__name__:
+            continue
+        rec = {"layer": name, "method": type(qm).__name__,
+               "activation_quant_key": str(qm.activation_quant_key) if getattr(qm, "activation_quant_key", None) is not None else None,
+               "kernel": type(qm.fp8_linear).__name__ if getattr(qm, "fp8_linear", None) is not None else None}
+        if type(qm).__name__ != "UnquantizedLinearMethod":
+            return rec
+        first = first or rec
+    return first
+
+
+def _linear_quant(runner):
+    if _state.get("linear_quant") is None:
+        try:
+            model = runner.get_model() if hasattr(runner, "get_model") else runner.model
+            _state["linear_quant"] = linear_quant(model)
+        except Exception as e:  # noqa: BLE001
+            _state["linear_quant"] = {"error": repr(e)[:80]}
+    return _state["linear_quant"]
+
+
 def _scheduler_limits(runner) -> dict:
     sc = getattr(runner.vllm_config, "scheduler_config", None)
     return {k: getattr(sc, k, None) for k in ("max_num_seqs", "max_num_batched_tokens", "enable_chunked_prefill", "async_scheduling")}
@@ -616,6 +690,9 @@ def _record(runner, so) -> dict:
         if env_key in os.environ and actual != bool(int(os.environ[env_key])):
             raise ValueError(f"worker resolved configuration contradicts {env_key}")
     pc = runner.vllm_config.parallel_config
+    if getattr(pc, "enable_batch_sharded_sampling", False):
+        # 0.29.0 V2: logits come from compute_logits_local, which the hook does not wrap.
+        raise ValueError("batch-sharded sampling bypasses the compute_logits wrapper; not recorded")
     try:
         backend = runner.attn_groups[0][0].backend.get_name()
     except Exception:  # noqa: BLE001
@@ -628,7 +705,8 @@ def _record(runner, so) -> dict:
            "model_runner": _model_runner_layout(runner), "scheduler": _scheduler_limits(runner),
            "admitted": admitted, "resumed": sorted(resumed),
            "finished": _ids(getattr(so, "finished_req_ids", None)), "preempted": _ids(getattr(so, "preempted_req_ids", None)),
-           "moe_counts_source": _state.get("moe_source"), "moe_expert_counts_first_layer": _state["moe_counts"], "fp8_scale_first_call": _state.get("fp8_scale"), "requests": reqs}
+           "moe_counts_source": _state.get("moe_source"), "moe_expert_counts_first_layer": _state["moe_counts"], "fp8_scale_first_call": _state.get("fp8_scale"),
+           "linear_quant": _linear_quant(runner), "fp8_forcing": _state.get("fp8_forcing"), "requests": reqs}
     rec["shape_vector"] = shape_vector(rec)
     return rec
 
@@ -650,22 +728,46 @@ def _force_fp8_per_tensor():
     per-token dynamic activation scales when cutlass_fp8_supported() returns
     True and per-tensor scales otherwise; the per-tensor scale is the batch
     statistic the hypothesis predicts to couple requests, and the arm
-    patches that check. The online module imports the function by name, so
-    the patch takes effect only if that module is first imported after this
-    call: runners must set SHAPE_FORCE_FP8_PER_TENSOR before register(),
-    which reads it once. The GEMM kernel is chosen separately; on H100 with
-    vLLM 0.28.0 the engine still selected CutlassFP8ScaledMMLinearKernel, not
-    torch._scaled_mm. Under compilation the hook observes no scale, so a
-    compiled forced arm is not attested by its records.
+    patches that check. Both files are byte-identical in 0.28.0 and 0.29.0,
+    and both take the function by name (``from ... w8a8_utils import
+    cutlass_fp8_supported``), so rebinding it in ``w8a8_utils`` alone does
+    not reach a module that has already imported it. This rebinds the name
+    in every vLLM module that holds it, ``quantization.online.fp8``
+    included, and fails closed when it finds none: the 15 September
+    per-tensor attempt ran vLLM's per-token default and nothing detected
+    that the forcing had not taken effect. Runners must still set
+    SHAPE_FORCE_FP8_PER_TENSOR before register(), which reads it once. The
+    GEMM kernel is chosen separately; on H100 with vLLM 0.28.0 the engine
+    selected CutlassFP8ScaledMMLinearKernel, and 0.29.0 reorders that
+    priority list (model_executor/kernels/linear/__init__.py:402-416), so
+    the resolved scheme is recorded per pass in ``linear_quant`` rather than
+    inferred. Under compilation the hook observes no scale, so the scale
+    field alone does not attest a compiled forced arm; ``linear_quant`` does.
     """
-    try:
-        import vllm.model_executor.layers.quantization.fp8 as fp8
-        fp8.cutlass_fp8_supported = lambda: False
-        import vllm.model_executor.layers.quantization.utils.w8a8_utils as w
-        if hasattr(w, "cutlass_fp8_supported"):
-            w.cutlass_fp8_supported = lambda: False
-    except Exception:  # noqa: BLE001
-        pass
+    import sys as _sys
+    def forced() -> bool:
+        return False
+    patched, preloaded = [], []
+    for name in ("vllm.model_executor.layers.quantization.utils.w8a8_utils",
+                 "vllm.model_executor.layers.quantization.fp8",
+                 "vllm.model_executor.layers.quantization.online.fp8"):
+        if name in _sys.modules:
+            preloaded.append(name)
+        try:
+            mod = __import__(name, fromlist=["cutlass_fp8_supported"])
+        except Exception:  # noqa: BLE001  not every build carries every module
+            continue
+        if hasattr(mod, "cutlass_fp8_supported"):
+            mod.cutlass_fp8_supported = forced
+            patched.append(name)
+    for name, mod in list(_sys.modules.items()):
+        if name.startswith("vllm.") and name not in patched and getattr(mod, "cutlass_fp8_supported", None) is not None:
+            mod.cutlass_fp8_supported = forced
+            patched.append(name)
+    _state["fp8_forcing"] = {"patched_modules": sorted(patched), "already_imported": sorted(preloaded)}
+    if not patched:
+        raise RuntimeError("SHAPE_FORCE_FP8_PER_TENSOR is set but no vLLM module exposes cutlass_fp8_supported; "
+                           "the arm would otherwise run the per-token default unnoticed")
 
 
 def flush() -> None:
