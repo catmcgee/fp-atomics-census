@@ -26,7 +26,7 @@ requests contain.
 
 ## Mechanisms that make this plausible, from source
 
-The census pins vLLM at `5769a7382cb1`, FlashInfer at `c0d920d3270c` and
+The census pins vLLM at `98dff2a81d74`, FlashInfer at `c0d920d3270c` and
 SGLang at `b41552334d46`; the wheels the probes run are vLLM 0.28.0,
 FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
 
@@ -40,11 +40,11 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
   inventory row vllm-0180; vllm-0181 is the different FP8 scaled_mm path).
 - **vLLM pads decode batches to captured CUDA-graph sizes.** The capture
   sizes are `cudagraph_capture_sizes` in
-  `vllm/config/compilation.py:631`, rounded at `:1488-1514`; the
+  `vllm/config/compilation.py:648`, rounded at `:1544-1570`; the
   dispatcher picks a graph from the token count and whether the batch is
   uniform decode in `vllm/v1/cudagraph_dispatcher.py:235-248`, reading the
   capture sizes at `:75`; the model runner pads to `num_tokens_padded` in
-  `vllm/v1/worker/gpu_model_runner.py:2242-2262` and dispatches at `:2887`.
+  `vllm/v1/worker/gpu_model_runner.py:2323-2344` and dispatches at `:2977`.
   A batch of 13 decode requests and a batch of 16 may use the same padded
   token count under a capture configuration containing that bucket. Equal
   padded counts alone do not imply equal attention plans or target placement.
@@ -53,7 +53,7 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
   and `max_num_pages_per_batch` from the batch size times the number of
   KV heads against the grid size, and from each request's page count in
   `kv_indptr`. vLLM's backend feeds those from the batch at
-  `vllm/v1/attention/backends/flashinfer.py:253-271`. A request's
+  `vllm/v1/attention/backends/flashinfer.py:316-334`. A request's
   attention reduction order therefore depends on its own KV length and
   on how many other requests share the pass, not on their tokens.
 - **Marlin and LoRA split-K are shape conditions.** SGLang turns Marlin's
@@ -65,9 +65,9 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
   and are excluded from this hypothesis by construction.
 - **Prefix caching changes a request's computed-token count, not its
   neighbours'.** A new request arrives with `num_computed_tokens` set to
-  its cache hit (`vllm/v1/core/sched/output.py:31-38`), and the model
+  its cache hit (`vllm/v1/core/sched/output.py:36-43`), and the model
   runner reads it per request
-  (`vllm/v1/worker/gpu_model_runner.py:1422`). It is part of the shape
+  (`vllm/v1/worker/gpu_model_runner.py:1482`). It is part of the shape
   vector.
 - **What Cankaya lists for replay is a shape vector.** Section 6 of
   arXiv:2606.00279 names hardware SKU, exact weights, parallelism
@@ -88,14 +88,14 @@ FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
   (`segmented_max_reduction_strided`, `atomicMaxFloat` on the shared
   scale). Per-token quantisation computes one scale per row
   (`common.cu:138`) and blockwise quantisation one per group
-  (`vllm/model_executor/layers/quantization/utils/fp8_utils.py:566`);
+  (`vllm/model_executor/layers/quantization/utils/fp8_utils.py:534`);
   neither reads other rows. The choice is `use_per_token_if_dynamic` in
-  `vllm/_custom_ops.py:1802-1827` and `activation_scheme` in
-  `vllm/model_executor/layers/quantization/fp8.py:101-112`, with
-  `block_quant` at `:298-301`.
+  `vllm/_custom_ops.py:1905-1930` and `activation_scheme` in
+  `vllm/model_executor/layers/quantization/fp8.py:97-108`, with
+  `block_quant` at `:268-271`.
 - **X3, shared-prefix effects not captured by computed-token counts.**
   Cascade attention and similar prefix-sharing paths
-  (`vllm/v1/attention/backends/flashinfer.py:591`, `use_cascade`) group
+  (`vllm/v1/attention/backends/flashinfer.py:661`, `use_cascade`) group
   requests by shared content, so two batches with equal counts can still
   run different kernels if their prefixes differ.
 
