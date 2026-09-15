@@ -50,7 +50,7 @@
   "validation_errors": [],
   "claim_scope": "Fresh-process reruns of the same arrival script; no recorded-schedule reconstruction, teacher forcing or midstream KV reconstruction.",
   "analysis_schema": 2,
-  "analyser_sha256": "0c41b89123b2018eb62884fd4e4375bbb0057700df2132519e8e2ece5b1b02e5",
+  "analyser_sha256": "fd45a1b297e9e377e7478a6ba322a58cc4c08b65b088f4f6635983274cd4dcd1",
   "input_sha256": {
     "a/hook/rank0.jsonl": "e3c63a65a5d7d8b025bf1bdc3b0c279ece6d1eb46aea776678a91c53430e201e",
     "a/outputs.json": "30c082f07a5c4f4637662780cdf533f3648040b22369b24fd8823ae6896e4fbb",
