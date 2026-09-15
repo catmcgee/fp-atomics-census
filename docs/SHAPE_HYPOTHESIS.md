@@ -26,9 +26,11 @@ requests contain.
 
 ## Mechanisms that make this plausible, from source
 
-The census pins vLLM at `98dff2a81d74`, FlashInfer at `c0d920d3270c` and
-SGLang at `b41552334d46`; the wheels the probes run are vLLM 0.28.0,
-FlashInfer 0.6.16 and SGLang 0.5.19. Line numbers are at the pinned shas.
+The census pins vLLM at `98dff2a81d74`, FlashInfer at `8bc3b5780277` (the
+commit its v0.6.18.post1 tag points to) and SGLang at `b41552334d46`; the
+wheels the probes below run are vLLM 0.28.0, FlashInfer 0.6.16 and SGLang
+0.5.19, so the FlashInfer wheel is older than the pinned release. Line
+numbers are at the pinned shas.
 
 - **cuBLASLt algorithm choice can depend on (M, N, K).** The trace lines the
   cuBLASLt probe captured (`probes/results/*/cublaslt_sweep_7b_bf16.json`)
