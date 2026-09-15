@@ -422,7 +422,7 @@
           },
           "campaign": {
             "type": "string",
-            "description": "Pairing group for the fresh-process column: the probe source digest prefix the paired reports share, or legacy for reports recorded without one."
+            "description": "Pairing group for the fresh-process column: the probe source digest prefix the paired reports share, followed by the differing package versions when one digest has several package sets on the stack, or legacy for reports recorded without one."
           },
           "in_process": {
             "type": "string",

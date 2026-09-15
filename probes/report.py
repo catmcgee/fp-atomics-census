@@ -16,7 +16,7 @@ def main(argv: list[str]) -> int:
         if chosen and stack not in chosen:
             continue
         print(f"\n### {stack}\n")
-        print("Legacy fresh-process comparisons lack complete input and kernel provenance. Fresh-process pairs are formed within one campaign (reports sharing a probe source digest; legacy reports have none). Evaluations include baselines; neither count implies statistical power.\n")
+        print("Legacy fresh-process comparisons lack complete input and kernel provenance. Fresh-process pairs are formed within one campaign (reports sharing a probe source digest and recorded package versions; legacy reports have none). Evaluations include baselines; neither count implies statistical power.\n")
         print("| Probe | Campaign | In process | Fresh process | Evaluations | Evidence relation and related rows |")
         print("|---|---|---|---|---|---|")
         for name, campaign, _, reports in campaign_rows(probes):

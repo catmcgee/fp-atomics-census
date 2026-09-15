@@ -9,9 +9,11 @@ how. Generated evidence is rebuilt, including removal of withdrawn mappings. Ide
 for the same stack and probe is replaced.
 
 Fresh-process comparisons are paired within one campaign only. A campaign is
-the set of reports sharing a probe source digest (``env.source.probe_source_sha256``);
-legacy reports carry neither a digest nor a comparison key and form the
-``legacy`` campaign. Mixing campaigns would leave no shared comparison key and
+the set of reports sharing a probe source digest (``env.source.probe_source_sha256``)
+and, when one digest was run against different installed libraries on one stack,
+the same recorded package versions; such campaigns are labelled with the digest
+prefix and the differing package versions. Legacy reports carry neither a digest
+nor a comparison key and form the ``legacy`` campaign. Mixing campaigns would leave no shared comparison key and
 turn every fresh-process verdict into n/a, so each campaign is summarised and
 attached as its own entry.
 """
@@ -199,10 +201,33 @@ def campaigns(by_tag: dict[str, dict]) -> dict[str, dict[str, dict]]:
     campaigns and no verdict is derived from the split; every group is
     summarised by ``summarise`` exactly as a single campaign was before.
     """
-    groups: dict[str, dict[str, dict]] = defaultdict(dict)
+    groups: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
     for path, report in by_tag.items():
-        groups[campaign_of(report)][path] = report
-    return dict(sorted(groups.items(), key=lambda item: (item[0] != "legacy", item[0])))
+        label = campaign_of(report)
+        # One probe source can run against different installed libraries (the 14 September SM120
+        # FlashInfer 0.6.18.post1 rerun and the FlashInfer main run share a digest and a stack
+        # directory); the recorded package versions keep them apart. Legacy reports stay one group.
+        packages = "" if label == "legacy" else json.dumps(packages_of(report), sort_keys=True)
+        groups[(label, packages)][path] = report
+    digests = defaultdict(list)
+    for label, packages in groups:
+        digests[label].append(packages)
+    named: dict[str, dict[str, dict]] = {}
+    for (label, packages), group in groups.items():
+        if len(digests[label]) > 1:
+            mine = json.loads(packages)
+            others = [json.loads(p) for p in digests[label] if p != packages]
+            changed = sorted(k for k in mine if any(o.get(k) != mine.get(k) for o in others))
+            label = label + ", " + ", ".join(f"{k} {mine.get(k)}" for k in changed)
+        named[label] = group
+    return dict(sorted(named.items(), key=lambda item: (item[0] != "legacy", item[0])))
+
+
+def packages_of(report: dict) -> dict:
+    """Recorded package versions of a report; an aggregate takes its members' (one process, one environment)."""
+    if "members" in report:
+        return next((packages_of(r) for r in report["members"].values()), {})
+    return (report.get("env") or {}).get("packages") or {}
 
 
 def campaign_rows(probes: dict[str, dict[str, dict]]) -> Iterator[tuple[str, str, bool, dict[str, dict]]]:

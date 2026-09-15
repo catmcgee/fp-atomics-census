@@ -120,3 +120,18 @@ def test_validator_uses_pinned_blobs_and_rejects_wrong_heads(tmp_path):
     git("commit", "-qm", "changed head")
     assert not Checkouts(tmp_path, manifest).available("vllm")
     assert not Checkouts(tmp_path / "missing", manifest).available("vllm")
+
+
+def test_one_source_against_two_library_versions_stays_apart():
+    # Same probe source digest and stack directory, different installed FlashInfer: two campaigns, each paired on its own.
+    def fi(tag, run_id, version, first):
+        r = new_report(tag, run_id, first=first)
+        r["env"]["packages"] = {"flashinfer-python": version, "torch": "2.14.0+cu130"}
+        return r
+    reports = {"r1/x.a.json": fi("a", "r1", "0.6.18.post1", "h1"), "r2/x.b.json": fi("b", "r2", "0.6.18.post1", "h2"),
+               "r3/x.a.json": fi("a", "r3", "0.7.0", "h3"), "r4/x.b.json": fi("b", "r4", "0.7.0", "h3")}
+    groups = campaigns(reports)
+    assert list(groups) == ["c71ba85c0851, flashinfer-python 0.6.18.post1", "c71ba85c0851, flashinfer-python 0.7.0"]
+    assert [summarise(g)[1] for g in groups.values()] == ["DIFFERS", "identical"]
+    # A single library version keeps the plain digest label.
+    assert list(campaigns({k: v for k, v in reports.items() if k.startswith(("r3", "r4"))})) == ["c71ba85c0851"]
