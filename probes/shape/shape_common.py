@@ -201,9 +201,16 @@ def engine_kwargs(args) -> dict:
     # vLLM 0.28.0: FULL_AND_PIECEWISE requires compilation. FULL is the
     # explicit graph-only arm; fail on unsupported models instead of relabelling.
     graph_mode = ("FULL_AND_PIECEWISE" if compile_on else "FULL") if graphs else "NONE"
+    compilation = {"mode": 3 if compile_on else 0, "cudagraph_mode": graph_mode}
+    # Optional controls for the compiled-kernel experiments; absent keys leave vLLM's defaults, and
+    # run.json keeps both in args so a replay applies the same ones.
+    if getattr(args, "inductor_config", None):
+        compilation["inductor_compile_config"] = json.loads(args.inductor_config)
+    if getattr(args, "custom_ops", None):
+        compilation["custom_ops"] = [op.strip() for op in args.custom_ops.split(",") if op.strip()]
     kw = {"model": args.model, "tensor_parallel_size": args.tp, "seed": 0, "max_model_len": 2048,
           "enable_prefix_caching": bool(args.prefix_caching), "enforce_eager": False,
-          "compilation_config": {"mode": 3 if compile_on else 0, "cudagraph_mode": graph_mode}}
+          "compilation_config": compilation}
     if getattr(args, "revision", None):
         kw["revision"] = args.revision
         kw["tokenizer_revision"] = args.revision
@@ -255,7 +262,11 @@ def add_common_args(ap) -> None:
     ap.add_argument("--out", type=Path, required=True, help="results directory for this arm")
     ap.add_argument("--fp8-per-tensor", action="store_true", help="force per-tensor dynamic FP8 activation scales (disables the CUTLASS FP8 path)")
     ap.add_argument("--no-compile", action="store_true", help="disable compilation; combine with --cudagraph 0 for eager execution")
+    ap.add_argument("--inductor-config", default=None, help='JSON merged into compilation_config.inductor_compile_config, e.g. \'{"deterministic": true}\'')
+    ap.add_argument("--custom-ops", default=None, help="comma-separated compilation_config.custom_ops, e.g. +rms_norm")
+    ap.add_argument("--tag", default=None, help="suffix for the arm directory, to keep arms that differ only in the options above apart")
 
 
 def arm_name(args) -> str:
-    return f"{args.model.replace('/', '_')}_tp{args.tp}_{args.quantization or 'none'}{'_pertensor' if getattr(args, 'fp8_per_tensor', False) else ''}{'_nocompile' if getattr(args, 'no_compile', False) else '_compile'}_v2_graphs{args.cudagraph}_prefix{args.prefix_caching}"
+    tag = f"_{args.tag}" if getattr(args, "tag", None) else ""
+    return f"{args.model.replace('/', '_')}_tp{args.tp}_{args.quantization or 'none'}{'_pertensor' if getattr(args, 'fp8_per_tensor', False) else ''}{'_nocompile' if getattr(args, 'no_compile', False) else '_compile'}_v2_graphs{args.cudagraph}_prefix{args.prefix_caching}{tag}"
