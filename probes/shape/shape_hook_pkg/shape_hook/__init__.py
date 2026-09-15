@@ -645,11 +645,18 @@ def shape_vector(rec: dict) -> str:
 def _force_fp8_per_tensor():
     """Arm X2: make vLLM's online FP8 use per-tensor dynamic activation scales.
 
-    fp8.py:310-322 picks per-token dynamic quantisation whenever the CUTLASS
-    FP8 GEMM is available and per-tensor otherwise, so the arm disables the
-    CUTLASS check. The GEMM then runs through torch._scaled_mm with a
-    per-tensor scale, which is the batch statistic the hypothesis predicts
-    to couple requests.
+    In the census's pinned vLLM source, the online FP8 linear method
+    (quantization/online/fp8.py, Fp8PerTensorOnlineLinearMethod) picks
+    per-token dynamic activation scales when cutlass_fp8_supported() returns
+    True and per-tensor scales otherwise; the per-tensor scale is the batch
+    statistic the hypothesis predicts to couple requests, and the arm
+    patches that check. The online module imports the function by name, so
+    the patch takes effect only if that module is first imported after this
+    call: runners must set SHAPE_FORCE_FP8_PER_TENSOR before register(),
+    which reads it once. The GEMM kernel is chosen separately; on H100 with
+    vLLM 0.28.0 the engine still selected CutlassFP8ScaledMMLinearKernel, not
+    torch._scaled_mm. Under compilation the hook observes no scale, so a
+    compiled forced arm is not attested by its records.
     """
     try:
         import vllm.model_executor.layers.quantization.fp8 as fp8

@@ -30,6 +30,8 @@ def run(args) -> int:
     tag = os.environ.get("RUN_TAG", "a")
     out = args.out / (arm_name(args) + ("_mixed" if args.mixed else "")) / tag
     env_with_hook(out / "hook")
+    if args.fp8_per_tensor:  # before register(): the hook reads it once, at registration
+        os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"
     import shape_hook
     shape_hook.register()
     from vllm import LLM, SamplingParams

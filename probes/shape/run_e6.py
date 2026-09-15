@@ -658,6 +658,8 @@ def record(args) -> int:
     out = args.out / (arm_name(args) + ("_mixed" if args.mixed else "")) / "record"
     out.mkdir(parents=True, exist_ok=False)
     env_with_hook(out / "hook")
+    if getattr(args, "fp8_per_tensor", False):
+        os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"  # before register(): the hook reads it once, at registration
     import shape_hook
     shape_hook.register()
     from vllm import SamplingParams
@@ -717,6 +719,8 @@ def replay(record_dir: Path, out: Path, boundary: int | None) -> int:
     out = Path(out)
     out.mkdir(parents=True, exist_ok=False)
     env_with_hook(out / "hook")
+    if getattr(args, "fp8_per_tensor", False):
+        os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"  # before register(): the hook reads it once, at registration
     import shape_hook
     shape_hook.register()
     from vllm import SamplingParams, TokensPrompt
