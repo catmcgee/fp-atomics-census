@@ -59,8 +59,9 @@
     {
       "name": "flash-attention",
       "url": "https://github.com/Dao-AILab/flash-attention.git",
-      "sha": "1f7ce2f7cb503473559f3d44d575ae05b1ed8557",
-      "commit_date": "2026-07-06T16:40:01Z",
+      "sha": "008e63667e0f50c146689bc4c3fa1aa8e3bc4fbd",
+      "commit_date": "2026-09-14T22:48:56Z",
+      "pin_rule": "main before 2026-09-15T00:00:00Z",
       "scan_paths": [
         "csrc/flash_attn",
         "hopper",

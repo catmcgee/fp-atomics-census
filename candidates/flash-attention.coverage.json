@@ -1,6 +1,6 @@
 {
   "engine": "flash-attention",
-  "sha": "1f7ce2f7cb503473559f3d44d575ae05b1ed8557",
+  "sha": "008e63667e0f50c146689bc4c3fa1aa8e3bc4fbd",
   "scan_paths": [
     "csrc/flash_attn",
     "hopper",
@@ -32,13 +32,13 @@
       }
     },
     "AI": {
-      "files_walked": 10,
+      "files_walked": 11,
       "files_scanned": 3,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".md": 7
+        ".md": 8
       }
     },
     "assets": {
@@ -54,10 +54,10 @@
       }
     },
     "benchmarks": {
-      "files_walked": 10,
-      "files_scanned": 9,
-      "files_with_candidates": 1,
-      "candidates": 1,
+      "files_walked": 11,
+      "files_scanned": 10,
+      "files_with_candidates": 2,
+      "candidates": 3,
       "in_scope": false,
       "skipped_extensions": {
         ".yaml": 1
@@ -110,10 +110,10 @@
       }
     },
     "flash_attn": {
-      "files_walked": 106,
-      "files_scanned": 99,
-      "files_with_candidates": 14,
-      "candidates": 32,
+      "files_walked": 108,
+      "files_scanned": 101,
+      "files_with_candidates": 16,
+      "candidates": 35,
       "in_scope": true,
       "skipped_extensions": {
         ".toml": 2,
@@ -125,16 +125,16 @@
     "hopper": {
       "files_walked": 507,
       "files_scanned": 507,
-      "files_with_candidates": 7,
-      "candidates": 19,
+      "files_with_candidates": 8,
+      "candidates": 20,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "tests": {
-      "files_walked": 48,
-      "files_scanned": 47,
-      "files_with_candidates": 10,
-      "candidates": 23,
+      "files_walked": 50,
+      "files_scanned": 49,
+      "files_with_candidates": 12,
+      "candidates": 34,
       "in_scope": false,
       "skipped_extensions": {
         ".toml": 1
@@ -167,13 +167,13 @@
     }
   },
   "totals": {
-    "files_walked": 1062,
-    "files_scanned": 901,
-    "candidates": 123,
-    "candidates_in_scope": 52,
+    "files_walked": 1068,
+    "files_scanned": 906,
+    "candidates": 140,
+    "candidates_in_scope": 56,
     "candidates_excluded": 0,
     "wrapper_definitions": {
-      "store_dq": "flash-attention-c00090"
+      "store_dq": "flash-attention-c00095"
     }
   }
 }
