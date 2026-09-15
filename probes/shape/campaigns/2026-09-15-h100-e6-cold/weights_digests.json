@@ -1,0 +1,416 @@
+[
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "config.json",
+  "size": 855,
+  "sha256": "29e4c210b0d6ac178b16b2a255a568bdb23b581e50ca1ef6a6d071dd85704e6e",
+  "git_blob_sha1": "0bb6fd75b3ad2fe988565929f329945262c2814e",
+  "blob_path": "0bb6fd75b3ad2fe988565929f329945262c2814e"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "generation_config.json",
+  "size": 184,
+  "sha256": "189fb0c0d7fd8a527db217c0a60a0e013f0394cd8800f9697a666a9e75e5f7fd",
+  "git_blob_sha1": "cc7276afd599de091142c6ed3005faf8a74aa257",
+  "blob_path": "cc7276afd599de091142c6ed3005faf8a74aa257"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "model-00001-of-00004.safetensors",
+  "size": 4976698672,
+  "sha256": "2b1879f356aed350030bb40eb45ad362c89d9891096f79a3ab323d3ba5607668",
+  "git_blob_sha1": "1356f0879dd34581bc4cca90b0ee56d1a022f737",
+  "blob_path": "2b1879f356aed350030bb40eb45ad362c89d9891096f79a3ab323d3ba5607668"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "model-00002-of-00004.safetensors",
+  "size": 4999802720,
+  "sha256": "09d433f650646834a83c580877bd60c6d1f88f7755305c12576b5c7058f9af15",
+  "git_blob_sha1": "76d0d77579db5dcbe2207d3069571794de76dd80",
+  "blob_path": "09d433f650646834a83c580877bd60c6d1f88f7755305c12576b5c7058f9af15"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "model-00003-of-00004.safetensors",
+  "size": 4915916176,
+  "sha256": "fc1cdddd6bfa91128d6e94ee73d0ce62bfcdb7af29e978ddcab30c66ae9ea7fa",
+  "git_blob_sha1": "d18db1ba39f1c119b2ba6952447a6bfd9f110e4e",
+  "blob_path": "fc1cdddd6bfa91128d6e94ee73d0ce62bfcdb7af29e978ddcab30c66ae9ea7fa"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "model-00004-of-00004.safetensors",
+  "size": 1168138808,
+  "sha256": "92ecfe1a2414458b4821ac8c13cf8cb70aed66b5eea8dc5ad9eeb4ff309d6d7b",
+  "git_blob_sha1": "25e7541525702006e4e6a0adfaca00230d50a8e5",
+  "blob_path": "92ecfe1a2414458b4821ac8c13cf8cb70aed66b5eea8dc5ad9eeb4ff309d6d7b"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "model.safetensors.index.json",
+  "size": 23950,
+  "sha256": "146776fce3f6db1103aa6f249e65ee5544c5923ce6f971b092eee79aa6e5d37b",
+  "git_blob_sha1": "0fd8120f1c6acddc268ebc2583058efaf699a771",
+  "blob_path": "0fd8120f1c6acddc268ebc2583058efaf699a771"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "special_tokens_map.json",
+  "size": 296,
+  "sha256": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec",
+  "git_blob_sha1": "02ee80b6196926a5ad790a004d9efd6ab1ba6542",
+  "blob_path": "02ee80b6196926a5ad790a004d9efd6ab1ba6542"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "tokenizer.json",
+  "size": 9085657,
+  "sha256": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+  "git_blob_sha1": "5cc5f00a5b203e90a27a3bd60d1ec393b07971e8",
+  "blob_path": "5cc5f00a5b203e90a27a3bd60d1ec393b07971e8"
+ },
+ {
+  "repo": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "revision": "d10aef7999a2b5ba950ab3974312feeedbfe0b77",
+  "file": "tokenizer_config.json",
+  "size": 50870,
+  "sha256": "24e8a6dc2547164b7002e3125f10b415105644fcf02bf9ad8b674c87b1eaaed6",
+  "git_blob_sha1": "421cda369d1e01e742b01d82e3a39c7cc82a8586",
+  "blob_path": "421cda369d1e01e742b01d82e3a39c7cc82a8586"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "config.json",
+  "size": 920,
+  "sha256": "b3e9fc1ad643d12f6536dee80a66c5ea045b571856165a598252720b6f2c553e",
+  "git_blob_sha1": "24dd49de4140249c8fceaaaee7777960db19006b",
+  "blob_path": "24dd49de4140249c8fceaaaee7777960db19006b"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "configuration.json",
+  "size": 38,
+  "sha256": "f625873f5df26193fae3ff45d3054667f5a9e91d644156add3310f258c495383",
+  "git_blob_sha1": "24ff93c212d3d254a77730c1e0c94eb7123c2a77",
+  "blob_path": "24ff93c212d3d254a77730c1e0c94eb7123c2a77"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "generation_config.json",
+  "size": 248,
+  "sha256": "bb1ace90ba308b9e8b3c823849aca96c3428773c715b38493ebcd9ccef4c6cac",
+  "git_blob_sha1": "281213f5a09f1391720f4cf9be97e8c6ea17d83a",
+  "blob_path": "281213f5a09f1391720f4cf9be97e8c6ea17d83a"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "merges.txt",
+  "size": 1671839,
+  "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+  "git_blob_sha1": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+  "blob_path": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00001-of-00008.safetensors",
+  "size": 3999614664,
+  "sha256": "a51a84c031e0f6c8808bc284106c488ab3db6069a3f6f5a231be1e963206d020",
+  "git_blob_sha1": "478f12c6720d5dcaaeb0c3b5b13d4182d4b1409f",
+  "blob_path": "a51a84c031e0f6c8808bc284106c488ab3db6069a3f6f5a231be1e963206d020"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00002-of-00008.safetensors",
+  "size": 3999385424,
+  "sha256": "02a9f530c526ac09e5d26cdece113d62b030ebc6f137ea69cd2754bea1287121",
+  "git_blob_sha1": "1ec9451596557c2a31385e015a64728a6de31cc9",
+  "blob_path": "02a9f530c526ac09e5d26cdece113d62b030ebc6f137ea69cd2754bea1287121"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00003-of-00008.safetensors",
+  "size": 3988628968,
+  "sha256": "200116fdf90ea17c2dae53594a87b9efbbe199e4c4e487fb25aba9c65e674112",
+  "git_blob_sha1": "4c1c575733a9f6902f9e87a596235777a86248fc",
+  "blob_path": "200116fdf90ea17c2dae53594a87b9efbbe199e4c4e487fb25aba9c65e674112"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00004-of-00008.safetensors",
+  "size": 3999386088,
+  "sha256": "41296f5c77188a4182c87f9bc5958222897ed5fe1bde6912755df050f1222b8d",
+  "git_blob_sha1": "e6b9a442a4ad6d9030c8b82d0301f3e766de4144",
+  "blob_path": "41296f5c77188a4182c87f9bc5958222897ed5fe1bde6912755df050f1222b8d"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00005-of-00008.safetensors",
+  "size": 3988629648,
+  "sha256": "a613a2c68f18630beb1eb681627d34110cec36a615a35c4d7f35f72e0df5b2e4",
+  "git_blob_sha1": "a032597014f2ae34842864a73090e3ef25a2d343",
+  "blob_path": "a613a2c68f18630beb1eb681627d34110cec36a615a35c4d7f35f72e0df5b2e4"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00006-of-00008.safetensors",
+  "size": 3999386104,
+  "sha256": "44de056d0f2c4375685ec7545a987c20d59cd8ee75c1802e04a11e7dcd7a84f1",
+  "git_blob_sha1": "a4f64da33823fb4099536e17e050f1fe53065792",
+  "blob_path": "44de056d0f2c4375685ec7545a987c20d59cd8ee75c1802e04a11e7dcd7a84f1"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00007-of-00008.safetensors",
+  "size": 3988629648,
+  "sha256": "fbc95c8fc0842c425168c21e933629cde22fc156ef9b4af927ad2787fe4d33a1",
+  "git_blob_sha1": "4d8d9154d4bfc9ef29b49fca74322095b53f3894",
+  "blob_path": "fbc95c8fc0842c425168c21e933629cde22fc156ef9b4af927ad2787fe4d33a1"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model-00008-of-00008.safetensors",
+  "size": 668484400,
+  "sha256": "9a5e51c0a101292c249032382f20d912677e1c0c4b5b0c78e951450fedb820ee",
+  "git_blob_sha1": "eaeff15c96a9c6345c6adaafe219a8ff6414d63f",
+  "blob_path": "9a5e51c0a101292c249032382f20d912677e1c0c4b5b0c78e951450fedb820ee"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "model.safetensors.index.json",
+  "size": 416452,
+  "sha256": "ece1b223efe32f4349d0dfa2a522249ac10bcb89369ed25b222c35175cd90b53",
+  "git_blob_sha1": "8058add31525101e7da55a6e62fcb6dae493114d",
+  "blob_path": "8058add31525101e7da55a6e62fcb6dae493114d"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "tokenizer.json",
+  "size": 7028015,
+  "sha256": "f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8",
+  "git_blob_sha1": "33ea6c72ebb92a237fa2bdf26c5ff16592efcdae",
+  "blob_path": "33ea6c72ebb92a237fa2bdf26c5ff16592efcdae"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "tokenizer_config.json",
+  "size": 1289,
+  "sha256": "3ec7934124b5e81aaa9c0977b95299b8ca3911b91bf8114494023fbbb22a515f",
+  "git_blob_sha1": "fa84582187a90af2895fab14e47bf3b8a3bbb9c5",
+  "blob_path": "fa84582187a90af2895fab14e47bf3b8a3bbb9c5"
+ },
+ {
+  "repo": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+  "file": "vocab.json",
+  "size": 2776833,
+  "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+  "git_blob_sha1": "4783fe10ac3adce15ac8f358ef5462739852c569",
+  "blob_path": "4783fe10ac3adce15ac8f358ef5462739852c569"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "config.json",
+  "size": 663,
+  "sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+  "git_blob_sha1": "0178295f88afc3c7f279ed284f961f8c1be00654",
+  "blob_path": "0178295f88afc3c7f279ed284f961f8c1be00654"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "generation_config.json",
+  "size": 243,
+  "sha256": "3a8f9087e486054c8a4a08dae2e5a3ba62e23da212b5b8c08bc42cb983c3459f",
+  "git_blob_sha1": "0eb3c536657dcd12626e09eca4b6198c0cbcde1e",
+  "blob_path": "0eb3c536657dcd12626e09eca4b6198c0cbcde1e"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "merges.txt",
+  "size": 1671839,
+  "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+  "git_blob_sha1": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+  "blob_path": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "model-00001-of-00004.safetensors",
+  "size": 3945441440,
+  "sha256": "a1333e6293854747c481288ea83b348226af178dd565c49b6f9495ba1966aba7",
+  "git_blob_sha1": "dfb1238f97020d94c87d5f50a9db9c5a5b1367db",
+  "blob_path": "a1333e6293854747c481288ea83b348226af178dd565c49b6f9495ba1966aba7"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "model-00002-of-00004.safetensors",
+  "size": 3864726352,
+  "sha256": "f5d25a2772cb825164a2a2c0fb6d51a87e282abf21e4dd75bc5cfb3cd0ea6185",
+  "git_blob_sha1": "8ecaf3a70e78885a3d91548d3be6257171b54972",
+  "blob_path": "f5d25a2772cb825164a2a2c0fb6d51a87e282abf21e4dd75bc5cfb3cd0ea6185"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "model-00003-of-00004.safetensors",
+  "size": 3864726424,
+  "sha256": "8efdec4c1bc12317ae1a38dc42b595ce777738a64deea3fcb8a0a91381bcdfd5",
+  "git_blob_sha1": "22e9f2279c57a4e89582de6d0b87434246502357",
+  "blob_path": "8efdec4c1bc12317ae1a38dc42b595ce777738a64deea3fcb8a0a91381bcdfd5"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "model-00004-of-00004.safetensors",
+  "size": 3556377672,
+  "sha256": "1a72d403cdf0c1ec3cb7f289f17b394a01e64394c2e9b3c0f94dbce3faf879bd",
+  "git_blob_sha1": "4ab11a40828dcbdcd1a87a161f8e2ed6a3d1e908",
+  "blob_path": "1a72d403cdf0c1ec3cb7f289f17b394a01e64394c2e9b3c0f94dbce3faf879bd"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "model.safetensors.index.json",
+  "size": 27752,
+  "sha256": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028",
+  "git_blob_sha1": "14d037fdda5a1311dcc0275003a7a370d84114e6",
+  "blob_path": "14d037fdda5a1311dcc0275003a7a370d84114e6"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "tokenizer.json",
+  "size": 7031645,
+  "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+  "git_blob_sha1": "443909a61d429dff23010e5bddd28ff530edda00",
+  "blob_path": "443909a61d429dff23010e5bddd28ff530edda00"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "tokenizer_config.json",
+  "size": 7305,
+  "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+  "git_blob_sha1": "07bfe0640cb5a0037f9322287fbfc682806cf672",
+  "blob_path": "07bfe0640cb5a0037f9322287fbfc682806cf672"
+ },
+ {
+  "repo": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "file": "vocab.json",
+  "size": 2776833,
+  "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+  "git_blob_sha1": "4783fe10ac3adce15ac8f358ef5462739852c569",
+  "blob_path": "4783fe10ac3adce15ac8f358ef5462739852c569"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "config.json",
+  "size": 896,
+  "sha256": "79e454d6cc36c41ab0e9418c8f78a033afa9ac88e5a58d67c1471de315c8d29a",
+  "git_blob_sha1": "9852f575a09be6d72ad0fa34d5b7191ece4bbc4d",
+  "blob_path": "9852f575a09be6d72ad0fa34d5b7191ece4bbc4d"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "generation_config.json",
+  "size": 213,
+  "sha256": "36efbc59151975193688a7e86804764f697478c6542fe0acbf1f40f119f4fdc9",
+  "git_blob_sha1": "6e9e36ca92eb5a9e511820485128f8fdc52106f5",
+  "blob_path": "6e9e36ca92eb5a9e511820485128f8fdc52106f5"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "merges.txt",
+  "size": 1671853,
+  "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+  "git_blob_sha1": "31349551d90c7606f325fe0f11bbb8bd5fa0d7c7",
+  "blob_path": "31349551d90c7606f325fe0f11bbb8bd5fa0d7c7"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "model-00001-of-00002.safetensors",
+  "size": 4953240624,
+  "sha256": "83bb444edc7d4a1ed91ab67ad19620e2ed74724cdd62ede330fcaa7748c64404",
+  "git_blob_sha1": "90c8a2c5f9ab8ce8aef64f199e33c059c6bfde21",
+  "blob_path": "83bb444edc7d4a1ed91ab67ad19620e2ed74724cdd62ede330fcaa7748c64404"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "model-00002-of-00002.safetensors",
+  "size": 4483388160,
+  "sha256": "c59d27856ca358b24770802ea52f1785258830f61ff3ac72a4b3896fad648f9b",
+  "git_blob_sha1": "0f382c4a480e8e090d0a3a179660057024d8cb4d",
+  "blob_path": "c59d27856ca358b24770802ea52f1785258830f61ff3ac72a4b3896fad648f9b"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "model.safetensors.index.json",
+  "size": 55847,
+  "sha256": "e7bb72e12dcae27a9968ded73109349d4d7f193c2496533d89ffa7184eeea5ae",
+  "git_blob_sha1": "e9697f08fb640dbc35803cb6d6dcd0c2118ac5e0",
+  "blob_path": "e9697f08fb640dbc35803cb6d6dcd0c2118ac5e0"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "tokenizer.json",
+  "size": 11422654,
+  "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "git_blob_sha1": "949e1ec83f61520a25c75426edc4a43acc36f29a",
+  "blob_path": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "tokenizer_config.json",
+  "size": 9732,
+  "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+  "git_blob_sha1": "417d038a63fa3de29cfde265caedae14d1a58d92",
+  "blob_path": "417d038a63fa3de29cfde265caedae14d1a58d92"
+ },
+ {
+  "repo": "Qwen/Qwen3-8B-FP8",
+  "revision": "220b46e3b2180893580a4454f21f22d3ebb187d3",
+  "file": "vocab.json",
+  "size": 2776833,
+  "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+  "git_blob_sha1": "4783fe10ac3adce15ac8f358ef5462739852c569",
+  "blob_path": "4783fe10ac3adce15ac8f358ef5462739852c569"
+ }
+]

@@ -1,0 +1,261 @@
++ export HF_HOME=/root/hf PIP_CACHE_DIR=/root/pip-cache PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ HF_HOME=/root/hf
++ PIP_CACHE_DIR=/root/pip-cache
++ PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ pip install -q -e /root/census/probes/shape/shape_hook_pkg
++ echo HOOK_INSTALL_OK
+HOOK_INSTALL_OK
++ python -
+ENTRY_POINTS [('lora_filesystem_resolver', 'vllm.plugins.lora_resolvers.filesystem_resolver:register_filesystem_resolver'), ('lora_hf_hub_resolver', 'vllm.plugins.lora_resolvers.hf_hub_resolver:register_hf_hub_resolver'), ('shape_hook', 'shape_hook:register')]
+SHAPE_HOOK_IMPORT_OK /root/census/probes/shape/shape_hook_pkg/shape_hook/__init__.py register_resolves_to shape_hook.register
+SCHEMA 3 new_token_ids_occurrences 12
+STACK python 3.12.3 torch 2.13.0+cu130 cuda 13.0 vllm 0.28.0
+TORCH_NCCL_VERSION 2.29.7
+PKG flashinfer-python 0.6.16.post3
+PKG triton 3.7.1
+PKG transformers 5.17.0
+PKG ninja 1.13.2
+PKG nvidia-cublas-cu13 None
+PKG nvidia-cublas 13.1.1.3
+PKG nvidia-nccl-cu13 2.29.7
+PKG hf_transfer 0.1.9
+DRIVER NVRM version: NVIDIA UNIX x86_64 Kernel Module  580.126.09  Wed Jan  7 22:59:56 UTC 2026
+GPU_COUNT 2 ['NVIDIA H100 80GB HBM3', 'NVIDIA H100 80GB HBM3']
+P2P 0->1 True 1->0 True
++ cd /root/census/probes/shape
++ python -c 'import sys; sys.path.insert(0, "."); import teacher_forcing; print("TEACHER_FORCING_VLLM_INTERFACE", teacher_forcing.VLLM_INTERFACE)'
+TEACHER_FORCING_VLLM_INTERFACE True
++ nvidia-smi
+Tue Sep 15 13:52:18 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.126.09             Driver Version: 580.126.09     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100 80GB HBM3          On  |   00000000:CB:00.0 Off |                    0 |
+| N/A   33C    P0             69W /  700W |       0MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA H100 80GB HBM3          On  |   00000000:DB:00.0 Off |                    0 |
+| N/A   32C    P0             71W /  700W |       0MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
++ nvidia-smi topo -m
+	[4mGPU0	GPU1	NIC0	NIC1	NIC2	NIC3	NIC4	NIC5	NIC6	NIC7	NIC8	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	NV18	SYS	SYS	SYS	SYS	NODE	NODE	PIX	NODE	NODE	56-111,168-223	1		N/A
+GPU1	NV18	 X 	SYS	SYS	SYS	SYS	NODE	NODE	NODE	PIX	NODE	56-111,168-223	1		N/A
+NIC0	SYS	SYS	 X 	NODE	NODE	NODE	SYS	SYS	SYS	SYS	SYS				
+NIC1	SYS	SYS	NODE	 X 	NODE	NODE	SYS	SYS	SYS	SYS	SYS				
+NIC2	SYS	SYS	NODE	NODE	 X 	NODE	SYS	SYS	SYS	SYS	SYS				
+NIC3	SYS	SYS	NODE	NODE	NODE	 X 	SYS	SYS	SYS	SYS	SYS				
+NIC4	NODE	NODE	SYS	SYS	SYS	SYS	 X 	NODE	NODE	NODE	PIX				
+NIC5	NODE	NODE	SYS	SYS	SYS	SYS	NODE	 X 	NODE	NODE	NODE				
+NIC6	PIX	NODE	SYS	SYS	SYS	SYS	NODE	NODE	 X 	NODE	NODE				
+NIC7	NODE	PIX	SYS	SYS	SYS	SYS	NODE	NODE	NODE	 X 	NODE				
+NIC8	NODE	NODE	SYS	SYS	SYS	SYS	PIX	NODE	NODE	NODE	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: mlx5_0
+  NIC1: mlx5_1
+  NIC2: mlx5_2
+  NIC3: mlx5_3
+  NIC4: mlx5_4
+  NIC5: mlx5_7
+  NIC6: mlx5_8
+  NIC7: mlx5_9
+  NIC8: mlx5_bond_0
+
++ nvidia-smi nvlink -s
++ head -40
+GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-0d9942be-6c59-96e1-2644-4df8b9938ded)
+	 Link 0: 26.562 GB/s
+	 Link 1: 26.562 GB/s
+	 Link 2: 26.562 GB/s
+	 Link 3: 26.562 GB/s
+	 Link 4: 26.562 GB/s
+	 Link 5: 26.562 GB/s
+	 Link 6: 26.562 GB/s
+	 Link 7: 26.562 GB/s
+	 Link 8: 26.562 GB/s
+	 Link 9: 26.562 GB/s
+	 Link 10: 26.562 GB/s
+	 Link 11: 26.562 GB/s
+	 Link 12: 26.562 GB/s
+	 Link 13: 26.562 GB/s
+	 Link 14: 26.562 GB/s
+	 Link 15: 26.562 GB/s
+	 Link 16: 26.562 GB/s
+	 Link 17: 26.562 GB/s
+GPU 1: NVIDIA H100 80GB HBM3 (UUID: GPU-88c83629-e78c-50af-c150-d8a4fc0bf86a)
+	 Link 0: 26.562 GB/s
+	 Link 1: 26.562 GB/s
+	 Link 2: 26.562 GB/s
+	 Link 3: 26.562 GB/s
+	 Link 4: 26.562 GB/s
+	 Link 5: 26.562 GB/s
+	 Link 6: 26.562 GB/s
+	 Link 7: 26.562 GB/s
+	 Link 8: 26.562 GB/s
+	 Link 9: 26.562 GB/s
+	 Link 10: 26.562 GB/s
+	 Link 11: 26.562 GB/s
+	 Link 12: 26.562 GB/s
+	 Link 13: 26.562 GB/s
+	 Link 14: 26.562 GB/s
+	 Link 15: 26.562 GB/s
+	 Link 16: 26.562 GB/s
+	 Link 17: 26.562 GB/s
++ nvidia-smi -q
++ grep -iE 'Product Name|Bus Id|Link Width|PCIe Generation|Current|Max'
++ head -40
+    Product Name                                       : NVIDIA H100 80GB HBM3
+        Current                                        : Disabled
+        Current                                        : N/A
+        Current                                        : N/A
+        Bus Id                                         : 00000000:CB:00.0
+            PCIe Generation
+                Max                                    : 5
+                Current                                : 5
+                Device Current                         : 5
+                Device Max                             : 5
+                Host Max                               : 5
+            Link Width
+                Max                                    : 16x
+                Current                                : 16x
+        Current                                        : N/A
+        Current                                        : Enabled
+            Max                                        : 2560 bank(s)
+        GPU Current Temp                               : 33 C
+        GPU Max Operating T.Limit Temp                 : 0 C
+        Memory Current Temp                            : 35 C
+        Memory Max Operating T.Limit Temp              : 0 C
+        Current Power Limit                            : 700.00 W
+        Max Power Limit                                : 700.00 W
+        Current Power Limit                            : N/A
+        Max Power Limit                                : N/A
+    Max Clocks
+    Max Customer Boost Clocks
+    Product Name                                       : NVIDIA H100 80GB HBM3
+        Current                                        : Disabled
+        Current                                        : N/A
+        Current                                        : N/A
+        Bus Id                                         : 00000000:DB:00.0
+            PCIe Generation
+                Max                                    : 5
+                Current                                : 5
+                Device Current                         : 5
+                Device Max                             : 5
+                Host Max                               : 5
+            Link Width
+                Max                                    : 16x
++ pip freeze
++ wc -l /root/logs/pip-freeze.txt
+198 /root/logs/pip-freeze.txt
++ nvidia-smi -L
+GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-0d9942be-6c59-96e1-2644-4df8b9938ded)
+GPU 1: NVIDIA H100 80GB HBM3 (UUID: GPU-88c83629-e78c-50af-c150-d8a4fc0bf86a)
++ nvidia-smi --query-gpu=index,name,uuid,serial,pci.bus_id,driver_version,vbios_version --format=csv
+index, name, uuid, serial, pci.bus_id, driver_version, vbios_version
+0, NVIDIA H100 80GB HBM3, GPU-0d9942be-6c59-96e1-2644-4df8b9938ded, 1652324103072, 00000000:CB:00.0, 580.126.09, 96.00.DA.00.0C
+1, NVIDIA H100 80GB HBM3, GPU-88c83629-e78c-50af-c150-d8a4fc0bf86a, 1652324102305, 00000000:DB:00.0, 580.126.09, 96.00.DA.00.0C
++ python -c 'import torch; print("TORCH_CUDA_NCCL", torch.cuda.nccl.version())'
+TORCH_CUDA_NCCL (2, 29, 7)
++ hostname
+41c437f8ef38
++ grep -m1 'model name' /proc/cpuinfo
+model name	: Intel(R) Xeon(R) Platinum 8480+
++ nproc
+224
++ free -g
++ head -2
+               total        used        free      shared  buff/cache   available
+Mem:            2015          56         755           0        1216        1958
++ env
++ grep -E '^RUNPOD_(POD_ID|POD_HOSTNAME|DC_ID|GPU_COUNT|CPU_COUNT|PUBLIC_IP|TCP_PORT_22)='
++ sort
++ cat /etc/os-release
++ head -3
+PRETTY_NAME="Ubuntu 24.04.3 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
++ uname -r
+6.8.0-106-generic
++ ls -l /usr/local/cuda
+lrwxrwxrwx 1 root root 22 Mar 10  2025 /usr/local/cuda -> /etc/alternatives/cuda
++ /usr/local/cuda/bin/nvcc --version
++ tail -2
+Cuda compilation tools, release 12.8, V12.8.93
+Build cuda_12.8.r12.8/compiler.35583870_0
++ which -a nvcc
++ nvcc --version
++ tail -2
+post_bootstrap.sh: line 42: nvcc: command not found
++ python -
+DEEP_GEMM_MODULE vllm.third_party.deep_gemm /root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm version 2.6.1
+DEEP_GEMM_MODULE deep_gemm not importable: ModuleNotFoundError No module named 'deep_gemm'
+DEEP_GEMM_DIST deep-gemm None
+DEEP_GEMM_DIST deep_gemm None
+VLLM_CACHE_ROOT /root/.cache/vllm
+FLASHINFER_JIT {'CCCL_INCLUDE_DIRS': "[PosixPath('/root/venv/lib/python3.12/site-packages/flashinfer/data/cccl/cub'), PosixPath('/root/venv/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include'), PosixPath('/root/venv/lib/python3.12/site-packages/flashinfer/data/cccl/thrust')]", 'CUTLASS_INCLUDE_DIRS': "[PosixPath('/root/venv/lib/python3.12/site-packages/flashinfer/data/cutlass/include'), PosixPath('/root/venv/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include')]", 'FLASHINFER_AOT_DIR': '/root/venv/lib/python3.12/site-packages/flashinfer/data/aot', 'FLASHINFER_BASE_DIR': '/root', 'FLASHINFER_CACHE_DIR': '/root/.cache/flashinfer', 'FLASHINFER_CSRC_DIR': '/root/venv/lib/python3.12/site-packages/flashinfer/data/csrc', 'FLASHINFER_CUBIN_DIR': '/root/.cache/flashinfer/cubins', 'FLASHINFER_GEN_SRC_DIR': '/root/.cache/flashinfer/0.6.16.post3/90a/generated', 'FLASHINFER_INCLUDE_DIR': '/root/venv/lib/python3.12/site-packages/flashinfer/data/include', 'FLASHINFER_JIT_DIR': '/root/.cache/flashinfer/0.6.16.post3/90a/cached_ops', 'FLASHINFER_WORKSPACE_DIR': '/root/.cache/flashinfer/0.6.16.post3/90a', 'SPDLOG_INCLUDE_DIR': '/root/venv/lib/python3.12/site-packages/flashinfer/data/spdlog/include'}
+INDUCTOR_CACHE_DIR /tmp/torchinductor_root
+TRITON_CACHE_DIR /root/.triton/cache
++ grep -rn 'DG_JIT_CACHE_DIR\|\.deep_gemm' /root/venv/lib/python3.12/site-packages/vllm/utils/deep_gemm.py /root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/__init__.py /root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/envs.py
++ head -8
+/root/venv/lib/python3.12/site-packages/vllm/utils/deep_gemm.py:188:            "trying vendored vllm.third_party.deep_gemm"
+/root/venv/lib/python3.12/site-packages/vllm/utils/deep_gemm.py:193:        module = importlib.import_module("vllm.third_party.deep_gemm")
+/root/venv/lib/python3.12/site-packages/vllm/utils/deep_gemm.py:194:        logger.debug_once("Imported deep_gemm module from vllm.third_party.deep_gemm")
+/root/venv/lib/python3.12/site-packages/vllm/utils/deep_gemm.py:261:    DEEP_GEMM_JIT_CACHE_ENV_NAME = "DG_JIT_CACHE_DIR"
++ grep -rln DG_JIT_CACHE_DIR /root/venv/lib/python3.12/site-packages/vllm
++ head -5
+/root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/_C.cpython-310-x86_64-linux-gnu.so
+/root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/_C.cpython-311-x86_64-linux-gnu.so
+/root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/_C.cpython-312-x86_64-linux-gnu.so
+/root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/_C.cpython-313-x86_64-linux-gnu.so
+/root/venv/lib/python3.12/site-packages/vllm/third_party/deep_gemm/_C.cpython-314-x86_64-linux-gnu.so
++ python -
+INSTALLED_DISTRIBUTIONS 198
+DIST_DIFF NousResearch_Meta-Llama-3.1-8B-Instruct_tp1_none_compile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'openai': ('3.13.0', '3.14.0'), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF NousResearch_Meta-Llama-3.1-8B-Instruct_tp1_none_compile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'openai': ('3.13.0', '3.14.0'), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'openai': ('3.13.0', '3.14.0'), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'openai': ('3.13.0', '3.14.0'), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 2
+DIST_DIFF Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed {} driver 580.126.09 gpu_count 2
+DIST_DIFF Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'openai': ('3.13.0', '3.14.0'), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 {} driver 580.126.09 gpu_count 1
+DIST_DIFF Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0_mixed record_n 209 diff {'autocommand': ('2.2.2', None), 'backports.tarfile': ('1.2.0', None), 'importlib_metadata': ('8.7.1', None), 'jaraco.context': ('6.1.0', None), 'jaraco.functools': ('4.4.0', None), 'jaraco.text': ('4.0.0', None), 'more-itertools': ('10.8.0', None), 'platformdirs': ('4.4.0', None), 'tomli': ('2.4.0', None), 'wheel': ('0.46.3', None), 'zipp': ('3.23.0', None)}
+PKGS_DIFF Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0_mixed {} driver 580.126.09 gpu_count 1
++ echo POST_BOOTSTRAP_DONE
+POST_BOOTSTRAP_DONE

@@ -1,0 +1,12 @@
+CACHE /root/.cache absent
+CACHE /root/.triton absent
+CACHE /root/.nv absent
+CACHE /root/.deep_gemm absent
+CACHE /root/.tilelang absent
+CACHE /root/.cutlass absent
+CACHE /tmp/torchinductor_root absent
+CACHE /tmp exists files=0 bytes=0
+  /tmp
+CACHE /var/tmp exists files=0 bytes=0
+  /var/tmp
+CACHE_TOTAL_FILES 0

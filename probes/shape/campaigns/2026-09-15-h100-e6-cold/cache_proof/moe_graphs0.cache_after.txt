@@ -1,0 +1,125 @@
+CACHE /root/.cache exists files=10 bytes=8764078
+  /root/.cache
+  /root/.cache/vllm
+  /root/.cache/vllm/modelinfos
+  /root/.cache/vllm/modelinfos/vllm-model_executor-models-qwen2_moe-Qwen2MoeForCausalLM.json
+  /root/.cache/flashinfer
+  /root/.cache/flashinfer/0.6.16.post3
+  /root/.cache/flashinfer/0.6.16.post3/90a
+CACHE /root/.triton exists files=65 bytes=5803570
+  /root/.triton
+  /root/.triton/cache
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ/cuda_utils.cpython-312-x86_64-linux-gnu.so
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.source
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.ttir
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.ttgir
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.llir
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.ptx
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.cubin
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/fused_moe_kernel.json
+  /root/.triton/cache/6V7S6P7Y2J6KD45IWJWQMR4LZHC2PYCSQVLRP2VERYX4B2CWEVIQ/__grp__fused_moe_kernel.json
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.source
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.ttir
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.ttgir
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.llir
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.ptx
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.cubin
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/fused_moe_kernel.json
+  /root/.triton/cache/NBHK5XMPEBLPMPLHDJQQPTFEEJ2DL2PUCMEPUSS2Q2PPNCSTDTJQ/__grp__fused_moe_kernel.json
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.source
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.ttir
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.ttgir
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.llir
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.ptx
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.cubin
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/_topk_topp_kernel.json
+  /root/.triton/cache/42XT2T7O5EINX7RTZAD5JAS447PRAVXJMUW3JQ3X5PVOAGZCHYGQ/__grp___topk_topp_kernel.json
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.source
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.ttir
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.ttgir
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.llir
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.ptx
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.cubin
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/_compute_slot_mapping_kernel.json
+  /root/.triton/cache/PTBQWXCZEAA6DW3QO3W6YGE3GMRYR6WMFCNEN2XXXG6W6EC7SKBQ/__grp___compute_slot_mapping_kernel.json
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.source
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.ttir
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.ttgir
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.llir
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.ptx
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.cubin
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/fused_moe_kernel.json
+  /root/.triton/cache/ZWK7EEAW7JO7QXEE2KE7FQQTTBF7CBWELWWEO5LU2EN5DOHRKE2A/__grp__fused_moe_kernel.json
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.source
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.ttir
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.ttgir
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.llir
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.ptx
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.cubin
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/fused_moe_kernel.json
+  /root/.triton/cache/UK64ZEV7B2KIRAENDOI26O3IH4G2HTPPKXKFKVXPGNOCV3RXBK7A/__grp__fused_moe_kernel.json
+  /root/.triton/cache/YN7KOL4KUH4IVOXOWAJD5K4GHQN6NM2MKLP2YZWGAO3PZARINF7A
+  /root/.triton/cache/YN7KOL4KUH4IVOXOWAJD5K4GHQN6NM2MKLP2YZWGAO3PZARINF7A/fused_moe_kernel.source
+CACHE /root/.nv exists files=0 bytes=0
+  /root/.nv
+  /root/.nv/ComputeCache
+CACHE /root/.deep_gemm absent
+CACHE /root/.tilelang exists files=0 bytes=0
+  /root/.tilelang
+  /root/.tilelang/cache
+  /root/.tilelang/cache/tmp
+  /root/.tilelang/cache/0.1.12
+  /root/.tilelang/cache/0.1.12/linux-x86_64
+CACHE /root/.cutlass absent
+CACHE /tmp/torchinductor_root exists files=44 bytes=1451214
+  /tmp/torchinductor_root
+  /tmp/torchinductor_root/jx
+  /tmp/torchinductor_root/jx/cjxm2blbltczwqp3nz7g4zmp5hrt6nsuz5rwwtiymgsrwgiskfk7.py
+  /tmp/torchinductor_root/hu
+  /tmp/torchinductor_root/hu/chuim6wmitzhx54q4y7vdl3bdghi6vrghrqyryw5as25aqbwskch.py
+  /tmp/torchinductor_root/triton
+  /tmp/torchinductor_root/triton/0
+  /tmp/torchinductor_root/triton/0/HKPVXPSMAKE7LIXAQBRRCE7XNMNKXRJ4ROTK46T5X73DQGTQBM3A
+  /tmp/torchinductor_root/triton/0/L3NWF6UZJUJCCDIYQC2BXUK5HCFXFPVZ2OXL45CGLNAXLWSDLRXA
+  /tmp/torchinductor_root/triton/0/ZY5DIE7XTM4CVLCF4NVMIV3PXWT5W3ZCKRSCOAXA2RQYUAW4KTSA
+  /tmp/torchinductor_root/triton/0/TOYC5D6QZYMI3LSDY2P3W5AACMUMUSRL2SMFBW257O55HUGW6VTQ
+  /tmp/torchinductor_root/triton/0/ULAAHUEFIRDFK7JJCCBOGRXYF7I2MYKTMB6GZAEP5XTC5RVDK3KA
+  /tmp/torchinductor_root/fxgraph
+  /tmp/torchinductor_root/fxgraph/yp
+  /tmp/torchinductor_root/fxgraph/yp/fypzwgougjr2tut7facco6bcjjkypnht66b2vcxshbyxmejua7yc
+  /tmp/torchinductor_root/aotautograd
+  /tmp/torchinductor_root/aotautograd/au4ykqbkb2mg2qbicimujwjs4icjc3tgp6o4foogitkqkzpqpcwm
+  /tmp/torchinductor_root/aotautograd/au4ykqbkb2mg2qbicimujwjs4icjc3tgp6o4foogitkqkzpqpcwm/numnt7rsesxbzdm67u2d7gkram6lzx4duzxoycvlxcegyie37nd
+CACHE /root/.humming exists files=1 bytes=0
+  /root/.humming
+  /root/.humming/tmp
+  /root/.humming/tmp/lock
+  /root/.humming/tmp/lock/launcher.lock
+CACHE /root/.config/vllm exists files=1 bytes=1501
+  /root/.config/vllm
+  /root/.config/vllm/usage_stats.json
+CACHE /tmp exists files=44 bytes=1451214
+  /tmp
+  /tmp/torchinductor_root
+  /tmp/torchinductor_root/jx
+  /tmp/torchinductor_root/jx/cjxm2blbltczwqp3nz7g4zmp5hrt6nsuz5rwwtiymgsrwgiskfk7.py
+  /tmp/torchinductor_root/hu
+  /tmp/torchinductor_root/hu/chuim6wmitzhx54q4y7vdl3bdghi6vrghrqyryw5as25aqbwskch.py
+  /tmp/torchinductor_root/triton
+  /tmp/torchinductor_root/triton/0
+  /tmp/torchinductor_root/fxgraph
+  /tmp/torchinductor_root/fxgraph/yp
+  /tmp/torchinductor_root/aotautograd
+  /tmp/torchinductor_root/aotautograd/au4ykqbkb2mg2qbicimujwjs4icjc3tgp6o4foogitkqkzpqpcwm
+  /tmp/root
+  /tmp/root/cutlass_python_cache
+CACHE /var/tmp exists files=0 bytes=0
+  /var/tmp
+CACHE_TOTAL_FILES 165

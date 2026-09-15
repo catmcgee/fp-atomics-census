@@ -1,0 +1,11 @@
+[2026-09-15T13:55:19Z] [q25_plain compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 497; errors 0
+[2026-09-15T13:57:28Z] [q25_mixed compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed replay: P2 DIFFERS; first mismatch None; rows compared 555; rows differing 555; errors 0
+[2026-09-15T13:59:44Z] [q25_fp8_pertensor compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+[2026-09-15T14:02:05Z] [q25_fp8_pertoken compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+[2026-09-15T14:07:31Z] [q3fp8_plain compare] E6 Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+[2026-09-15T14:10:37Z] [q3fp8_mixed compare] E6 Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0_mixed replay: P2 IDENTICAL; first mismatch None; rows compared 555; rows differing 0; errors 0
+[2026-09-15T14:12:54Z] [llama_plain compare] E6 NousResearch_Meta-Llama-3.1-8B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 495; errors 0
+[2026-09-15T14:15:01Z] [moe_graphs0 compare] E6 Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+[2026-09-15T14:17:08Z] [moe_graphs1 compare] E6 Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+[2026-09-15T14:19:25Z] [q25_tp2_plain compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 493; errors 0
+[2026-09-15T14:21:41Z] [q25_tp2_mixed compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay: P2 DIFFERS; first mismatch None; rows compared 555; rows differing 555; errors 0

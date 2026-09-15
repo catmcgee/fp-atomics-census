@@ -1,0 +1,53 @@
++ export HF_HOME=/root/hf PIP_CACHE_DIR=/root/pip-cache PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ HF_HOME=/root/hf
++ PIP_CACHE_DIR=/root/pip-cache
++ PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ mkdir -p /root/hf /root/pip-cache /root/census /root/logs
++ date -u
+Tue Sep 15 13:48:41 UTC 2026
++ nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv
+name, driver_version, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 580.126.09, 81559 MiB
+NVIDIA H100 80GB HBM3, 580.126.09, 81559 MiB
++ python3 --version
+Python 3.12.3
++ '[' -x /root/venv/bin/python ']'
++ python3 -m venv /root/venv
++ pip install -q --upgrade pip
++ pip install -q vllm==0.28.0 flashinfer-python==0.6.16.post3 hf_transfer ninja
++ echo PIP_PINNED_OK
+PIP_PINNED_OK
++ python -c 'import torch, vllm, triton; print("STACK torch", torch.__version__, "cuda", torch.version.cuda, "vllm", vllm.__version__, "triton", triton.__version__)'
+STACK torch 2.13.0+cu130 cuda 13.0 vllm 0.28.0 triton 3.7.1
++ for p in flashinfer-python ninja transformers hf_transfer
+++ pip show flashinfer-python
+++ grep -i '^version'
+++ cut '-d ' -f2
++ echo 'PKG flashinfer-python 0.6.16.post3'
+PKG flashinfer-python 0.6.16.post3
++ for p in flashinfer-python ninja transformers hf_transfer
+++ pip show ninja
+++ grep -i '^version'
+++ cut '-d ' -f2
++ echo 'PKG ninja 1.13.2'
+PKG ninja 1.13.2
++ for p in flashinfer-python ninja transformers hf_transfer
+++ pip show transformers
+++ grep -i '^version'
+++ cut '-d ' -f2
++ echo 'PKG transformers 5.17.0'
+PKG transformers 5.17.0
++ for p in flashinfer-python ninja transformers hf_transfer
+++ pip show hf_transfer
+++ grep -i '^version'
+++ cut '-d ' -f2
++ echo 'PKG hf_transfer 0.1.9'
+PKG hf_transfer 0.1.9
++ which ninja
+/root/venv/bin/ninja
++ ninja --version
+1.13.2.git.kitware.jobserver-pipe-1
++ date -u
+Tue Sep 15 13:50:38 UTC 2026
++ echo BOOTSTRAP_DONE
+BOOTSTRAP_DONE

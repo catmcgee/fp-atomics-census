@@ -1,0 +1,45 @@
+CACHE /root/.cache exists files=221 bytes=32585288
+  /root/.cache
+  /root/.cache/vllm
+  /root/.cache/vllm/modelinfos
+  /root/.cache/vllm/modelinfos/vllm-model_executor-models-qwen2-Qwen2ForCausalLM.json
+  /root/.cache/vllm/torch_compile_cache
+  /root/.cache/vllm/torch_compile_cache/torch_aot_compile
+  /root/.cache/vllm/torch_compile_cache/1fa9d56857
+  /root/.cache/flashinfer
+  /root/.cache/flashinfer/0.6.16.post3
+  /root/.cache/flashinfer/0.6.16.post3/90a
+CACHE /root/.triton exists files=1 bytes=55832
+  /root/.triton
+  /root/.triton/cache
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ/cuda_utils.cpython-312-x86_64-linux-gnu.so
+CACHE /root/.nv exists files=0 bytes=0
+  /root/.nv
+  /root/.nv/ComputeCache
+CACHE /root/.deep_gemm absent
+CACHE /root/.tilelang exists files=0 bytes=0
+  /root/.tilelang
+  /root/.tilelang/cache
+  /root/.tilelang/cache/tmp
+  /root/.tilelang/cache/0.1.12
+  /root/.tilelang/cache/0.1.12/linux-x86_64
+CACHE /root/.cutlass absent
+CACHE /tmp/torchinductor_root exists files=0 bytes=0
+  /tmp/torchinductor_root
+CACHE /root/.humming exists files=1 bytes=0
+  /root/.humming
+  /root/.humming/tmp
+  /root/.humming/tmp/lock
+  /root/.humming/tmp/lock/launcher.lock
+CACHE /root/.config/vllm exists files=1 bytes=1502
+  /root/.config/vllm
+  /root/.config/vllm/usage_stats.json
+CACHE /tmp exists files=0 bytes=0
+  /tmp
+  /tmp/torchinductor_root
+  /tmp/root
+  /tmp/root/cutlass_python_cache
+CACHE /var/tmp exists files=0 bytes=0
+  /var/tmp
+CACHE_TOTAL_FILES 224

@@ -1,0 +1,3 @@
+# added 13:59Z after the first replay showed these written (a lock file and usage stats, no compiled artefact)
+/root/.humming
+/root/.config/vllm

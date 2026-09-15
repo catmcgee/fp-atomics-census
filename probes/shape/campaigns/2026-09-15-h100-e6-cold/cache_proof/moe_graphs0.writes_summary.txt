@@ -1,0 +1,10 @@
+     65 /root/.triton/cache
+     40 /tmp/torchinductor_root/triton
+      9 /root/.cache/flashinfer
+      1 /tmp/torchinductor_root/jx
+      1 /tmp/torchinductor_root/hu
+      1 /tmp/torchinductor_root/fxgraph
+      1 /tmp/torchinductor_root/aotautograd
+      1 /root/.humming/tmp
+      1 /root/.config/vllm
+      1 /root/.cache/vllm
