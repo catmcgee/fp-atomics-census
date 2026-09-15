@@ -490,6 +490,37 @@ def _load_json(p: Path, default=None):
     return json.loads(p.read_text()) if p.exists() else default
 
 
+STACK_FIELDS = ("gpu", "gpu_count", "driver", "installed_distributions")
+
+
+def replay_stacks(record_dir: Path, replay_dir: Path) -> dict | None:
+    """GPU and driver of the record and the replay from their env.json files, and which recorded stack fields differ.
+
+    None when either side has no env.json. Equal fields do not make two stacks equal: the attention kernel
+    version, the container image and compiled artefacts are not recorded there.
+    """
+    envs = [_load_json(d / "env.json") for d in (record_dir, replay_dir)]
+    if not all(isinstance(e, dict) for e in envs):
+        return None
+    rec, rep = envs
+    return {"record": {k: rec.get(k) for k in ("gpu", "driver")}, "replay": {k: rep.get(k) for k in ("gpu", "driver")},
+            "differing_fields": [k for k in STACK_FIELDS if rec.get(k) != rep.get(k)]}
+
+
+def replay_claim_scope(stacks: dict | None) -> str:
+    tail = "identical means the recorded passes were reproduced from the record, not that every schedule or stack would be."
+    if stacks is None:
+        return f"One recorded schedule replayed in one fresh process with teacher forcing; env.json is missing on at least one side, so the stacks are not compared here; {tail}"
+    if not stacks["differing_fields"]:
+        return ("One recorded schedule replayed in one fresh process on the same recorded stack (GPU, driver and installed "
+                f"distributions equal in both env.json files) with teacher forcing; {tail}")
+    rec, rep = stacks["record"], stacks["replay"]
+    return (f"One recorded schedule replayed in one fresh process on a different stack with teacher forcing ({', '.join(stacks['differing_fields'])} "
+            f"differ: record {rec['gpu']}, driver {rec['driver']}; replay {rep['gpu']}, driver {rep['driver']}). This is a two-stack "
+            "observation: a difference does not isolate the GPU from the driver, kernel selection or compiled artefacts, and "
+            "identical would not show that other schedules or stacks reproduce.")
+
+
 def compare(record_dir: Path, replay_dir: Path) -> int:
     record_dir, replay_dir = Path(record_dir), Path(replay_dir)
     rec_meta = _load_json(record_dir / "run.json", {})
@@ -554,12 +585,17 @@ def compare(record_dir: Path, replay_dir: Path) -> int:
                    "requirements_met": comparison["first_mismatch"] is None and not errors,
                    "outputs_identical": bool(outputs_a) and outputs_a == outputs_b,
                    "forcing_log": {k: v for k, v in forcing.items() if k != "errors"}, "notes": plan.get("notes", []),
-                   "verdict_P2": verdict, "validation_errors": sorted(set(errors)),
-                   "claim_scope": "One recorded schedule replayed in one fresh process on the same stack with teacher forcing; identical means the "
-                                  "recorded passes were reproduced from the record, not that every schedule or stack would be."}
+                   "verdict_P2": verdict, "validation_errors": sorted(set(errors))}
+        stacks = replay_stacks(record_dir, replay_dir)
+        if stacks is not None:
+            summary["record_stack"], summary["replay_stack"] = stacks["record"], stacks["replay"]
+        summary["claim_scope"] = replay_claim_scope(stacks)
+    inputs = [*_record_files(record_dir), *_record_files(replay_dir)]
+    if boundary is None:
+        inputs += [record_dir / "env.json", replay_dir / "env.json"]
     summary["record_sha256"] = _digests(_record_files(record_dir))
     summary["replay_sha256"] = _digests(_record_files(replay_dir))
-    summary.update(analysis_metadata(common, [*_record_files(record_dir), *_record_files(replay_dir)]))
+    summary.update(analysis_metadata(common, inputs))
     write_json(_summary_path(record_dir, replay_dir, boundary), summary)
     label = f"boundary pass {boundary['pass']}" if boundary else "replay"
     print(f"E6 {arm} {label}: P2 {verdict}; first mismatch {summary.get('first_mismatch')}; rows compared {summary.get('rows_compared')}; "

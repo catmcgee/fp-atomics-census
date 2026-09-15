@@ -485,6 +485,28 @@ def test_e6_table_names_each_replay_directory_and_its_gpu(tmp_path):
     assert "| arm | replay (GPU A) | 3 | True |" in out and "| arm | replay_other (GPU B) | 3 | True |" in out
 
 
+def test_claim_scope_states_whether_the_replay_ran_on_the_recorded_stack(tmp_path):
+    arm = tmp_path / "results/e6/arm"
+    write_arm(arm / "record", make_record("a"), outputs("a"), RUN_META)
+    base = {"gpu": "GPU A", "gpu_count": 1, "driver": "1.0", "installed_distributions": {"vllm": "0.28.0"}}
+    (arm / "record/env.json").write_text(json.dumps(base))
+    for name, env in (("replay", base), ("replay_other", {**base, "gpu": "GPU B", "driver": "2.0"}), ("replay_noenv", None)):
+        rep = make_record("b")
+        write_arm(arm / name, rep, outputs("b"), replay_meta(arm / "record"), forcing_log_for(rep))
+        if env is not None:
+            (arm / name / "env.json").write_text(json.dumps(env))
+        assert run_e6.compare(arm / "record", arm / name) == 0
+    same = json.loads((arm / "summary.json").read_text())
+    other = json.loads((arm / "summary_replay_other.json").read_text())
+    missing = json.loads((arm / "summary_replay_noenv.json").read_text())
+    assert "on the same recorded stack" in same["claim_scope"] and "replay/env.json" in same["input_sha256"]
+    assert "on a different stack" in other["claim_scope"] and "gpu, driver differ" in other["claim_scope"]
+    assert "two-stack observation" in other["claim_scope"] and other["replay_stack"] == {"gpu": "GPU B", "driver": "2.0"}
+    assert "same stack" not in missing["claim_scope"] and "replay_stack" not in missing
+    # The stack fields describe the scope only; the verdict still comes from the hashes.
+    assert same["verdict_P2"] == other["verdict_P2"] == "IDENTICAL"
+
+
 def test_compare_is_invalid_without_forcing_log_or_with_schema2_record(tmp_path):
     arm = tmp_path / "results/e6/arm"
     write_arm(arm / "record", make_record("a"), outputs("a"), RUN_META)

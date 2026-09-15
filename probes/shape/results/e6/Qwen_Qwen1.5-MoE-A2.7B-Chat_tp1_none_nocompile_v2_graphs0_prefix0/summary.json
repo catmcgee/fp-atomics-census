@@ -29,7 +29,15 @@
   "notes": [],
   "verdict_P2": "IDENTICAL",
   "validation_errors": [],
-  "claim_scope": "One recorded schedule replayed in one fresh process on the same stack with teacher forcing; identical means the recorded passes were reproduced from the record, not that every schedule or stack would be.",
+  "record_stack": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09"
+  },
+  "replay_stack": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09"
+  },
+  "claim_scope": "One recorded schedule replayed in one fresh process on the same recorded stack (GPU, driver and installed distributions equal in both env.json files) with teacher forcing; identical means the recorded passes were reproduced from the record, not that every schedule or stack would be.",
   "record_sha256": {
     "run.json": "91945f287a2210902b66e32608ef783c40886f64685a67e513a18b06f9f7dc3d",
     "outputs.json": "195cac58621da27ae8e969b66100d066dff6d6ed837daaf1ec9dedf600196f14",
@@ -43,12 +51,14 @@
     "forcing_rank0.jsonl": "2e1833fc7863e155eedde68b3047dae6181987f099591c0b55928b23ed0b0899"
   },
   "analysis_schema": 2,
-  "analyser_sha256": "569e6d1275c392b2d5d441ac3dd83953fb4e3e88e74e6f9d74e528dade611e17",
+  "analyser_sha256": "58759462ef5763966abbf3a642928557b51390a420938ddabed51d929a9f390c",
   "input_sha256": {
+    "record/env.json": "aa232cd95d29997bffecb01b0b06fbfa6bd25f049b16adfe42a70b74153b219f",
     "record/hook/forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
     "record/hook/rank0.jsonl": "d48d82821258f0e9295f8d5b44ca8685fc3b81d8b1a6f9ae38277146da1f71d2",
     "record/outputs.json": "195cac58621da27ae8e969b66100d066dff6d6ed837daaf1ec9dedf600196f14",
     "record/run.json": "91945f287a2210902b66e32608ef783c40886f64685a67e513a18b06f9f7dc3d",
+    "replay/env.json": "cb74e2442c9c1534d10990ed2f3ab1a38972e337c89e34ae9d0111c70557a418",
     "replay/hook/forcing_rank0.jsonl": "2e1833fc7863e155eedde68b3047dae6181987f099591c0b55928b23ed0b0899",
     "replay/hook/rank0.jsonl": "1a66203bf70e41a3509829024912d5f4e91935e379dc5d27e3208fef1a5a1042",
     "replay/outputs.json": "195cac58621da27ae8e969b66100d066dff6d6ed837daaf1ec9dedf600196f14",
