@@ -1,6 +1,6 @@
 {
   "engine": "vllm",
-  "sha": "5769a7382cb111288a9c2927342ca908943b9793",
+  "sha": "98dff2a81d747d1dba01a47f939f48c3526d4206",
   "scan_paths": [
     "csrc",
     "vllm"
@@ -24,45 +24,46 @@
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        "<none>": 9,
+        "<none>": 8,
         ".yaml": 4,
         ".md": 7,
         ".txt": 1,
         ".in": 1,
-        ".sh": 1,
+        ".sh": 2,
         ".yml": 1,
         ".toml": 2
       }
     },
     "benchmarks": {
-      "files_walked": 116,
-      "files_scanned": 91,
-      "files_with_candidates": 4,
-      "candidates": 7,
+      "files_walked": 133,
+      "files_scanned": 105,
+      "files_with_candidates": 8,
+      "candidates": 22,
       "in_scope": false,
       "skipped_extensions": {
         ".md": 5,
         ".sh": 4,
         ".txt": 3,
-        ".yaml": 11,
+        ".yaml": 14,
         ".json": 2
       }
     },
     "cmake": {
-      "files_walked": 9,
+      "files_walked": 12,
       "files_scanned": 1,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".cmake": 8
+        ".cmake": 10,
+        ".patch": 1
       }
     },
     "csrc": {
-      "files_walked": 14,
-      "files_scanned": 14,
-      "files_with_candidates": 0,
-      "candidates": 0,
+      "files_walked": 17,
+      "files_scanned": 17,
+      "files_with_candidates": 1,
+      "candidates": 4,
       "in_scope": true,
       "skipped_extensions": {}
     },
@@ -83,8 +84,8 @@
       "skipped_extensions": {}
     },
     "csrc/cpu": {
-      "files_walked": 60,
-      "files_scanned": 60,
+      "files_walked": 71,
+      "files_scanned": 71,
       "files_with_candidates": 2,
       "candidates": 3,
       "in_scope": true,
@@ -99,10 +100,10 @@
       "skipped_extensions": {}
     },
     "csrc/libtorch_stable": {
-      "files_walked": 175,
-      "files_scanned": 172,
-      "files_with_candidates": 14,
-      "candidates": 103,
+      "files_walked": 185,
+      "files_scanned": 182,
+      "files_with_candidates": 16,
+      "candidates": 108,
       "in_scope": true,
       "skipped_extensions": {
         "<none>": 2,
@@ -136,15 +137,15 @@
       "skipped_extensions": {}
     },
     "csrc/rocm": {
-      "files_walked": 8,
-      "files_scanned": 8,
+      "files_walked": 9,
+      "files_scanned": 9,
       "files_with_candidates": 4,
       "candidates": 32,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "docker": {
-      "files_walked": 14,
+      "files_walked": 18,
       "files_scanned": 0,
       "files_with_candidates": 0,
       "candidates": 0,
@@ -153,8 +154,12 @@
         "<none>": 1,
         ".cpu": 1,
         ".ppc64le": 1,
+        ".rock": 1,
+        ".rock_base": 1,
         ".rocm": 1,
         ".rocm_base": 1,
+        ".rocm_base_gfx1250": 1,
+        ".rocm_gfx1250": 1,
         ".s390x": 1,
         ".tpu": 1,
         ".xpu": 1,
@@ -164,36 +169,36 @@
       }
     },
     "docs": {
-      "files_walked": 335,
-      "files_scanned": 6,
+      "files_walked": 338,
+      "files_scanned": 8,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
         ".yml": 5,
-        ".md": 226,
+        ".md": 224,
         ".sh": 1,
+        ".svg": 7,
         ".png": 81,
         ".html": 3,
         ".jpg": 2,
-        ".svg": 5,
         ".ico": 1,
-        ".js": 4,
+        ".js": 5,
         ".css": 1
       }
     },
     "examples": {
-      "files_walked": 257,
-      "files_scanned": 149,
+      "files_walked": 261,
+      "files_scanned": 150,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".jinja": 44,
+        ".jinja": 45,
         ".md": 18,
         ".sh": 16,
         "<none>": 1,
-        ".yaml": 22,
+        ".yaml": 24,
         ".json": 4,
         ".tpl": 1,
         ".jsonl": 1,
@@ -212,57 +217,58 @@
       }
     },
     "rust": {
-      "files_walked": 338,
+      "files_walked": 437,
       "files_scanned": 1,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
         "<none>": 2,
-        ".md": 10,
+        ".md": 15,
         ".lock": 1,
-        ".toml": 16,
-        ".proto": 1,
-        ".rs": 247,
-        ".json": 12,
-        ".txt": 13,
+        ".toml": 19,
+        ".yaml": 1,
+        ".proto": 2,
+        ".rs": 312,
+        ".txt": 26,
+        ".json": 23,
         ".jinja": 35
       }
     },
     "scripts": {
-      "files_walked": 1,
-      "files_scanned": 1,
+      "files_walked": 2,
+      "files_scanned": 2,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {}
     },
     "tests": {
-      "files_walked": 1643,
-      "files_scanned": 1437,
-      "files_with_candidates": 47,
-      "candidates": 93,
+      "files_walked": 2016,
+      "files_scanned": 1773,
+      "files_with_candidates": 75,
+      "candidates": 154,
       "in_scope": false,
       "skipped_extensions": {
-        ".md": 5,
+        ".md": 6,
         ".json": 14,
-        ".yaml": 131,
-        ".txt": 35,
-        ".mp4": 1,
+        ".yaml": 147,
+        ".txt": 51,
+        ".mp4": 2,
         ".png": 3,
-        ".sh": 16,
+        ".sh": 19,
         ".jpg": 1
       }
     },
     "tools": {
-      "files_walked": 44,
-      "files_scanned": 21,
+      "files_walked": 53,
+      "files_scanned": 26,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
         ".sh": 16,
-        ".md": 2,
+        ".md": 6,
         ".patch": 1,
         ".json": 1,
         ".png": 3
@@ -295,24 +301,24 @@
       "skipped_extensions": {}
     },
     "vllm/compilation": {
-      "files_walked": 43,
-      "files_scanned": 43,
+      "files_walked": 45,
+      "files_scanned": 45,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "vllm/config": {
-      "files_walked": 30,
-      "files_scanned": 30,
+      "files_walked": 32,
+      "files_scanned": 32,
       "files_with_candidates": 1,
       "candidates": 3,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "vllm/cute_utils": {
-      "files_walked": 3,
-      "files_scanned": 3,
+      "files_walked": 4,
+      "files_scanned": 4,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -327,10 +333,10 @@
       "skipped_extensions": {}
     },
     "vllm/distributed": {
-      "files_walked": 126,
-      "files_scanned": 124,
-      "files_with_candidates": 13,
-      "candidates": 32,
+      "files_walked": 142,
+      "files_scanned": 140,
+      "files_with_candidates": 15,
+      "candidates": 38,
       "in_scope": true,
       "skipped_extensions": {
         ".md": 1,
@@ -346,8 +352,8 @@
       "skipped_extensions": {}
     },
     "vllm/entrypoints": {
-      "files_walked": 182,
-      "files_scanned": 180,
+      "files_walked": 214,
+      "files_scanned": 212,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -357,8 +363,8 @@
       }
     },
     "vllm/inputs": {
-      "files_walked": 4,
-      "files_scanned": 4,
+      "files_walked": 3,
+      "files_scanned": 3,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -373,8 +379,8 @@
       "skipped_extensions": {}
     },
     "vllm/kernels": {
-      "files_walked": 34,
-      "files_scanned": 20,
+      "files_walked": 33,
+      "files_scanned": 19,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -401,36 +407,36 @@
       }
     },
     "vllm/model_executor": {
-      "files_walked": 1288,
-      "files_scanned": 733,
-      "files_with_candidates": 46,
-      "candidates": 81,
+      "files_walked": 1337,
+      "files_scanned": 764,
+      "files_with_candidates": 56,
+      "candidates": 100,
       "in_scope": true,
       "skipped_extensions": {
-        ".json": 553,
+        ".json": 571,
         "<none>": 1,
         ".md": 1
       }
     },
     "vllm/models": {
-      "files_walked": 67,
-      "files_scanned": 67,
+      "files_walked": 235,
+      "files_scanned": 235,
+      "files_with_candidates": 18,
+      "candidates": 34,
+      "in_scope": true,
+      "skipped_extensions": {}
+    },
+    "vllm/multimodal": {
+      "files_walked": 32,
+      "files_scanned": 32,
       "files_with_candidates": 3,
       "candidates": 3,
       "in_scope": true,
       "skipped_extensions": {}
     },
-    "vllm/multimodal": {
-      "files_walked": 24,
-      "files_scanned": 24,
-      "files_with_candidates": 2,
-      "candidates": 2,
-      "in_scope": true,
-      "skipped_extensions": {}
-    },
     "vllm/parser": {
-      "files_walked": 25,
-      "files_scanned": 25,
+      "files_walked": 28,
+      "files_scanned": 28,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -445,8 +451,8 @@
       "skipped_extensions": {}
     },
     "vllm/plugins": {
-      "files_walked": 6,
-      "files_scanned": 6,
+      "files_walked": 8,
+      "files_scanned": 8,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -469,24 +475,34 @@
       "skipped_extensions": {}
     },
     "vllm/reasoning": {
-      "files_walked": 27,
-      "files_scanned": 27,
+      "files_walked": 32,
+      "files_scanned": 32,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "vllm/renderers": {
-      "files_walked": 15,
-      "files_scanned": 15,
+      "files_walked": 19,
+      "files_scanned": 19,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "vllm/third_party": {
-      "files_walked": 3,
-      "files_scanned": 3,
+      "files_walked": 23,
+      "files_scanned": 22,
+      "files_with_candidates": 1,
+      "candidates": 2,
+      "in_scope": true,
+      "skipped_extensions": {
+        "<none>": 1
+      }
+    },
+    "vllm/tilelang_utils": {
+      "files_walked": 1,
+      "files_scanned": 1,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -501,8 +517,8 @@
       "skipped_extensions": {}
     },
     "vllm/tool_parsers": {
-      "files_walked": 45,
-      "files_scanned": 45,
+      "files_walked": 51,
+      "files_scanned": 51,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -517,18 +533,18 @@
       "skipped_extensions": {}
     },
     "vllm/transformers_utils": {
-      "files_walked": 114,
-      "files_scanned": 106,
+      "files_walked": 117,
+      "files_scanned": 110,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
       "skipped_extensions": {
-        ".jinja": 8
+        ".jinja": 7
       }
     },
     "vllm/triton_utils": {
-      "files_walked": 4,
-      "files_scanned": 4,
+      "files_walked": 5,
+      "files_scanned": 5,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -543,8 +559,8 @@
       "skipped_extensions": {}
     },
     "vllm/utils": {
-      "files_walked": 38,
-      "files_scanned": 37,
+      "files_walked": 41,
+      "files_scanned": 40,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": true,
@@ -553,10 +569,10 @@
       }
     },
     "vllm/v1": {
-      "files_walked": 320,
-      "files_scanned": 319,
-      "files_with_candidates": 32,
-      "candidates": 59,
+      "files_walked": 362,
+      "files_scanned": 361,
+      "files_with_candidates": 38,
+      "candidates": 76,
       "in_scope": true,
       "skipped_extensions": {
         ".md": 1
@@ -574,13 +590,13 @@
     }
   },
   "totals": {
-    "files_walked": 5638,
-    "files_scanned": 3952,
-    "candidates": 429,
-    "candidates_in_scope": 329,
+    "files_walked": 6542,
+    "files_scanned": 4684,
+    "candidates": 590,
+    "candidates_in_scope": 414,
     "candidates_excluded": 15,
     "wrapper_definitions": {
-      "atomicMaxFloat": "vllm-c00115"
+      "atomicMaxFloat": "vllm-c00139"
     }
   }
 }

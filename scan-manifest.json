@@ -6,8 +6,9 @@
     {
       "name": "vllm",
       "url": "https://github.com/vllm-project/vllm.git",
-      "sha": "5769a7382cb111288a9c2927342ca908943b9793",
-      "commit_date": "2026-07-06T23:06:19Z",
+      "sha": "98dff2a81d747d1dba01a47f939f48c3526d4206",
+      "commit_date": "2026-09-08T08:50:34Z",
+      "pin_rule": "tag v0.29.0",
       "scan_paths": [
         "csrc",
         "vllm"
