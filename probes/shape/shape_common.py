@@ -1,14 +1,20 @@
 """Shared helpers for the batch-shape experiments (probes/shape/)."""
 from __future__ import annotations
 
+import getpass
 import hashlib
 import json
 import os
+import platform
 import random
+import re
+import socket
 import struct
+import subprocess
+import tempfile
 import uuid
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -239,6 +245,8 @@ def record_run(out: Path, args, llm, prompts, extra: dict | None = None) -> None
               "model_revision": getattr(config.model_config.hf_config, "_commit_hash", None),
               "tokenizer_revision": getattr(config.model_config, "tokenizer_revision", None),
               "weight_content_hash": None, "kernel_content_hash": None,
+              "vllm_version": _vllm_version(), "model_runner": "v2" if getattr(config, "use_v2_model_runner", False) else "v1",
+              "machine": machine_identity(),
               "status": "configured" if actual == expected else "INVALID"}
     if extra:
         record.update(extra)
@@ -270,3 +278,144 @@ def add_common_args(ap) -> None:
 def arm_name(args) -> str:
     tag = f"_{args.tag}" if getattr(args, "tag", None) else ""
     return f"{args.model.replace('/', '_')}_tp{args.tp}_{args.quantization or 'none'}{'_pertensor' if getattr(args, 'fp8_per_tensor', False) else ''}{'_nocompile' if getattr(args, 'no_compile', False) else '_compile'}_v2_graphs{args.cudagraph}_prefix{args.prefix_caching}{tag}"
+
+
+# ----------------------------------------------------------------------------
+# Machine identity and compile/kernel cache state (E6 cold replays)
+# ----------------------------------------------------------------------------
+
+def cache_roots() -> dict[str, str]:
+    """Directories where vLLM 0.28.0/0.29.0, torch 2.13 Inductor, triton, FlashInfer, DeepGEMM and the CUDA driver keep
+    compiled artefacts, at their defaults or as the environment redirects them. vLLM may point TORCHINDUCTOR_CACHE_DIR
+    and TRITON_CACHE_DIR inside its own root while it compiles (vllm/compilation/compiler_interface.py:475-480); such a
+    path is covered by the vllm root and not listed twice."""
+    home = Path.home()
+    cache_home = Path(os.environ.get("XDG_CACHE_HOME") or home / ".cache")
+    try:
+        user = re.sub(r'[\\/:*?"<>|]', "_", getpass.getuser())  # torch/_inductor/runtime/cache_dir_utils.py
+    except Exception:  # noqa: BLE001
+        user = "unknown"
+    roots = {"vllm": os.environ.get("VLLM_CACHE_ROOT") or str(cache_home / "vllm"),
+             "inductor": str(Path(tempfile.gettempdir()) / f"torchinductor_{user}"),
+             "triton": str(home / ".triton"),
+             "flashinfer": str(Path(os.environ.get("FLASHINFER_WORKSPACE_BASE") or home) / ".cache" / "flashinfer"),
+             "torch_extensions": os.environ.get("TORCH_EXTENSIONS_DIR") or str(cache_home / "torch_extensions"),
+             "cuda_jit": os.environ.get("CUDA_CACHE_PATH") or str(home / ".nv" / "ComputeCache"),
+             "deep_gemm": os.environ.get("DG_JIT_CACHE_DIR") or str(home / ".deep_gemm")}
+    for key, var in (("inductor_env", "TORCHINDUCTOR_CACHE_DIR"), ("triton_env", "TRITON_CACHE_DIR")):
+        path = os.environ.get(var)
+        if path and not any(Path(path).resolve().is_relative_to(Path(r).resolve()) for r in roots.values()):
+            roots[key] = path
+    return roots
+
+
+def _file_sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+MAX_CACHE_FILES = 20000
+
+
+def cache_manifest(path, max_files: int = MAX_CACHE_FILES) -> dict:
+    """File count, bytes and one digest over (relative path, size, content digest) of every regular file under path.
+
+    ``files`` is 0 for a missing directory and for an empty one, which is what the cold-cache checks compare;
+    ``sha256`` is null in both cases. Above ``max_files`` the walk stops and the record says ``truncated``, so a
+    cache nobody cleared costs a bounded amount of time instead of silently stalling an arm.
+    """
+    root = Path(path)
+    if not root.is_dir():
+        return {"path": str(root), "exists": False, "files": 0, "bytes": 0, "sha256": None}
+    digest, files, size, truncated = hashlib.sha256(), 0, 0, False
+    for p in sorted(x for x in root.rglob("*") if x.is_file() and not x.is_symlink()):
+        if files >= max_files:
+            truncated = True
+            break
+        n = p.stat().st_size
+        digest.update(f"{p.relative_to(root).as_posix()}\0{n}\0{_file_sha256(p)}\n".encode())
+        files, size = files + 1, size + n
+    rec = {"path": str(root), "exists": True, "files": files, "bytes": size,
+           "sha256": digest.hexdigest() if files and not truncated else None}
+    if truncated:
+        rec["truncated"] = max_files
+    return rec
+
+
+def cache_state(roots: dict | None = None) -> dict:
+    return {name: cache_manifest(path) for name, path in sorted((roots or cache_roots()).items())}
+
+
+def cache_is_empty(state: dict | None = None) -> bool:
+    """True when every cache root is absent or holds no file: the precondition of a cold replay."""
+    return all(root["files"] == 0 for root in (state or cache_state()).values())
+
+
+def compiled_artefacts(roots: dict | None = None) -> dict:
+    """What the compiled artefacts under the cache roots say about kernel choice: every Inductor autotune pick
+    (``*.best_config``), the extern calls in the generated code (``extern_kernels.mm`` is cuBLAS) and the generated
+    Triton kernel families. A digest of the files is in cache_state; archive the directories for anything more."""
+    best, calls, kernels = {}, Counter(), Counter()
+    for name, path in sorted((roots or cache_roots()).items()):
+        root = Path(path)
+        if not root.is_dir():
+            continue
+        for p in sorted(root.rglob("*.best_config")):
+            try:
+                best[f"{name}/{p.relative_to(root).as_posix()}"] = json.loads(p.read_text())
+            except Exception as e:  # noqa: BLE001
+                best[f"{name}/{p.relative_to(root).as_posix()}"] = {"error": repr(e)[:80]}
+        for p in sorted(root.rglob("*.py")):
+            text = p.read_text(errors="replace")
+            calls.update(re.findall(r"extern_kernels\.(\w+)\(", text))
+            kernels.update(re.sub(r"_\d+$", "", k) for k in re.findall(r"def (triton_(?:poi|red|per|tem|spl)_\w*)\(", text))
+    return {"best_configs": best, "extern_calls": dict(sorted(calls.items())), "triton_kernel_families": dict(sorted(kernels.items()))}
+
+
+def _vllm_version() -> str | None:
+    try:
+        import importlib.metadata as md
+        return md.version("vllm")
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def write_cache_state(out: Path, phase: str) -> dict:
+    """Record the compile and kernel caches at a named point of an arm, into ``cache_<phase>.json``.
+
+    Runners call this with ``before_engine`` before constructing the engine, so a cold replay's claim that every
+    cache was empty is a recorded fact rather than a note, and with ``after_run`` afterwards.
+    """
+    state = cache_state()
+    write_json(Path(out) / f"cache_{phase}.json", {"phase": phase, "empty": cache_is_empty(state), "roots": state})
+    return state
+
+
+def write_artefacts(out: Path) -> dict:
+    """Record what the compiled artefacts left on disk say about kernel choice, into ``artefacts.json``.
+
+    This is the record side the cold E6 replays lacked: without the recording machine's Inductor autotune choices
+    and generated kernels, a cold replay that differs cannot say whether autotuning or the machine caused it. The
+    files themselves must still be archived; this is the summary that travels with the arm.
+    """
+    state = write_cache_state(out, "after_run")
+    art = compiled_artefacts()
+    write_json(Path(out) / "artefacts.json", {"cache_roots": {k: v["path"] for k, v in state.items()}, **art})
+    return art
+
+
+def machine_identity() -> dict:
+    """Host name, pod id and the GPUs' UUIDs, PCI bus ids and VBIOS as nvidia-smi reports them (all GPUs on the host)."""
+    ident = {"hostname": socket.gethostname(), "runpod_pod_id": os.environ.get("RUNPOD_POD_ID"),
+             "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES"), "kernel": platform.release(), "gpus": None}
+    try:
+        out = subprocess.check_output(["nvidia-smi", "--query-gpu=index,uuid,pci.bus_id,vbios_version", "--format=csv,noheader"],
+                                      text=True, timeout=60)
+        ident["gpus"] = [dict(zip(("index", "uuid", "pci_bus_id", "vbios"), (x.strip() for x in line.split(","))))
+                         for line in out.strip().splitlines() if line.strip()]
+    except Exception as e:  # noqa: BLE001
+        ident["gpus_error"] = repr(e)[:80]
+    return ident

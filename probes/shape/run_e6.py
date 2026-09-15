@@ -62,7 +62,8 @@ os.environ.setdefault("VLLM_USE_V2_MODEL_RUNNER", "0")
 
 from comparison import load_steps, normalise_outputs, output_trace_errors
 from shape_common import (add_common_args, analysis_metadata, arm_name, engine_kwargs, env_with_hook, mixed_prompts, outputs_record,
-                          prompt_sha256, read_hook, real_steps, record_run, record_schema, slot_of, trace_errors, write_json)
+                          prompt_sha256, read_hook, real_steps, record_run, record_schema, slot_of, trace_errors, write_artefacts,
+                          write_cache_state, write_json)
 from teacher_forcing import EXTRA_ARGS_KEY, TeacherForcingLogitsProcessor, read_forcing_log
 
 RECORD_FIELDS = ("num_reqs", "total_scheduled", "dispatch", "attention_backend", "parallel", "resolved_compile", "resolved_cudagraph",
@@ -658,6 +659,7 @@ def record(args) -> int:
     out = args.out / (arm_name(args) + ("_mixed" if args.mixed else "")) / "record"
     out.mkdir(parents=True, exist_ok=False)
     env_with_hook(out / "hook")
+    write_cache_state(out, "before_engine")
     if getattr(args, "fp8_per_tensor", False):
         os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"  # before register(): the hook reads it once, at registration
     import shape_hook
@@ -683,6 +685,7 @@ def record(args) -> int:
         finished.extend(o for o in eng.step() if o.finished)
     shape_hook.flush()
     write_json(out / "outputs.json", outputs_record(finished))
+    write_artefacts(out)
     steps = real_steps(read_hook(out / "hook"))
     plan = replay_plan(steps, json.loads((out / "run.json").read_text()), normalise_outputs(json.loads((out / "outputs.json").read_text())))
     write_json(out / "schedule.json", {"forward_passes_at_scheduler": counter["forward"], "passes": plan["passes"], "errors": plan["errors"], "notes": plan["notes"]})
@@ -719,6 +722,7 @@ def replay(record_dir: Path, out: Path, boundary: int | None) -> int:
     out = Path(out)
     out.mkdir(parents=True, exist_ok=False)
     env_with_hook(out / "hook")
+    write_cache_state(out, "before_engine")
     if getattr(args, "fp8_per_tensor", False):
         os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"  # before register(): the hook reads it once, at registration
     import shape_hook
@@ -751,6 +755,7 @@ def replay(record_dir: Path, out: Path, boundary: int | None) -> int:
             finished.extend(o for o in eng.step() if o.finished)
     shape_hook.flush()
     write_json(out / "outputs.json", outputs_record(finished))
+    write_artefacts(out)
     steps = real_steps(read_hook(out / "hook"))
     print(f"E6 {'boundary' if boundary is not None else 'replay'} {out}: {len(steps)} forward passes logged ({counter['forward']} at the scheduler), "
           f"recorded {len(recorded)}; run --compare for the verdict")
