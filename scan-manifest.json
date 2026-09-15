@@ -42,8 +42,9 @@
     {
       "name": "flashinfer",
       "url": "https://github.com/flashinfer-ai/flashinfer.git",
-      "sha": "c0d920d3270ce28e0d7db8cc2163a76245e63712",
-      "commit_date": "2026-07-06T23:13:30Z",
+      "sha": "8bc3b578027791336c6ae87db5c9d76f82cef8bc",
+      "commit_date": "2026-09-04T22:42:33Z",
+      "pin_rule": "tag v0.6.18.post1",
       "scan_paths": [
         "include",
         "csrc",
