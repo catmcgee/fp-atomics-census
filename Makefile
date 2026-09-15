@@ -5,7 +5,7 @@ MANIFEST ?= scan-manifest.json
 # locale and would reorder inventory.csv on macOS, making check-derived report it stale.
 INVENTORY := $(sort $(wildcard inventory/*.jsonl))
 
-.PHONY: docs check-derived reanalyse dispositions shape-tables attach-runtime summary help venv clone census census-all test validate csv
+.PHONY: docs check-derived reanalyse dispositions shape-tables attach-runtime summary help venv clone census census-all test validate csv repin-plan
 
 help:
 	@echo "make venv           create .venv with pinned dependencies"
@@ -15,6 +15,7 @@ help:
 	@echo "make validate       validate inventory/*.jsonl against triage/inventory.schema.json"
 	@echo "make csv            regenerate inventory.csv from inventory/*.jsonl"
 	@echo "make test           run the scanner unit tests"
+	@echo "make repin-plan OUT=dir [REPO=x]  map the inventory to the last upstream commit before BEFORE and write the review worklist"
 
 venv:
 	uv sync --frozen --python 3.11 --extra dev --extra probe-test
@@ -26,6 +27,10 @@ census:
 	@test -n "$(REPO)" || (echo "usage: make census REPO=<name> [SHA=<sha>]"; exit 1)
 	$(PYTHON) -m scan.clone --manifest $(MANIFEST) --dest $(REPOS_DIR) --only $(REPO) $(if $(SHA),--sha $(SHA),)
 	$(PYTHON) -m scan.run --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --only $(REPO) $(if $(SHA),--sha $(SHA),) --out candidates
+
+repin-plan:
+	@test -n "$(OUT)" || (echo "usage: make repin-plan OUT=<dir> [REPO=<name>] [BEFORE=<date>]"; exit 1)
+	$(PYTHON) -m scan.repin plan --out $(OUT) $(if $(REPO),--only $(REPO),) $(if $(BEFORE),--before $(BEFORE),)
 
 census-all:
 	$(PYTHON) -m scan.run --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --out candidates
