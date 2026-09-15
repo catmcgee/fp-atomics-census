@@ -1,0 +1,28 @@
+QUEUE Q5 ARM_START T1b 2026-09-15T02:44:27Z :: CUDA_VISIBLE_DEVICES=0,1 NCCL_NVLS_ENABLE=0 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 2 --cudagraph 1 --prefix-caching 0
+QUEUE Q5 RECORD_EXIT T1b rc=0 2026-09-15T02:45:16Z
+[2026-09-15T02:45:16Z] [T1b record] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE Q5 AOT_CHECK T1b.record direct_load=0 saved_aot=0
+QUEUE Q5 ARM_DIR T1b Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0
+TEXT_CHECK T1b requests 16 degenerate_or_low_diversity 0
+QUEUE Q5 REPLAY_START T1b 2026-09-15T02:45:21Z
+QUEUE Q5 REPLAY_EXIT T1b rc=0 2026-09-15T02:46:00Z
+[2026-09-15T02:46:00Z] [T1b replay] E6 replay /root/census/probes/shape/results_matrix2/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE Q5 AOT_CHECK T1b.replay direct_load=0 saved_aot=0
+QUEUE Q5 COMPARE_EXIT T1b rc=0 2026-09-15T02:46:07Z
+[2026-09-15T02:46:07Z] [T1b compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE Q5 ARM_END T1b 2026-09-15T02:46:07Z
+QUEUE Q5 ARM_START T2b 2026-09-15T02:46:07Z :: CUDA_VISIBLE_DEVICES=0,1 NCCL_NVLS_ENABLE=0 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 2 --cudagraph 1 --prefix-caching 0 --mixed
+QUEUE Q5 RECORD_EXIT T2b rc=0 2026-09-15T02:46:44Z
+[2026-09-15T02:46:45Z] [T2b record] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed record: 77 forward passes logged (77 at the scheduler); replayable
+QUEUE Q5 AOT_CHECK T2b.record direct_load=0 saved_aot=0
+QUEUE Q5 ARM_DIR T2b Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed
+TEXT_CHECK T2b requests 16 degenerate_or_low_diversity 0
+QUEUE Q5 REPLAY_START T2b 2026-09-15T02:46:49Z
+QUEUE Q5 REPLAY_EXIT T2b rc=0 2026-09-15T02:47:23Z
+[2026-09-15T02:47:23Z] [T2b replay] E6 replay /root/census/probes/shape/results_matrix2/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/replay: 77 forward passes logged (77 at the scheduler), recorded 77; run --compare for the verdict
+QUEUE Q5 AOT_CHECK T2b.replay direct_load=0 saved_aot=0
+QUEUE Q5 COMPARE_EXIT T2b rc=0 2026-09-15T02:47:30Z
+[2026-09-15T02:47:30Z] [T2b compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay: P2 IDENTICAL; first mismatch None; rows compared 555; rows differing 0; errors 0
+QUEUE Q5 ARM_END T2b 2026-09-15T02:47:30Z
+QUEUE Q5 SGL skipped (STOP or SKIP_SGL present) 2026-09-15T02:47:30Z
+QUEUE_DONE Q5 2026-09-15T02:47:30Z

@@ -1,0 +1,176 @@
++ export HF_HOME=/root/hf PIP_CACHE_DIR=/root/pip-cache PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ HF_HOME=/root/hf
++ PIP_CACHE_DIR=/root/pip-cache
++ PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ pip install -q -e /root/census/probes/shape/shape_hook_pkg
++ echo HOOK_INSTALL_OK
+HOOK_INSTALL_OK
++ python -
+ENTRY_POINTS [('lora_filesystem_resolver', 'vllm.plugins.lora_resolvers.filesystem_resolver:register_filesystem_resolver'), ('lora_hf_hub_resolver', 'vllm.plugins.lora_resolvers.hf_hub_resolver:register_hf_hub_resolver'), ('shape_hook', 'shape_hook:register')]
+SHAPE_HOOK_IMPORT_OK /root/census/probes/shape/shape_hook_pkg/shape_hook/__init__.py register_resolves_to shape_hook.register
+SCHEMA 3 new_token_ids_occurrences 12
+STACK python 3.12.3 torch 2.13.0+cu130 cuda 13.0 vllm 0.28.0
+TORCH_NCCL_VERSION 2.29.7
+PKG flashinfer-python 0.6.16.post3
+PKG triton 3.7.1
+PKG transformers 5.17.0
+PKG ninja 1.13.2
+PKG nvidia-cublas-cu13 None
+PKG nvidia-cublas 13.1.1.3
+PKG nvidia-nccl-cu13 2.29.7
+PKG hf_transfer 0.1.9
+DRIVER NVRM version: NVIDIA UNIX x86_64 Kernel Module  580.126.09  Wed Jan  7 22:59:56 UTC 2026
+GPU_COUNT 2 ['NVIDIA H100 80GB HBM3', 'NVIDIA H100 80GB HBM3']
+P2P 0->1 True 1->0 True
++ cd /root/census/probes/shape
++ python -c 'import sys; sys.path.insert(0, "."); import teacher_forcing; print("TEACHER_FORCING_VLLM_INTERFACE", teacher_forcing.VLLM_INTERFACE)'
+TEACHER_FORCING_VLLM_INTERFACE True
++ nvidia-smi
+Tue Sep 15 02:37:53 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.126.09             Driver Version: 580.126.09     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100 80GB HBM3          On  |   00000000:3B:00.0 Off |                    0 |
+| N/A   31C    P0             70W /  700W |       0MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA H100 80GB HBM3          On  |   00000000:BB:00.0 Off |                    0 |
+| N/A   33C    P0             71W /  700W |       0MiB /  81559MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
++ nvidia-smi topo -m
+	[4mGPU0	GPU1	NIC0	NIC1	NIC2	NIC3	NIC4	NIC5	NIC6	NIC7	NIC8	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	NV18	NODE	PIX	NODE	NODE	SYS	SYS	SYS	SYS	SYS	0-55,112-167	0		N/A
+GPU1	NV18	 X 	SYS	SYS	SYS	SYS	NODE	PIX	NODE	NODE	NODE	56-111,168-223	1		N/A
+NIC0	NODE	SYS	 X 	NODE	NODE	NODE	SYS	SYS	SYS	SYS	SYS				
+NIC1	PIX	SYS	NODE	 X 	NODE	NODE	SYS	SYS	SYS	SYS	SYS				
+NIC2	NODE	SYS	NODE	NODE	 X 	NODE	SYS	SYS	SYS	SYS	SYS				
+NIC3	NODE	SYS	NODE	NODE	NODE	 X 	SYS	SYS	SYS	SYS	SYS				
+NIC4	SYS	NODE	SYS	SYS	SYS	SYS	 X 	NODE	NODE	NODE	PIX				
+NIC5	SYS	PIX	SYS	SYS	SYS	SYS	NODE	 X 	NODE	NODE	NODE				
+NIC6	SYS	NODE	SYS	SYS	SYS	SYS	NODE	NODE	 X 	NODE	NODE				
+NIC7	SYS	NODE	SYS	SYS	SYS	SYS	NODE	NODE	NODE	 X 	NODE				
+NIC8	SYS	NODE	SYS	SYS	SYS	SYS	PIX	NODE	NODE	NODE	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: mlx5_0
+  NIC1: mlx5_1
+  NIC2: mlx5_2
+  NIC3: mlx5_3
+  NIC4: mlx5_4
+  NIC5: mlx5_7
+  NIC6: mlx5_8
+  NIC7: mlx5_9
+  NIC8: mlx5_bond_0
+
++ nvidia-smi nvlink -s
++ head -40
+GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-4d2166f1-c544-9536-fa98-ed0784c893bc)
+	 Link 0: 26.562 GB/s
+	 Link 1: 26.562 GB/s
+	 Link 2: 26.562 GB/s
+	 Link 3: 26.562 GB/s
+	 Link 4: 26.562 GB/s
+	 Link 5: 26.562 GB/s
+	 Link 6: 26.562 GB/s
+	 Link 7: 26.562 GB/s
+	 Link 8: 26.562 GB/s
+	 Link 9: 26.562 GB/s
+	 Link 10: 26.562 GB/s
+	 Link 11: 26.562 GB/s
+	 Link 12: 26.562 GB/s
+	 Link 13: 26.562 GB/s
+	 Link 14: 26.562 GB/s
+	 Link 15: 26.562 GB/s
+	 Link 16: 26.562 GB/s
+	 Link 17: 26.562 GB/s
+GPU 1: NVIDIA H100 80GB HBM3 (UUID: GPU-8861a4a7-2f05-6adc-d548-3de20eefa88b)
+	 Link 0: 26.562 GB/s
+	 Link 1: 26.562 GB/s
+	 Link 2: 26.562 GB/s
+	 Link 3: 26.562 GB/s
+	 Link 4: 26.562 GB/s
+	 Link 5: 26.562 GB/s
+	 Link 6: 26.562 GB/s
+	 Link 7: 26.562 GB/s
+	 Link 8: 26.562 GB/s
+	 Link 9: 26.562 GB/s
+	 Link 10: 26.562 GB/s
+	 Link 11: 26.562 GB/s
+	 Link 12: 26.562 GB/s
+	 Link 13: 26.562 GB/s
+	 Link 14: 26.562 GB/s
+	 Link 15: 26.562 GB/s
+	 Link 16: 26.562 GB/s
+	 Link 17: 26.562 GB/s
++ nvidia-smi -q
++ grep -iE 'Product Name|Bus Id|Link Width|PCIe Generation|Current|Max'
++ head -40
+    Product Name                                       : NVIDIA H100 80GB HBM3
+        Current                                        : Disabled
+        Current                                        : N/A
+        Current                                        : N/A
+        Bus Id                                         : 00000000:3B:00.0
+            PCIe Generation
+                Max                                    : 5
+                Current                                : 5
+                Device Current                         : 5
+                Device Max                             : 5
+                Host Max                               : 5
+            Link Width
+                Max                                    : 16x
+                Current                                : 16x
+        Current                                        : N/A
+        Current                                        : Enabled
+            Max                                        : 2560 bank(s)
+        GPU Current Temp                               : 31 C
+        GPU Max Operating T.Limit Temp                 : 0 C
+        Memory Current Temp                            : 34 C
+        Memory Max Operating T.Limit Temp              : 0 C
+        Current Power Limit                            : 700.00 W
+        Max Power Limit                                : 700.00 W
+        Current Power Limit                            : N/A
+        Max Power Limit                                : N/A
+    Max Clocks
+    Max Customer Boost Clocks
+    Product Name                                       : NVIDIA H100 80GB HBM3
+        Current                                        : Disabled
+        Current                                        : N/A
+        Current                                        : N/A
+        Bus Id                                         : 00000000:BB:00.0
+            PCIe Generation
+                Max                                    : 5
+                Current                                : 5
+                Device Current                         : 5
+                Device Max                             : 5
+                Host Max                               : 5
+            Link Width
+                Max                                    : 16x
++ pip freeze
++ wc -l /root/logs/pip-freeze.txt
+198 /root/logs/pip-freeze.txt
++ echo POST_BOOTSTRAP_DONE
+POST_BOOTSTRAP_DONE

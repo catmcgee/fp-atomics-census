@@ -1,0 +1,68 @@
+{
+  "experiment": "E6",
+  "mode": "replay",
+  "arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0",
+  "recorded_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0/record",
+  "replay_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0/replay",
+  "passes_recorded": 37,
+  "passes_replayed": 37,
+  "first_mismatch": null,
+  "first_divergence": null,
+  "rows_compared": 512,
+  "rows_differing": 0,
+  "passes_differing": 0,
+  "hidden_identical_rows": 512,
+  "argmax_identical_rows": 512,
+  "logits_identical_rows": 512,
+  "free_running_divergence": {
+    "rows": 0,
+    "passes": 0,
+    "first": null
+  },
+  "requirements_met": true,
+  "outputs_identical": true,
+  "forcing_log": {
+    "calls": 37,
+    "forced_rows": 512,
+    "rows_where_forced_equalled_argmax": 512
+  },
+  "notes": [],
+  "verdict_P2": "IDENTICAL",
+  "validation_errors": [],
+  "record_stack": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09"
+  },
+  "replay_stack": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09"
+  },
+  "claim_scope": "One recorded schedule replayed in one fresh process on the same recorded stack (GPU, driver and installed distributions equal in both env.json files) with teacher forcing; identical means the recorded passes were reproduced from the record, not that every schedule or stack would be.",
+  "record_sha256": {
+    "run.json": "02406fb569b69e74a3e3f6a360475284674197827b191e0bb6109207f9042154",
+    "outputs.json": "56d0bdb6a424df0019bea2495af04338b3599f90949e3158d8784d4ef295294c",
+    "rank0.jsonl": "9e3b8359ccc6a915d06ce8669a49f624e6b554efab49a4104c6360ed522e68b8",
+    "forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08"
+  },
+  "replay_sha256": {
+    "run.json": "860738690229d758e6821afe5e6af576fb50b9699a37d3ab561e953ee6e93e9e",
+    "outputs.json": "56d0bdb6a424df0019bea2495af04338b3599f90949e3158d8784d4ef295294c",
+    "rank0.jsonl": "7498da55fc2ef093eb59eeb98d656d612ca8e8f5a3e3b716641d4bb9b868a58a",
+    "forcing_rank0.jsonl": "2e1833fc7863e155eedde68b3047dae6181987f099591c0b55928b23ed0b0899"
+  },
+  "analysis_schema": 2,
+  "analyser_sha256": "0c41b89123b2018eb62884fd4e4375bbb0057700df2132519e8e2ece5b1b02e5",
+  "input_sha256": {
+    "record/env.json": "5f89c20d84efe6702bcf33616e39727756ccccd04d084e381b70b6d25acd4fde",
+    "record/hook/forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+    "record/hook/rank0.jsonl": "9e3b8359ccc6a915d06ce8669a49f624e6b554efab49a4104c6360ed522e68b8",
+    "record/outputs.json": "56d0bdb6a424df0019bea2495af04338b3599f90949e3158d8784d4ef295294c",
+    "record/run.json": "02406fb569b69e74a3e3f6a360475284674197827b191e0bb6109207f9042154",
+    "replay/env.json": "9f5934ec33df1f8d134e3b7d680a4c00da8fc614bf22eff2eabf349b7b24470d",
+    "replay/hook/forcing_rank0.jsonl": "2e1833fc7863e155eedde68b3047dae6181987f099591c0b55928b23ed0b0899",
+    "replay/hook/rank0.jsonl": "7498da55fc2ef093eb59eeb98d656d612ca8e8f5a3e3b716641d4bb9b868a58a",
+    "replay/outputs.json": "56d0bdb6a424df0019bea2495af04338b3599f90949e3158d8784d4ef295294c",
+    "replay/run.json": "860738690229d758e6821afe5e6af576fb50b9699a37d3ab561e953ee6e93e9e"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
+}

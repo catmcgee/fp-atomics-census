@@ -1,0 +1,27 @@
+SGL 0.5.19 torch 2.13.0+cu130 13.0
+sgl_kernel ok
+MARLIN_SHA256 c3386c20db959445c2326461bc0cf0e77c353b962bf718d0e752558f6e6f2507  /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+GUARD_TEST env unset:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = None
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = False
+GUARD_TEST env=1:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = 1
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = True
+GUARD_TEST env=0:
+marlin_utils: /root/venv-sgl/lib/python3.12/site-packages/sglang/srt/layers/quantization/marlin_utils.py
+SGLANG_MARLIN_USE_ATOMIC_ADD = 0
+should_use_atomic_add_reduce(16, 1536, 8960, cuda, fp16) = False
+SGL ARM_START RUN_TAG=a 2026-09-15T03:01:02Z (SGLANG_MARLIN_USE_ATOMIC_ADD=unset, CUDA_VISIBLE_DEVICES=0)
+SGL ARM_EXIT RUN_TAG=a rc=0 2026-09-15T03:05:51Z
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6 bitwise-identical -> /root/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/8560652b-fd90-49cf-9a36-d38e8311a837/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6.a.json
+SGL ARM_START RUN_TAG=b 2026-09-15T03:05:53Z (SGLANG_MARLIN_USE_ATOMIC_ADD=unset, CUDA_VISIBLE_DEVICES=0)
+SGL ARM_EXIT RUN_TAG=b rc=0 2026-09-15T03:06:31Z
+PROBE sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6 bitwise-identical -> /root/census/probes/results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/654429c2-f01a-48a4-b5d1-4fea0d847bd2/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6.b.json
+new result files:
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/654429c2-f01a-48a4-b5d1-4fea0d847bd2/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6.b.json
+results/NVIDIA-H100-80GB-HBM3-580.126.09-torch2.13.0+cu130/8560652b-fd90-49cf-9a36-d38e8311a837/sglang_qwen2.5_1.5b_gptq_marlin_guard_off_fixed_composition_x6.a.json
+results/invocations/654429c2-f01a-48a4-b5d1-4fea0d847bd2/status.json
+results/invocations/8560652b-fd90-49cf-9a36-d38e8311a837/status.json
+SGL_ARM_DONE 2026-09-15T03:06:31Z

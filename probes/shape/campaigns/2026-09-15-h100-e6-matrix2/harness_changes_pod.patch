@@ -1,0 +1,20 @@
+--- /root/census/probes/shape/run_e6.py	2026-09-14 21:23:57.000000000 +0000
++++ /root/census_fix/probes/shape/run_e6.py	2026-09-15 02:58:29.417477022 +0000
+@@ -622,6 +622,8 @@
+     out = args.out / (arm_name(args) + ("_mixed" if args.mixed else "")) / "record"
+     out.mkdir(parents=True, exist_ok=False)
+     env_with_hook(out / "hook")
++    if getattr(args, "fp8_per_tensor", False):
++        os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"  # before register(): the hook reads it once, at registration
+     import shape_hook
+     shape_hook.register()
+     from vllm import SamplingParams
+@@ -681,6 +683,8 @@
+     out = Path(out)
+     out.mkdir(parents=True, exist_ok=False)
+     env_with_hook(out / "hook")
++    if getattr(args, "fp8_per_tensor", False):
++        os.environ["SHAPE_FORCE_FP8_PER_TENSOR"] = "1"  # before register(): the hook reads it once, at registration
+     import shape_hook
+     shape_hook.register()
+     from vllm import SamplingParams, TokensPrompt

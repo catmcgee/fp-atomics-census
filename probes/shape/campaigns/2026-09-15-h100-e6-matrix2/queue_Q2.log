@@ -1,0 +1,42 @@
+QUEUE Q2 ARM_START T1 2026-09-15T02:38:15Z :: CUDA_VISIBLE_DEVICES=0,1 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 2 --cudagraph 1 --prefix-caching 0
+QUEUE Q2 RECORD_EXIT T1 rc=1 2026-09-15T02:38:39Z
+QUEUE Q2 AOT_CHECK T1.record direct_load=0 saved_aot=0
+QUEUE Q2 T1 record printed no E6 line; newest arm dir: Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0
+(Worker pid=2405) ERROR 09-15 02:38:37 [multiproc_executor.py:941] Traceback (most recent call last):
+(Worker pid=2405) ERROR 09-15 02:38:37 [multiproc_executor.py:941]     raise RuntimeError(f"NCCL error: {error_str}")
+(Worker pid=2405) ERROR 09-15 02:38:37 [multiproc_executor.py:941] RuntimeError: NCCL error: unhandled cuda error (run with NCCL_DEBUG=INFO for details)
+(Worker pid=2382) ERROR 09-15 02:38:37 [multiproc_executor.py:941] Traceback (most recent call last):
+(Worker pid=2382) ERROR 09-15 02:38:37 [multiproc_executor.py:941]     raise RuntimeError(f"NCCL error: {error_str}")
+(Worker pid=2382) ERROR 09-15 02:38:37 [multiproc_executor.py:941] RuntimeError: NCCL error: unhandled cuda error (run with NCCL_DEBUG=INFO for details)
+Traceback (most recent call last):
+QUEUE Q2 ARM_FAILED T1 (no usable record) 2026-09-15T02:38:39Z
+QUEUE Q2 ARM_END T1 2026-09-15T02:38:39Z
+QUEUE Q2 ARM_START T2 2026-09-15T02:38:39Z :: CUDA_VISIBLE_DEVICES=0,1 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 2 --cudagraph 1 --prefix-caching 0 --mixed
+QUEUE Q2 RECORD_EXIT T2 rc=1 2026-09-15T02:38:54Z
+QUEUE Q2 AOT_CHECK T2.record direct_load=0 saved_aot=0
+QUEUE Q2 T2 record printed no E6 line; newest arm dir: Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed
+(Worker pid=2863) ERROR 09-15 02:38:53 [multiproc_executor.py:941] Traceback (most recent call last):
+(Worker pid=2863) ERROR 09-15 02:38:53 [multiproc_executor.py:941]     raise RuntimeError(f"NCCL error: {error_str}")
+(Worker pid=2863) ERROR 09-15 02:38:53 [multiproc_executor.py:941] RuntimeError: NCCL error: unhandled cuda error (run with NCCL_DEBUG=INFO for details)
+(Worker pid=2886) ERROR 09-15 02:38:53 [multiproc_executor.py:941] Traceback (most recent call last):
+(Worker pid=2886) ERROR 09-15 02:38:53 [multiproc_executor.py:941]     raise RuntimeError(f"NCCL error: {error_str}")
+(Worker pid=2886) ERROR 09-15 02:38:53 [multiproc_executor.py:941] RuntimeError: NCCL error: unhandled cuda error (run with NCCL_DEBUG=INFO for details)
+Traceback (most recent call last):
+QUEUE Q2 ARM_FAILED T2 (no usable record) 2026-09-15T02:38:55Z
+QUEUE Q2 ARM_END T2 2026-09-15T02:38:55Z
+QUEUE Q2 ARM_START M3 2026-09-15T02:38:55Z :: CUDA_VISIBLE_DEVICES=0 :: --model Qwen/Qwen1.5-MoE-A2.7B-Chat --revision ec052fda178e241c7c443468d2fa1db6618996be --no-compile --cudagraph 1 --prefix-caching 0
+QUEUE Q2 RECORD_EXIT M3 rc=0 2026-09-15T02:40:51Z
+[2026-09-15T02:40:51Z] [M3 record] E6 Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE Q2 AOT_CHECK M3.record direct_load=0 saved_aot=0
+QUEUE Q2 ARM_DIR M3 Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0
+TEXT_CHECK M3 requests 16 degenerate_or_low_diversity 0
+QUEUE Q2 REPLAY_START M3 2026-09-15T02:40:56Z
+QUEUE Q2 REPLAY_EXIT M3 rc=0 2026-09-15T02:41:25Z
+[2026-09-15T02:41:25Z] [M3 replay] E6 replay /root/census/probes/shape/results_matrix2/e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0/replay: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE Q2 AOT_CHECK M3.replay direct_load=0 saved_aot=0
+QUEUE Q2 COMPARE_EXIT M3 rc=0 2026-09-15T02:41:32Z
+[2026-09-15T02:41:32Z] [M3 compare] E6 Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE Q2 ARM_END M3 2026-09-15T02:41:32Z
+QUEUE Q2 STOP present; not launching Q4|0|--model Qwen/Qwen3-8B-FP8 --revision 220b46e3b2180893580a4454f21f22d3ebb187d3 --quantization fp8 --cudagraph 1 --prefix-caching 0 --mixed 2026-09-15T02:41:32Z
+QUEUE Q2 SGL skipped (STOP or SKIP_SGL present) 2026-09-15T02:41:32Z
+QUEUE_DONE Q2 2026-09-15T02:41:32Z

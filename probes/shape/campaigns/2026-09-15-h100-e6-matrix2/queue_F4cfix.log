@@ -1,0 +1,15 @@
+F4CFIX WAIT_Q7 2026-09-15T02:57:04Z
+F4CFIX PATCH_LINES 20
+F4CFIX RECORD_START 2026-09-15T02:58:29Z :: CUDA_VISIBLE_DEVICES=0
+F4CFIX RECORD_EXIT rc=0 2026-09-15T02:59:13Z
+E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 record: 37 forward passes logged (37 at the scheduler); replayable
+F4CFIX AOT_CHECK record direct_load=0
+TEXT_CHECK F4cfix requests 16 degenerate_or_low_diversity 0
+F4CFIX REPLAY_EXIT rc=0 2026-09-15T02:59:54Z
+E6 replay /root/census/probes/shape/results_matrix2/e6/Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0/replay: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+F4CFIX AOT_CHECK replay direct_load=0
+F4CFIX COMPARE_EXIT rc=0 2026-09-15T03:00:01Z
+E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+INFO 09-15 02:58:41 [__init__.py:720] Selected CutlassFP8ScaledMMLinearKernel for Fp8PerTensorOnlineLinearMethod
+INFO 09-15 02:59:30 [__init__.py:720] Selected CutlassFP8ScaledMMLinearKernel for Fp8PerTensorOnlineLinearMethod
+F4CFIX_DONE 2026-09-15T03:00:01Z
