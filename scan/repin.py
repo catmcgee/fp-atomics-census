@@ -1,11 +1,13 @@
 """Move the census from one upstream commit to a newer one without re-triaging by hand.
 
-    python -m scan.repin plan --out <dir> [--only vllm ...] [--before 2026-09-15T00:00:00Z]
-    python -m scan.repin apply --only cutlass [--resolutions reviewed.jsonl] [--before ...]
+    python -m scan.repin plan --out <dir> [--only vllm ...] [--before 2026-09-15T00:00:00Z] [--target vllm=v0.29.0 ...]
+    python -m scan.repin apply --only cutlass [--resolutions reviewed.jsonl] [--before ...] [--target ...]
 
-``plan`` picks, for each repository in scan-manifest.json, the last commit on
-its default branch before the cut-off, and maps every inventory location from
-the pinned sha to that commit with git's own diff: rename detection over the
+``plan`` picks, for each repository in scan-manifest.json, a new commit: the
+commit a ``--target`` ref points to (``git rev-list -n1 <ref>``, fetching a
+missing tag), or else the last commit on its default branch before the
+cut-off. It maps every inventory location from the pinned sha to that commit
+with git's own diff: rename detection over the
 whole tree (``git diff -M -C -l0 --name-status``) and zero-context hunks per
 file (``git diff -U0`` of the two blobs, Myers algorithm). A cited range whose
 lines all lie in unchanged lines is shifted exactly and then verified by
@@ -19,8 +21,10 @@ checkout to its pinned sha.
 
 ``apply`` writes one repository's migration into the tree: its inventory rows,
 references into it from other repositories' rows, its candidates, its manifest
-entry, its disposition ledger and its checkout. It refuses while any worklist
-row lacks a reviewed replacement at the new sha (``--resolutions``). Run
+entry (with a ``pin_rule`` recording how the sha was chosen), its disposition
+ledger and its checkout. It refuses while any worklist row lacks a reviewed
+replacement at the new sha (``--resolutions``). For a repository whose rule
+selects the sha it already has, it records only the rule. Run
 ``make docs validate check-derived test`` afterwards.
 
 Location fields handled: the row's ``file``/``line_start``/``line_end``,
@@ -48,6 +52,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CUTOFF = "2026-09-15T00:00:00Z"
+PIN_RULE_NOTE = ("pin_rule, where present, records how the sha was chosen: the commit a release tag points to, "
+                 "or the last commit on the default branch before a cut-off.")
 
 _REF = re.compile(r"^(?P<file>[^:\s]+):(?P<start>\d+)(?:-(?P<end>\d+))?$")
 _HUNK = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@")
@@ -705,16 +711,37 @@ def is_ancestor(repo: Path, a: str, b: str) -> bool:
     return subprocess.run(["git", "-C", str(repo), "merge-base", "--is-ancestor", a, b], capture_output=True).returncode == 0
 
 
+def _since(repo: Path, old: str) -> str:
+    return (dt.datetime.fromtimestamp(int(git(repo, "log", "-1", "--format=%ct", old).strip()), dt.timezone.utc)
+            - dt.timedelta(days=2)).strftime("%Y-%m-%d")
+
+
 def ensure_history(repo: Path, old: str, branch: str) -> bool:
     """Deepen a shallow clone until the pinned sha is an ancestor of the branch, so commit counts are exact."""
     if is_ancestor(repo, old, f"origin/{branch}"):
         return False
     if not (repo / ".git" / "shallow").exists():
         return False
-    since = (dt.datetime.fromtimestamp(int(git(repo, "log", "-1", "--format=%ct", old).strip()), dt.timezone.utc)
-             - dt.timedelta(days=2)).strftime("%Y-%m-%d")
-    subprocess.run(["git", "-C", str(repo), "fetch", "-q", f"--shallow-since={since}", "origin", branch], check=True)
+    subprocess.run(["git", "-C", str(repo), "fetch", "-q", f"--shallow-since={_since(repo, old)}", "origin", branch], check=True)
     return True
+
+
+def resolve_target(repo: Path, ref: str, old: str) -> tuple[str, str]:
+    """(commit, rule) for a tag, branch or sha: ``git rev-list -n1 <ref>``, fetching a missing tag from origin
+    with history back to the pinned commit so that commit counts are exact."""
+    tag = f"refs/tags/{ref}"
+    if not git(repo, "rev-list", "-n1", tag, check=False).strip() and not git(repo, "rev-list", "-n1", ref, check=False).strip():
+        fetch = ["git", "-C", str(repo), "fetch", "-q", "--no-tags"]
+        if (repo / ".git" / "shallow").exists():
+            fetch.append(f"--shallow-since={_since(repo, old)}")
+        subprocess.run([*fetch, "origin", f"+{tag}:{tag}"], check=True)
+    sha = git(repo, "rev-list", "-n1", tag, check=False).strip()
+    if sha:
+        return sha, f"tag {ref}"
+    sha = git(repo, "rev-list", "-n1", ref, check=False).strip()
+    if not sha:
+        raise RuntimeError(f"{repo}: cannot resolve {ref}")
+    return sha, f"ref {ref}"
 
 
 def checkout(repo: Path, sha: str, url: str, name: str, dest: Path) -> None:
@@ -737,6 +764,7 @@ class EnginePlan:
     new_date: str
     branch: str
     commit_count: int | None
+    rule: str = ""
     results: list[RowResult] = field(default_factory=list)
     cmap: CandidateMap | None = None
     new_candidates_dir: Path | None = None
@@ -761,7 +789,7 @@ def choose_new(repo: Path, branch: str, cutoff: str) -> str:
 
 
 def plan_engine(entry: dict, rows: list[dict], root: Path, cutoff: str, work: Path, keep_checkout: bool = False,
-                scope: dict | None = None) -> EnginePlan:
+                scope: dict | None = None, target: str | None = None) -> EnginePlan:
     name, old = entry["name"], entry["sha"]
     repos_dir = root / "repos"
     repo = repos_dir / name
@@ -769,13 +797,24 @@ def plan_engine(entry: dict, rows: list[dict], root: Path, cutoff: str, work: Pa
     notes = []
     if ensure_history(repo, old, branch):
         notes.append("clone was shallow; history deepened to the pinned commit to count commits")
-    new = choose_new(repo, branch, cutoff)
-    if not new:
-        raise RuntimeError(f"{name}: no commit on origin/{branch} before {cutoff}")
-    count = int(git(repo, "rev-list", "--count", f"{old}..{new}").strip()) if is_ancestor(repo, old, new) else None
-    if count is None and old != new:
-        notes.append(f"pinned sha {old[:12]} is not an ancestor of {new[:12]}; commit count unknown")
-    plan = EnginePlan(name, old, new, entry["commit_date"], commit_date_utc(repo, new), branch, count if old != new else 0, notes=notes)
+    if target:
+        new, rule = resolve_target(repo, target, old)
+    else:
+        new, rule = choose_new(repo, branch, cutoff), f"{branch} before {cutoff}"
+        if not new:
+            raise RuntimeError(f"{name}: no commit on origin/{branch} before {cutoff}")
+    count = None
+    if old == new:
+        count = 0
+    elif is_ancestor(repo, old, new):
+        count = int(git(repo, "rev-list", "--count", f"{old}..{new}").strip())
+    else:
+        base = git(repo, "merge-base", old, new, check=False).strip()
+        notes.append(f"pinned sha {old[:12]} is not an ancestor of {new[:12]}"
+                     + (f"; merge base {base[:12]} ({commit_date_utc(repo, base)}), "
+                        f"{git(repo, 'rev-list', '--count', f'{old}..{new}').strip()} commits reachable from the new commit only"
+                        if base else "; no merge base in the fetched history, commit count unknown"))
+    plan = EnginePlan(name, old, new, entry["commit_date"], commit_date_utc(repo, new), branch, count, rule=rule, notes=notes)
     if not plan.moved:
         return plan
     diff = EngineDiff(repo, old, new)
@@ -948,18 +987,19 @@ def write_plan_outputs(plan: EnginePlan, rows_by_id: dict[str, dict], out: Path)
 
 
 def summary_markdown(plans: list[EnginePlan], stats: dict[str, dict], cutoff: str, rows_by_engine: Counter) -> str:
-    out = [f"# Repin plan: last commit before {cutoff}", "",
-           "Generated by `python -m scan.repin plan`. Rows are carried only when every cited line is unchanged and its text is equal at both commits; everything else is on the worklist. Candidate links are carried by location and pattern.", "",
-           "| Repository | Old sha (date) | New sha (date) | Commits | Rows | Auto-carried (shifted) | Worklist | Candidates old/new | Linked carried | New | New class A? | Removed (linked) |",
-           "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    out = ["# Repin plan", "",
+           f"Generated by `python -m scan.repin plan`. Each repository moves to the commit its rule selects: a release tag where one is given, otherwise the last commit on the default branch before {cutoff}. "
+           "Rows are carried only when every cited line is unchanged and its text is equal at both commits; everything else is on the worklist. Candidate links are carried by location, pattern and match text.", "",
+           "| Repository | Rule | Old sha (date) | New sha (date) | Commits | Rows | Auto-carried (shifted) | Worklist | Candidates old/new | Linked carried | New | New class A? | Removed (linked) |",
+           "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for p in plans:
         s = stats.get(p.name, {})
         rows = rows_by_engine[p.name]
         if not p.moved:
-            out.append(f"| {p.name} | `{p.old[:12]}` ({p.old_date}) | unchanged | 0 | {rows} | {rows} (0) | 0 | n/a | n/a | 0 | 0 | 0 |")
+            out.append(f"| {p.name} | {p.rule} | `{p.old[:12]}` ({p.old_date}) | unchanged | 0 | {rows} | {rows} (0) | 0 | n/a | n/a | 0 | 0 | 0 |")
             continue
         wl = len(p.worklist())
-        out.append(f"| {p.name} | `{p.old[:12]}` ({p.old_date}) | `{p.new[:12]}` ({p.new_date}) | {p.commit_count if p.commit_count is not None else 'unknown'} | {rows} | "
+        out.append(f"| {p.name} | {p.rule} | `{p.old[:12]}` ({p.old_date}) | `{p.new[:12]}` ({p.new_date}) | {p.commit_count if p.commit_count is not None else 'see note'} | {rows} | "
                    f"{s['auto']} ({s['auto_shifted']}) | {wl} | {s['candidates_old']}/{s['candidates_new']} | {s['linked_carried']}/{s['linked_old']} | "
                    f"{s['new_only']} | {s['new_only_class_a']} | {s['removed']} ({s['removed_linked']}) |")
     out += ["", "## Worklist by reason", "",
@@ -978,12 +1018,12 @@ def summary_markdown(plans: list[EnginePlan], stats: dict[str, dict], cutoff: st
         s = stats.get(p.name, {})
         out.append(f"### {p.name}")
         out.append("")
-        out.append(f"- Default branch `{p.branch}`; old `{p.old}` ({p.old_date}); new `{p.new}` ({p.new_date}).")
+        out.append(f"- Rule: {p.rule}. Default branch `{p.branch}`; old `{p.old}` ({p.old_date}); new `{p.new}` ({p.new_date}).")
         if not p.moved:
-            out.append("- No commit after the pin before the cut-off; the sha is kept.")
+            out.append("- The rule selects the pinned commit; the sha is kept.")
             out.append("")
             continue
-        out.append(f"- Commits between the pins: {p.commit_count if p.commit_count is not None else 'unknown'}; files changed: "
+        out.append(f"- Commits between the pins: {p.commit_count if p.commit_count is not None else 'see note'}; files changed: "
                    f"{sum(1 for st in p.diff.statuses.values() if st.status == 'M')} modified, "
                    f"{sum(1 for st in p.diff.statuses.values() if st.status == 'R')} renamed, "
                    f"{sum(1 for st in p.diff.statuses.values() if st.status == 'D')} deleted.")
@@ -1034,6 +1074,26 @@ LIMITATIONS = [
 # apply
 # ---------------------------------------------------------------------------
 
+def record_pin(manifest: dict, plan: EnginePlan, generated: str) -> None:
+    """Set the entry's sha, commit date and pin_rule (kept next to the sha), any scope override, and the notes."""
+    for i, entry in enumerate(manifest["repos"]):
+        if entry["name"] != plan.name:
+            continue
+        entry = {**entry, "sha": plan.new, "commit_date": plan.new_date if plan.moved else entry["commit_date"]}
+        if plan.scope:
+            entry.update({k: plan.scope[k] for k in ("scan_paths", "exclude") if k in plan.scope})
+        ordered = {}
+        for k, v in entry.items():
+            if k != "pin_rule":
+                ordered[k] = v
+            if k == "commit_date":
+                ordered["pin_rule"] = plan.rule
+        manifest["repos"][i] = ordered
+    if PIN_RULE_NOTE not in manifest.get("notes", ""):
+        manifest["notes"] = (manifest.get("notes", "") + " " + PIN_RULE_NOTE).strip()
+    manifest["generated"] = generated
+
+
 def apply_engine(plan: EnginePlan, root: Path, manifest: dict, resolutions: dict[str, dict], generated: str) -> list[str]:
     """Write one engine's migration into the tree. Returns the paths written."""
     missing = [r.row_id for r in plan.worklist() if r.row_id not in resolutions]
@@ -1058,12 +1118,7 @@ def apply_engine(plan: EnginePlan, root: Path, manifest: dict, resolutions: dict
         dst = root / "candidates" / f"{plan.name}{suffix}"
         dst.write_bytes(src.read_bytes())
         written.append(str(dst.relative_to(root)))
-    for entry in manifest["repos"]:
-        if entry["name"] == plan.name:
-            entry["sha"], entry["commit_date"] = plan.new, plan.new_date
-            if plan.scope:
-                entry.update({k: plan.scope[k] for k in ("scan_paths", "exclude") if k in plan.scope})
-    manifest["generated"] = generated
+    record_pin(manifest, plan, generated)
     (root / "scan-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     written.append("scan-manifest.json")
     from triage.dispositions import records
@@ -1083,6 +1138,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("command", choices=["plan", "apply"])
     ap.add_argument("--only", action="append", help="engine name (repeatable); apply takes exactly one")
     ap.add_argument("--before", default=DEFAULT_CUTOFF, help="cut-off for the new commit (git --before)")
+    ap.add_argument("--target", action="append", default=[], metavar="NAME=REF",
+                    help="pin NAME to the commit REF points to (a release tag, branch or sha) instead of the cut-off rule")
     ap.add_argument("--out", type=Path, help="plan: output directory for the worklist, candidate lists and summary")
     ap.add_argument("--resolutions", type=Path, help="apply: JSONL of reviewed rows replacing every worklist row")
     ap.add_argument("--scope", type=Path, help='JSON {"<engine>": {"scan_paths": [...], "exclude": [...]}} to rescan (and, for apply, '
@@ -1098,6 +1155,10 @@ def main(argv: list[str] | None = None) -> int:
     rows_by_id = {r["id"]: r for r in rows}
     entries = [e for e in manifest["repos"] if not args.only or e["name"] in args.only]
     scopes = json.loads(args.scope.read_text()) if args.scope else {}
+    targets = dict(t.split("=", 1) for t in args.target)
+    unknown = set(targets) - {e["name"] for e in manifest["repos"]}
+    if unknown:
+        ap.error(f"--target names no manifest repository: {', '.join(sorted(unknown))}")
 
     if args.command == "plan":
         if not args.out:
@@ -1106,13 +1167,13 @@ def main(argv: list[str] | None = None) -> int:
         out.mkdir(parents=True, exist_ok=True)
         plans, stats = [], {}
         for entry in entries:
-            plan = plan_engine(entry, rows, root, args.before, out, scope=scopes.get(entry["name"]))
+            plan = plan_engine(entry, rows, root, args.before, out, scope=scopes.get(entry["name"]), target=targets.get(entry["name"]))
             plans.append(plan)
             if plan.moved:
                 stats[plan.name] = write_plan_outputs(plan, rows_by_id, out)
             print(f"{plan.name}: {plan.old[:12]} -> {plan.new[:12]}; worklist {len(plan.worklist())}")
         (out / "summary.md").write_text(summary_markdown(plans, stats, args.before, Counter(r["engine"] for r in rows)))
-        (out / "summary.json").write_text(json.dumps({p.name: {"old": p.old, "new": p.new, "old_date": p.old_date, "new_date": p.new_date,
+        (out / "summary.json").write_text(json.dumps({p.name: {"rule": p.rule, "old": p.old, "new": p.new, "old_date": p.old_date, "new_date": p.new_date,
                                                               "commits": p.commit_count, "worklist": len(p.worklist()),
                                                               "scope_drift": p.drift, "scope_used": p.scope,
                                                               "proposed_scope": proposed_scope(next(e for e in entries if e["name"] == p.name), p.drift) if p.drift else None,
@@ -1125,9 +1186,14 @@ def main(argv: list[str] | None = None) -> int:
     resolutions = {r["id"]: r for r in load_jsonl(args.resolutions)} if args.resolutions else {}
     with __import__("tempfile").TemporaryDirectory(prefix="repin-") as tmp:
         plan = plan_engine(entries[0], rows, root, args.before, Path(tmp), keep_checkout=True,
-                           scope=scopes.get(entries[0]["name"]))
+                           scope=scopes.get(entries[0]["name"]), target=targets.get(entries[0]["name"]))
         if not plan.moved:
-            print(f"{plan.name}: no commit after {plan.old[:12]} before {args.before}; nothing to apply")
+            if entries[0].get("pin_rule") == plan.rule:
+                print(f"{plan.name}: {plan.rule} selects the pinned {plan.old[:12]}; nothing to apply")
+                return 0
+            record_pin(manifest, plan, args.generated)
+            (root / "scan-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+            print(f"{plan.name}: {plan.rule} selects the pinned {plan.old[:12]}; recorded the rule in scan-manifest.json")
             return 0
         try:
             written = apply_engine(plan, root, manifest, resolutions, args.generated)

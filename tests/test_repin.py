@@ -248,3 +248,37 @@ def test_scope_drift_reports_where_a_scan_path_went(repo, tmp_path):
         ("scan_paths", "srt", {"py/kernels": 1}, 1, None, True),  # reorganised move, grouped one level down
         ("exclude", "kern/tests", {"py/kernels/aot/tests": 1}, 0, "py/kernels/aot/tests", False)]
     assert proposed_scope(entry, drift) == {"scan_paths": ["py/kernels/aot", "srt", "py/kernels"], "exclude": ["py/kernels/aot/tests"]}
+
+
+def test_target_resolves_a_missing_annotated_tag_to_its_commit(tmp_path):
+    from scan.repin import resolve_target
+    up = tmp_path / "up"
+    up.mkdir()
+    _git(up, "-c", "init.defaultBranch=main", "init", "-q")
+    old = _commit(up, {"a.cu": _body("a")}, "old")
+    tagged = _commit(up, {"a.cu": _body("a") + "// release\n"}, "release")
+    _git(up, "-c", "user.name=t", "-c", "user.email=t@t", "tag", "-a", "v1.0", "-m", "v1.0")
+    _commit(up, {"a.cu": _body("b")}, "after")
+    down = tmp_path / "down"
+    down.mkdir()
+    _git(down, "init", "-q")
+    _git(down, "remote", "add", "origin", str(up))
+    _git(down, "fetch", "-q", "--no-tags", "origin", "main")
+    assert resolve_target(down, "v1.0", old) == (tagged, "tag v1.0")  # fetched, then dereferenced to the commit
+    assert resolve_target(down, old, old) == (old, f"ref {old}")
+
+
+def test_manifest_records_the_rule_next_to_the_sha():
+    from scan.repin import PIN_RULE_NOTE, EnginePlan, record_pin
+    manifest = {"generated": "2026-07-17", "notes": "Pinned.", "repos": [
+        {"name": "a", "url": "u", "sha": "1" * 40, "commit_date": "2026-07-06T00:00:00Z", "scan_paths": ["x"], "exclude": []},
+        {"name": "b", "url": "u", "sha": "3" * 40, "commit_date": "2024-09-04T15:35:00+02:00", "scan_paths": ["y"], "exclude": []}]}
+    record_pin(manifest, EnginePlan("a", "1" * 40, "2" * 40, "", "2026-09-09T00:00:00Z", "main", 5, rule="tag v0.29.0"), "2026-09-15")
+    record_pin(manifest, EnginePlan("b", "3" * 40, "3" * 40, "", "2024-09-04T13:35:00Z", "master", 0, rule="master before X"), "2026-09-15")
+    a, b = manifest["repos"]
+    assert list(a) == ["name", "url", "sha", "commit_date", "pin_rule", "scan_paths", "exclude"]
+    assert (a["sha"], a["commit_date"], a["pin_rule"]) == ("2" * 40, "2026-09-09T00:00:00Z", "tag v0.29.0")
+    assert (b["sha"], b["commit_date"], b["pin_rule"]) == ("3" * 40, "2024-09-04T15:35:00+02:00", "master before X")  # date kept
+    assert manifest["notes"] == "Pinned. " + PIN_RULE_NOTE and manifest["generated"] == "2026-09-15"
+    record_pin(manifest, EnginePlan("a", "2" * 40, "2" * 40, "", "", "main", 0, rule="tag v0.29.0"), "2026-09-15")
+    assert manifest["notes"].count(PIN_RULE_NOTE) == 1

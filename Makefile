@@ -15,7 +15,7 @@ help:
 	@echo "make validate       validate inventory/*.jsonl against triage/inventory.schema.json"
 	@echo "make csv            regenerate inventory.csv from inventory/*.jsonl"
 	@echo "make test           run the scanner unit tests"
-	@echo "make repin-plan OUT=dir [REPO=x]  map the inventory to the last upstream commit before BEFORE and write the review worklist"
+	@echo "make repin-plan OUT=dir [REPO=x] [TARGETS='x=tag']  map the inventory to newer upstream commits and write the review worklist"
 
 venv:
 	uv sync --frozen --python 3.11 --extra dev --extra probe-test
@@ -29,8 +29,8 @@ census:
 	$(PYTHON) -m scan.run --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --only $(REPO) $(if $(SHA),--sha $(SHA),) --out candidates
 
 repin-plan:
-	@test -n "$(OUT)" || (echo "usage: make repin-plan OUT=<dir> [REPO=<name>] [BEFORE=<date>]"; exit 1)
-	$(PYTHON) -m scan.repin plan --out $(OUT) $(if $(REPO),--only $(REPO),) $(if $(BEFORE),--before $(BEFORE),)
+	@test -n "$(OUT)" || (echo "usage: make repin-plan OUT=<dir> [REPO=<name>] [BEFORE=<date>] [TARGETS='vllm=v0.29.0 ...']"; exit 1)
+	$(PYTHON) -m scan.repin plan --out $(OUT) $(if $(REPO),--only $(REPO),) $(if $(BEFORE),--before $(BEFORE),) $(foreach t,$(TARGETS),--target $(t))
 
 census-all:
 	$(PYTHON) -m scan.run --manifest $(MANIFEST) --repos-dir $(REPOS_DIR) --out candidates
