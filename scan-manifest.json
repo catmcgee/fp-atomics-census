@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
-  "generated": "2026-07-17",
-  "notes": "Each repository is cloned at exactly the pinned sha. scan_paths are the directories in scope for triage; the scanner still walks the whole tree so that coverage can be reported per directory. Line numbers in inventory/ refer to these shas only.",
+  "generated": "2026-09-15",
+  "notes": "Each repository is cloned at exactly the pinned sha. scan_paths are the directories in scope for triage; the scanner still walks the whole tree so that coverage can be reported per directory. Line numbers in inventory/ refer to these shas only. pin_rule, where present, records how the sha was chosen: the commit a release tag points to, or the last commit on the default branch before a cut-off.",
   "repos": [
     {
       "name": "vllm",
@@ -79,6 +79,7 @@
       "url": "https://github.com/IST-DASLab/marlin.git",
       "sha": "1f25790bdd49fba53106164a24666dade68d7c90",
       "commit_date": "2024-09-04T15:35:00+02:00",
+      "pin_rule": "master before 2026-09-15T00:00:00Z",
       "scan_paths": [
         "marlin"
       ],
@@ -118,8 +119,9 @@
     {
       "name": "cutlass",
       "url": "https://github.com/NVIDIA/cutlass.git",
-      "sha": "4cbaaae4c70dbb2b3e07844010a381b97217ed76",
-      "commit_date": "2026-07-06T06:45:31Z",
+      "sha": "147295a3d4b75f3aeff247c25b8927cea9a7006a",
+      "commit_date": "2026-09-08T06:20:12Z",
+      "pin_rule": "main before 2026-09-15T00:00:00Z",
       "scan_paths": [
         "include/cutlass/gemm/kernel",
         "include/cutlass/gemm/device",

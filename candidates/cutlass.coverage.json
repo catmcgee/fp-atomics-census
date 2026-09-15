@@ -1,6 +1,6 @@
 {
   "engine": "cutlass",
-  "sha": "4cbaaae4c70dbb2b3e07844010a381b97217ed76",
+  "sha": "147295a3d4b75f3aeff247c25b8927cea9a7006a",
   "scan_paths": [
     "include/cutlass/gemm/kernel",
     "include/cutlass/gemm/device",
@@ -51,6 +51,23 @@
         ".in": 2
       }
     },
+    "cutlass_compiler": {
+      "files_walked": 463,
+      "files_scanned": 85,
+      "files_with_candidates": 1,
+      "candidates": 1,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".txt": 35,
+        "<none>": 1,
+        ".md": 2,
+        ".cmake": 4,
+        ".td": 8,
+        ".in": 4,
+        ".mlir": 322,
+        ".sh": 2
+      }
+    },
     "docs": {
       "files_walked": 3660,
       "files_scanned": 0,
@@ -67,14 +84,14 @@
       }
     },
     "examples": {
-      "files_walked": 662,
-      "files_scanned": 500,
-      "files_with_candidates": 24,
-      "candidates": 55,
+      "files_walked": 802,
+      "files_scanned": 630,
+      "files_with_candidates": 30,
+      "candidates": 74,
       "in_scope": false,
       "skipped_extensions": {
-        ".txt": 102,
-        ".md": 26,
+        ".txt": 103,
+        ".md": 35,
         ".csv": 1,
         ".json": 1,
         ".sh": 4,
@@ -85,32 +102,45 @@
       }
     },
     "include/cute": {
-      "files_walked": 112,
-      "files_scanned": 112,
+      "files_walked": 117,
+      "files_scanned": 117,
       "files_with_candidates": 2,
       "candidates": 25,
       "in_scope": false,
       "skipped_extensions": {}
     },
     "include/cutlass": {
-      "files_walked": 712,
-      "files_scanned": 712,
+      "files_walked": 714,
+      "files_scanned": 714,
       "files_with_candidates": 7,
       "candidates": 33,
       "in_scope": true,
       "skipped_extensions": {}
     },
     "media": {
-      "files_walked": 155,
-      "files_scanned": 0,
+      "files_walked": 216,
+      "files_scanned": 1,
       "files_with_candidates": 0,
       "candidates": 0,
       "in_scope": false,
       "skipped_extensions": {
-        ".rst": 48,
-        ".md": 33,
-        ".png": 73,
-        ".svg": 1
+        ".rst": 96,
+        ".md": 34,
+        ".nblink": 8,
+        ".png": 75,
+        ".svg": 2
+      }
+    },
+    "operators": {
+      "files_walked": 183,
+      "files_scanned": 172,
+      "files_with_candidates": 4,
+      "candidates": 9,
+      "in_scope": false,
+      "skipped_extensions": {
+        ".md": 2,
+        ".toml": 1,
+        ".ipynb": 8
       }
     },
     "python": {
@@ -125,16 +155,17 @@
       }
     },
     "python/CuTeDSL": {
-      "files_walked": 145,
-      "files_scanned": 139,
-      "files_with_candidates": 4,
-      "candidates": 28,
+      "files_walked": 219,
+      "files_scanned": 211,
+      "files_with_candidates": 5,
+      "candidates": 44,
       "in_scope": false,
       "skipped_extensions": {
         ".txt": 3,
         ".toml": 1,
         ".sh": 1,
-        ".md": 1
+        ".typed": 1,
+        ".md": 2
       }
     },
     "python/cutlass_cppgen": {
@@ -197,8 +228,8 @@
       "skipped_extensions": {}
     },
     "test": {
-      "files_walked": 1082,
-      "files_scanned": 1015,
+      "files_walked": 1098,
+      "files_scanned": 1031,
       "files_with_candidates": 3,
       "candidates": 3,
       "in_scope": false,
@@ -220,17 +251,17 @@
     }
   },
   "totals": {
-    "files_walked": 6940,
-    "files_scanned": 2764,
-    "candidates": 300,
+    "files_walked": 7884,
+    "files_scanned": 3247,
+    "candidates": 345,
     "candidates_in_scope": 18,
     "candidates_excluded": 9,
     "wrapper_definitions": {
-      "atomicMaxFloat": "cutlass-c00004",
-      "storeAtomicAdd": "cutlass-c00008",
-      "epilogue_lse_reduction": "cutlass-c00026",
-      "copy_unpack_": "cutlass-c00077",
-      "wait_eq_reset": "cutlass-c00086"
+      "atomicMaxFloat": "cutlass-c00005",
+      "storeAtomicAdd": "cutlass-c00009",
+      "epilogue_lse_reduction": "cutlass-c00027",
+      "copy_unpack_": "cutlass-c00097",
+      "wait_eq_reset": "cutlass-c00106"
     }
   }
 }
