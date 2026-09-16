@@ -1,0 +1,751 @@
+{
+  "comparisons": [
+    {
+      "current_cell": "cu129_v2/compile-on_graphs-off_runner-v2",
+      "current_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "exact_prompt_batch": true,
+      "generated_tokens": {
+        "count": 32,
+        "current": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ],
+        "exact": true,
+        "historical": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ]
+      },
+      "historical_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0",
+      "historical_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "model_revision": {
+        "current": "ec052fda178e241c7c443468d2fa1db6618996be",
+        "historical": "ec052fda178e241c7c443468d2fa1db6618996be"
+      },
+      "resolved_compile": {
+        "current": 3,
+        "historical": "3"
+      },
+      "resolved_cudagraph": {
+        "current": "NONE",
+        "historical": "NONE"
+      },
+      "scope": "prompt/target 0, original repeat 0",
+      "source_files": [
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/run.json",
+          "sha256": "f5c34604ca0611560a9bba9f4138b6b6ae83377cfc11f99036b3ee0d96e4ef59",
+          "size": 10360
+        },
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/runs.json",
+          "sha256": "f10a66be43866880fecffdb3f6703562011b50c8718d07b59da2dce976d87525",
+          "size": 171590
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/result.json.gz",
+          "sha256": "d9c8409c69ebb001b6828873f755c0594170058da987304c8ebb13d003273766",
+          "size": 73941
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/resolved_config.json",
+          "sha256": "2f5c4a3fbdffa9a44bff7de21509bf7f8812ed2cbd99e072aeaa9cd49cb6fbd8",
+          "size": 31638
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/provenance.json",
+          "sha256": "c3af50899635952fdd193bf12f8d518f2ca8290ff01c9114c88e5a91e6eac590",
+          "size": 10502
+        }
+      ],
+      "top5_logprobs": {
+        "all_exact": true,
+        "exact_positions": 32,
+        "positions": 32
+      }
+    },
+    {
+      "current_cell": "cu129_v2/compile-off_graphs-off_runner-v2",
+      "current_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "exact_prompt_batch": true,
+      "generated_tokens": {
+        "count": 32,
+        "current": [
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064,
+          315,
+          975,
+          320,
+          32904,
+          54,
+          8,
+          323,
+          11064,
+          315,
+          18279,
+          320,
+          32904,
+          50,
+          8,
+          369,
+          279,
+          34447,
+          13,
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064
+        ],
+        "exact": true,
+        "historical": [
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064,
+          315,
+          975,
+          320,
+          32904,
+          54,
+          8,
+          323,
+          11064,
+          315,
+          18279,
+          320,
+          32904,
+          50,
+          8,
+          369,
+          279,
+          34447,
+          13,
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064
+        ]
+      },
+      "historical_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0",
+      "historical_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "model_revision": {
+        "current": "ec052fda178e241c7c443468d2fa1db6618996be",
+        "historical": "ec052fda178e241c7c443468d2fa1db6618996be"
+      },
+      "resolved_compile": {
+        "current": 0,
+        "historical": "0"
+      },
+      "resolved_cudagraph": {
+        "current": "NONE",
+        "historical": "NONE"
+      },
+      "scope": "prompt/target 0, original repeat 0",
+      "source_files": [
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0/run.json",
+          "sha256": "ab4dd5dbf25aa00328a4a9d6b23a5186328f1c9c9f47a004cf38f8cb73cfa234",
+          "size": 9733
+        },
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0/runs.json",
+          "sha256": "feacec43fbe01e4e91562d0c3d1fd8dec8f86b4b09bcb6d5d5d1cfcff88a5a76",
+          "size": 171022
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_nodump/compile-off_graphs-off_runner-v2/result.json.gz",
+          "sha256": "aa00b4635ea4de378d8e0a96a8ee96d2032714e69d61afbb15ccd21da2bd0540",
+          "size": 91730
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_nodump/compile-off_graphs-off_runner-v2/resolved_config.json",
+          "sha256": "bfe6f6a45243c7cb40182e31bc446a34fdb841f31244cdfa76ab60592b861ad0",
+          "size": 30789
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_nodump/compile-off_graphs-off_runner-v2/provenance.json",
+          "sha256": "23218dd4fe404144e84ab3a43d243cdb331328a223a66a6a1a97578dd2d4e3a3",
+          "size": 10502
+        }
+      ],
+      "top5_logprobs": {
+        "all_exact": true,
+        "exact_positions": 32,
+        "positions": 32
+      }
+    },
+    {
+      "current_cell": "cu130_v2/compile-on_graphs-off_runner-v2",
+      "current_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "exact_prompt_batch": true,
+      "generated_tokens": {
+        "count": 32,
+        "current": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ],
+        "exact": true,
+        "historical": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ]
+      },
+      "historical_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0",
+      "historical_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "model_revision": {
+        "current": "ec052fda178e241c7c443468d2fa1db6618996be",
+        "historical": "ec052fda178e241c7c443468d2fa1db6618996be"
+      },
+      "resolved_compile": {
+        "current": 3,
+        "historical": "3"
+      },
+      "resolved_cudagraph": {
+        "current": "NONE",
+        "historical": "NONE"
+      },
+      "scope": "prompt/target 0, original repeat 0",
+      "source_files": [
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/run.json",
+          "sha256": "f5c34604ca0611560a9bba9f4138b6b6ae83377cfc11f99036b3ee0d96e4ef59",
+          "size": 10360
+        },
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/runs.json",
+          "sha256": "f10a66be43866880fecffdb3f6703562011b50c8718d07b59da2dce976d87525",
+          "size": 171590
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/result.json.gz",
+          "sha256": "a5b67ca2f5ae156b2e743dd5a493b8c4145b6c7f1a6bb851fdbb2dd6aefda4d2",
+          "size": 73941
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/resolved_config.json",
+          "sha256": "f9f2c4a69a34557a85839dd60933144795398d11e231b3bb19f8a06b418deea3",
+          "size": 31639
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/provenance.json",
+          "sha256": "ef4fad1ec254088bf1bd0a1d8a0fd8f2301b2c0899c96f53064a8155c6fe86fa",
+          "size": 10601
+        }
+      ],
+      "top5_logprobs": {
+        "all_exact": true,
+        "exact_positions": 32,
+        "positions": 32
+      }
+    },
+    {
+      "current_cell": "cu130_v2/compile-off_graphs-off_runner-v2",
+      "current_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "exact_prompt_batch": true,
+      "generated_tokens": {
+        "count": 32,
+        "current": [
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064,
+          315,
+          975,
+          320,
+          32904,
+          54,
+          8,
+          323,
+          11064,
+          315,
+          18279,
+          320,
+          32904,
+          50,
+          8,
+          369,
+          279,
+          34447,
+          13,
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064
+        ],
+        "exact": true,
+        "historical": [
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064,
+          315,
+          975,
+          320,
+          32904,
+          54,
+          8,
+          323,
+          11064,
+          315,
+          18279,
+          320,
+          32904,
+          50,
+          8,
+          369,
+          279,
+          34447,
+          13,
+          576,
+          88737,
+          646,
+          1083,
+          1779,
+          279,
+          11064
+        ]
+      },
+      "historical_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0",
+      "historical_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "model_revision": {
+        "current": "ec052fda178e241c7c443468d2fa1db6618996be",
+        "historical": "ec052fda178e241c7c443468d2fa1db6618996be"
+      },
+      "resolved_compile": {
+        "current": 0,
+        "historical": "0"
+      },
+      "resolved_cudagraph": {
+        "current": "NONE",
+        "historical": "NONE"
+      },
+      "scope": "prompt/target 0, original repeat 0",
+      "source_files": [
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0/run.json",
+          "sha256": "ab4dd5dbf25aa00328a4a9d6b23a5186328f1c9c9f47a004cf38f8cb73cfa234",
+          "size": 9733
+        },
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0/runs.json",
+          "sha256": "feacec43fbe01e4e91562d0c3d1fd8dec8f86b4b09bcb6d5d5d1cfcff88a5a76",
+          "size": 171022
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-off_graphs-off_runner-v2/result.json.gz",
+          "sha256": "810d690320ec81640ec82cca0f82154f9778080c0186437b7d5c6149cfe10aa2",
+          "size": 91730
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-off_graphs-off_runner-v2/resolved_config.json",
+          "sha256": "bfe6f6a45243c7cb40182e31bc446a34fdb841f31244cdfa76ab60592b861ad0",
+          "size": 30789
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-off_graphs-off_runner-v2/provenance.json",
+          "sha256": "8d7240054d45bb06cdcea172f9dea08fe07699a7e74896f12f7a82c773a89759",
+          "size": 10601
+        }
+      ],
+      "top5_logprobs": {
+        "all_exact": true,
+        "exact_positions": 32,
+        "positions": 32
+      }
+    },
+    {
+      "current_cell": "cu130_v2_repeat/compile-on_graphs-off_runner-v2",
+      "current_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "exact_prompt_batch": true,
+      "generated_tokens": {
+        "count": 32,
+        "current": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ],
+        "exact": true,
+        "historical": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ]
+      },
+      "historical_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0",
+      "historical_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "model_revision": {
+        "current": "ec052fda178e241c7c443468d2fa1db6618996be",
+        "historical": "ec052fda178e241c7c443468d2fa1db6618996be"
+      },
+      "resolved_compile": {
+        "current": 3,
+        "historical": "3"
+      },
+      "resolved_cudagraph": {
+        "current": "NONE",
+        "historical": "NONE"
+      },
+      "scope": "prompt/target 0, original repeat 0",
+      "source_files": [
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/run.json",
+          "sha256": "f5c34604ca0611560a9bba9f4138b6b6ae83377cfc11f99036b3ee0d96e4ef59",
+          "size": 10360
+        },
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/runs.json",
+          "sha256": "f10a66be43866880fecffdb3f6703562011b50c8718d07b59da2dce976d87525",
+          "size": 171590
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_cold_repeat/compile-on_graphs-off_runner-v2/result.json.gz",
+          "sha256": "52a64ffa502669be8ba3ed3ed4703aa7fb2aef4bd344407ded71303efc1d93ab",
+          "size": 73941
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_cold_repeat/compile-on_graphs-off_runner-v2/resolved_config.json",
+          "sha256": "b9e8038a6747065a9cf83138f1f98918beecc565a9964bafa88a6622ba008ce2",
+          "size": 31649
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_cold_repeat/compile-on_graphs-off_runner-v2/provenance.json",
+          "sha256": "e84dbe3162a01e48ff18c1af897855d3b05d31190b0e324cfb1fb2789a5881af",
+          "size": 10601
+        }
+      ],
+      "top5_logprobs": {
+        "all_exact": true,
+        "exact_positions": 32,
+        "positions": 32
+      }
+    },
+    {
+      "current_cell": "cu129_v2_repeat/compile-on_graphs-off_runner-v2",
+      "current_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "exact_prompt_batch": true,
+      "generated_tokens": {
+        "count": 32,
+        "current": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ],
+        "exact": true,
+        "historical": [
+          279,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198,
+          1782,
+          198
+        ]
+      },
+      "historical_arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0",
+      "historical_input_sha256": "573b7902fcbc93c2adeccc88deb0fa5d5a6611693153e6e6018a3b48fa00e912",
+      "model_revision": {
+        "current": "ec052fda178e241c7c443468d2fa1db6618996be",
+        "historical": "ec052fda178e241c7c443468d2fa1db6618996be"
+      },
+      "resolved_compile": {
+        "current": 3,
+        "historical": "3"
+      },
+      "resolved_cudagraph": {
+        "current": "NONE",
+        "historical": "NONE"
+      },
+      "scope": "prompt/target 0, original repeat 0",
+      "source_files": [
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/run.json",
+          "sha256": "f5c34604ca0611560a9bba9f4138b6b6ae83377cfc11f99036b3ee0d96e4ef59",
+          "size": 10360
+        },
+        {
+          "path": "probes/shape/results/e4/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_compile_v2_graphs0_prefix0/runs.json",
+          "sha256": "f10a66be43866880fecffdb3f6703562011b50c8718d07b59da2dce976d87525",
+          "size": 171590
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_cold_repeat/compile-on_graphs-off_runner-v2/result.json.gz",
+          "sha256": "d882b187fbc936af496b850e10c15960ae76bdf042dd640671d9363ab1ef3bc2",
+          "size": 73929
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_cold_repeat/compile-on_graphs-off_runner-v2/resolved_config.json",
+          "sha256": "3448b4b547b6062acb91b4562a752d109227c5b5b8b42fd86079e91d195db627",
+          "size": 31649
+        },
+        {
+          "path": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu129_v2_graphs_off_cold_repeat/compile-on_graphs-off_runner-v2/provenance.json",
+          "sha256": "133b0267d728b15fe0d32574cf02962bd2c924e562d4d1fa69019d329ae1ca49",
+          "size": 10502
+        }
+      ],
+      "top5_logprobs": {
+        "all_exact": true,
+        "exact_positions": 32,
+        "positions": 32
+      }
+    }
+  ],
+  "errors": [],
+  "hook_scope": "The retained E4 arms contain hook records. The repository prose says a later hook-free check reproduced the corresponding E4 tokens, but separate raw hook-free output files were not found, so direct raw-file comparison to that check is unavailable.",
+  "scope": "Retained historical E4 output is target 0 only; other 15 outputs are unavailable in runs.json."
+}

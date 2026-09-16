@@ -1,0 +1,33 @@
+{
+  "inherited_relevant": {
+    "CUBLAS_WORKSPACE_CONFIG": null,
+    "CUDA_HOME": null,
+    "CUDA_MODULE_LOADING": null,
+    "CUDA_VISIBLE_DEVICES": "0",
+    "LD_LIBRARY_PATH": null,
+    "NCCL_NVLS_ENABLE": null,
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+    "PYTORCH_CUDA_ALLOC_CONF": null,
+    "TORCHINDUCTOR_CACHE_DIR": null,
+    "TORCHINDUCTOR_COMPILE_THREADS": null,
+    "TORCHINDUCTOR_DETERMINISTIC": null,
+    "TRITON_CACHE_DIR": null,
+    "VLLM_CACHE_ROOT": null,
+    "VLLM_DISABLE_COMPILE_CACHE": null,
+    "VLLM_ENABLE_V1_MULTIPROCESSING": null,
+    "VLLM_PLUGINS": null,
+    "VLLM_USE_V2_MODEL_RUNNER": null
+  },
+  "set_by_reproducer": {
+    "TORCHINDUCTOR_CACHE_DIR": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache/torchinductor",
+    "TORCHINDUCTOR_COMPILE_THREADS": "1",
+    "TRITON_CACHE_DIR": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache/triton",
+    "VLLM_CACHE_ROOT": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache/vllm",
+    "VLLM_DEBUG_DUMP_PATH": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/vllm_debug_dump",
+    "VLLM_DISABLE_COMPILE_CACHE": "1",
+    "VLLM_ENABLE_V1_MULTIPROCESSING": "0",
+    "VLLM_LOGGING_LEVEL": "DEBUG",
+    "VLLM_PLUGINS": "",
+    "VLLM_USE_V2_MODEL_RUNNER": "1"
+  }
+}

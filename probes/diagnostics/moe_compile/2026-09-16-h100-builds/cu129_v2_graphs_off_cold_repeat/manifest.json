@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/root/moe_compile_reproducer.py",
+    "--output-dir",
+    "/root/results/cu129_v2_graphs_off_cold_repeat",
+    "--runners",
+    "v2",
+    "--compiles",
+    "on",
+    "--graphs",
+    "off",
+    "--timeout-seconds",
+    "600"
+  ],
+  "controller_python": "/opt/issue56900/cu129/bin/python",
+  "created_at": "2026-09-16T16:15:13.418643+00:00",
+  "debug_dump": false,
+  "expected_vllm": "0.28.0",
+  "issue": "https://github.com/vllm-project/vllm/issues/56900",
+  "model": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "requested": [
+    {
+      "compile": "on",
+      "graphs": "off",
+      "runner": "v2"
+    }
+  ],
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be"
+}

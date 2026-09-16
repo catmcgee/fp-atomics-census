@@ -1,5 +1,7 @@
 # Diagnostic reproducer for vLLM issue #56900
 
+Executed results: [16 September same-H100 build and runner controls](2026-09-16-h100-builds/README.md). Both CUDA builds reproduced the V2 failure; V1 did not remove it.
+
 `moe_compile_reproducer.py` is a fresh-process diagnostic for the compiled
 Qwen1.5-MoE failure reported in [vLLM issue #56900](https://github.com/vllm-project/vllm/issues/56900).
 It reproduces the original raw 16-prompt batch, model revision
@@ -9,9 +11,9 @@ apply a chat template.
 
 The original failure was vLLM 0.28.0 with torch 2.13.0+cu130 on an H100. A later
 report did not reproduce it with the cu129 wheel on an H20, but changed the GPU
-and driver too. This harness is for the controlled comparison that has not yet
-been run: two environments on the same physical GPU and driver, changing the
-wheel build only.
+and driver too. This harness compares two recorded build bundles on the same
+physical GPU and driver, then tests the runner separately. The linked results
+include both comparisons and fresh-process compiled repeats.
 
 ## What one run records
 
@@ -25,8 +27,12 @@ TRITON_CACHE_DIR
 ```
 
 The script also sets `VLLM_DISABLE_COMPILE_CACHE=1`, `VLLM_PLUGINS=""`,
-`VLLM_ENABLE_V1_MULTIPROCESSING=0`, `VLLM_LOGGING_LEVEL=DEBUG` and a unique
-`VLLM_DEBUG_DUMP_PATH`. It does not redirect `HF_HOME`, so each environment must
+`VLLM_ENABLE_V1_MULTIPROCESSING=0` and `VLLM_LOGGING_LEVEL=DEBUG`.
+`--debug-dump` additionally sets a unique `VLLM_DEBUG_DUMP_PATH`. It is opt-in:
+the 16 September CUDA 13.0 run found that depyf 0.20.0's dump instrumentation
+rejects torch 2.13.0's `set_sys_modules` keyword before generation. Ordinary
+DEBUG logs and compiler-cache files remain available without this option.
+The script does not redirect `HF_HOME`, so each environment must
 already have access to the exact pinned weights and tokenizer revision.
 It refuses a version other than vLLM 0.28.0 unless `--expected-vllm` explicitly
 names the intended version. The default accepts an official wheel suffix such
@@ -40,7 +46,7 @@ Each worker saves:
 - `collect_env.py` output, GPU UUID/driver, build configuration, the selected
   runner and resolved compilation, attention and kernel configs;
 - cache snapshots before and after model construction and generation;
-- vLLM FX/pattern debug dumps and live worker stdout/stderr logs;
+- live worker stdout/stderr logs, and vLLM FX/pattern dumps with `--debug-dump`;
 - exact prompt and generated token ids, requested top-five logprobs and text for
   both identical in-process repeats;
 - short-cycle, duplicate-prompt and repeat-identity summaries; and

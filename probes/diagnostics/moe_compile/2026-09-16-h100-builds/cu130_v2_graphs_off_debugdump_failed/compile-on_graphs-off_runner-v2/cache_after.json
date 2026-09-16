@@ -1,0 +1,10 @@
+{
+  "file_count": 4,
+  "files": [
+    "torchinductor/gc/cgc3ygfhdusrgetjbkwuqcbh72mg5zm44dv3bnbiyystifpsgkum.py",
+    "triton/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ/cuda_utils.cpython-312-x86_64-linux-gnu.so",
+    "vllm/modelinfos/vllm-model_executor-models-qwen2_moe-Qwen2MoeForCausalLM.json",
+    "vllm/torch_compile_cache/f4b7973379/rank_0_0/backbone/cache_key_factors.json"
+  ],
+  "root": "/root/results/cu130_v2_graphs_off/compile-on_graphs-off_runner-v2/cache"
+}

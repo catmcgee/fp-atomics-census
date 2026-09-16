@@ -41,6 +41,12 @@ Compilation modes are exactly: 0 `NONE`, 1 `STOCK_TORCH_COMPILE`, 2 `DYNAMO_TRAC
 
 `VLLM_DEBUG_DUMP_PATH` overrides `CompilationConfig.debug_dump_path`. In mode 3 it enables depyf/transformed-code and FX/pattern dump paths. It should not be described as a complete capture of every generated binary/kernel. `VLLM_LOGGING_LEVEL=DEBUG` is supported. `VLLM_LOG_MODEL_INSPECTION=1` is also supported and can record the selected layer implementations.
 
+The [16 September execution](2026-09-16-h100-builds/README.md) found a runtime
+compatibility limit: depyf 0.20.0's patched loader rejects torch 2.13.0's
+`set_sys_modules` keyword. The failed dump-enabled worker is retained. Successful
+controls use DEBUG logging without that instrumentation; generated compiler
+sources and native vLLM computation graphs remain available.
+
 `VLLM_DISABLE_COMPILE_CACHE=1` disables vLLM's on-disk layer. Source tests combine it with Torch Inductor's `fresh_cache()` because it does not alone prove a cold Inductor/Triton compile. For subprocess diagnostics, set unique, initially empty `VLLM_CACHE_ROOT`, `TORCHINDUCTOR_CACHE_DIR`, and `TRITON_CACHE_DIR` before importing torch/vLLM. With vLLM caching disabled, vLLM's compiler adapter returns before redirecting the latter two, so explicit paths matter.
 
 ## H20 versus H100: what can and cannot be inferred

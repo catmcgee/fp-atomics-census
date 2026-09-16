@@ -1,0 +1,22 @@
+{
+  "entry_points": {
+    "vllm.endpoint_plugins": [],
+    "vllm.general_plugins": [
+      {
+        "name": "lora_filesystem_resolver",
+        "value": "vllm.plugins.lora_resolvers.filesystem_resolver:register_filesystem_resolver"
+      },
+      {
+        "name": "lora_hf_hub_resolver",
+        "value": "vllm.plugins.lora_resolvers.hf_hub_resolver:register_hf_hub_resolver"
+      }
+    ],
+    "vllm.io_processor_plugins": [],
+    "vllm.platform_plugins": [],
+    "vllm.stat_logger_plugins": []
+  },
+  "plugins_loaded": true,
+  "vllm_plugins": [
+    ""
+  ]
+}

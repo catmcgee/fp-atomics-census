@@ -1,0 +1,511 @@
+{
+  "cells": [
+    {
+      "backend": {
+        "attention_backend": [
+          "FLASH_ATTN"
+        ],
+        "complete": false,
+        "flash_attention_version": [
+          "3"
+        ],
+        "moe_experts": [
+          "TritonExperts"
+        ],
+        "moe_prepare_finalize": [
+          "MoEPrepareAndFinalizeNoDPEPModular"
+        ],
+        "requested_runner": null,
+        "resolved_runner": null,
+        "signature": {
+          "attention_backend": "FLASH_ATTN",
+          "flash_attention_version": "3",
+          "moe_experts": "TritonExperts",
+          "moe_prepare_finalize": "MoEPrepareAndFinalizeNoDPEPModular",
+          "unquantized_moe_backend": "TRITON"
+        },
+        "unquantized_moe_backend": [
+          "TRITON"
+        ]
+      },
+      "cache": {
+        "after_file_count": 4,
+        "before_file_count": 0,
+        "configured_roots": {
+          "TORCHINDUCTOR_CACHE_DIR": "/root/results/cu130_v2_graphs_off/compile-on_graphs-off_runner-v2/cache/torchinductor",
+          "TRITON_CACHE_DIR": "/root/results/cu130_v2_graphs_off/compile-on_graphs-off_runner-v2/cache/triton",
+          "VLLM_CACHE_ROOT": "/root/results/cu130_v2_graphs_off/compile-on_graphs-off_runner-v2/cache/vllm"
+        },
+        "errors": [],
+        "root": "/root/results/cu130_v2_graphs_off/compile-on_graphs-off_runner-v2/cache",
+        "scope": "VLLM_CACHE_ROOT, TORCHINDUCTOR_CACHE_DIR, and TRITON_CACHE_DIR only",
+        "verified_empty_named_roots_before_import": true
+      },
+      "controller_status": {
+        "backend_lines": [
+          "Using V2 Model Runner",
+          "Some attention backends are not valid for cuda with AttentionSelectorConfig(head_size=128, dtype=torch.bfloat16, kv_cache_dtype=auto, block_size=None, use_mla=False, has_sink=False, use_sparse=False, use_mm_prefix=False, use_per_head_quant_scales=False, attn_type=AttentionType.DECODER, has_sliding_window=False, use_non_causal=False, use_batch_invariant=False, use_kv_connector=False, use_adaptive_verification=False, use_pcp=False). Reasons: {TURBOQUANT: [kv_cache_dtype not supported]}.",
+          "Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+          "Using FlashAttention version 3",
+          "Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].",
+          "Using MoEPrepareAndFinalizeNoDPEPModular",
+          "Using TritonExperts MoE backend"
+        ],
+        "compile": "on",
+        "graphs": "off",
+        "name": "compile-on_graphs-off_runner-v2",
+        "returncode": 1,
+        "runner": "v2",
+        "timed_out": false
+      },
+      "distribution_provenance_complete": true,
+      "distributions": {
+        "distribution_count": 196,
+        "key_builds": {
+          "tokenspeed-triton": {
+            "direct_url": null,
+            "distribution_version": "3.8.10.post20260906",
+            "module_file": null,
+            "module_file_sha256": null,
+            "module_version": null,
+            "record_sha256": "2a79e94aa9181dc812425d6cd915cf782d4ef603855f2bce1137366855818fa6"
+          },
+          "torch": {
+            "direct_url": null,
+            "distribution_version": "2.13.0+cu130",
+            "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/__init__.py",
+            "module_file_sha256": "cf40c075c95864036e835795756d69b8cccfafa76f3bcde5eba9d06065ccd3d1",
+            "module_version": "2.13.0+cu130",
+            "record_sha256": "7e4655e60208c1df22db7a6e29fde1f8102a544587088ed8cefbe85daf1a0d4a"
+          },
+          "triton": {
+            "direct_url": null,
+            "distribution_version": "3.7.1",
+            "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/triton/__init__.py",
+            "module_file_sha256": "ae908c069c695e60788beef511f58d0b16d399782257335b86e466503dc74eca",
+            "module_version": "3.7.1",
+            "record_sha256": "bcbf3007a3ff1d351e8960ae15b5619d94f43b56205a42ff3068dd1f31f93099"
+          },
+          "vllm": {
+            "direct_url": "{\"archive_info\": {\"hash\": \"sha256=addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\", \"hashes\": {\"sha256\": \"addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\"}}, \"url\": \"https://files.pythonhosted.org/packages/87/d7/97f6ecc2ae883e601e08d7cef87cb54ececeefcfe6b5e12d5d92f8d06d6b/vllm-0.28.0-cp38-abi3-manylinux_2_28_x86_64.whl\"}",
+            "distribution_version": "0.28.0",
+            "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/__init__.py",
+            "module_file_sha256": "fd3708e5a13abe98c566afd79a6b1987cef70c0548bb19c1218ff6a7f9d43346",
+            "module_version": "0.28.0",
+            "record_sha256": "2ee8df97b3aab0d819ece50ff3f002315dd68dae4b1484107b6cd84a281d44bd"
+          }
+        },
+        "pip_freeze_sha256": "323077600dd957665bf1ad5474a68b081b246b1586ab4b771948bb94371b11e4",
+        "tokenspeed_mla": "tokenspeed-mla==0.1.8",
+        "torch_cuda_build": "13.0"
+      },
+      "errors": [],
+      "execution_controls": {
+        "debug_dump_enabled": true,
+        "debug_dump_manifest_consistent": true,
+        "debug_dump_requested": null,
+        "inherited_numerical_environment": {
+          "CUBLAS_WORKSPACE_CONFIG": null,
+          "CUDA_MODULE_LOADING": null,
+          "NCCL_NVLS_ENABLE": null,
+          "PYTORCH_CUDA_ALLOC_CONF": null,
+          "TORCHINDUCTOR_DETERMINISTIC": null
+        },
+        "torchinductor_compile_threads": "1",
+        "vllm_disable_compile_cache": "1",
+        "vllm_logging_level": "DEBUG",
+        "vllm_plugins": ""
+      },
+      "failure": {
+        "message": "RuntimeError: Failed to run autotuning code block: patched_load_by_key_path() got an unexpected keyword argument 'set_sys_modules'\n\nSet TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+        "traceback": "Traceback (most recent call last):\n  File \"/root/moe_compile_reproducer.py\", line 396, in worker\n    llm = LLM(\n          ^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/entrypoints/llm.py\", line 343, in __init__\n    self.llm_engine = LLMEngine.from_engine_args(\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py\", line 179, in from_engine_args\n    return cls(\n           ^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py\", line 105, in __init__\n    self.engine_core = EngineCoreClient.make_client(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core_client.py\", line 112, in make_client\n    return InprocClient(vllm_config, executor_class, log_stats)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core_client.py\", line 317, in __init__\n    self.engine_core = EngineCore(*args, **kwargs)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core.py\", line 144, in __init__\n    kv_cache_config = self._initialize_kv_caches(vllm_config)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/tracing/otel.py\", line 178, in sync_wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core.py\", line 296, in _initialize_kv_caches\n    available_gpu_memory = self.model_executor.determine_available_memory()\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/executor/abstract.py\", line 149, in determine_available_memory\n    return self.collective_rpc(\"determine_available_memory\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py\", line 103, in collective_rpc\n    result = run_method(self.driver_worker, method, args, kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/serial_utils.py\", line 510, in run_method\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py\", line 519, in determine_available_memory\n    self.model_runner.profile_run()\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py\", line 813, in profile_run\n    hidden_states, sample_hidden_states = self._dummy_run(\n                                          ^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/eplb_utils.py\", line 27, in wrapper\n    result = fn(self, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py\", line 695, in _dummy_run\n    self.execute_model(\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py\", line 1666, in execute_model\n    model_output = self.model(**model_inputs)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_moe.py\", line 480, in forward\n    hidden_states = self.model(\n                    ^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/compilation/decorators.py\", line 678, in __call__\n    output = TorchCompileWithNoGuardsWrapper.__call__(\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/compilation/wrapper.py\", line 183, in __call__\n    return self._call_with_optional_nvtx_range(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/compilation/wrapper.py\", line 70, in _call_with_optional_nvtx_range\n    return callable_fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py\", line 1183, in compile_wrapper\n    raise e.remove_dynamo_frames() from None  # see TORCHDYNAMO_VERBOSE=1\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/compile_fx.py\", line 1079, in _compile_fx_inner\n    raise InductorError(e, currentframe()).with_traceback(\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/compile_fx.py\", line 1059, in _compile_fx_inner\n    mb_compiled_graph = fx_codegen_and_compile(\n                        ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/compile_fx.py\", line 1847, in fx_codegen_and_compile\n    return scheme.codegen_and_compile(gm, example_inputs, inputs_to_check, graph_kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/compile_fx.py\", line 1608, in codegen_and_compile\n    compiled_module = graph.compile_to_module()\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/graph.py\", line 2669, in compile_to_module\n    return self._compile_to_module()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/graph.py\", line 2675, in _compile_to_module\n    self.codegen_with_cpp_wrapper() if self.cpp_wrapper else self.codegen()\n                                                             ^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/graph.py\", line 2618, in codegen\n    result = self.wrapper_code.generate(self.is_inference)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/codegen/wrapper.py\", line 2127, in generate\n    return self._generate(is_inference)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/codegen/wrapper.py\", line 2211, in _generate\n    self.generate_and_run_autotune_block()\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/_inductor/codegen/wrapper.py\", line 2299, in generate_and_run_autotune_block\n    raise RuntimeError(f\"Failed to run autotuning code block: {e}\") from e\ntorch._inductor.exc.InductorError: RuntimeError: Failed to run autotuning code block: patched_load_by_key_path() got an unexpected keyword argument 'set_sys_modules'\n\nSet TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n\n",
+        "type": "InductorError"
+      },
+      "gpu": {
+        "capability": [
+          9,
+          0
+        ],
+        "driver": "580.126.09",
+        "multi_processor_count": 132,
+        "name": "NVIDIA H100 80GB HBM3",
+        "nvidia_smi_rows": [
+          {
+            "driver": "580.126.09",
+            "index": "0",
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+          }
+        ],
+        "selection_method": "cuda_visible_devices",
+        "selection_unambiguous": true,
+        "total_memory": 85017493504,
+        "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+      },
+      "id": "cu130_debugdump_failed/compile-on_graphs-off_runner-v2",
+      "label": "cu130_debugdump_failed",
+      "model": null,
+      "name": "compile-on_graphs-off_runner-v2",
+      "output": null,
+      "prompt_text_batch_sha256": null,
+      "prompt_token_ids": null,
+      "prompt_token_ids_batch_sha256": null,
+      "requested": {
+        "compile": "on",
+        "graphs": "off",
+        "runner": "v2"
+      },
+      "resolved_assertions": null,
+      "revision": null,
+      "sampling": null,
+      "state": "failed",
+      "usable_for_controlled_comparison": false
+    },
+    {
+      "backend": {
+        "attention_backend": [
+          "FLASH_ATTN"
+        ],
+        "complete": false,
+        "flash_attention_version": [
+          "3"
+        ],
+        "moe_experts": [
+          "TritonExperts"
+        ],
+        "moe_prepare_finalize": [
+          "MoEPrepareAndFinalizeNoDPEPModular"
+        ],
+        "requested_runner": null,
+        "resolved_runner": null,
+        "signature": {
+          "attention_backend": "FLASH_ATTN",
+          "flash_attention_version": "3",
+          "moe_experts": "TritonExperts",
+          "moe_prepare_finalize": "MoEPrepareAndFinalizeNoDPEPModular",
+          "unquantized_moe_backend": "TRITON"
+        },
+        "unquantized_moe_backend": [
+          "TRITON"
+        ]
+      },
+      "cache": {
+        "after_file_count": 178,
+        "before_file_count": 0,
+        "configured_roots": {
+          "TORCHINDUCTOR_CACHE_DIR": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache/torchinductor",
+          "TRITON_CACHE_DIR": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache/triton",
+          "VLLM_CACHE_ROOT": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache/vllm"
+        },
+        "errors": [],
+        "root": "/root/results/cu130_v2_graphs_off/compile-off_graphs-off_runner-v2/cache",
+        "scope": "VLLM_CACHE_ROOT, TORCHINDUCTOR_CACHE_DIR, and TRITON_CACHE_DIR only",
+        "verified_empty_named_roots_before_import": true
+      },
+      "controller_status": {
+        "backend_lines": [
+          "Using V2 Model Runner",
+          "Some attention backends are not valid for cuda with AttentionSelectorConfig(head_size=128, dtype=torch.bfloat16, kv_cache_dtype=auto, block_size=None, use_mla=False, has_sink=False, use_sparse=False, use_mm_prefix=False, use_per_head_quant_scales=False, attn_type=AttentionType.DECODER, has_sliding_window=False, use_non_causal=False, use_batch_invariant=False, use_kv_connector=False, use_adaptive_verification=False, use_pcp=False). Reasons: {TURBOQUANT: [kv_cache_dtype not supported]}.",
+          "Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+          "Using FlashAttention version 3",
+          "Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].",
+          "Using MoEPrepareAndFinalizeNoDPEPModular",
+          "Using TritonExperts MoE backend"
+        ],
+        "compile": "off",
+        "graphs": "off",
+        "name": "compile-off_graphs-off_runner-v2",
+        "returncode": 1,
+        "runner": "v2",
+        "timed_out": false
+      },
+      "distribution_provenance_complete": true,
+      "distributions": {
+        "distribution_count": 196,
+        "key_builds": {
+          "tokenspeed-triton": {
+            "direct_url": null,
+            "distribution_version": "3.8.10.post20260906",
+            "module_file": null,
+            "module_file_sha256": null,
+            "module_version": null,
+            "record_sha256": "2a79e94aa9181dc812425d6cd915cf782d4ef603855f2bce1137366855818fa6"
+          },
+          "torch": {
+            "direct_url": null,
+            "distribution_version": "2.13.0+cu130",
+            "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/__init__.py",
+            "module_file_sha256": "cf40c075c95864036e835795756d69b8cccfafa76f3bcde5eba9d06065ccd3d1",
+            "module_version": "2.13.0+cu130",
+            "record_sha256": "7e4655e60208c1df22db7a6e29fde1f8102a544587088ed8cefbe85daf1a0d4a"
+          },
+          "triton": {
+            "direct_url": null,
+            "distribution_version": "3.7.1",
+            "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/triton/__init__.py",
+            "module_file_sha256": "ae908c069c695e60788beef511f58d0b16d399782257335b86e466503dc74eca",
+            "module_version": "3.7.1",
+            "record_sha256": "bcbf3007a3ff1d351e8960ae15b5619d94f43b56205a42ff3068dd1f31f93099"
+          },
+          "vllm": {
+            "direct_url": "{\"archive_info\": {\"hash\": \"sha256=addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\", \"hashes\": {\"sha256\": \"addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\"}}, \"url\": \"https://files.pythonhosted.org/packages/87/d7/97f6ecc2ae883e601e08d7cef87cb54ececeefcfe6b5e12d5d92f8d06d6b/vllm-0.28.0-cp38-abi3-manylinux_2_28_x86_64.whl\"}",
+            "distribution_version": "0.28.0",
+            "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/__init__.py",
+            "module_file_sha256": "fd3708e5a13abe98c566afd79a6b1987cef70c0548bb19c1218ff6a7f9d43346",
+            "module_version": "0.28.0",
+            "record_sha256": "2ee8df97b3aab0d819ece50ff3f002315dd68dae4b1484107b6cd84a281d44bd"
+          }
+        },
+        "pip_freeze_sha256": "323077600dd957665bf1ad5474a68b081b246b1586ab4b771948bb94371b11e4",
+        "tokenspeed_mla": "tokenspeed-mla==0.1.8",
+        "torch_cuda_build": "13.0"
+      },
+      "errors": [],
+      "execution_controls": {
+        "debug_dump_enabled": true,
+        "debug_dump_manifest_consistent": true,
+        "debug_dump_requested": null,
+        "inherited_numerical_environment": {
+          "CUBLAS_WORKSPACE_CONFIG": null,
+          "CUDA_MODULE_LOADING": null,
+          "NCCL_NVLS_ENABLE": null,
+          "PYTORCH_CUDA_ALLOC_CONF": null,
+          "TORCHINDUCTOR_DETERMINISTIC": null
+        },
+        "torchinductor_compile_threads": "1",
+        "vllm_disable_compile_cache": "1",
+        "vllm_logging_level": "DEBUG",
+        "vllm_plugins": ""
+      },
+      "failure": {
+        "message": "[Errno 2] No such file or directory: 'ninja'",
+        "traceback": "Traceback (most recent call last):\n  File \"/root/moe_compile_reproducer.py\", line 396, in worker\n    llm = LLM(\n          ^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/entrypoints/llm.py\", line 343, in __init__\n    self.llm_engine = LLMEngine.from_engine_args(\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py\", line 179, in from_engine_args\n    return cls(\n           ^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py\", line 105, in __init__\n    self.engine_core = EngineCoreClient.make_client(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core_client.py\", line 112, in make_client\n    return InprocClient(vllm_config, executor_class, log_stats)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core_client.py\", line 317, in __init__\n    self.engine_core = EngineCore(*args, **kwargs)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core.py\", line 144, in __init__\n    kv_cache_config = self._initialize_kv_caches(vllm_config)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/tracing/otel.py\", line 178, in sync_wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/engine/core.py\", line 331, in _initialize_kv_caches\n    self.model_executor.compile_or_warm_up_model()\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/executor/abstract.py\", line 126, in compile_or_warm_up_model\n    compilation_times: list[CompilationTimes] = self.collective_rpc(\n                                                ^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py\", line 103, in collective_rpc\n    result = run_method(self.driver_worker, method, args, kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/serial_utils.py\", line 510, in run_method\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/tracing/otel.py\", line 178, in sync_wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py\", line 810, in compile_or_warm_up_model\n    warmup_kernels(self.model_runner, self.execute_model, self.sample_tokens)\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/warmup.py\", line 337, in warmup_kernels\n    worker_sample_tokens(grammar_output)\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py\", line 1049, in sample_tokens\n    return self.model_runner.sample_tokens(grammar_output)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/eplb_utils.py\", line 27, in wrapper\n    result = fn(self, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py\", line 1749, in sample_tokens\n    sampler_output, num_sampled, num_rejected = self.sample(\n                                                ^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py\", line 1353, in sample\n    sampler_output = self.sampler(logits, input_batch)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/sample/sampler.py\", line 120, in __call__\n    sampled, processed_logits = self.sample(\n                                ^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/worker/gpu/sample/sampler.py\", line 284, in sample\n    sampled = flashinfer_sample(processed_logits, top_k, top_p).to(torch.int64)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/v1/sample/ops/topk_topp_sampler.py\", line 508, in flashinfer_sample\n    next_token_ids = flashinfer.sampling.top_k_top_p_sampling_from_logits(\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/api_logging.py\", line 2333, in _auto_dump_wrapper\n    return _inner(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/sampling.py\", line 1547, in top_k_top_p_sampling_from_logits\n    masked_logits = top_k_mask_logits(logits, top_k)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/api_logging.py\", line 2333, in _auto_dump_wrapper\n    return _inner(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/sampling.py\", line 1974, in top_k_mask_logits\n    return get_sampling_module().top_k_mask_logits(\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/sampling.py\", line 68, in get_sampling_module\n    module = gen_sampling_module().build_and_load()\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/jit/core.py\", line 320, in build_and_load\n    self.build()\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/jit/core.py\", line 427, in build\n    run_ninja(self.build_dir, self.ninja_path, verbose)\n  File \"/opt/issue56900/cu130/lib/python3.12/site-packages/flashinfer/jit/cpp_ext.py\", line 370, in run_ninja\n    subprocess.run(\n  File \"/usr/lib/python3.12/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/usr/lib/python3.12/subprocess.py\", line 1955, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: 'ninja'\n",
+        "type": "FileNotFoundError"
+      },
+      "gpu": {
+        "capability": [
+          9,
+          0
+        ],
+        "driver": "580.126.09",
+        "multi_processor_count": 132,
+        "name": "NVIDIA H100 80GB HBM3",
+        "nvidia_smi_rows": [
+          {
+            "driver": "580.126.09",
+            "index": "0",
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+          }
+        ],
+        "selection_method": "cuda_visible_devices",
+        "selection_unambiguous": true,
+        "total_memory": 85017493504,
+        "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+      },
+      "id": "cu130_debugdump_failed/compile-off_graphs-off_runner-v2",
+      "label": "cu130_debugdump_failed",
+      "model": null,
+      "name": "compile-off_graphs-off_runner-v2",
+      "output": null,
+      "prompt_text_batch_sha256": null,
+      "prompt_token_ids": null,
+      "prompt_token_ids_batch_sha256": null,
+      "requested": {
+        "compile": "off",
+        "graphs": "off",
+        "runner": "v2"
+      },
+      "resolved_assertions": null,
+      "revision": null,
+      "sampling": null,
+      "state": "failed",
+      "usable_for_controlled_comparison": false
+    }
+  ],
+  "comparisons": [
+    {
+      "confounds": [
+        "left cell is failed",
+        "left selected-backend evidence is incomplete",
+        "model differs or is missing",
+        "revision differs or is missing",
+        "right cell is failed",
+        "right selected-backend evidence is incomplete",
+        "sampling differs or is missing"
+      ],
+      "controlled": false,
+      "cuda_builds": {
+        "left": "13.0",
+        "right": "13.0"
+      },
+      "distribution_differences": [],
+      "distribution_summary": {
+        "different_entries": 0,
+        "identical_entries": 196,
+        "left_count": 196,
+        "right_count": 196
+      },
+      "execution_controls": {
+        "left": {
+          "debug_dump_enabled": true,
+          "debug_dump_manifest_consistent": true,
+          "debug_dump_requested": null,
+          "inherited_numerical_environment": {
+            "CUBLAS_WORKSPACE_CONFIG": null,
+            "CUDA_MODULE_LOADING": null,
+            "NCCL_NVLS_ENABLE": null,
+            "PYTORCH_CUDA_ALLOC_CONF": null,
+            "TORCHINDUCTOR_DETERMINISTIC": null
+          },
+          "torchinductor_compile_threads": "1",
+          "vllm_disable_compile_cache": "1",
+          "vllm_logging_level": "DEBUG",
+          "vllm_plugins": ""
+        },
+        "right": {
+          "debug_dump_enabled": true,
+          "debug_dump_manifest_consistent": true,
+          "debug_dump_requested": null,
+          "inherited_numerical_environment": {
+            "CUBLAS_WORKSPACE_CONFIG": null,
+            "CUDA_MODULE_LOADING": null,
+            "NCCL_NVLS_ENABLE": null,
+            "PYTORCH_CUDA_ALLOC_CONF": null,
+            "TORCHINDUCTOR_DETERMINISTIC": null
+          },
+          "torchinductor_compile_threads": "1",
+          "vllm_disable_compile_cache": "1",
+          "vllm_logging_level": "DEBUG",
+          "vllm_plugins": ""
+        }
+      },
+      "execution_controls_held_fixed": true,
+      "gpu": {
+        "left": {
+          "capability": [
+            9,
+            0
+          ],
+          "driver": "580.126.09",
+          "multi_processor_count": 132,
+          "name": "NVIDIA H100 80GB HBM3",
+          "nvidia_smi_rows": [
+            {
+              "driver": "580.126.09",
+              "index": "0",
+              "name": "NVIDIA H100 80GB HBM3",
+              "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+            }
+          ],
+          "selection_method": "cuda_visible_devices",
+          "selection_unambiguous": true,
+          "total_memory": 85017493504,
+          "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+        },
+        "right": {
+          "capability": [
+            9,
+            0
+          ],
+          "driver": "580.126.09",
+          "multi_processor_count": 132,
+          "name": "NVIDIA H100 80GB HBM3",
+          "nvidia_smi_rows": [
+            {
+              "driver": "580.126.09",
+              "index": "0",
+              "name": "NVIDIA H100 80GB HBM3",
+              "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+            }
+          ],
+          "selection_method": "cuda_visible_devices",
+          "selection_unambiguous": true,
+          "total_memory": 85017493504,
+          "uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+        },
+        "same_driver": true,
+        "same_model": true,
+        "same_uuid": true
+      },
+      "kind": "compiled_vs_eager",
+      "left": "cu130_debugdump_failed/compile-on_graphs-off_runner-v2",
+      "logprobs_identical_prompts": 0,
+      "prompt_count": 0,
+      "prompt_text_batch_sha256": {
+        "left": null,
+        "right": null
+      },
+      "prompt_token_ids_batch_sha256": {
+        "left": null,
+        "right": null
+      },
+      "prompt_token_ids_identical": false,
+      "prompts": [],
+      "right": "cu130_debugdump_failed/compile-off_graphs-off_runner-v2",
+      "selected_backends": {
+        "left": {
+          "attention_backend": "FLASH_ATTN",
+          "flash_attention_version": "3",
+          "moe_experts": "TritonExperts",
+          "moe_prepare_finalize": "MoEPrepareAndFinalizeNoDPEPModular",
+          "unquantized_moe_backend": "TRITON"
+        },
+        "right": {
+          "attention_backend": "FLASH_ATTN",
+          "flash_attention_version": "3",
+          "moe_experts": "TritonExperts",
+          "moe_prepare_finalize": "MoEPrepareAndFinalizeNoDPEPModular",
+          "unquantized_moe_backend": "TRITON"
+        }
+      },
+      "selected_backends_held_fixed": true,
+      "texts_identical_prompts": 0,
+      "tokens_identical_prompts": 0
+    }
+  ],
+  "confounded_comparisons": [
+    "cu130_debugdump_failed/compile-on_graphs-off_runner-v2 :: cu130_debugdump_failed/compile-off_graphs-off_runner-v2"
+  ],
+  "created_at": "2026-09-16T16:27:19.303470+00:00",
+  "evidence_state": "INCOMPLETE",
+  "failed_cells": [
+    "cu130_debugdump_failed/compile-on_graphs-off_runner-v2",
+    "cu130_debugdump_failed/compile-off_graphs-off_runner-v2"
+  ],
+  "global_checks": {
+    "all_cells_use_distinct_named_cache_roots": true,
+    "distribution_snapshots_by_environment": {
+      "cu130_debugdump_failed": []
+    },
+    "distributions_stable_within_each_environment": false,
+    "drivers": [
+      "580.126.09"
+    ],
+    "gpu_models": [
+      "NVIDIA H100 80GB HBM3"
+    ],
+    "one_gpu_uuid_driver_and_model": true,
+    "selected_gpu_uuids": [
+      "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc"
+    ],
+    "torch_cuda_builds": [
+      "13.0"
+    ]
+  },
+  "input_errors": [],
+  "invalid_cells": [],
+  "method_bounds": [
+    "Cold-root proof covers only VLLM_CACHE_ROOT, TORCHINDUCTOR_CACHE_DIR, and TRITON_CACHE_DIR; it does not prove every driver or library cache was cold.",
+    "Two generate calls establish in-process repeatability only. One cell does not establish fresh-process repeatability of that configuration.",
+    "Matching selection logs identify vLLM's named attention and MoE implementations, not the exact generated GPU kernels.",
+    "Debug-dump instrumentation is recorded as an execution control. A no-dump run retains DEBUG logs and named cache trees, but not depyf/FX debug dumps.",
+    "A CUDA-build comparison is a comparison of the recorded installed stacks. Distribution differences are reported rather than silently attributed to one wheel.",
+    "Recorded versions, module paths, RECORD hashes, and distribution differences bound the current run; they do not by themselves prove exact identity with the historical stack.",
+    "Eager vLLM is an internal reference, not an external accuracy oracle.",
+    "V1 versus V2 changes the runner stack, and is not a one-kernel comparison."
+  ],
+  "missing_cells": [],
+  "schema": 1,
+  "unusable_successful_cells": []
+}

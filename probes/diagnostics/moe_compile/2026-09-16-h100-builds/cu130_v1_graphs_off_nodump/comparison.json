@@ -1,0 +1,79 @@
+{
+  "compiled_vs_eager": [
+    {
+      "backends_held_fixed": true,
+      "compiled_backend_lines": [
+        "Some attention backends are not valid for cuda with AttentionSelectorConfig(head_size=128, dtype=torch.bfloat16, kv_cache_dtype=auto, block_size=None, use_mla=False, has_sink=False, use_sparse=False, use_mm_prefix=False, use_per_head_quant_scales=False, attn_type=AttentionType.DECODER, has_sliding_window=False, use_non_causal=False, use_batch_invariant=False, use_kv_connector=False, use_adaptive_verification=False, use_pcp=False). Reasons: {TURBOQUANT: [kv_cache_dtype not supported]}.",
+        "Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+        "Using FlashAttention version 3",
+        "Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].",
+        "Using MoEPrepareAndFinalizeNoDPEPModular",
+        "Using TritonExperts MoE backend"
+      ],
+      "compiled_vs_eager_identical_prompts": 0,
+      "confounded_by_backend_selection": false,
+      "eager_backend_lines": [
+        "Some attention backends are not valid for cuda with AttentionSelectorConfig(head_size=128, dtype=torch.bfloat16, kv_cache_dtype=auto, block_size=None, use_mla=False, has_sink=False, use_sparse=False, use_mm_prefix=False, use_per_head_quant_scales=False, attn_type=AttentionType.DECODER, has_sliding_window=False, use_non_causal=False, use_batch_invariant=False, use_kv_connector=False, use_adaptive_verification=False, use_pcp=False). Reasons: {TURBOQUANT: [kv_cache_dtype not supported]}.",
+        "Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+        "Using FlashAttention version 3",
+        "Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].",
+        "Using MoEPrepareAndFinalizeNoDPEPModular",
+        "Using TritonExperts MoE backend"
+      ],
+      "first_difference_token_index": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "graphs": "off",
+      "runner": "v1"
+    }
+  ],
+  "completed": [
+    {
+      "backend_lines": [
+        "Some attention backends are not valid for cuda with AttentionSelectorConfig(head_size=128, dtype=torch.bfloat16, kv_cache_dtype=auto, block_size=None, use_mla=False, has_sink=False, use_sparse=False, use_mm_prefix=False, use_per_head_quant_scales=False, attn_type=AttentionType.DECODER, has_sliding_window=False, use_non_causal=False, use_batch_invariant=False, use_kv_connector=False, use_adaptive_verification=False, use_pcp=False). Reasons: {TURBOQUANT: [kv_cache_dtype not supported]}.",
+        "Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+        "Using FlashAttention version 3",
+        "Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].",
+        "Using MoEPrepareAndFinalizeNoDPEPModular",
+        "Using TritonExperts MoE backend"
+      ],
+      "compile": "on",
+      "graphs": "off",
+      "name": "compile-on_graphs-off_runner-v1",
+      "returncode": 0,
+      "runner": "v1",
+      "timed_out": false
+    },
+    {
+      "backend_lines": [
+        "Some attention backends are not valid for cuda with AttentionSelectorConfig(head_size=128, dtype=torch.bfloat16, kv_cache_dtype=auto, block_size=None, use_mla=False, has_sink=False, use_sparse=False, use_mm_prefix=False, use_per_head_quant_scales=False, attn_type=AttentionType.DECODER, has_sliding_window=False, use_non_causal=False, use_batch_invariant=False, use_kv_connector=False, use_adaptive_verification=False, use_pcp=False). Reasons: {TURBOQUANT: [kv_cache_dtype not supported]}.",
+        "Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+        "Using FlashAttention version 3",
+        "Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].",
+        "Using MoEPrepareAndFinalizeNoDPEPModular",
+        "Using TritonExperts MoE backend"
+      ],
+      "compile": "off",
+      "graphs": "off",
+      "name": "compile-off_graphs-off_runner-v1",
+      "returncode": 0,
+      "runner": "v1",
+      "timed_out": false
+    }
+  ]
+}
