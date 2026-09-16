@@ -60,6 +60,14 @@ assert ROUNDED_SPEC and ROUNDED_SPEC.loader
 rounded_control = importlib.util.module_from_spec(ROUNDED_SPEC)
 ROUNDED_SPEC.loader.exec_module(rounded_control)
 
+VLLM_C_RMS_PATH = Path(__file__).with_name("vllm_c_rms_control.py")
+VLLM_C_RMS_SPEC = importlib.util.spec_from_file_location(
+    "vllm_c_rms_control", VLLM_C_RMS_PATH
+)
+assert VLLM_C_RMS_SPEC and VLLM_C_RMS_SPEC.loader
+vllm_c_rms_control = importlib.util.module_from_spec(VLLM_C_RMS_SPEC)
+VLLM_C_RMS_SPEC.loader.exec_module(vllm_c_rms_control)
+
 TOKEN_AUDIT_PATH = Path(__file__).with_name("control_token_audit.py")
 TOKEN_AUDIT_SPEC = importlib.util.spec_from_file_location(
     "control_token_audit", TOKEN_AUDIT_PATH
@@ -310,6 +318,27 @@ def test_rounded_control_source_audit_records_matched_barrier(tmp_path: Path) ->
     report = rounded_control.generated_source_audit(tmp_path)
     assert report["moe_forward_shared_occurrences"] == 1
     assert report["residual_barrier_occurrences"] == 1
+
+
+def test_vllm_c_rms_source_audit_attests_lowered_cuda_op(tmp_path: Path) -> None:
+    source = tmp_path / "ab" / "generated.py"
+    source.parent.mkdir()
+    source.write_text(
+        "torch.ops.vllm.moe_forward_shared.default(x)\n"
+        f"{vllm_c_rms_control.CUDA_OP}.default(x, residual, weight, 1e-6)\n"
+    )
+    report = vllm_c_rms_control.generated_source_audit(tmp_path)
+    assert report["moe_forward_shared_occurrences"] == 1
+    assert report["cuda_fused_add_rms_norm_occurrences"] == 1
+    assert report["unlowered_ir_fused_add_rms_norm_occurrences"] == 0
+
+
+def test_vllm_c_rms_source_audit_detects_unlowered_ir(tmp_path: Path) -> None:
+    source = tmp_path / "generated.py"
+    source.write_text("torch.ops.vllm_ir.fused_add_rms_norm.default(x)\n")
+    report = vllm_c_rms_control.generated_source_audit(tmp_path)
+    assert report["cuda_fused_add_rms_norm_occurrences"] == 0
+    assert report["unlowered_ir_fused_add_rms_norm_occurrences"] == 1
 
 
 def test_control_token_audit_compares_common_prefix_and_cycles(tmp_path: Path) -> None:

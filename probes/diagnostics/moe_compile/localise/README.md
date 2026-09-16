@@ -198,3 +198,23 @@ statement about rounding. The buffer-reuse control retained token IDs but did
 not retain logprobs, so its exact-identity claim is limited to decoded tokens.
 The retained comparison can be regenerated on CPU with
 `control_token_audit.py LEFT_RESULT RIGHT_RESULT`.
+
+The final control uses vLLM 0.28's supported IR-provider selection to lower
+fused add/RMSNorm to its native CUDA op while leaving the model compiled.
+Unlike the matched opaque-barrier controls, it adds no new Python custom op to
+the graph:
+
+```sh
+CUDA_VISIBLE_DEVICES=0 /opt/issue56900/cu130/bin/python \
+  probes/diagnostics/moe_compile/localise/vllm_c_rms_control.py \
+  --output-dir /project/moe-vllm-c-rms --require-ack
+```
+
+The measured worker passed those checks: both priority lists began with
+`vllm_c`, generated sources contained four
+`torch.ops._C.fused_add_rms_norm` calls and ten opaque MoE calls, and no
+unlowered `torch.ops.vllm_ir.fused_add_rms_norm` remained. The native provider
+changed 12 of 16 complete token rows relative to the retained compiled
+baseline, but still produced 0/8 agreeing duplicate pairs and 7/16 short-cycle
+outputs. Replacing the compiled RMSNorm decomposition is therefore not a
+complete fix for the degenerate-output phenotype.

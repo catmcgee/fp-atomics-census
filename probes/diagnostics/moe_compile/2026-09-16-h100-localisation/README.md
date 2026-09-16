@@ -18,6 +18,7 @@ VBIOS 96.00.DA.00.0C match the previous cu130 experiment. The GPU UUID differs.
 | Global precision-cast control | Enabling Inductor precision-cast emulation changes first tokens but leaves 0/8 duplicate pairs agreeing. |
 | Matched opaque residual controls | Identity and BF16-rounding barriers each generate 32 tokens per prompt. Both leave 0/8 duplicate pairs agreeing, with 6/16 and 7/16 short-cycle outputs respectively. |
 | Buffer reuse disabled | Both Inductor reuse settings resolve false and generated sources contain no reuse markers. All 512 generated tokens match the earlier compiled cu130 run exactly; 0/8 duplicate pairs agree and 9/16 outputs have short cycles. |
+| Native CUDA fused-add/RMSNorm | Both provider priorities begin with `vllm_c`; generated sources contain four `_C.fused_add_rms_norm` calls and no unlowered IR calls. Twelve of 16 rows change from the compiled baseline, but 0/8 duplicate pairs agree and 7/16 outputs still have short cycles. |
 | Eager reference | All eight duplicate output pairs agree; only one of the 16 first tokens matches the compiled output. |
 
 The earliest differing recorded operation is layer 0's post-attention RMSNorm.
@@ -25,7 +26,9 @@ The eager result matches a reference that rounds the residual sum to BF16 before
 computing its variance; the compiled result is close to the unrounded FP32-sum
 reference. This is a numerical localisation, not an established cause of the
 model's degenerate text. Both precision emulation and the matched residual
-rounding intervention leave the failure in place. The opaque identity barrier
+rounding intervention leave the failure in place. Selecting the native CUDA
+fused-add/RMSNorm provider also changes tokens without restoring duplicate
+agreement. The opaque identity barrier
 itself changes three first tokens, so the rounding intervention must be compared
 with that matched identity control rather than only with the original baseline.
 
@@ -46,9 +49,10 @@ The attention comparison checks entire tensor bytes across the two modes.
 The [MoE scan](moe-scan/) retains three immutable handoffs with 1,105 file
 entries. The [attention scan](attention-layer0/) retains two with 690 entries.
 Every original file was copied and SHA-verified before its exact ACK allowed
-another GPU process to begin. Public bundles retain compressed raw JSON, logs,
-executed source snapshots and textual compiler source/IR. Full binary caches
-remain in the durable private archive; their original hashes are retained.
+another GPU process to begin. The [native RMSNorm control](vllm-c-rms-control/)
+adds one 416-file verified handoff. Public bundles retain compressed raw JSON,
+logs, executed source snapshots and textual compiler source/IR. Full binary
+caches remain in the durable private archive; their original hashes are retained.
 
 The [post-attention bundle](post-attention-op/) includes nine captured tensors
 needed for its five direct comparisons. These comparisons reproduce from the
@@ -77,10 +81,13 @@ matching package versions do not prove every installed file identical. No
 full-stack identity is claimed. The first-token baseline was reproduced on this
 different GPU UUID.
 
-All completed arms were copied and SHA-verified before their ACK. The final
-buffer-reuse arm contains 445 verified files, followed by 41 operational logs
-and seven final provenance files. The pod was deleted at 19:11 UTC and absence
-confirmed twice. Full caches remain in the durable private archive.
+All completed arms were copied and SHA-verified before their ACK. The earlier
+localisation pod was deleted at 19:11 UTC. A later single-H100 pod ran only the
+native RMSNorm control on driver 580.126.20 and VBIOS 96.00.89.00.01. Its
+416-file handoff was verified and acknowledged before deletion; provider
+absence was confirmed by 20:49 UTC. That follow-up cost about $0.73, and only
+the unrelated $0.056/hour storage spend remained. Full caches remain in the
+durable private archive.
 
 [Operational failures](operational-failures/) retain the first opaque-operator
 registration failure (before model work), plus two independent routing setup
@@ -92,6 +99,9 @@ original short-cycle classifier (period at most three over the final 16 tokens).
 The paired identity/rounding controls differ in 14 of 16 complete sequences,
 with six and seven short-cycle outputs respectively. The no-reuse control
 matches the original compiled run in all 512 tokens and all nine short cycles.
+The native RMSNorm control differs from that baseline in 12 of 16 rows and
+reduces the short-cycle count from nine to seven, but still has no agreeing
+duplicate pair.
 Requested top-five log probabilities were not retained by these targeted
 controls, so no logprob identity is claimed.
 
@@ -99,7 +109,8 @@ To verify every localisation bundle, run the following from the repository root:
 
 ```sh
 for bundle in moe-scan attention-layer0 post-attention-op precision-cast-control \
-  opaque-identity-control opaque-rounded-control no-buffer-reuse-control; do
+  opaque-identity-control opaque-rounded-control no-buffer-reuse-control \
+  vllm-c-rms-control; do
   .venv/bin/python probes/diagnostics/moe_compile/localise/public_audit.py \
     --audit-public "probes/diagnostics/moe_compile/2026-09-16-h100-localisation/$bundle" \
     --output "/tmp/$bundle-audit.json"

@@ -472,3 +472,51 @@ def test_no_reuse_profile_is_prepared_for_max_32() -> None:
         },
     }
     assert audit.controller_profile(controller, "fixture") == "inductor_reuse_control.py"
+
+
+def test_vllm_c_rms_profile_validates_provider_and_lowering(tmp_path: Path) -> None:
+    root = tmp_path / "native-rms"
+    cell = root / "compiled-vllm-c-rms"
+    cell.mkdir(parents=True)
+    write_json(
+        cell / "result.json",
+        {
+            "model": audit.MODEL,
+            "revision": audit.REVISION,
+            "output": {"token_ids": [[1] * 32 for _ in range(16)]},
+        },
+    )
+    write_json(
+        cell / "resolved.json",
+        {
+            "mode": 3,
+            "cudagraph_mode": "NONE",
+            "use_v2_model_runner": True,
+            "vllm": "0.28.0",
+            "configured_fused_add_rms_norm_priority": ["vllm_c", "native"],
+            "runtime_fused_add_rms_norm_priority": ["vllm_c", "native"],
+            "supported_fused_add_rms_norm_providers": ["native", "vllm_c"],
+        },
+    )
+    write_json(
+        cell / "generated_source_audit.json",
+        {
+            "moe_forward_shared_occurrences": 1,
+            "cuda_fused_add_rms_norm_occurrences": 2,
+            "unlowered_ir_fused_add_rms_norm_occurrences": 0,
+        },
+    )
+    controller = {
+        "model": audit.MODEL,
+        "revision": audit.REVISION,
+        "max_tokens": 32,
+        "command": ["/frozen/vllm_c_rms_control.py"],
+        "cell": "compiled-vllm-c-rms",
+        "control": {
+            "expected_lowered_op": "torch.ops._C.fused_add_rms_norm",
+            "vllm.ir.ops.fused_add_rms_norm.priority": ["vllm_c"],
+        },
+    }
+    profile = audit.controller_profile(controller, "fixture")
+    assert profile == "vllm_c_rms_control.py"
+    audit.validate_control_evidence(profile, root, controller)

@@ -33,6 +33,7 @@ POST_OPERATOR_COMPARATOR_SHA256 = "39018437fb3bdeee13b433f2208d43fb542d101c23a05
 PRECISION_CAST_CONTROL_SHA256 = "a2313baecce5aa69bb96604313413f580d4e16eea5b635204d8789fd0e0da901"
 ROUNDED_RESIDUAL_CONTROL_SHA256 = "633c7d6b4bdd58633af4567922eea8a4a83c453101f0ec6793f81a9d99e9bf63"
 INDUCTOR_REUSE_CONTROL_SHA256 = "e493c3c294bfc516608b21f930e5008a8d6d169a1e75142a1852a9573eaf9a96"
+VLLM_C_RMS_CONTROL_SHA256 = "d34b8166328e7a7fa006e65ae988df625d6166bceec9546e316f811fa46f0677"
 KNOWN_CONTROLLERS = {
     "moe_boundary_localise.py": FROZEN_COMPARATOR_SHA256,
     "attention_boundary_localise.py": ATTENTION_COMPARATOR_SHA256,
@@ -40,10 +41,12 @@ KNOWN_CONTROLLERS = {
     "precision_cast_control.py": PRECISION_CAST_CONTROL_SHA256,
     "rounded_residual_control.py": ROUNDED_RESIDUAL_CONTROL_SHA256,
     "inductor_reuse_control.py": INDUCTOR_REUSE_CONTROL_SHA256,
+    "vllm_c_rms_control.py": VLLM_C_RMS_CONTROL_SHA256,
 }
 SINGLE_CONTROL_PROFILES = {
     "precision_cast_control.py": ("compiled-emulate-precision-casts", 1),
     "inductor_reuse_control.py": ("compiled-reuse-off", 32),
+    "vllm_c_rms_control.py": ("compiled-vllm-c-rms", 32),
 }
 POST_OPERATOR_PUBLIC_TENSORS = {
     "compiled-operator/tensors/o_projection_output.pt",
@@ -264,7 +267,11 @@ def controller_profile(controller: Any, origin: str) -> str:
     profile = Path(command[0]).name
     if profile not in KNOWN_CONTROLLERS:
         raise AuditError(f"unsupported frozen controller {profile!r}: {origin}")
-    expected_max_tokens = 32 if profile in {"rounded_residual_control.py", "inductor_reuse_control.py"} else 1
+    expected_max_tokens = (
+        SINGLE_CONTROL_PROFILES.get(profile, (None, 1))[1]
+        if profile != "rounded_residual_control.py"
+        else 32
+    )
     if controller.get("max_tokens") != expected_max_tokens:
         raise AuditError(
             f"controller snapshot lacks max_tokens={expected_max_tokens!r}: {origin}"
@@ -295,6 +302,10 @@ def controller_profile(controller: Any, origin: str) -> str:
             "inductor_reuse_control.py": {
                 "torch._inductor.config.allow_buffer_reuse": False,
                 "torch._inductor.config.inplace_buffers": False,
+            },
+            "vllm_c_rms_control.py": {
+                "expected_lowered_op": "torch.ops._C.fused_add_rms_norm",
+                "vllm.ir.ops.fused_add_rms_norm.priority": ["vllm_c"],
             },
         }[profile]
         if controller.get("control") != expected_control:
@@ -439,6 +450,20 @@ def validate_control_evidence(profile: str, root: Path, controller: dict[str, An
             and override.get("priority_after") == ["native"]
             and override.get("priority_before") == []
             and source.get("residual_barrier_occurrences", 0) > 0
+        )
+    elif profile == "vllm_c_rms_control.py":
+        configured = resolved.get("configured_fused_add_rms_norm_priority")
+        runtime = resolved.get("runtime_fused_add_rms_norm_priority")
+        providers = resolved.get("supported_fused_add_rms_norm_providers")
+        valid = (
+            isinstance(configured, list)
+            and configured[:1] == ["vllm_c"]
+            and isinstance(runtime, list)
+            and runtime[:1] == ["vllm_c"]
+            and isinstance(providers, list)
+            and "vllm_c" in providers
+            and source.get("cuda_fused_add_rms_norm_occurrences", 0) > 0
+            and source.get("unlowered_ir_fused_add_rms_norm_occurrences") == 0
         )
     else:
         before, after = resolved.get("inductor_before", {}), resolved.get("inductor_after", {})

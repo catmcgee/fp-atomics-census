@@ -131,7 +131,9 @@ The [MoE operation investigation](../../diagnostics/moe_compile/2026-09-16-h100-
 narrows the earliest recorded numerical difference to post-attention RMSNorm.
 Precision emulation and matched residual rounding do not remove the failure.
 Disabling Inductor buffer reuse reproduces all 512 tokens of the earlier failing
-compiled run exactly. The cause of the degenerate output remains unresolved.
+compiled run exactly. Selecting vLLM's native CUDA fused-add/RMSNorm provider
+changes 12/16 token rows but still leaves 0/8 duplicate pairs agreeing and
+7/16 short-cycle outputs. The cause of the degenerate output remains unresolved.
 
 
 ## Lifecycle and unexecuted TP=2 work
@@ -146,6 +148,11 @@ retain those failures. Prepared TP=2 code is not evidence that its experiment ra
 Account balance decreased by $8.25 during this batch, below its $20 cap. This
 includes unrelated pre-existing storage charges of $0.056/hour. No campaign
 compute remains; those unrelated resources were left alone.
+
+A later single-H100 follow-up measured the native RMSNorm control for about
+$0.73. Its 416-file handoff was verified before acknowledgement, the pod was
+deleted, and a provider listing at 20:49 UTC showed no remaining pods. The
+unrelated $0.056/hour storage spend remained unchanged.
 
 Two routing setup failures preceded the successful validation: an unavailable
 public `LLM.shutdown` method and asynchronous placeholders observed by the CPU

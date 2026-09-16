@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "label": "compiled_vllm_c_rms",
+  "handoff_manifest_sha256": "5684c18a7a163b605b4d9ccba5e4c4409dd38f79c1636a61a98a05a2a1aeb205",
+  "verified_manifest_sha256": "5684c18a7a163b605b4d9ccba5e4c4409dd38f79c1636a61a98a05a2a1aeb205"
+}
