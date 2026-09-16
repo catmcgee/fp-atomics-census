@@ -1,0 +1,321 @@
+{
+  "archives": [
+    {
+      "label": "d0_c0_b0_record",
+      "path": "archives/d0_c0_b0_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b0_record.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "0792c79ed1d422e2336447a5f03dd252b2f62fab92385543848c3bd01781f6b4",
+      "sha256": "79e1bca525accb56b6b561985b5c0fdacf22c3896a30c4440a5b8909d4da8b36",
+      "size": 4083034
+    },
+    {
+      "label": "d0_c0_b0_warm",
+      "path": "archives/d0_c0_b0_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b0_warm.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "0792c79ed1d422e2336447a5f03dd252b2f62fab92385543848c3bd01781f6b4",
+      "sha256": "424b3b0c6994eae8c689f6a0c97dced076393207bb9f71c1de5972a050f6986f",
+      "size": 4083039
+    },
+    {
+      "label": "d0_c0_b0_cold_0",
+      "path": "archives/d0_c0_b0_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b0_cold_0.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "01324cd982890047d44c6f235333e089d9b4640b63c8022fe244f396893895b4",
+      "sha256": "6edc0ff24853802a449eaff85bded576553f630453d627ef4fd60b6a29ba22fa",
+      "size": 4091133
+    },
+    {
+      "label": "d0_c0_b0_cold_1",
+      "path": "archives/d0_c0_b0_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b0_cold_1.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "353293651e51883087dc7e86f9e1fbc8dd01ef1c5f236064bea95fdfc30b3910",
+      "sha256": "51e57e5922b960af92aa8ce526385bc9b7eeb6b35dae56c98fdf49bb553d4f77",
+      "size": 4088499
+    },
+    {
+      "label": "d0_c0_b0_cold_2",
+      "path": "archives/d0_c0_b0_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b0_cold_2.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "1ebe971e92abe4cbe6f72ffa0f4e0cdc95467b37d52cbaf972cbf9453a5c77d1",
+      "sha256": "d8d86884610bc31f38abf8a4af4348ec0194ccd252613835897f85a6f0076a18",
+      "size": 4088072
+    },
+    {
+      "label": "d0_c0_b1_record",
+      "path": "archives/d0_c0_b1_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b1_record.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "a37fe62425c03bb16cf35f4f6e57c0ff71f045f5f44cb383caef8eb8e398a967",
+      "sha256": "5248dab0783232134c449a59e29882d56a6618f65a15e65dd90690c6023831d9",
+      "size": 4082657
+    },
+    {
+      "label": "d0_c0_b1_warm",
+      "path": "archives/d0_c0_b1_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b1_warm.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "a37fe62425c03bb16cf35f4f6e57c0ff71f045f5f44cb383caef8eb8e398a967",
+      "sha256": "1c755e0db5f41c3b8623188dfd640ca299ef7d3b6d01e37b541bf334eaa3304f",
+      "size": 4082669
+    },
+    {
+      "label": "d0_c0_b1_cold_0",
+      "path": "archives/d0_c0_b1_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b1_cold_0.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "59b3226cb1238fc63cc67964f2667d3e1cf2569e63e15313cb0aac1065b47ce1",
+      "sha256": "7f1c8977a989a051d2f936624f7983b6bc78dce293979ee2b5bebacc7f090d86",
+      "size": 4089406
+    },
+    {
+      "label": "d0_c0_b1_cold_1",
+      "path": "archives/d0_c0_b1_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b1_cold_1.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "36bc19ba1827cbceab43c319ceb542c137ec2e314958d2a4d260afd5122faddf",
+      "sha256": "93f9f16fbeaf376c07efbfaaff8a56e6596d3a970a38c2e9b2a1afb30b78d1d3",
+      "size": 4090618
+    },
+    {
+      "label": "d0_c0_b1_cold_2",
+      "path": "archives/d0_c0_b1_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c0_b1_cold_2.sources.tar.gz",
+      "public_source_files": 97,
+      "public_source_sha256": "17529918857c93fef8a6c4ce408f4fcbab9663c4d315b25da83a1deab3bbf53d",
+      "sha256": "07a58442bc325e83c30b62790630190e8049c1c16bf53989dd4e4844f4b8203f",
+      "size": 4088918
+    },
+    {
+      "label": "d0_c1_b0_record",
+      "path": "archives/d0_c1_b0_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b0_record.sources.tar.gz",
+      "public_source_files": 79,
+      "public_source_sha256": "7cd6fce59372f5639ad1e7844d415ca0637cffa721788d343aacc237c68001bd",
+      "sha256": "21f2f2484b461a4523c1fb296a6aa18b57246990096b18df366ee1da67c894b2",
+      "size": 4095279
+    },
+    {
+      "label": "d0_c1_b0_warm",
+      "path": "archives/d0_c1_b0_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b0_warm.sources.tar.gz",
+      "public_source_files": 79,
+      "public_source_sha256": "7cd6fce59372f5639ad1e7844d415ca0637cffa721788d343aacc237c68001bd",
+      "sha256": "536713eddf9065a3188aa5862e6fa919c69eb665686ce46b8c1e017b0dd2ebbb",
+      "size": 4095303
+    },
+    {
+      "label": "d0_c1_b0_cold_0",
+      "path": "archives/d0_c1_b0_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b0_cold_0.sources.tar.gz",
+      "public_source_files": 79,
+      "public_source_sha256": "fdbf5390bfade35f2ad6c304c6d4457ff7b24c5d60fbda14d26f415e372ac17f",
+      "sha256": "b1a9cb922b62db9856172697bc7cf8d5c6a8b3cc04b55ecd4e093ec4e3ca49c4",
+      "size": 4104233
+    },
+    {
+      "label": "d0_c1_b0_cold_1",
+      "path": "archives/d0_c1_b0_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b0_cold_1.sources.tar.gz",
+      "public_source_files": 79,
+      "public_source_sha256": "26812bc28b1f7271745660def14b00438e66bcc0899723c2fb0ffed3229c9659",
+      "sha256": "f958fa09bc2ab40cadd36d450f4202afd5a7b9783d353c947ba7917f5153f921",
+      "size": 4099128
+    },
+    {
+      "label": "d0_c1_b0_cold_2",
+      "path": "archives/d0_c1_b0_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b0_cold_2.sources.tar.gz",
+      "public_source_files": 79,
+      "public_source_sha256": "9377238072ead4aa77ae5e1b384f4cd93ea7dbda4a6f9136f4ea663ed3ecd68d",
+      "sha256": "6f9a1f2637ba371455f89242ce0b744e0b4482b761f3e0410935385c01b5e14a",
+      "size": 4094978
+    },
+    {
+      "label": "d0_c1_b1_record",
+      "path": "archives/d0_c1_b1_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b1_record.sources.tar.gz",
+      "public_source_files": 106,
+      "public_source_sha256": "18be69c5757e6794b18ee90d20a786e705ce74a8446f1bb08a118276cd4ed7b7",
+      "sha256": "43772d4d3d11e2936c99a97da695b7d435c22ca2a2c5ff5e819093b7737b9dd6",
+      "size": 4389598
+    },
+    {
+      "label": "d0_c1_b1_warm",
+      "path": "archives/d0_c1_b1_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b1_warm.sources.tar.gz",
+      "public_source_files": 106,
+      "public_source_sha256": "18be69c5757e6794b18ee90d20a786e705ce74a8446f1bb08a118276cd4ed7b7",
+      "sha256": "1d2bdbc2893d286b0f6e03f28909a0cddd003afc48dbf436f452cfbc1a148f5c",
+      "size": 4389610
+    },
+    {
+      "label": "d0_c1_b1_cold_0",
+      "path": "archives/d0_c1_b1_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b1_cold_0.sources.tar.gz",
+      "public_source_files": 106,
+      "public_source_sha256": "0630fab0ec7c0589453c31a6eedf8e9d90ccf3a8a8b1d12c3b2f336671a4b1dd",
+      "sha256": "d90474a52e864a45c7094d5ee47a7a6da50bc998485c062b8108d204fbb264ef",
+      "size": 4387594
+    },
+    {
+      "label": "d0_c1_b1_cold_1",
+      "path": "archives/d0_c1_b1_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b1_cold_1.sources.tar.gz",
+      "public_source_files": 106,
+      "public_source_sha256": "30f5b5b34e639cbd6a109cbd2638395b811447224fa53fd15dcd47046a7eaee3",
+      "sha256": "936cbbc73585f52fbd1af528f20a023d0a6b402f2e6bcd47f23377ab0d2e568c",
+      "size": 4388131
+    },
+    {
+      "label": "d0_c1_b1_cold_2",
+      "path": "archives/d0_c1_b1_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d0_c1_b1_cold_2.sources.tar.gz",
+      "public_source_files": 106,
+      "public_source_sha256": "2512bdcb9c5428afbfb7cef35e5f78cfd383a296b103ccd9edee08fede54a53e",
+      "sha256": "d97e5c16f7bf438f3e4bacf6ba6987585b9e45a83a622e18ce27226242267f7e",
+      "size": 4382648
+    },
+    {
+      "label": "d1_c0_b0_record",
+      "path": "archives/d1_c0_b0_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b0_record.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "4dc05970ac4f4585bdf3263b04e631b3a1ef18d9af8214491a13fca22997db3b",
+      "sha256": "3e154f2d7436d57d20fab269cf1ed65c1366f8ba4baa952034018c8573765444",
+      "size": 4030627
+    },
+    {
+      "label": "d1_c0_b0_warm",
+      "path": "archives/d1_c0_b0_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b0_warm.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "4dc05970ac4f4585bdf3263b04e631b3a1ef18d9af8214491a13fca22997db3b",
+      "sha256": "d6d6d369dd74d0adf19632f02726b94ce900d5318000d0c1403e4f7fb6d45e5c",
+      "size": 4030645
+    },
+    {
+      "label": "d1_c0_b0_cold_0",
+      "path": "archives/d1_c0_b0_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b0_cold_0.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "64106fa997c22feecf833351b9a1983b65c14e7ccbb1067cd41697fa96b5d26d",
+      "sha256": "b6f38d4fa4cde8042a2b5e88c5c7a626ee8b86ee01dedf548d7839633889c03a",
+      "size": 4032914
+    },
+    {
+      "label": "d1_c0_b0_cold_1",
+      "path": "archives/d1_c0_b0_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b0_cold_1.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "ca8c344110640ae74d7e70c74fb33066781a062368ffe9aaf6f4e623fc03ed45",
+      "sha256": "1c9517e9024bb02a7a204f94f540d43fca3b4fdc3d97b23b28e97e8570aecc4b",
+      "size": 4030214
+    },
+    {
+      "label": "d1_c0_b0_cold_2",
+      "path": "archives/d1_c0_b0_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b0_cold_2.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "2ecb6f3460de87e7f9352b88bf1efcb5633d1acfd7d5dc762ce4b70c9d016493",
+      "sha256": "c49d898efa898b92a744a0ae24930cb1e9cb3f88db676f96a04fc9b7f0f7aa73",
+      "size": 4037621
+    },
+    {
+      "label": "d1_c0_b1_record",
+      "path": "archives/d1_c0_b1_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b1_record.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "5aa05ce85c03fd1583afb3deef8e44beadfb43c058bbcba9c2c3533b98834a8b",
+      "sha256": "8285615431edbf895845a62089ef573c9964044cbdf70188ecfe76a14318121d",
+      "size": 4035855
+    },
+    {
+      "label": "d1_c0_b1_warm",
+      "path": "archives/d1_c0_b1_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b1_warm.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "5aa05ce85c03fd1583afb3deef8e44beadfb43c058bbcba9c2c3533b98834a8b",
+      "sha256": "733cbd3df40cce8ffa33cf0804d96d379a19e92e9465bea3c547dcc069e630d9",
+      "size": 4035889
+    },
+    {
+      "label": "d1_c0_b1_cold_0",
+      "path": "archives/d1_c0_b1_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b1_cold_0.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "7be0a7c2a98a41a81c551ed08699882d94e574db9bec4f7f4d6e1812efb99d54",
+      "sha256": "c839ab168aabfaf352ec5a56a2f80ef11d0e18012625d06c4a2b783bf4a8caff",
+      "size": 4039064
+    },
+    {
+      "label": "d1_c0_b1_cold_1",
+      "path": "archives/d1_c0_b1_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b1_cold_1.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "bd32308f88e725cdb85e268bc8da85b40390ad15f125aadfe8684bfc424759c6",
+      "sha256": "089994eb62efb733cec6c9b1167afd8ed476ec779f79d9b1699d7e409778d1e2",
+      "size": 4039700
+    },
+    {
+      "label": "d1_c0_b1_cold_2",
+      "path": "archives/d1_c0_b1_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c0_b1_cold_2.sources.tar.gz",
+      "public_source_files": 85,
+      "public_source_sha256": "d54a6872f7684bf9de5b1aededbcb6b7276a94f403971e340fbb3997f5f4b3bc",
+      "sha256": "15df3df418e208e77b060ac9ed350e294d7ae28c65c07bc7c83b22221e738a3a",
+      "size": 4039573
+    },
+    {
+      "label": "d1_c1_b0_record",
+      "path": "archives/d1_c1_b0_record/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c1_b0_record.sources.tar.gz",
+      "public_source_files": 67,
+      "public_source_sha256": "374f071613f6d083dbcf8d31cd093cf7650fa9bdb51f5a03f2708a6702930feb",
+      "sha256": "7fe678dfa07b3cfe061a62b99b4e95b0f51b1ac31db457582401205a2588c511",
+      "size": 4046405
+    },
+    {
+      "label": "d1_c1_b0_warm",
+      "path": "archives/d1_c1_b0_warm/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c1_b0_warm.sources.tar.gz",
+      "public_source_files": 67,
+      "public_source_sha256": "374f071613f6d083dbcf8d31cd093cf7650fa9bdb51f5a03f2708a6702930feb",
+      "sha256": "4b399c5f81b293b25c9505829179c46a5189d5eda5f045a806c3ce2983a6f076",
+      "size": 4046430
+    },
+    {
+      "label": "d1_c1_b0_cold_0",
+      "path": "archives/d1_c1_b0_cold_0/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c1_b0_cold_0.sources.tar.gz",
+      "public_source_files": 67,
+      "public_source_sha256": "a550491f16ae35c0a27a62c5e90a5e33b4f4c713da9a510aa07d42e10a91c681",
+      "sha256": "6a97dd21d3a8ddb898cdb1ae39667db55724e395c540dd4bc5e31c85b01c7139",
+      "size": 4046302
+    },
+    {
+      "label": "d1_c1_b0_cold_1",
+      "path": "archives/d1_c1_b0_cold_1/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c1_b0_cold_1.sources.tar.gz",
+      "public_source_files": 67,
+      "public_source_sha256": "ebb8d17a492eb04d83e00047e394f5baf692001743695be8a7b5a33018398c27",
+      "sha256": "9f5555e53368694dceaae4b69c07a7759604c185791ae7165880a1848d897c3c",
+      "size": 4045903
+    },
+    {
+      "label": "d1_c1_b0_cold_2",
+      "path": "archives/d1_c1_b0_cold_2/cache.tar.gz",
+      "public_source_archive": "sources_ir/d1_c1_b0_cold_2.sources.tar.gz",
+      "public_source_files": 67,
+      "public_source_sha256": "a6e0c4a57e06791489e7e443ad591203246553164e0d81174786fe52fdf18f3b",
+      "sha256": "3f50be7bf1d1f0ba94fffcd555ce91748c44cc5653cfa4f7f1f8c878d06160a1",
+      "size": 4045520
+    }
+  ],
+  "note": "Full cache archives remain private; only hashes and source/IR derivatives are public.",
+  "schema": 1
+}

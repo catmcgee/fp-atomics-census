@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "path": "hook/eager-telemetry/rank0.jsonl",
+      "sha256": "acacbe8134bd33e218a07b7723e30ce2bdf833716adce483316f52618639f218",
+      "size": 18901
+    },
+    {
+      "path": "report.conditions/eager-telemetry.json",
+      "sha256": "644c5a0fafc81ef960af916e14e297178bad83e7fced694ca4539ac5c84cfec8",
+      "size": 143559
+    },
+    {
+      "path": "report.conditions/eager-telemetry.log",
+      "sha256": "d80d14981f14a1d71ce9d456c4c38394d3d654cab0240b8841b9d86aaf4850fa",
+      "size": 11399
+    },
+    {
+      "path": "source_snapshot/routing_harness.py",
+      "sha256": "c952ac33b31a72647a3f8107e7e5e7672411ccdd7b8315ca1302a8be0b4506f5",
+      "size": 32171
+    },
+    {
+      "path": "source_snapshot/routing_telemetry.py",
+      "sha256": "ea7974c33b2670a045f62d2beb82254e6d694e989699a3ee91c2b5d7af4cc4ba",
+      "size": 15027
+    },
+    {
+      "path": "source_snapshot/shape_hook_init.py",
+      "sha256": "5bc003293fef95e525658226cfb05b2ad28199cb7010ebb09bbd9c37954e357f",
+      "size": 38777
+    }
+  ],
+  "label": "report_eager_telemetry",
+  "schema": 1,
+  "sha256": "1bd02d8c3291a0d27bec9eb26639f62ec75f714411f2ebe6f0107c27da6e235b"
+}

@@ -1,0 +1,54 @@
+{
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "rows": [
+    {
+      "elements_differing": 437420,
+      "exact": false,
+      "max_abs": 0.03125,
+      "mean_abs": 0.00040011072997003794,
+      "normalised_round_bf16": false,
+      "rows_differing": 962,
+      "same_shape": true,
+      "sum_round_bf16": false
+    },
+    {
+      "elements_differing": 664130,
+      "exact": false,
+      "max_abs": 0.03125,
+      "mean_abs": 0.0005621819291263819,
+      "normalised_round_bf16": true,
+      "rows_differing": 962,
+      "same_shape": true,
+      "sum_round_bf16": false
+    },
+    {
+      "elements_differing": 0,
+      "exact": true,
+      "max_abs": 0.0,
+      "mean_abs": 0.0,
+      "normalised_round_bf16": false,
+      "rows_differing": 0,
+      "same_shape": true,
+      "sum_round_bf16": true
+    },
+    {
+      "elements_differing": 498904,
+      "exact": false,
+      "max_abs": 0.03125,
+      "mean_abs": 0.00040211493615061045,
+      "normalised_round_bf16": true,
+      "rows_differing": 962,
+      "same_shape": true,
+      "sum_round_bf16": true
+    }
+  ],
+  "schema": 1,
+  "scope": "CPU formula comparison after independent bundle verification; reduction order is stack-sensitive, not a GPU cause test.",
+  "source_sha256": {
+    "probes/diagnostics/moe_compile/2026-09-16-h100-localisation/post-attention-op/raw/compiled-operator/tensors/norm_weight.pt.gz": "27c4a34c416152a015ce3dcc0289929360a6872c01049570874b1058cde54c14",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-localisation/post-attention-op/raw/compiled-operator/tensors/o_projection_output.pt.gz": "addb7d2a09480bb020e41b782190cd18b1d99d4cf8d7c8e5787d0c6d455fd4ad",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-localisation/post-attention-op/raw/compiled-operator/tensors/residual.pt.gz": "43fee9234da3daf1a33e7de17f7334e9e0ec40774e4fb20b22dfeab893fd8466",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-localisation/post-attention-op/raw/eager-boundary/tensors/norm_output.pt.gz": "d545771668a1d686794a15ff9500253a0cb600e803f63bcadeb9a6b6923e21a2"
+  },
+  "torch": "2.8.0"
+}

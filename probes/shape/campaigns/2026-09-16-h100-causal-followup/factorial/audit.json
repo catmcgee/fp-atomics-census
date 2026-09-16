@@ -1,0 +1,1662 @@
+{
+  "cells": [
+    {
+      "benchmark_combo_kernel": false,
+      "combo_kernels": false,
+      "complete": true,
+      "deterministic": 0,
+      "label": "d0_c0_b0",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "4f115b0c8a5fde060a78ab643c0720e4d062086cfcaf004259925bd398fd25c9",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "1adc1d2f3311e76765703077fc3acf24f17efe687d23092b879904a3e840a375",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 512
+          },
+          "manifest_sha256": "08e243435a2daeacca866b4e19183ba6a002dfe18e2029b172b6af6e5aeae64d",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "c2fef008f8b8870e71acc98a2e3e15296320e08425579d1f29b00b44fef9ca2d",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "fb3c76711bd4c733ab669e0bc34f18fa1124ef3ec283cde588e1c4e6fbaaee9f",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": true,
+      "combo_kernels": false,
+      "complete": true,
+      "deterministic": 0,
+      "label": "d0_c0_b1",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "35179c77832afe4003282b7346eb5d6877bc75481c714c737016d69248336617",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "424b9489c73e33631a367b5ceb26f23a305c2b6f08085d17db7277287056e484",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "8c82278305d8a4fa465aee45acffaa35f2b56209375cec6943bf4bf9f80c80fb",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "4f8122d0f0c46732cd5ef776c764dbb92b0e589ef20f09d525dbff3293341fe0",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 8,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "7ce0d6365aaff68b84847dc6c362d21248a7ef6f76a6f3a78fa40b8e901ddc1f",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": false,
+      "combo_kernels": true,
+      "complete": true,
+      "deterministic": 0,
+      "label": "d0_c1_b0",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 6,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 512
+          },
+          "manifest_sha256": "f38d9652c492536f8f25a3f758a01cab880061b5dd8c8007a55e66cb018bd236",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 6,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 512
+          },
+          "manifest_sha256": "fbfdd3f8f344bcd01654c796eae48e08e1221a68c4a90c3fe9f894f7382ea089",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 6,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "56d353218bfe9d33e937ec12c1b6f711f602de02635caa96f5d530ef9fb4e80b",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 6,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "9d4de56fdb55b3736d8468ec0a37b5648bbbdbe656b998e489c62684fee37585",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 6,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "05ab5900cc8d8740493818402c073941e57d212d7d97846b52bbe239829588b0",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": true,
+      "combo_kernels": true,
+      "complete": true,
+      "deterministic": 0,
+      "label": "d0_c1_b1",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 5,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 9,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 512
+          },
+          "manifest_sha256": "8bb40dbf629938b6c948ff634abb1f5ec51a158c976dae3deec52118b36cc116",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 5,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 9,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "eed7f46ba0f23a6cf01231732f478f1f128204b424138fdd23cf16fa381780ae",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 3,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 5,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 9,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 512
+          },
+          "manifest_sha256": "9e77b55669c740afcd5ff2cfe829f3ee24693d8a5aa9a29ba60400d2e1a5407a",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "DIFFERS"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 5,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 9,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "af4a59adc1a88d6db35325673dc8bd176d094ec57eb04379a8945cc8a3188ac9",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"R0_BLOCK\":2048,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 1,
+              "{\"R0_BLOCK\":4096,\"XBLOCK\":1,\"num_stages\":1,\"num_warps\":16}": 2,
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 5,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 9,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "4afd37e6f1d16c42d88cbdd472998696be3d9d9eeee37d416bc1bfc7942a3a9e",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": false,
+      "combo_kernels": false,
+      "complete": true,
+      "deterministic": 1,
+      "label": "d1_c0_b0",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "16e4afda94fcae5508cb83dbe3fd86693fbb48fcf04ea49df3246855e6ad2f19",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "8ac36f30674cbf0b673c7458af98491f445c3dea576154691a653dbcaa04ae94",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "e8c4d98d0ba30c343a1f52841d02e79f1f1ca76fbba77f3b8a753457ca11b8fd",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "2239e403d5e26ecd9bd5a6ac8ee0f5b5b051d139784fe554b7d5e0127cc931ec",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "e14034abeaf01ec2e0f4cbe270dc574418ee832ec4ab16871ccc05a31cb06482",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": true,
+      "combo_kernels": false,
+      "complete": true,
+      "deterministic": 1,
+      "label": "d1_c0_b1",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "f6af259f860f84b2bac7e25952624d348134c1c1f7be9d49f1c27df070385dab",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "68a8746ec2e3ed70b74fdc6740ce8c6f3731be0f013dbb167b59cda1980e7e26",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 2
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "b844152a0ba6310b8aec42afba89fdcde52943f912b2b394a254916d52bd81de",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "a740640878921e425755e063ef0c1776f25c41742ce7542545c3c6381bec3e0f",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3,
+              "{\"XBLOCK\":256,\"num_stages\":1,\"num_warps\":4}": 1,
+              "{\"XBLOCK\":512,\"num_stages\":1,\"num_warps\":4}": 1
+            },
+            "best_config_entries": 5,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "1d08c0d0dc7e8230c66a6969dffe587c85ca159b18e3960ad9b9a8bfd8ce9853",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": false,
+      "combo_kernels": true,
+      "complete": true,
+      "deterministic": 1,
+      "label": "d1_c1_b0",
+      "phases": {
+        "cold_0": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 3,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "240c1241690ee1073e9594e5d139bff58957922ccb8ec3fa5c8cc239a69d72f4",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_1": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 3,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "0c4b3ce064ec558f7504ac69a0d8f736882284abf64452356cae10b6922f3beb",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "cold_2": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 3,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "7e0dbc9a02826359f51fdf5d64efdc19294bbaacbbdd50c4bc8eb0af04d14bfe",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        },
+        "record": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 3,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "manifest_sha256": "e83b103f946cacdca1fa1c099a42e54cc2cc7c2688d16e4b40f8515ab987dfc2",
+          "state": "verified_valid",
+          "validation_errors": []
+        },
+        "warm": {
+          "ack_verified": true,
+          "compiler_choices": {
+            "best_config_choice_counts": {
+              "{\"XBLOCK\":1024,\"num_stages\":1,\"num_warps\":4}": 3
+            },
+            "best_config_entries": 3,
+            "extern_calls": {
+              "addmm": 2,
+              "mm": 6
+            },
+            "triton_kernel_families": {
+              "triton_poi_fused": 6,
+              "triton_poi_fused_mul_silu_slice": 5,
+              "triton_red_fused__to_copy_embedding_rms_norm": 3,
+              "triton_red_fused_fused_add_rms_norm": 11,
+              "triton_red_fused_ge_sum": 2
+            }
+          },
+          "forcing": {
+            "calls": 77,
+            "forced_rows": 555,
+            "rows_where_forced_equalled_argmax": 513
+          },
+          "manifest_sha256": "ba71ee05d6c3b2153587d2a1b8ada2552631b490023a2361d3d7e2c76a59640c",
+          "rows_compared": 555,
+          "state": "verified_valid",
+          "validation_errors": [],
+          "verdict_P2": "IDENTICAL"
+        }
+      },
+      "planned": true
+    },
+    {
+      "benchmark_combo_kernel": true,
+      "combo_kernels": true,
+      "complete": false,
+      "deterministic": 1,
+      "label": "d1_c1_b1",
+      "phases": {
+        "cold_0": {
+          "ack_verified": false,
+          "reason": "missing handoff manifest",
+          "state": "pending_or_unverified"
+        },
+        "cold_1": {
+          "ack_verified": false,
+          "reason": "missing handoff manifest",
+          "state": "pending_or_unverified"
+        },
+        "cold_2": {
+          "ack_verified": false,
+          "reason": "missing handoff manifest",
+          "state": "pending_or_unverified"
+        },
+        "record": {
+          "ack_verified": false,
+          "reason": "missing handoff manifest",
+          "state": "pending_or_unverified"
+        },
+        "warm": {
+          "ack_verified": false,
+          "reason": "missing handoff manifest",
+          "state": "pending_or_unverified"
+        }
+      },
+      "planned": true
+    }
+  ],
+  "conditional_benchmark_interpretation": "Treat benchmark_combo_kernel as a conditional factor: its operational contrast is the c=1 strata. Rows with combo_kernels=false retain the requested setting but do not by themselves establish an active benchmark-kernel contrast.",
+  "failures": [
+    {
+      "detail": {
+        "cell": {
+          "benchmark_combo_kernel": true,
+          "combo_kernels": true,
+          "deterministic": 1,
+          "label": "d1_c1_b1"
+        },
+        "phase": "record",
+        "returncode": 1
+      },
+      "path": "evidence/d1_c1_b1_record.failure.json"
+    }
+  ],
+  "frozen_comparator_sha256": "bb32f9b631e988131948a59e2a0ce778c84fe892ee3f994ee7b7057344f79a3a",
+  "frozen_source": "7dc6f469726d3eec0719c98e9bf6458945b961af",
+  "plan_errors": [],
+  "planned_cells": 8,
+  "public_files": [
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/summary_replay_warm.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b1_mixed/summary_replay_warm.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b0_mixed/summary_replay_warm.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/summary_replay_warm.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b0_mixed/summary_replay_warm.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c0_b1_mixed/summary_replay_warm.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/record/schedule.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_0/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_1/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_cold_2/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/artefacts.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/cache_after_run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/cache_before_engine.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/env.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/hook/forcing_rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/hook/rank0.jsonl.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/outputs.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/replay_warm/run.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/summary_replay_cold_0.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/summary_replay_cold_1.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/summary_replay_cold_2.json.gz",
+    "raw/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b0_mixed/summary_replay_warm.json.gz",
+    "raw/evidence/d0_c0_b0_record.immutable.json.gz",
+    "raw/evidence/d0_c0_b1_record.immutable.json.gz",
+    "raw/evidence/d0_c1_b0_record.immutable.json.gz",
+    "raw/evidence/d0_c1_b1_record.immutable.json.gz",
+    "raw/evidence/d1_c0_b0_record.immutable.json.gz",
+    "raw/evidence/d1_c0_b1_record.immutable.json.gz",
+    "raw/evidence/d1_c1_b0_record.immutable.json.gz",
+    "raw/evidence/factorial.py.gz",
+    "raw/evidence/reference_env.json.gz",
+    "raw/evidence/run_followup.py.gz",
+    "raw/logs/d0_c0_b0_cold_0.cache_after.json.gz",
+    "raw/logs/d0_c0_b0_cold_0.cache_before.json.gz",
+    "raw/logs/d0_c0_b0_cold_0.compare.log.gz",
+    "raw/logs/d0_c0_b0_cold_0.run.log.gz",
+    "raw/logs/d0_c0_b0_cold_1.cache_after.json.gz",
+    "raw/logs/d0_c0_b0_cold_1.cache_before.json.gz",
+    "raw/logs/d0_c0_b0_cold_1.compare.log.gz",
+    "raw/logs/d0_c0_b0_cold_1.run.log.gz",
+    "raw/logs/d0_c0_b0_cold_2.cache_after.json.gz",
+    "raw/logs/d0_c0_b0_cold_2.cache_before.json.gz",
+    "raw/logs/d0_c0_b0_cold_2.compare.log.gz",
+    "raw/logs/d0_c0_b0_cold_2.run.log.gz",
+    "raw/logs/d0_c0_b0_record.cache_after.json.gz",
+    "raw/logs/d0_c0_b0_record.cache_before.json.gz",
+    "raw/logs/d0_c0_b0_record.run.log.gz",
+    "raw/logs/d0_c0_b0_warm.cache_after.json.gz",
+    "raw/logs/d0_c0_b0_warm.cache_before.json.gz",
+    "raw/logs/d0_c0_b0_warm.compare.log.gz",
+    "raw/logs/d0_c0_b0_warm.run.log.gz",
+    "raw/logs/d0_c0_b1_cold_0.cache_after.json.gz",
+    "raw/logs/d0_c0_b1_cold_0.cache_before.json.gz",
+    "raw/logs/d0_c0_b1_cold_0.compare.log.gz",
+    "raw/logs/d0_c0_b1_cold_0.run.log.gz",
+    "raw/logs/d0_c0_b1_cold_1.cache_after.json.gz",
+    "raw/logs/d0_c0_b1_cold_1.cache_before.json.gz",
+    "raw/logs/d0_c0_b1_cold_1.compare.log.gz",
+    "raw/logs/d0_c0_b1_cold_1.run.log.gz",
+    "raw/logs/d0_c0_b1_cold_2.cache_after.json.gz",
+    "raw/logs/d0_c0_b1_cold_2.cache_before.json.gz",
+    "raw/logs/d0_c0_b1_cold_2.compare.log.gz",
+    "raw/logs/d0_c0_b1_cold_2.run.log.gz",
+    "raw/logs/d0_c0_b1_record.cache_after.json.gz",
+    "raw/logs/d0_c0_b1_record.cache_before.json.gz",
+    "raw/logs/d0_c0_b1_record.run.log.gz",
+    "raw/logs/d0_c0_b1_warm.cache_after.json.gz",
+    "raw/logs/d0_c0_b1_warm.cache_before.json.gz",
+    "raw/logs/d0_c0_b1_warm.compare.log.gz",
+    "raw/logs/d0_c0_b1_warm.run.log.gz",
+    "raw/logs/d0_c1_b0_cold_0.cache_after.json.gz",
+    "raw/logs/d0_c1_b0_cold_0.cache_before.json.gz",
+    "raw/logs/d0_c1_b0_cold_0.compare.log.gz",
+    "raw/logs/d0_c1_b0_cold_0.run.log.gz",
+    "raw/logs/d0_c1_b0_cold_1.cache_after.json.gz",
+    "raw/logs/d0_c1_b0_cold_1.cache_before.json.gz",
+    "raw/logs/d0_c1_b0_cold_1.compare.log.gz",
+    "raw/logs/d0_c1_b0_cold_1.run.log.gz",
+    "raw/logs/d0_c1_b0_cold_2.cache_after.json.gz",
+    "raw/logs/d0_c1_b0_cold_2.cache_before.json.gz",
+    "raw/logs/d0_c1_b0_cold_2.compare.log.gz",
+    "raw/logs/d0_c1_b0_cold_2.run.log.gz",
+    "raw/logs/d0_c1_b0_record.cache_after.json.gz",
+    "raw/logs/d0_c1_b0_record.cache_before.json.gz",
+    "raw/logs/d0_c1_b0_record.run.log.gz",
+    "raw/logs/d0_c1_b0_warm.cache_after.json.gz",
+    "raw/logs/d0_c1_b0_warm.cache_before.json.gz",
+    "raw/logs/d0_c1_b0_warm.compare.log.gz",
+    "raw/logs/d0_c1_b0_warm.run.log.gz",
+    "raw/logs/d0_c1_b1_cold_0.cache_after.json.gz",
+    "raw/logs/d0_c1_b1_cold_0.cache_before.json.gz",
+    "raw/logs/d0_c1_b1_cold_0.compare.log.gz",
+    "raw/logs/d0_c1_b1_cold_0.run.log.gz",
+    "raw/logs/d0_c1_b1_cold_1.cache_after.json.gz",
+    "raw/logs/d0_c1_b1_cold_1.cache_before.json.gz",
+    "raw/logs/d0_c1_b1_cold_1.compare.log.gz",
+    "raw/logs/d0_c1_b1_cold_1.run.log.gz",
+    "raw/logs/d0_c1_b1_cold_2.cache_after.json.gz",
+    "raw/logs/d0_c1_b1_cold_2.cache_before.json.gz",
+    "raw/logs/d0_c1_b1_cold_2.compare.log.gz",
+    "raw/logs/d0_c1_b1_cold_2.run.log.gz",
+    "raw/logs/d0_c1_b1_record.cache_after.json.gz",
+    "raw/logs/d0_c1_b1_record.cache_before.json.gz",
+    "raw/logs/d0_c1_b1_record.run.log.gz",
+    "raw/logs/d0_c1_b1_warm.cache_after.json.gz",
+    "raw/logs/d0_c1_b1_warm.cache_before.json.gz",
+    "raw/logs/d0_c1_b1_warm.compare.log.gz",
+    "raw/logs/d0_c1_b1_warm.run.log.gz",
+    "raw/logs/d1_c0_b0_cold_0.cache_after.json.gz",
+    "raw/logs/d1_c0_b0_cold_0.cache_before.json.gz",
+    "raw/logs/d1_c0_b0_cold_0.compare.log.gz",
+    "raw/logs/d1_c0_b0_cold_0.run.log.gz",
+    "raw/logs/d1_c0_b0_cold_1.cache_after.json.gz",
+    "raw/logs/d1_c0_b0_cold_1.cache_before.json.gz",
+    "raw/logs/d1_c0_b0_cold_1.compare.log.gz",
+    "raw/logs/d1_c0_b0_cold_1.run.log.gz",
+    "raw/logs/d1_c0_b0_cold_2.cache_after.json.gz",
+    "raw/logs/d1_c0_b0_cold_2.cache_before.json.gz",
+    "raw/logs/d1_c0_b0_cold_2.compare.log.gz",
+    "raw/logs/d1_c0_b0_cold_2.run.log.gz",
+    "raw/logs/d1_c0_b0_record.cache_after.json.gz",
+    "raw/logs/d1_c0_b0_record.cache_before.json.gz",
+    "raw/logs/d1_c0_b0_record.run.log.gz",
+    "raw/logs/d1_c0_b0_warm.cache_after.json.gz",
+    "raw/logs/d1_c0_b0_warm.cache_before.json.gz",
+    "raw/logs/d1_c0_b0_warm.compare.log.gz",
+    "raw/logs/d1_c0_b0_warm.run.log.gz",
+    "raw/logs/d1_c0_b1_cold_0.cache_after.json.gz",
+    "raw/logs/d1_c0_b1_cold_0.cache_before.json.gz",
+    "raw/logs/d1_c0_b1_cold_0.compare.log.gz",
+    "raw/logs/d1_c0_b1_cold_0.run.log.gz",
+    "raw/logs/d1_c0_b1_cold_1.cache_after.json.gz",
+    "raw/logs/d1_c0_b1_cold_1.cache_before.json.gz",
+    "raw/logs/d1_c0_b1_cold_1.compare.log.gz",
+    "raw/logs/d1_c0_b1_cold_1.run.log.gz",
+    "raw/logs/d1_c0_b1_cold_2.cache_after.json.gz",
+    "raw/logs/d1_c0_b1_cold_2.cache_before.json.gz",
+    "raw/logs/d1_c0_b1_cold_2.compare.log.gz",
+    "raw/logs/d1_c0_b1_cold_2.run.log.gz",
+    "raw/logs/d1_c0_b1_record.cache_after.json.gz",
+    "raw/logs/d1_c0_b1_record.cache_before.json.gz",
+    "raw/logs/d1_c0_b1_record.run.log.gz",
+    "raw/logs/d1_c0_b1_warm.cache_after.json.gz",
+    "raw/logs/d1_c0_b1_warm.cache_before.json.gz",
+    "raw/logs/d1_c0_b1_warm.compare.log.gz",
+    "raw/logs/d1_c0_b1_warm.run.log.gz",
+    "raw/logs/d1_c1_b0_cold_0.cache_after.json.gz",
+    "raw/logs/d1_c1_b0_cold_0.cache_before.json.gz",
+    "raw/logs/d1_c1_b0_cold_0.compare.log.gz",
+    "raw/logs/d1_c1_b0_cold_0.run.log.gz",
+    "raw/logs/d1_c1_b0_cold_1.cache_after.json.gz",
+    "raw/logs/d1_c1_b0_cold_1.cache_before.json.gz",
+    "raw/logs/d1_c1_b0_cold_1.compare.log.gz",
+    "raw/logs/d1_c1_b0_cold_1.run.log.gz",
+    "raw/logs/d1_c1_b0_cold_2.cache_after.json.gz",
+    "raw/logs/d1_c1_b0_cold_2.cache_before.json.gz",
+    "raw/logs/d1_c1_b0_cold_2.compare.log.gz",
+    "raw/logs/d1_c1_b0_cold_2.run.log.gz",
+    "raw/logs/d1_c1_b0_record.cache_after.json.gz",
+    "raw/logs/d1_c1_b0_record.cache_before.json.gz",
+    "raw/logs/d1_c1_b0_record.run.log.gz",
+    "raw/logs/d1_c1_b0_warm.cache_after.json.gz",
+    "raw/logs/d1_c1_b0_warm.cache_before.json.gz",
+    "raw/logs/d1_c1_b0_warm.compare.log.gz",
+    "raw/logs/d1_c1_b0_warm.run.log.gz",
+    "raw/plan.json.gz"
+  ],
+  "schema": 1,
+  "status": "partial",
+  "validation_errors": [],
+  "verified_complete_cells": 7
+}

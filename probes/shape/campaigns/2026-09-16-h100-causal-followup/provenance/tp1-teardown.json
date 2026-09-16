@@ -1,0 +1,18 @@
+{
+  "pod_id": "2brkf0nuxh6lja",
+  "name": "census-causal-tp1-20260916",
+  "requested_utc": "2026-09-16T18:57:06.807956+00:00",
+  "returncode": 0,
+  "stdout": "{\n  \"deleted\": true,\n  \"id\": \"2brkf0nuxh6lja\"\n}\n",
+  "stderr": "",
+  "checks": [
+    {
+      "utc": "2026-09-16T18:57:08.944600+00:00",
+      "present": false
+    },
+    {
+      "utc": "2026-09-16T18:57:11.997448+00:00",
+      "present": false
+    }
+  ]
+}

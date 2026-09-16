@@ -1,0 +1,32 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "schema": 1,
+  "sequence": [
+    {
+      "cache": "cold",
+      "kind": "record",
+      "name": "record"
+    },
+    {
+      "cache": "warm",
+      "kind": "replay",
+      "name": "warm"
+    },
+    {
+      "cache": "cold",
+      "kind": "replay",
+      "name": "cold_a"
+    },
+    {
+      "cache": "cold",
+      "kind": "replay",
+      "name": "cold_b"
+    },
+    {
+      "cache": "cold",
+      "kind": "replay",
+      "name": "cold_c"
+    }
+  ]
+}

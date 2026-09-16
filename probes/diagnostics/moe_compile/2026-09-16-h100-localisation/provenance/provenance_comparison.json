@@ -1,0 +1,161 @@
+{
+  "configuration_differences": {
+    "current_environment": {
+      "TORCHINDUCTOR_CACHE_DIR": "/root/causal/moe-scan/compiled-baseline/cache/torchinductor",
+      "TORCHINDUCTOR_COMPILE_THREADS": "1",
+      "TRITON_CACHE_DIR": "/root/causal/moe-scan/compiled-baseline/cache/triton",
+      "VLLM_CACHE_ROOT": "/root/causal/moe-scan/compiled-baseline/cache/vllm",
+      "VLLM_DISABLE_COMPILE_CACHE": "1",
+      "VLLM_ENABLE_V1_MULTIPROCESSING": "0",
+      "VLLM_LOGGING_LEVEL": "DEBUG",
+      "VLLM_PLUGINS": "",
+      "VLLM_USE_V2_MODEL_RUNNER": "1"
+    },
+    "current_resolved": {
+      "compile_requested": "on",
+      "cudagraph_mode": "NONE",
+      "gpu": "NVIDIA H100 80GB HBM3",
+      "gpu_uuid": "acdfe3bb-3b19-1010-e380-bb26aa874ad5",
+      "mode": 3,
+      "torch": "2.13.0+cu130",
+      "torch_cuda": "13.0",
+      "use_v2_model_runner": true,
+      "vllm": "0.28.0"
+    },
+    "note": "Both records select compiled V2 execution with graphs disabled/off, but their evidence schemas and cache paths differ; no claim of full stack identity is made.",
+    "public_assertions": {
+      "graph_mode_matches_request": true,
+      "mode_matches_request": true,
+      "runner_matches_request": true
+    }
+  },
+  "current_baseline_ack": {
+    "handoff_manifest_sha256": "c5cc271a41bf7febf433d880ac5a7c26e8dab0c58c6840de945c1dfd6a858a32",
+    "label": "compiled_baseline",
+    "schema": 1,
+    "verified_manifest_sha256": "c5cc271a41bf7febf433d880ac5a7c26e8dab0c58c6840de945c1dfd6a858a32"
+  },
+  "distribution_comparison": {
+    "current_provenance_omits_public_runtime_fields": [
+      "fused_moe_router_select_experts_file",
+      "nvidia_smi"
+    ],
+    "key_distribution_records_equal": {
+      "tokenspeed-triton": true,
+      "torch": false,
+      "triton": true,
+      "vllm": true
+    },
+    "only_current": [],
+    "only_public": [],
+    "pip_freeze_exact_text_equal": true,
+    "version_or_url_differences": {}
+  },
+  "first_token_comparison": {
+    "current_first_token_ids": [
+      279,
+      279,
+      99339,
+      576,
+      5205,
+      220,
+      13,
+      315,
+      151643,
+      99483,
+      151643,
+      279,
+      308,
+      1075,
+      1270,
+      11
+    ],
+    "limit": "current baseline records one token per prompt; this compares only those first tokens, not the public 32-token traces or logprobs.",
+    "matches_each_public_repeat": [
+      true,
+      true
+    ],
+    "prompt_token_batches_equal": true,
+    "public_first_token_ids_by_repeat": [
+      [
+        279,
+        279,
+        99339,
+        576,
+        5205,
+        220,
+        13,
+        315,
+        151643,
+        99483,
+        151643,
+        279,
+        308,
+        1075,
+        1270,
+        11
+      ],
+      [
+        279,
+        279,
+        99339,
+        576,
+        5205,
+        220,
+        13,
+        315,
+        151643,
+        99483,
+        151643,
+        279,
+        308,
+        1075,
+        1270,
+        11
+      ]
+    ],
+    "same_model_revision": true
+  },
+  "hardware_comparison": {
+    "current": {
+      "driver_version": "580.126.09",
+      "memory.total [MiB]": "81559 MiB",
+      "name": "NVIDIA H100 80GB HBM3",
+      "uuid": "GPU-acdfe3bb-3b19-1010-e380-bb26aa874ad5",
+      "vbios_version": "96.00.DA.00.0C"
+    },
+    "gpu_uuid_equal": false,
+    "new_gpu_uuid": "GPU-acdfe3bb-3b19-1010-e380-bb26aa874ad5",
+    "public_gpu_uuid": "GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc",
+    "public_machine_line": "NVIDIA H100 80GB HBM3, GPU-fcd67bc9-4348-93cc-aba6-22a2076f2fdc, 580.126.09, 96.00.DA.00.0C, 81559 MiB",
+    "same_driver": true,
+    "same_gpu_product": true,
+    "same_vbios": true
+  },
+  "inputs_sha256": {
+    "/Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-causal/moe-parallel/compiled_baseline.verified-ack.json": "fd39d1423d515919718ee2c14ccd01c1eda74f1bef231863f0e2b8533b18b682",
+    "/Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-causal/moe-parallel/moe-scan/compiled-baseline/provenance.json": "3723002f98edd920df31b0f320e06b75c08060ed4fbd1909231104fbb7a83447",
+    "/Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-causal/moe-parallel/moe-scan/compiled-baseline/result.json": "7bf5ec40bf6268b88259f153a0e01b9ca606e6f001e4f36b26531fb47c853b34",
+    "/Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-causal/moe-parallel/setup-logs/nvidia-smi.txt": "b2e74d31e35091eb5632b44ddd778a34c1a27a51fed0651d200b1ddf6b00d837",
+    "/Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-causal/moe-parallel/setup-logs/weights_digests.json": "00244420e4604648eb594f4f245cc8285e034601d9228525b4a27af4ec9e01b4",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/provenance.json": "ef4fad1ec254088bf1bd0a1d8a0fd8f2301b2c0899c96f53064a8155c6fe86fa",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/result.json.gz": "a5b67ca2f5ae156b2e743dd5a493b8c4145b6c7f1a6bb851fdbb2dd6aefda4d2",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-builds/setup/machine.txt": "a03159380a668441583e58276b92aa8efff1159b70f1b1558083a0add2af6e1d",
+    "probes/diagnostics/moe_compile/2026-09-16-h100-builds/setup/weights_digests.json": "18d1153cd0e905c50e174809be9741fc7ff50f9c078dfffbe3f2db320b83c9a4"
+  },
+  "model_weights_comparison": {
+    "current_file_rows": 16,
+    "current_revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+    "exact_file_rows_match_by_repo_revision_file_size_sha256": true,
+    "model": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+    "public_matching_model_file_rows": 16,
+    "public_revision": "ec052fda178e241c7c443468d2fa1db6618996be",
+    "safetensor_shards_match": true
+  },
+  "reference": {
+    "public_cell": "probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2",
+    "reason": "same cu130, compile-on, graphs-off, V2-runner public cell"
+  },
+  "schema": 1,
+  "scope": "read-only provenance comparison; matching listed fields does not establish an identical execution stack or causal equivalence."
+}

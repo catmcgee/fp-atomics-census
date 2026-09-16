@@ -1,0 +1,58 @@
+{
+  "environment": {
+    "pip_freeze_exact_text_equal": true
+  },
+  "schema": 1,
+  "scope": "The top-level torch records compare unequal because the public schema adds CUDA runtime, device, and torch_config fields that the current recorder omitted. Every shared torch field, including distribution version, RECORD-file hash, module version, and torch/__init__.py hash, is equal, and pip-freeze text is exact. This is not evidence of a differing torch distribution, but these sampled records do not prove that every installed torch file is byte-identical.",
+  "sources": {
+    "current": {
+      "path": "fp-atomics-census-work/2026-09-16-causal/moe-parallel/moe-scan/compiled-baseline/provenance.json",
+      "sha256": "3723002f98edd920df31b0f320e06b75c08060ed4fbd1909231104fbb7a83447"
+    },
+    "public": {
+      "path": "fp-atomics-census/probes/diagnostics/moe_compile/2026-09-16-h100-builds/cu130_v2_graphs_off_nodump/compile-on_graphs-off_runner-v2/provenance.json",
+      "sha256": "ef4fad1ec254088bf1bd0a1d8a0fd8f2301b2c0899c96f53064a8155c6fe86fa"
+    }
+  },
+  "torch_record": {
+    "common_fields_equal": {
+      "direct_url": true,
+      "distribution_location": true,
+      "distribution_version": true,
+      "import_error": true,
+      "module_file": true,
+      "module_file_sha256": true,
+      "module_version": true,
+      "record_sha256": true
+    },
+    "common_keys": [
+      "direct_url",
+      "distribution_location",
+      "distribution_version",
+      "import_error",
+      "module_file",
+      "module_file_sha256",
+      "module_version",
+      "record_sha256"
+    ],
+    "only_current": [],
+    "only_public": [
+      "cuda_available",
+      "cuda_build",
+      "cuda_device",
+      "cuda_device_count",
+      "torch_config"
+    ],
+    "recorded_distribution_and_module_identity_fields_equal": {
+      "direct_url": true,
+      "distribution_location": true,
+      "distribution_version": true,
+      "import_error": true,
+      "module_file": true,
+      "module_file_sha256": true,
+      "module_version": true,
+      "record_sha256": true
+    },
+    "whole_object_equal": false
+  }
+}

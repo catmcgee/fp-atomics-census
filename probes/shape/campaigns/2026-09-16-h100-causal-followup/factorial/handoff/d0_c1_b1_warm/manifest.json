@@ -1,0 +1,147 @@
+{
+  "files": [
+    {
+      "path": "archives/d0_c1_b1_warm/cache.tar.gz",
+      "sha256": "1d2bdbc2893d286b0f6e03f28909a0cddd003afc48dbf436f452cfbc1a148f5c",
+      "size": 4389610
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/artefacts.json",
+      "sha256": "aeddd9b0633e310574e262014058a04471756b6860e4911766795b74ae5bc310",
+      "size": 4765
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/cache_after_run.json",
+      "sha256": "6bc41149a6de79979725ec957746f771596b6a6153a7099d3297a5c093755b8e",
+      "size": 1930
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/cache_before_engine.json",
+      "sha256": "28a15d7bb17a10f99c2037f366a87ce163bdc5add01d816e4aa2747df6dae6b9",
+      "size": 1660
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/env.json",
+      "sha256": "e46304340a4915170a5187c8d7ada70479c1c1dad7d9c2c937162883754f7d14",
+      "size": 11466
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/hook/forcing_rank0.jsonl",
+      "sha256": "6742800e2560b7ab4f6137340f9890e2dea04b5cea7dfabec683a9a4b3626128",
+      "size": 2763
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/hook/rank0.jsonl",
+      "sha256": "38e05e6d72f6f007199b44372d4338281996698590a12fffb0902c22f0dafa16",
+      "size": 388128
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/outputs.json",
+      "sha256": "550d6dec74232e17959b25ff946a4a96bf9ec74ee7afb131054db8903fce865c",
+      "size": 199510
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/run.json",
+      "sha256": "0cdf710e8de8f8d6954973c9633a7fea9ef436f89fa2d1befa4f6282407fa9a9",
+      "size": 32045
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/record/schedule.json",
+      "sha256": "0d91c75e04541e0dced9834b738e6e94cb4d881c7103694bad46aca0834e3f1b",
+      "size": 20448
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/artefacts.json",
+      "sha256": "aeddd9b0633e310574e262014058a04471756b6860e4911766795b74ae5bc310",
+      "size": 4765
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/cache_after_run.json",
+      "sha256": "6bc41149a6de79979725ec957746f771596b6a6153a7099d3297a5c093755b8e",
+      "size": 1930
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/cache_before_engine.json",
+      "sha256": "2d01d43af3b118c63274f9042acc92a2f2e0e0cc5ad572fb901bb203c3ab713c",
+      "size": 1934
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/env.json",
+      "sha256": "d645b985463b6463e0ef02a4e866ea94a9b96d30ca78ad064cad293c4915cc98",
+      "size": 11466
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/hook/forcing_rank0.jsonl",
+      "sha256": "6806b1d8180ce161eadade7c8be452c64f831dd10f09cdaeee79e39d3950d09f",
+      "size": 53533
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/hook/rank0.jsonl",
+      "sha256": "dbf0feee68fcf0275075421c02a1f30f05b99234882b33346c0f85a32d45b95e",
+      "size": 388126
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/outputs.json",
+      "sha256": "550d6dec74232e17959b25ff946a4a96bf9ec74ee7afb131054db8903fce865c",
+      "size": 199510
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/replay_warm/run.json",
+      "sha256": "536a97496a6309af3ca828bfd5426cbb9f84b795b1157d6ec0ea3660c6f3f5b5",
+      "size": 68354
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/summary_replay_warm.json",
+      "sha256": "7789c65478000e9f1be09445a0544d3eb14eaad2ffbe149e0e0de42c0fc0efe6",
+      "size": 3477
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c1_b1_mixed/summary_replay_warm.json",
+      "sha256": "7789c65478000e9f1be09445a0544d3eb14eaad2ffbe149e0e0de42c0fc0efe6",
+      "size": 3477
+    },
+    {
+      "path": "evidence/factorial.py",
+      "sha256": "e2fab47f30c973233008568b9977f7f30cfbabe1d99d88769f60470efe1db5fa",
+      "size": 8514
+    },
+    {
+      "path": "evidence/reference_env.json",
+      "sha256": "7bce93f71c88ad93c50590563c48531f02c586fb49cf97b3b9904e076bb6cd92",
+      "size": 11429
+    },
+    {
+      "path": "evidence/run_followup.py",
+      "sha256": "58c5ba8df9cda4ea000d5221de40c0614c1f53995c04aa83335b30c340bfb36f",
+      "size": 36961
+    },
+    {
+      "path": "logs/d0_c1_b1_warm.cache_after.json",
+      "sha256": "c4119721c7a351da21ba48ddc03bd6e52aa9c600a3f5a8a6f42fa1d3938be5f7",
+      "size": 54238
+    },
+    {
+      "path": "logs/d0_c1_b1_warm.cache_before.json",
+      "sha256": "c4119721c7a351da21ba48ddc03bd6e52aa9c600a3f5a8a6f42fa1d3938be5f7",
+      "size": 54238
+    },
+    {
+      "path": "logs/d0_c1_b1_warm.compare.log",
+      "sha256": "0f2e208d03d41bce97ff5044be13c7f069bf93321dc1df1b180a356ad4cc0b04",
+      "size": 501
+    },
+    {
+      "path": "logs/d0_c1_b1_warm.run.log",
+      "sha256": "91bcb23c2fc120860b9113eb70f1a8638f2c4cb7ddf754862081235aeddb2f7b",
+      "size": 13871
+    },
+    {
+      "path": "plan.json",
+      "sha256": "45bebda6d47759b42acb5255bd260825263598da4746e10aef384f77f3fd585d",
+      "size": 1120
+    }
+  ],
+  "label": "d0_c1_b1_warm",
+  "schema": 1,
+  "sha256": "4afd37e6f1d16c42d88cbdd472998696be3d9d9eeee37d416bc1bfc7942a3a9e"
+}

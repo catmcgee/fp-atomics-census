@@ -1,0 +1,7 @@
+{
+  "distribution_count": 210,
+  "torch": "2.13.0+cu130",
+  "triton": "3.7.1",
+  "vllm": "0.29.0",
+  "python": "3.12.3"
+}

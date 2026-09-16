@@ -1,0 +1,143 @@
+{
+  "cell": "d1_c0_b1",
+  "comparisons": [
+    {
+      "changed_kernels": [],
+      "replay": "replay_warm",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [
+        {
+          "best_config_path": "inductor_env/lm/b7fc90f4dc0c31fa9c40a8788bf90cc08f5cc7bf33d064f67d7eb45312500200.best_config",
+          "cache_key_prefix": "lm",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_1",
+          "record_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d1_c0_b1_cold_0/inductor/lm/clmsryfjlucglmjv6lsmv4vpq45ykopdftlququdgnhm6ohwrpcr.py"
+        }
+      ],
+      "replay": "replay_cold_0",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [
+        {
+          "best_config_path": "inductor_env/lm/b7fc90f4dc0c31fa9c40a8788bf90cc08f5cc7bf33d064f67d7eb45312500200.best_config",
+          "cache_key_prefix": "lm",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_1",
+          "record_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d1_c0_b1_cold_1/inductor/lm/clmsryfjlucglmjv6lsmv4vpq45ykopdftlququdgnhm6ohwrpcr.py"
+        }
+      ],
+      "replay": "replay_cold_1",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [
+        {
+          "best_config_path": "inductor_env/lm/b7fc90f4dc0c31fa9c40a8788bf90cc08f5cc7bf33d064f67d7eb45312500200.best_config",
+          "cache_key_prefix": "lm",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_1",
+          "record_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d1_c0_b1_cold_2/inductor/lm/clmsryfjlucglmjv6lsmv4vpq45ykopdftlququdgnhm6ohwrpcr.py"
+        }
+      ],
+      "replay": "replay_cold_2",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    }
+  ],
+  "schema": 1,
+  "scope": "association only; changed compilation choices are not a demonstrated cause of row/output divergence"
+}

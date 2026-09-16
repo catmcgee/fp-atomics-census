@@ -1,0 +1,18 @@
+{
+  "pod_id": "k69ni1wveshwfq",
+  "name": "census-causal-moe-20260916",
+  "requested_utc": "2026-09-16T19:11:39.241699+00:00",
+  "returncode": 0,
+  "stdout": "{\n  \"deleted\": true,\n  \"id\": \"k69ni1wveshwfq\"\n}\n",
+  "stderr": "",
+  "checks": [
+    {
+      "utc": "2026-09-16T19:11:42.180279+00:00",
+      "present": false
+    },
+    {
+      "utc": "2026-09-16T19:11:44.869934+00:00",
+      "present": false
+    }
+  ]
+}

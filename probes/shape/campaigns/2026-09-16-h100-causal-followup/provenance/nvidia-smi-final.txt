@@ -1,0 +1,2 @@
+name, uuid, driver_version, vbios_version
+NVIDIA H100 80GB HBM3, GPU-b147fcfc-e61a-e854-3b3d-e26991a96cac, 580.126.09, 96.00.89.00.01

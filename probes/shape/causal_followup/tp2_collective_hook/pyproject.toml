@@ -1,0 +1,15 @@
+[project]
+name = "tp2-collective-trace"
+version = "0.1.0"
+description = "Pinned vLLM 0.29 TP all-reduce dispatch tracer"
+requires-python = ">=3.10"
+
+[project.entry-points."vllm.general_plugins"]
+tp2_collective_trace = "tp2_collective_hook:register"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]

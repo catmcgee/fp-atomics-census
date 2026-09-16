@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "path": "hook/graph-control/rank0.jsonl",
+      "sha256": "1e4d1cf8562e633447551de8b3868971320968181eb354f99b9d7db6ec82826e",
+      "size": 17303
+    },
+    {
+      "path": "report.conditions/graph-control.json",
+      "sha256": "bd8498e7653ff3aae4b409cbfd655ce2a467bfa6a6c4f7110f9f47acb19c4335",
+      "size": 10047
+    },
+    {
+      "path": "report.conditions/graph-control.log",
+      "sha256": "8361c561c7ba2aee74f0e397f3ee7623314b0d25d69492e091bac77ef30f6dcc",
+      "size": 14693
+    },
+    {
+      "path": "source_snapshot/routing_harness.py",
+      "sha256": "c952ac33b31a72647a3f8107e7e5e7672411ccdd7b8315ca1302a8be0b4506f5",
+      "size": 32171
+    },
+    {
+      "path": "source_snapshot/routing_telemetry.py",
+      "sha256": "ea7974c33b2670a045f62d2beb82254e6d694e989699a3ee91c2b5d7af4cc4ba",
+      "size": 15027
+    },
+    {
+      "path": "source_snapshot/shape_hook_init.py",
+      "sha256": "5bc003293fef95e525658226cfb05b2ad28199cb7010ebb09bbd9c37954e357f",
+      "size": 38777
+    }
+  ],
+  "label": "report_graph_control",
+  "schema": 1,
+  "sha256": "b3407104c7f7f077d2bffe7515fa888a1dae4e04d1dce606253aeed1a2e644d4"
+}

@@ -1,0 +1,8 @@
+[
+  {
+    "event": "firstACKdeliveryfailed_missing_ack_directory",
+    "label": "compiled_baseline",
+    "all_manifest_files_durably_copied_and_verified_before_error": true,
+    "repair": "Created previously absent remote acks directory; restarted supervisor to reverify and deliver atomic ACK; no experimental source or data changed."
+  }
+]

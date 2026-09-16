@@ -1,0 +1,2 @@
+[vllm.general_plugins]
+tp2_collective_trace = tp2_collective_hook:register

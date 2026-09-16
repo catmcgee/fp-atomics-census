@@ -1,0 +1,290 @@
+{
+  "condition": "graph-control",
+  "engine_controls": {
+    "async_scheduling": false,
+    "compilation_config": {
+      "cudagraph_mode": "FULL",
+      "mode": 0
+    },
+    "enable_prefix_caching": false,
+    "enable_return_routed_experts": false,
+    "enforce_eager": false,
+    "max_model_len": 2048,
+    "seed": 0
+  },
+  "hook_evidence": {
+    "dispatch_modes": [
+      "FULL"
+    ],
+    "forward_records": 8,
+    "resolved_compile_cudagraph": [
+      [
+        "0",
+        "FULL"
+      ]
+    ],
+    "rows": [
+      {
+        "computed": 0,
+        "h": "9cd98e3880795f34fcb90572b937958bb122e4edd231f4bbb7bc84a7b82390d1",
+        "logits_h": "776acf768a4c8ef1bed12cb83a9d59d4110fe2f5f43bbe2e22716565146bddae",
+        "new_token_ids": [
+          46254,
+          6896,
+          25,
+          220,
+          16,
+          22,
+          54916,
+          553,
+          220,
+          16,
+          24,
+          16819
+        ],
+        "phase": "prefill",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 12
+      },
+      {
+        "computed": 0,
+        "h": "9f345575c0a52b406b53fcb9844227de24f0c4c148bde3657efe0df094f27c0c",
+        "logits_h": "922676ec9582657690e31eaf108e03b00687117f906f0c66cb8609479bd2a36f",
+        "new_token_ids": [
+          7985,
+          825,
+          42020,
+          11652,
+          911,
+          264,
+          93767,
+          518,
+          63819,
+          13
+        ],
+        "phase": "prefill",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 10
+      },
+      {
+        "computed": 12,
+        "h": "fd5d9c32f3b2eee3d394e5a5d67a390125a962b16c365f7a736b49593e9205d8",
+        "logits_h": "ab572585f731906f77ccb9f4696598175915e5b9b5aac8d02d34f5efe57035a2",
+        "new_token_ids": [
+          624
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 10,
+        "h": "ec0b64c810ab264054f1d67c28cbc6b3c81cb19e2cb4277dd34fddc0e734f99d",
+        "logits_h": "9b0937ce024aa81fee13f11b1f7e7f319bd6810de84fd854eb947d42916c8239",
+        "new_token_ids": [
+          362
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      },
+      {
+        "computed": 13,
+        "h": "972b623dc21716618280df24117694bdb3ce6323180d2a3926294bde7f21cc1a",
+        "logits_h": "ea10bcf70e9c86193e0ebb5ade06d7d7accff7dd0833bdcc0212a169e74940e5",
+        "new_token_ids": [
+          16
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 11,
+        "h": "fbace64f59eb7e5de1424c6f0b0c747f9d99bbf6d4bb8dedace07b7b3a4e106d",
+        "logits_h": "41205ec771e0d1d7b1bac91ed92023f6ed31a9a089bf0286a2a2d1d6f3b67919",
+        "new_token_ids": [
+          93767
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      },
+      {
+        "computed": 14,
+        "h": "ab04db6b9722441ff768b3358b11a828ae4363f2c3d190d2b984c0379069dece",
+        "logits_h": "bdb3a72e60d3f4054632f19778d896cbb34c7dfc205315a6a0be121b923c2bd7",
+        "new_token_ids": [
+          22
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 12,
+        "h": "1e0122cb95d1c67fe4f037ad6b85871f227374d140b850319b66c126df41bb37",
+        "logits_h": "d37212309a0cbecf4a6a357eb8ec7d6e555e9e9c4e1874d9b55f1d563fdec5ef",
+        "new_token_ids": [
+          518
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      },
+      {
+        "computed": 15,
+        "h": "163cad00616660977ae6d01c06e6a49449a05453393388fe6f6ac2d8d30f4aa2",
+        "logits_h": "953189158395bc59058dc906d68094f3914aaab5be8715d292b44a9e50c0667f",
+        "new_token_ids": [
+          54916
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 13,
+        "h": "e0e14b5f5f184a28b7c7a53ea05a84eb3cb7b801c9923b1071b6556d941a260a",
+        "logits_h": "33d075e8187c07013b74a8346fd66e5abfc86d9b295c3b8c617defc25ed70bfc",
+        "new_token_ids": [
+          63819
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      },
+      {
+        "computed": 16,
+        "h": "b00635919a5acc31bddc275ccc467a36e53c005a55891939096abe9bd62fc480",
+        "logits_h": "3c4b33833285cef08111161282580fb0d877536c3b06886c6f6a1ce9a023d3ee",
+        "new_token_ids": [
+          553
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 14,
+        "h": "a744ce121d8ddbb0cf259175b1701a8b7ecd26a5f3295334b4c068dfe983f511",
+        "logits_h": "e8294e0177f4b11eb68185041eab9e18630e4f49ec0dedfb00b4a14b515ae355",
+        "new_token_ids": [
+          374
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      },
+      {
+        "computed": 17,
+        "h": "e531c18927eea8c0aeabd75ab4eb147e3f3937a9573cea532e6885fc21ac9f4d",
+        "logits_h": "27c367d2ad481cad8149dd73adf1b6c38849c5e4c1c0c99bb4c31d2a8959e8ed",
+        "new_token_ids": [
+          220
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 15,
+        "h": "5bc0eacba0d6ce15d5f34bf3b31e25ca891927a57a3cdb0b5d99cfdee4a32e41",
+        "logits_h": "f940b8c7b18b003dc06e3bfce5df12992640696065bcad3241354477113153f0",
+        "new_token_ids": [
+          264
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      },
+      {
+        "computed": 18,
+        "h": "6a7ac94238ade320e690b51723e462b3ae23322eabb7fdd0f53b24e7274f0fa2",
+        "logits_h": "69ef637db249743e482b499932d3885c4e4c277c6280938b452e56728a4cc69a",
+        "new_token_ids": [
+          16
+        ],
+        "phase": "decode",
+        "prompt_sha256": "0d9d71eedf2348dd3357f425dd1dadc25f00c694706908612c286832a7c5c5b6",
+        "q": 1
+      },
+      {
+        "computed": 16,
+        "h": "49152efacbfb6386f7c4e3145115fd93058982872d7058a326dd5de1b0e5c954",
+        "logits_h": "995bc85febd3b892ff16d87b6d8dbfd71da974914a21fe79aa49aa9cbd091806",
+        "new_token_ids": [
+          83361
+        ],
+        "phase": "decode",
+        "prompt_sha256": "68c0d9d006edfa63084f080ad4e24dc7ad086664be396775ab7634138482c46f",
+        "q": 1
+      }
+    ],
+    "rows_sha256": "3dd6e1736cc0c3097cecd612b768d95015df84c04854c7062a13036644f594b2"
+  },
+  "samples": [
+    {
+      "generated_token_count": 8,
+      "output_token_ids": [
+        624,
+        16,
+        22,
+        54916,
+        553,
+        220,
+        16,
+        24
+      ],
+      "output_token_ids_sha256": "9287a3c1386721d2c9d9b2284b9232d0a6e678c4e24a032dfa170d3e8bc7f43a",
+      "prompt_index": 0,
+      "prompt_token_count": 12,
+      "prompt_token_ids_sha256": "df9928ac0dd0c753580903be9c7a6092bc8fef529b08f9d64e1591ca26583437",
+      "routing": null
+    },
+    {
+      "generated_token_count": 8,
+      "output_token_ids": [
+        362,
+        93767,
+        518,
+        63819,
+        374,
+        264,
+        83361,
+        4849
+      ],
+      "output_token_ids_sha256": "bd86ebe07870094693f48508551d6c45c2d527bb77f702d4bd2f6ab72bfd6cf3",
+      "prompt_index": 1,
+      "prompt_token_count": 10,
+      "prompt_token_ids_sha256": "3af210e8164b89a2df5ac90a5e2269954420790acc13035dde9adb67ca7454e8",
+      "routing": null
+    }
+  ],
+  "schema": 1,
+  "source_attestation": {
+    "installed_modules": {
+      "shape_hook": "/root/c2-source/probes/shape/shape_hook_pkg/shape_hook/__init__.py",
+      "vllm": "/opt/c2/lib/python3.12/site-packages/vllm/__init__.py"
+    },
+    "reviewed_vllm_commit": "98dff2a81d747d1dba01a47f939f48c3526d4206",
+    "shape_hook_sha256": "5bc003293fef95e525658226cfb05b2ad28199cb7010ebb09bbd9c37954e357f",
+    "source_commit": "7dc6f469726d3eec0719c98e9bf6458945b961af",
+    "vllm_files": {
+      "config/compilation.py": "3a79ea08d48d44879ac8cbfee1c7d88f9bd72927d9bd12eee31743e8da8a4d7e",
+      "config/scheduler.py": "f1f70b83527ee2ccc78bf186d418739d2616de1f96834ad0bbb65f42b6a41787",
+      "config/vllm.py": "788430b9211a5b0ccda0be565ad2a0f27e9069370f35d2b1f6a333a6ca135186",
+      "engine/arg_utils.py": "950cb3b650c081d6d36d43d73e3ecd669b44eabd4fe8395b92e399c7a89b8011",
+      "entrypoints/llm.py": "52de4ac99489e004ef6c61d0bedc84aa96020dd58b8bd1ae500814b548b2b83e",
+      "model_executor/layers/fused_moe/routed_experts_capturer.py": "cd006bc1a1703418cca3b589fafb2abc4268a086fb3db044bbb64348aeac8b13",
+      "model_executor/layers/fused_moe/router/fused_moe_router.py": "f182f30712983f61815f8df947af597277d660cd2891066fcb13789d55f7353e",
+      "outputs.py": "346d1f9204a441867efc3af7c5a99d8a70ef0f69fe607dfa8a4a2557a82ca425",
+      "sampling_params.py": "2aba9ebd1c3921d601dcf94ac6a1f726e5172fe991e313cd5a69d3eaa02013fa",
+      "v1/core/sched/scheduler.py": "abca7134821e2fb5cc8572df5c4a0b570ecf702646254327bc786fc452074983",
+      "v1/engine/output_processor.py": "80a01067f4b3b351239506a3a1754dafdfc83cd162352d95545ba8ebed44c447",
+      "v1/worker/gpu_model_runner.py": "3970d7b764f80847842e10fc20f0e3f4f3da84cd97d042bb92db6e99147337e2"
+    },
+    "vllm_version": "0.29.0"
+  },
+  "status": "complete"
+}

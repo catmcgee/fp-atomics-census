@@ -1,0 +1,7 @@
+{
+  "utc": "2026-09-16T17:48:17.994059+00:00",
+  "reason": "driver570.195.03 does not match desired CUDA13 host; no inference launched",
+  "stdout": "{\n  \"deleted\": true,\n  \"id\": \"r1gycjv23uk5y1\"\n}\n",
+  "stderr": "",
+  "returncode": 0
+}

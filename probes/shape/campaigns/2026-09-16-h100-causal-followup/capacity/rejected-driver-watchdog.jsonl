@@ -1,0 +1,12 @@
+{"utc": "2026-09-16T17:45:51.064623+00:00", "event": "started", "pod_id": "r1gycjv23uk5y1", "name": "census-causal-tp2-20260916", "deadline_epoch": 1789585549.0}
+{"utc": "2026-09-16T17:45:51.830203+00:00", "event": "waiting", "seconds_to_deadline": 4797.2, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:46:09.148858+00:00", "event": "waiting", "seconds_to_deadline": 4779.9, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:46:24.862617+00:00", "event": "waiting", "seconds_to_deadline": 4764.1, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:46:42.248819+00:00", "event": "waiting", "seconds_to_deadline": 4746.8, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:46:57.986708+00:00", "event": "waiting", "seconds_to_deadline": 4731.0, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:47:14.739257+00:00", "event": "waiting", "seconds_to_deadline": 4714.3, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:47:30.933219+00:00", "event": "waiting", "seconds_to_deadline": 4698.1, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:47:47.627947+00:00", "event": "waiting", "seconds_to_deadline": 4681.4, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:48:03.388551+00:00", "event": "waiting", "seconds_to_deadline": 4665.6, "provider_status": "RUNNING"}
+{"utc": "2026-09-16T17:48:19.134217+00:00", "event": "absence_pending_confirmation", "pod_id": "r1gycjv23uk5y1"}
+{"utc": "2026-09-16T17:48:34.962196+00:00", "event": "absence_verified", "pod_id": "r1gycjv23uk5y1", "consecutive_reads": 2}

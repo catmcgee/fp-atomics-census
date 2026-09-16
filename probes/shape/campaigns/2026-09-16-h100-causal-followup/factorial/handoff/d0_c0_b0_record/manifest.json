@@ -1,0 +1,97 @@
+{
+  "files": [
+    {
+      "path": "archives/d0_c0_b0_record/cache.tar.gz",
+      "sha256": "79e1bca525accb56b6b561985b5c0fdacf22c3896a30c4440a5b8909d4da8b36",
+      "size": 4083034
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/artefacts.json",
+      "sha256": "75307cc538e87309354a89bcf5c10a991213190f3568432f22cf5b2ada3bf11e",
+      "size": 4420
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/cache_after_run.json",
+      "sha256": "32500e855f4d7a65a49e7c6e0f00e1545823b335f0199f81b24356d34e13dc40",
+      "size": 1930
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/cache_before_engine.json",
+      "sha256": "183c45bec7da56d0acd2458f0eedc2066ff43b96c9edec484114d5ce58acbb2f",
+      "size": 1660
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/env.json",
+      "sha256": "d7d9d8956644d22bb9a1110cf186102077bdb9c94cf0b06f80d5cb67d4c13041",
+      "size": 11466
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/hook/forcing_rank0.jsonl",
+      "sha256": "6742800e2560b7ab4f6137340f9890e2dea04b5cea7dfabec683a9a4b3626128",
+      "size": 2763
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/hook/rank0.jsonl",
+      "sha256": "8f74522b57c1be3c7087f7cfb56948b1f45e3c5e2ee96014031baeb2a5616658",
+      "size": 388108
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/outputs.json",
+      "sha256": "6884a5ca3a1696b857185122aef47e21a56e3961890aaf80013c68088f81302e",
+      "size": 199492
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/run.json",
+      "sha256": "e1b6c2817259d73e83d361eb8793b7d14efd5fc2f6f80b38974a93cf893c2376",
+      "size": 32049
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d0_c0_b0_mixed/record/schedule.json",
+      "sha256": "0d91c75e04541e0dced9834b738e6e94cb4d881c7103694bad46aca0834e3f1b",
+      "size": 20448
+    },
+    {
+      "path": "evidence/d0_c0_b0_record.immutable.json",
+      "sha256": "7035649627dfcffa1457eefb8717a174a8d47fc7367560376da72195d122426a",
+      "size": 1467
+    },
+    {
+      "path": "evidence/factorial.py",
+      "sha256": "e2fab47f30c973233008568b9977f7f30cfbabe1d99d88769f60470efe1db5fa",
+      "size": 8514
+    },
+    {
+      "path": "evidence/reference_env.json",
+      "sha256": "7bce93f71c88ad93c50590563c48531f02c586fb49cf97b3b9904e076bb6cd92",
+      "size": 11429
+    },
+    {
+      "path": "evidence/run_followup.py",
+      "sha256": "58c5ba8df9cda4ea000d5221de40c0614c1f53995c04aa83335b30c340bfb36f",
+      "size": 36961
+    },
+    {
+      "path": "logs/d0_c0_b0_record.cache_after.json",
+      "sha256": "5366809729b34a78bd4e2a25562acd7fa5cfd3f034cb54d08b1b3f7489e5e3fe",
+      "size": 54244
+    },
+    {
+      "path": "logs/d0_c0_b0_record.cache_before.json",
+      "sha256": "aa935bddf2023d2a1f55dd7aa48e8511bac7bb840a98ce6627854f66d3619ccc",
+      "size": 1557
+    },
+    {
+      "path": "logs/d0_c0_b0_record.run.log",
+      "sha256": "5c3022465cadfe9176361580b92cfabe4a46fe156e626962df861a7a9c17282c",
+      "size": 13997
+    },
+    {
+      "path": "plan.json",
+      "sha256": "45bebda6d47759b42acb5255bd260825263598da4746e10aef384f77f3fd585d",
+      "size": 1120
+    }
+  ],
+  "label": "d0_c0_b0_record",
+  "schema": 1,
+  "sha256": "c2fef008f8b8870e71acc98a2e3e15296320e08425579d1f29b00b44fef9ca2d"
+}

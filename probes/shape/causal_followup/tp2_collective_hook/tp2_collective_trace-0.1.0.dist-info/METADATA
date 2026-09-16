@@ -1,0 +1,4 @@
+Metadata-Version: 2.1
+Name: tp2-collective-trace
+Version: 0.1.0
+Summary: Pinned vLLM 0.29 TP all-reduce dispatch tracer

@@ -1,0 +1,73 @@
+{
+  "torch": "2.13.0+cu130",
+  "module": "/opt/c2/lib/python3.12/site-packages/torch/_inductor/config.py",
+  "sha256": "4cdbe0025fd4890e2dfaa6395e57a08971c33889265cbcd26b33a1cf9ee1fa7f",
+  "source_lines": [
+    {
+      "line": 1003,
+      "text": "#   triton.cooperative_reductions: uses cross thread-block synchronization to gain more parallelism"
+    },
+    {
+      "line": 1004,
+      "text": "# enabling both of these will implicitly disable split_reductions"
+    },
+    {
+      "line": 1005,
+      "text": "split_reductions = os.getenv(\"TORCHINDUCTOR_SPLIT_REDUCTIONS\", \"1\") == \"1\""
+    },
+    {
+      "line": 1006,
+      "text": ""
+    },
+    {
+      "line": 1007,
+      "text": "# A deterministic mode that skips any on device benchmarking in Inductor"
+    },
+    {
+      "line": 1008,
+      "text": "# if we know they affect numerics.  WARNING: Expect perf hit in this mode."
+    },
+    {
+      "line": 1009,
+      "text": "deterministic = os.getenv(\"TORCHINDUCTOR_DETERMINISTIC\") == \"1\""
+    },
+    {
+      "line": 1010,
+      "text": ""
+    },
+    {
+      "line": 1011,
+      "text": "# Batch-invariant mode: stable per-sample compiled kernel across batch sizes. Implies deterministic."
+    },
+    {
+      "line": 1012,
+      "text": "batch_invariant = os.getenv(\"TORCHINDUCTOR_BATCH_INVARIANT\") == \"1\""
+    },
+    {
+      "line": 1013,
+      "text": ""
+    },
+    {
+      "line": 1014,
+      "text": "# When we do split reduction, this number control the minimum value for"
+    },
+    {
+      "line": 1015,
+      "text": "# num_split. Too small num_split make the split reduction less efficient."
+    },
+    {
+      "line": 1016,
+      "text": "# It's a much bigger problem when we compile a dynamic shape kernel with"
+    }
+  ],
+  "fresh_process_checks": [
+    {
+      "environment": "0",
+      "resolved_inductor_deterministic": "False"
+    },
+    {
+      "environment": "1",
+      "resolved_inductor_deterministic": "True"
+    }
+  ]
+}

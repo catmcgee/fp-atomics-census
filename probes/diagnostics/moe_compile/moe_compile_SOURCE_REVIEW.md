@@ -1,6 +1,6 @@
 # vLLM issue 56900: v0.28.0 source and wheel audit
 
-Audit date: 2026-09-16. This is a source review and diagnostic design, not a GPU result. No root cause is asserted. The installation recipes below have not yet been executed on a GPU host in this follow-up.
+Audit date: 2026-09-16. This source review preceded the [controlled GPU build comparison](2026-09-16-h100-builds/README.md), which executed the installation recipes and diagnostic controls below. Source-derived expectations and measured outcomes are distinguished throughout. No root cause is asserted.
 
 ## Primary material checked
 

@@ -1,0 +1,40 @@
+{
+  "status": "startup_failed_no_valid_record",
+  "files": [
+    {
+      "path": "STOP",
+      "size": 130,
+      "sha256": "c309c81dbea3e9d9a0a79b7980fbf10f37508c53a7d30d0cedf5ad2200a8ecf0",
+      "public": "STOP.gz"
+    },
+    {
+      "path": "evidence/d1_c1_b1_record.failure.json",
+      "size": 171,
+      "sha256": "2d0f07eda9e230df3b5ab49ed53da583171244c172e6315261ef2c54ddb006ac",
+      "public": "evidence/d1_c1_b1_record.failure.json.gz"
+    },
+    {
+      "path": "logs/d1_c1_b1_record.cache_before.json",
+      "size": 1557,
+      "sha256": "e4f5461c51bfe0cc4faa08a72d8f90303c192799368c92d59f96ff000ada0381",
+      "public": "logs/d1_c1_b1_record.cache_before.json.gz"
+    },
+    {
+      "path": "logs/d1_c1_b1_record.run.log",
+      "size": 21706,
+      "sha256": "d9b66570217bce000124129f07eadd3847283fdbbd3c776ef971cc103f8a8e33",
+      "public": "logs/d1_c1_b1_record.run.log.gz"
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b1_mixed/record/cache_before_engine.json",
+      "size": 1660,
+      "sha256": "b56102373a9bfc727bf442c7c081ee1664caf2ee8e5ad0a9847a3861819f9823",
+      "public": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_factorial_d1_c1_b1_mixed/record/cache_before_engine.json.gz"
+    }
+  ],
+  "private_failed_cache": {
+    "path": "failures/d1_c1_b1_record.cache.tar.gz",
+    "size": 70253,
+    "sha256": "cd4d77e4bd865c10b4ad85ffc382c008b7db89c03ef4220c18254b1bab60958a"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "cell": "d1_c1_b0",
+  "comparisons": [
+    {
+      "changed_kernels": [],
+      "replay": "replay_warm",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [],
+      "replay": "replay_cold_0",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [],
+      "replay": "replay_cold_1",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [],
+      "replay": "replay_cold_2",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "record_rows": 555,
+        "replay_digest_sha256": "4f489c6e493a7392e484e6da8145e4c33164ec49257aa4380d972fc97ef22b46",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    }
+  ],
+  "schema": 1,
+  "scope": "association only; changed compilation choices are not a demonstrated cause of row/output divergence"
+}

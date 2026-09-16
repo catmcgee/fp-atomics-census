@@ -1,0 +1,23 @@
+[
+  "runpodctl",
+  "pod",
+  "create",
+  "--name",
+  "census-causal-tp2-after-tp1-20260916",
+  "--gpu-id",
+  "NVIDIA H100 80GB HBM3",
+  "--gpu-count",
+  "2",
+  "--min-cuda-version",
+  "13.0",
+  "--image",
+  "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404",
+  "--container-disk-in-gb",
+  "220",
+  "--volume-in-gb",
+  "0",
+  "--ports",
+  "22/tcp",
+  "--terminate-after",
+  "2026-09-16T20:02:47Z"
+]

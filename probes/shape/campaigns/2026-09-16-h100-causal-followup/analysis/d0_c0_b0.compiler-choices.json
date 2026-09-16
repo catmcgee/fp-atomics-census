@@ -1,0 +1,268 @@
+{
+  "cell": "d0_c0_b0",
+  "comparisons": [
+    {
+      "changed_kernels": [],
+      "replay": "replay_warm",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 555
+        },
+        "comparable": true,
+        "record_digest_sha256": "7e639158858648ae0a8c6e504429c9c1396795fe0694eb9c8ebc501673ba9cd3",
+        "record_rows": 555,
+        "replay_digest_sha256": "7e639158858648ae0a8c6e504429c9c1396795fe0694eb9c8ebc501673ba9cd3",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "IDENTICAL"
+    },
+    {
+      "changed_kernels": [
+        {
+          "best_config_path": "inductor_env/65/d900201962089ca8119ebd0ebd966375f8a92de1fc8c5a6deea459e9c0cf60e1.best_config",
+          "cache_key_prefix": "65",
+          "changed_fields": [
+            "R0_BLOCK"
+          ],
+          "kernel_name": "triton_red_fused_fused_add_rms_norm_2",
+          "record_choice": {
+            "R0_BLOCK": 4096,
+            "XBLOCK": 1,
+            "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 16
+          },
+          "replay_choice": {
+            "R0_BLOCK": 2048,
+            "XBLOCK": 1,
+            "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 16
+          },
+          "source_path": "d0_c0_b0_cold_0/inductor/65/c65wahmhalx4mxh2c7uu5zixomrn67nobywcjpo3yebobe5fk4py.py"
+        },
+        {
+          "best_config_path": "inductor_env/np/265286e027f03edd977301fda6e2e4e67475a41b051f7e8f519ffda8032e12d2.best_config",
+          "cache_key_prefix": "np",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_3",
+          "record_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d0_c0_b0_cold_0/inductor/np/cnpo2kpxqlpfpwjmalcgncayizjykwlztcsio7po77bhxbc2b7aw.py"
+        }
+      ],
+      "replay": "replay_cold_0",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 550,
+          "h+logits_h": 5
+        },
+        "comparable": true,
+        "record_digest_sha256": "7e639158858648ae0a8c6e504429c9c1396795fe0694eb9c8ebc501673ba9cd3",
+        "record_rows": 555,
+        "replay_digest_sha256": "aaa8d9981b9e42f997068d54bc92d88716f9eeb882b8be592063be02c13b06e5",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "DIFFERS"
+    },
+    {
+      "changed_kernels": [
+        {
+          "best_config_path": "inductor_env/65/d900201962089ca8119ebd0ebd966375f8a92de1fc8c5a6deea459e9c0cf60e1.best_config",
+          "cache_key_prefix": "65",
+          "changed_fields": [
+            "R0_BLOCK"
+          ],
+          "kernel_name": "triton_red_fused_fused_add_rms_norm_2",
+          "record_choice": {
+            "R0_BLOCK": 4096,
+            "XBLOCK": 1,
+            "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 16
+          },
+          "replay_choice": {
+            "R0_BLOCK": 2048,
+            "XBLOCK": 1,
+            "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 16
+          },
+          "source_path": "d0_c0_b0_cold_1/inductor/65/c65wahmhalx4mxh2c7uu5zixomrn67nobywcjpo3yebobe5fk4py.py"
+        },
+        {
+          "best_config_path": "inductor_env/np/265286e027f03edd977301fda6e2e4e67475a41b051f7e8f519ffda8032e12d2.best_config",
+          "cache_key_prefix": "np",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_3",
+          "record_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d0_c0_b0_cold_1/inductor/np/cnpo2kpxqlpfpwjmalcgncayizjykwlztcsio7po77bhxbc2b7aw.py"
+        },
+        {
+          "best_config_path": "inductor_env/w2/648122bbec30593f71a7bb9a864250a8415d80ae1652c9dd4515c82c62651a5d.best_config",
+          "cache_key_prefix": "w2",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_1",
+          "record_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d0_c0_b0_cold_1/inductor/w2/cw2dxkw56yaperqpkn6nscdcsrbnmnycy3su6ykyp42aizogvgwr.py"
+        }
+      ],
+      "replay": "replay_cold_1",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 550,
+          "h+logits_h": 5
+        },
+        "comparable": true,
+        "record_digest_sha256": "7e639158858648ae0a8c6e504429c9c1396795fe0694eb9c8ebc501673ba9cd3",
+        "record_rows": 555,
+        "replay_digest_sha256": "aaa8d9981b9e42f997068d54bc92d88716f9eeb882b8be592063be02c13b06e5",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "DIFFERS"
+    },
+    {
+      "changed_kernels": [
+        {
+          "best_config_path": "inductor_env/np/265286e027f03edd977301fda6e2e4e67475a41b051f7e8f519ffda8032e12d2.best_config",
+          "cache_key_prefix": "np",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_3",
+          "record_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d0_c0_b0_cold_2/inductor/np/cnpo2kpxqlpfpwjmalcgncayizjykwlztcsio7po77bhxbc2b7aw.py"
+        },
+        {
+          "best_config_path": "inductor_env/rx/dd4b9162a1618725f5cc375c097bc18884588e3be0402ce1aa9f1ac799d80f2a.best_config",
+          "cache_key_prefix": "rx",
+          "changed_fields": [
+            "R0_BLOCK"
+          ],
+          "kernel_name": "triton_red_fused_fused_add_rms_norm_2",
+          "record_choice": {
+            "R0_BLOCK": 4096,
+            "XBLOCK": 1,
+            "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 16
+          },
+          "replay_choice": {
+            "R0_BLOCK": 2048,
+            "XBLOCK": 1,
+            "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 16
+          },
+          "source_path": "d0_c0_b0_cold_2/inductor/rx/crxlk47zxx3x2btev25ozkaryoaefdswb6kcdullj2i47nx67op4.py"
+        },
+        {
+          "best_config_path": "inductor_env/w2/648122bbec30593f71a7bb9a864250a8415d80ae1652c9dd4515c82c62651a5d.best_config",
+          "cache_key_prefix": "w2",
+          "changed_fields": [
+            "XBLOCK"
+          ],
+          "kernel_name": "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_1",
+          "record_choice": {
+            "XBLOCK": 512,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "replay_choice": {
+            "XBLOCK": 256,
+            "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+            "found_by_coordesc": false,
+            "num_stages": 1,
+            "num_warps": 4
+          },
+          "source_path": "d0_c0_b0_cold_2/inductor/w2/cw2dxkw56yaperqpkn6nscdcsrbnmnycy3su6ykyp42aizogvgwr.py"
+        }
+      ],
+      "replay": "replay_cold_2",
+      "row_digest_classes": {
+        "classes": {
+          "equal": 3,
+          "h+logits_h": 551,
+          "h+logits_h+argmax": 1
+        },
+        "comparable": true,
+        "record_digest_sha256": "7e639158858648ae0a8c6e504429c9c1396795fe0694eb9c8ebc501673ba9cd3",
+        "record_rows": 555,
+        "replay_digest_sha256": "ca36bb5497e65dc6e6a2cc20ba063521ebda7152cfdf5089f343bf0e7cde7488",
+        "replay_rows": 555
+      },
+      "rows_compared": 555,
+      "verdict_P2": "DIFFERS"
+    }
+  ],
+  "schema": 1,
+  "scope": "association only; changed compilation choices are not a demonstrated cause of row/output divergence"
+}

@@ -1,0 +1,11 @@
+{
+  "acked_labels": [
+    "report_graph_control",
+    "report_graph_telemetry",
+    "report_eager_telemetry"
+  ],
+  "output": "report.json",
+  "schema": 1,
+  "status": "valid",
+  "valid": true
+}
