@@ -1,7 +1,16 @@
-# Prepared C2 follow-up batch
+# C2 follow-up runner and execution contract
 
-These files prepare the missing C2 GPU work. They do not provision or remove a
-pod. Read `../campaigns/NEXT_EXPERIMENTS.md` before running them.
+These files prepared the missing C2 GPU work. The bounded follow-up has now
+executed; its evidence is in
+[`2026-09-16-h100-e6-followup.md`](../campaigns/2026-09-16-h100-e6-followup.md).
+They do not provision or remove a pod. Read `../campaigns/NEXT_EXPERIMENTS.md`
+before using this preparation for a future run.
+
+The runner retained with the executed evidence has SHA-256
+`1a1bad6ca3cdb810e1a36f5aa4f5464f7a31a21d9ac4a58070b2cd3dd49e0de6` and is
+not rewritten. The malformed-ACK handling in the current source postdates that
+execution; it is a future-run hardening rather than a change to the archived
+evidence.
 
 ## Source and evidence layout
 
@@ -53,9 +62,10 @@ python probes/shape/next_campaign/preflight.py \
 ```
 
 For TP=2 select the historical TP=2 `env.json`, require two GPUs, use M3's
-weight digest file, and require only Qwen2.5. The script exits nonzero on any
-mismatch. Also require `NCCL_NVLS_ENABLE=0`. Retain its JSON report even on
-failure.
+weight digest file, and require only Qwen2.5. M3's recorded VBIOS is
+`96.00.89.00.01`; `96.00.DA.00.0C` in the TP=1 example belongs to M1 and is
+not compatible evidence for TP=2. The script exits nonzero on any mismatch.
+Also require `NCCL_NVLS_ENABLE=0`. Retain its JSON report even on failure.
 
 ## Queue specification (not directly executable)
 
@@ -65,8 +75,7 @@ That runner continues after some arm/comparison failures and does not prove a
 durable sync before the next arm, so it does not implement the stop contract in
 `NEXT_EXPERIMENTS.md`.
 
-When funding and compatible hardware are available, a bounded runner must be
-prepared and reviewed with these properties:
+The bounded runner below implements the reviewed execution contract:
 
 - `ROOT` becomes the absolute durable `RESULTS_ROOT`.
 - `LOGS` and `ART` become new durable directories below the campaign root.
@@ -84,9 +93,106 @@ after preflight passes and a CUDA/NCCL smoke succeeds. The queue's deadline and
 arm, so set the deadline far enough before the provider deadline to cover the
 1500-second per-arm timeout, sync, digest verification, and explicit deletion.
 
+When a handoff manifest is ready, the sync operator must copy and verify every
+listed file before publishing the acknowledgement. Write and close
+`ACK_DIR/LABEL.json.pending`, then atomically rename it to
+`ACK_DIR/LABEL.json`. A direct streamed write to the final ACK path can be read
+while incomplete by the polling runner. Keep the runner digest frozen for the
+active queue. The current malformed-JSON hardening is a later runner revision.
+
 The orchestration deliberately does not contain provider commands. Use the
 provider deadline plus the detached `probes/ops/watch_pod.py` guard described
 in `NEXT_EXPERIMENTS.md`.
+
+## Exact environment installation
+
+`env.json`, rather than the retained `pip-freeze.txt`, is the authority for the
+210-distribution preflight comparison. The freeze omits 11 distributions that
+the record's installed-distribution map contains. Generate the exact 209
+wheel pins (everything except the local editable hook) from the selected TP=1
+record:
+
+```sh
+python probes/shape/next_campaign/c2_constraints.py \
+  --env-json probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/env.json \
+  --constraints /project/campaign/c2-209.txt \
+  --plan /project/campaign/c2-install-plan.json
+python3.12 -m venv /project/c2-venv
+/project/c2-venv/bin/pip install --no-index --find-links /project/wheelhouse --no-deps -r /project/campaign/c2-209.txt
+/project/c2-venv/bin/pip install -e /project/census-c2-source/probes/shape/shape_hook_pkg
+```
+
+The editable installation must come from the clean detached frozen source
+worktree. It restores `shape-hook==0.1.0`, yielding the required 210 entries.
+Keep the expected `pip check` failure: vLLM 0.29.0 declares
+`flashinfer-python==0.6.18`, while C2 deliberately retained
+`0.6.18.post1`. Any additional `pip check` failure is a failed installation
+gate.
+
+## Bounded runner and handoff protocol
+
+`run_followup.py` is the reviewed replacement for the recovered queue. It
+does not create, extend, or remove a pod. It uses direct argument execution
+(never `eval`), accepts only the reviewed environment variables in the job
+file, and runs `SOURCE_ROOT/probes/shape/run_e6.py` only after verifying the
+frozen source, a successful preflight JSON, a successful supplied CUDA/NCCL
+smoke command, free disk reserve, deadline margin, and `STOP` absence.
+
+First stage the historical `record/` directories described above into the new
+`RESULTS_ROOT/e6/ARM/record` locations. Then create the immutable baseline and
+retain a copy plus SHA-256 of the runner:
+
+```sh
+python /project/evidence/probes/shape/next_campaign/run_followup.py \
+  --initialize --results-root /project/campaign/results
+```
+
+For each batch, create an empty durable acknowledgement directory and run the
+queue from the current evidence checkout. The cache root is deliberately below
+the durable campaign path. Every cold arm gets a never-before-used directory;
+the runner records all enumerated cache roots before and after execution.
+
+```sh
+mkdir -p /project/campaign/acks /project/campaign/results/cache
+python /project/evidence/probes/shape/next_campaign/run_followup.py \
+  --run \
+  --source-root /project/census-c2-source \
+  --results-root /project/campaign/results \
+  --jobs /project/evidence/probes/shape/next_campaign/jobs_tp1.txt \
+  --preflight-report /project/campaign/preflight_tp1.json \
+  --smoke-command "python -c 'import torch; assert torch.cuda.is_available() and torch.cuda.device_count() == 1'" \
+  --cache-root /project/campaign/results/cache \
+  --ack-dir /project/campaign/acks \
+  --deadline-epoch PROVIDER_DEADLINE_EPOCH \
+  --arm-timeout 1500 --ack-timeout 1800 --deadline-buffer 600 \
+  --min-free-gb 30 --archive-full-cache
+```
+
+Use a TP=2 CUDA/NCCL smoke command and `jobs_tp2.txt` on the two-GPU pod. The
+runner validates rank 1 with the frozen comparator after the TP=2 replay and
+records the rank-0/rank-1 observation separately. It also runs the routing
+validator after both graph-disabled MoE arms and stops if either has missing or
+estimated counts.
+
+After each arm, the runner writes `handoff/LABEL/manifest.json`, prints its
+SHA-256, and waits. The operator copies every listed file off the pod, verifies
+the listed digests, then writes this file in `ACK_DIR`:
+
+```json
+{
+  "schema": 1,
+  "label": "LABEL",
+  "handoff_manifest_sha256": "the manifest sha256",
+  "verified_manifest_sha256": "the same manifest sha256"
+}
+```
+
+The runner refuses an old acknowledgement, an incorrect digest, a failed
+comparison, changed record, timeout, cache gate, failed audit, low disk, or
+deadline margin; each failure creates `RESULTS_ROOT/STOP` before another engine
+process can start. The acknowledgement must be written only after the copied
+manifest verifies, so it is the durable-sync launch gate rather than a claim
+made by the pod itself.
 
 ## Post-run checks
 
