@@ -20,6 +20,7 @@ import platform
 import signal
 import subprocess
 import sys
+import time
 import traceback
 from datetime import UTC, datetime
 from enum import Enum
@@ -50,6 +51,18 @@ PROMPTS = [prompt for pair in zip(SHORT, LONG) for prompt in pair] * 2
 
 def sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def canonical_json(value: Any) -> bytes:
+    return json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
 
 
 def json_default(value: Any) -> str:
@@ -305,6 +318,13 @@ def requested_graph_mode(compile_mode: str, graph_setting: str) -> str:
     return "FULL_AND_PIECEWISE" if compile_mode == "on" else "FULL"
 
 
+def requested_compile_mode(arguments: argparse.Namespace) -> int:
+    """Resolve the legacy on/off spelling or the explicit vLLM mode integer."""
+    if arguments.mode is not None:
+        return arguments.mode
+    return 3 if arguments.compile == "on" else 0
+
+
 def vllm_version_matches(actual: str | None, expected: str) -> bool:
     """Allow a wheel build suffix only when the requested version omits one."""
     if actual is None:
@@ -395,7 +415,8 @@ def worker(arguments: argparse.Namespace) -> None:
         if len(arguments.graphs) != 1:
             raise RuntimeError("a worker must receive exactly one graph setting")
         graph_mode = requested_graph_mode(arguments.compile, graph_setting)
-        compilation = {"mode": 3 if arguments.compile == "on" else 0, "cudagraph_mode": graph_mode}
+        expected_mode = requested_compile_mode(arguments)
+        compilation = {"mode": expected_mode, "cudagraph_mode": graph_mode}
         llm = LLM(
             model=MODEL,
             tensor_parallel_size=1,
@@ -413,6 +434,7 @@ def worker(arguments: argparse.Namespace) -> None:
             {
                 "requested": {
                     "compile": arguments.compile,
+                    "mode": arguments.mode,
                     "graphs": graph_setting,
                     "runner": arguments.runner,
                     "compilation_config": compilation,
@@ -425,7 +447,6 @@ def worker(arguments: argparse.Namespace) -> None:
                 "kernel_config": serialise_config(config.kernel_config),
             },
         )
-        expected_mode = 3 if arguments.compile == "on" else 0
         resolved_mode = config.compilation_config.mode.value
         resolved_graph_mode = config.compilation_config.cudagraph_mode.name
         resolved = {
@@ -556,13 +577,175 @@ def compare_runs(output_dir: Path, completed: list[dict[str, Any]]) -> dict[str,
                     "first_difference_token_index": first_difference,
                 }
             )
-    return {"completed": completed, "compiled_vs_eager": comparisons}
+    modes = {}
+    for item in completed:
+        if item.get("mode") is None:
+            continue
+        result_file = output_dir / item["name"] / "result.json"
+        failure_file = output_dir / item["name"] / "failure.json"
+        if item["returncode"] == 0 and result_file.is_file() and not failure_file.exists():
+            result = json.loads(result_file.read_text())
+            modes[str(item["mode"])] = {
+                "name": item["name"],
+                "metrics": result["metrics"],
+                "first_repeat_token_ids": [row["token_ids"] for row in result["repeats"][0]],
+            }
+        else:
+            failure = json.loads(failure_file.read_text()) if failure_file.is_file() else None
+            modes[str(item["mode"])] = {
+                "name": item["name"],
+                "returncode": item["returncode"],
+                "timed_out": item["timed_out"],
+                "failure": failure,
+            }
+    mode_zero = modes.get("0", {}).get("first_repeat_token_ids")
+    mode_comparisons = []
+    if mode_zero is not None:
+        for mode in sorted(modes, key=int):
+            token_ids = modes[mode].get("first_repeat_token_ids")
+            if mode == "0" or token_ids is None:
+                continue
+            first_difference = []
+            for left, right in zip(token_ids, mode_zero):
+                difference = next(
+                    (index for index, pair in enumerate(zip(left, right)) if pair[0] != pair[1]),
+                    None,
+                )
+                if difference is None and len(left) != len(right):
+                    difference = min(len(left), len(right))
+                first_difference.append(difference)
+            mode_comparisons.append(
+                {
+                    "mode": int(mode),
+                    "mode_vs_0_identical_prompts": sum(
+                        left == right for left, right in zip(token_ids, mode_zero)
+                    ),
+                    "first_difference_token_index": first_difference,
+                }
+            )
+    return {
+        "completed": completed,
+        "compiled_vs_eager": comparisons,
+        "mode_matrix": modes,
+        "mode_vs_0": mode_comparisons,
+    }
 
 
 def persist_status(output_dir: Path, completed: list[dict[str, Any]]) -> None:
     report = compare_runs(output_dir, completed)
     write_json(output_dir / "status.json", report)
     write_json(output_dir / "comparison.json", report)
+
+
+def handoff_manifest(output_dir: Path, cell_name: str) -> Path:
+    """Hash every retained byte for one cell before allowing the next arm."""
+    label = cell_name.replace("-", "_")
+    handoff_dir = output_dir / "handoff" / label
+    if handoff_dir.exists():
+        raise RuntimeError(f"refusing existing handoff directory: {handoff_dir}")
+    handoff_dir.mkdir(parents=True)
+    script_copy = handoff_dir / Path(__file__).name
+    script_copy.write_bytes(Path(__file__).read_bytes())
+    controller_snapshot = handoff_dir / "controller_manifest.json"
+    controller_snapshot.write_bytes((output_dir / "manifest.json").read_bytes())
+    comparison_snapshot = handoff_dir / "comparison_before_ack.json"
+    comparison_snapshot.write_bytes((output_dir / "comparison.json").read_bytes())
+    targets = [
+        output_dir / cell_name,
+        output_dir / f"{cell_name}.stdout.log",
+        output_dir / f"{cell_name}.stderr.log",
+        script_copy,
+        controller_snapshot,
+        comparison_snapshot,
+    ]
+    files = []
+    seen = set()
+    for target in targets:
+        if not target.exists():
+            continue
+        candidates = [target] if target.is_file() else sorted(
+            path for path in target.rglob("*") if path.is_file()
+        )
+        for path in candidates:
+            if path.is_symlink():
+                raise RuntimeError(f"handoff evidence contains symlink: {path}")
+            relative = path.relative_to(output_dir).as_posix()
+            if relative in seen:
+                continue
+            seen.add(relative)
+            files.append(
+                {"path": relative, "size": path.stat().st_size, "sha256": sha256_file(path)}
+            )
+    files.sort(key=lambda item: item["path"])
+    payload = {"schema": 1, "label": label, "files": files}
+    manifest = handoff_dir / "manifest.json"
+    write_json(manifest, {**payload, "sha256": sha256_bytes(canonical_json(payload))})
+    return manifest
+
+
+def verify_handoff_manifest(output_dir: Path, manifest: Path) -> dict[str, Any]:
+    value = json.loads(manifest.read_text())
+    if set(value) != {"schema", "label", "files", "sha256"} or value["schema"] != 1:
+        raise RuntimeError(f"invalid handoff manifest schema: {manifest}")
+    payload = {key: value[key] for key in ("schema", "label", "files")}
+    expected = sha256_bytes(canonical_json(payload))
+    if value["sha256"] != expected:
+        raise RuntimeError(f"invalid handoff manifest digest: {manifest}")
+    root = output_dir.resolve()
+    seen = set()
+    for item in value["files"]:
+        relative = str(item["path"])
+        if relative in seen:
+            raise RuntimeError(f"duplicate handoff path: {relative}")
+        seen.add(relative)
+        path = (output_dir / relative).resolve()
+        if path == root or root not in path.parents or path.is_symlink() or not path.is_file():
+            raise RuntimeError(f"invalid handoff file path: {relative}")
+        if path.stat().st_size != item["size"] or sha256_file(path) != item["sha256"]:
+            raise RuntimeError(f"handoff file does not match manifest: {relative}")
+    return {"label": value["label"], "files": len(value["files"]), "sha256": expected}
+
+
+def verify_ack(ack: Path, label: str, manifest: Path) -> None:
+    expected = json.loads(manifest.read_text())["sha256"]
+    value = json.loads(ack.read_text())
+    required = {
+        "schema": 1,
+        "label": label,
+        "handoff_manifest_sha256": expected,
+        "verified_manifest_sha256": expected,
+    }
+    if value != required:
+        raise RuntimeError(f"invalid durable handoff acknowledgement: {ack}")
+
+
+def audit_handoffs(output_dir: Path, *, require_acks: bool = True) -> dict[str, Any]:
+    manifests = sorted((output_dir / "handoff").glob("*/manifest.json"))
+    if not manifests:
+        raise RuntimeError(f"no handoff manifests found under: {output_dir}")
+    verified = []
+    for manifest in manifests:
+        item = verify_handoff_manifest(output_dir, manifest)
+        if require_acks:
+            verify_ack(output_dir / "acks" / f"{item['label']}.json", item["label"], manifest)
+        verified.append(item)
+    return {"schema": 1, "handoffs_verified": len(verified), "handoffs": verified}
+
+
+def wait_for_ack(output_dir: Path, cell_name: str, manifest: Path, timeout: int) -> None:
+    label = cell_name.replace("-", "_")
+    ack = output_dir / "acks" / f"{label}.json"
+    if ack.exists():
+        raise RuntimeError(f"refusing stale acknowledgement: {ack}")
+    expected = json.loads(manifest.read_text())["sha256"]
+    print(f"HANDOFF_READY label={label} manifest={manifest} sha256={expected}", flush=True)
+    end = time.monotonic() + timeout
+    while time.monotonic() < end:
+        if ack.is_file():
+            verify_ack(ack, label, manifest)
+            return
+        time.sleep(2)
+    raise RuntimeError(f"timed out waiting for durable handoff acknowledgement: {label}")
 
 
 def stop_worker_group(process: subprocess.Popen[str], stderr_file: Any) -> None:
@@ -623,12 +806,20 @@ def controller(arguments: argparse.Namespace) -> None:
     if output_dir.exists():
         raise SystemExit(f"refusing to overwrite existing output directory: {output_dir}")
     output_dir.mkdir(parents=True)
-    requested = [
-        (compile_mode, graph_mode, runner)
-        for graph_mode in arguments.graphs
-        for runner in arguments.runners
-        for compile_mode in arguments.compiles
-    ]
+    if arguments.modes is None:
+        requested = [
+            (compile_mode, None, graph_mode, runner)
+            for graph_mode in arguments.graphs
+            for runner in arguments.runners
+            for compile_mode in arguments.compiles
+        ]
+    else:
+        requested = [
+            ("on" if mode else "off", mode, graph_mode, runner)
+            for graph_mode in arguments.graphs
+            for runner in arguments.runners
+            for mode in arguments.modes
+        ]
     write_json(
         output_dir / "manifest.json",
         {
@@ -639,8 +830,8 @@ def controller(arguments: argparse.Namespace) -> None:
             "expected_vllm": arguments.expected_vllm,
             "debug_dump": arguments.debug_dump,
             "requested": [
-                {"compile": compile_mode, "graphs": graph_mode, "runner": runner}
-                for compile_mode, graph_mode, runner in requested
+                {"compile": compile_mode, "mode": mode, "graphs": graph_mode, "runner": runner}
+                for compile_mode, mode, graph_mode, runner in requested
             ],
             "controller_python": sys.executable,
             "command": sys.argv,
@@ -649,8 +840,12 @@ def controller(arguments: argparse.Namespace) -> None:
     completed = []
     previous_sigterm_handler = signal.signal(signal.SIGTERM, controller_sigterm_handler)
     try:
-        for compile_mode, graph_mode, runner in requested:
-            name = f"compile-{compile_mode}_graphs-{graph_mode}_runner-{runner}"
+        for compile_mode, mode, graph_mode, runner in requested:
+            name = (
+                f"mode-{mode}_graphs-{graph_mode}_runner-{runner}"
+                if mode is not None
+                else f"compile-{compile_mode}_graphs-{graph_mode}_runner-{runner}"
+            )
             command = [
                 sys.executable,
                 str(Path(__file__).resolve()),
@@ -666,6 +861,8 @@ def controller(arguments: argparse.Namespace) -> None:
                 "--expected-vllm",
                 arguments.expected_vllm,
             ]
+            if mode is not None:
+                command.extend(["--mode", str(mode)])
             if arguments.debug_dump:
                 command.append("--debug-dump")
             returncode, timed_out = run_worker(
@@ -680,6 +877,7 @@ def controller(arguments: argparse.Namespace) -> None:
                 {
                     "name": name,
                     "compile": compile_mode,
+                    "mode": mode,
                     "graphs": graph_mode,
                     "runner": runner,
                     "returncode": returncode,
@@ -688,6 +886,10 @@ def controller(arguments: argparse.Namespace) -> None:
                 }
             )
             persist_status(output_dir, completed)
+            if arguments.require_ack:
+                handoff = handoff_manifest(output_dir, name)
+                wait_for_ack(output_dir, name, handoff, arguments.ack_timeout_seconds)
+                audit_handoffs(output_dir)
     finally:
         signal.signal(signal.SIGTERM, previous_sigterm_handler)
     failures = [item for item in completed if item["returncode"]]
@@ -706,10 +908,29 @@ def parse_args() -> argparse.Namespace:
         help="new directory for controller results",
     )
     parser.add_argument("--compile", choices=("on", "off"), default="on")
+    parser.add_argument("--mode", choices=range(4), type=int, help=argparse.SUPPRESS)
     parser.add_argument("--graphs", choices=("on", "off"), nargs="+", default=("off",))
     parser.add_argument("--runner", choices=("v1", "v2"), default="v2")
     parser.add_argument("--runners", choices=("v1", "v2"), nargs="+", default=("v2",))
     parser.add_argument("--compiles", choices=("on", "off"), nargs="+", default=("on", "off"))
+    parser.add_argument(
+        "--modes",
+        choices=range(4),
+        type=int,
+        nargs="+",
+        help="run explicit vLLM CompilationMode values (0, 1, 2, 3)",
+    )
+    parser.add_argument(
+        "--require-ack",
+        action="store_true",
+        help="require a verified durable handoff acknowledgement after every cell",
+    )
+    parser.add_argument("--ack-timeout-seconds", type=int, default=180)
+    parser.add_argument(
+        "--audit-only",
+        action="store_true",
+        help="rehash all handoffs and validate acknowledgements without using a GPU",
+    )
     parser.add_argument(
         "--debug-dump", action="store_true",
         help="enable vLLM's depyf debug instrumentation (may be incompatible with torch); DEBUG logs and compiler caches are always retained",
@@ -728,8 +949,10 @@ def parse_args() -> argparse.Namespace:
     arguments = parser.parse_args()
     if arguments.worker and arguments.run_dir is None:
         parser.error("--worker requires --run-dir")
-    if arguments.timeout_seconds <= 0:
-        parser.error("--timeout-seconds must be positive")
+    if arguments.timeout_seconds <= 0 or arguments.ack_timeout_seconds <= 0:
+        parser.error("timeouts must be positive")
+    if arguments.modes is not None and len(set(arguments.modes)) != len(arguments.modes):
+        parser.error("--modes must not contain duplicates")
     return arguments
 
 
@@ -737,6 +960,8 @@ def main() -> None:
     arguments = parse_args()
     if arguments.worker:
         worker(arguments)
+    elif arguments.audit_only:
+        print(json.dumps(audit_handoffs(arguments.output_dir.resolve()), indent=2, sort_keys=True))
     else:
         controller(arguments)
 
