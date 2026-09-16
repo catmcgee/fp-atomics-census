@@ -1,0 +1,60 @@
+{
+  "roots": [
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "CUDA_CACHE_PATH",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/cuda_jit"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "DG_JIT_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/deep_gemm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "FLASHINFER_WORKSPACE_BASE",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/flashinfer-workspace"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TMPDIR",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/tmp"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCHINDUCTOR_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/inductor"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCH_EXTENSIONS_DIR",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/torch_extensions"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TRITON_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/triton"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "VLLM_CACHE_ROOT",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/vllm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "XDG_CACHE_HOME",
+      "path": "/root/c2-campaign/cache/cold/DET_MIX_c/xdg"
+    }
+  ],
+  "schema": 1,
+  "sha256": "510925625b809d6374c25d46a07046e8c014964c4582b666443e3cde1cf23883"
+}

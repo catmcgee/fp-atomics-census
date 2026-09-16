@@ -1,0 +1,182 @@
+{
+  "files": [
+    {
+      "path": "archives/DET_MIX_a/cache.tar.gz",
+      "sha256": "d5a1a41fe1741713ec4acdb3a4129544a68ecc38f3f02da3f84f0cca9fff2c35",
+      "size": 4034556
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/artefacts.json",
+      "sha256": "0f5bc237cfaed85fd0262340d948f9669604048181d3f95f36a5ba2fe03bd569",
+      "size": 3119
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/cache_after_run.json",
+      "sha256": "d1fd4f48179fd8289cf93867d442c36ef7e962d434e1278e8e47e5c992fddf04",
+      "size": 1922
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/cache_before_engine.json",
+      "sha256": "9483f632e3214bf0a01153a89e62bb3abc2dc31b03022c529da8654cb993a3b3",
+      "size": 1652
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/env.json",
+      "sha256": "3812906d2d3facd5eda72bc12918415bc031ac09decbb6ba92a3d3aec9298301",
+      "size": 11466
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/hook/forcing_rank0.jsonl",
+      "sha256": "6742800e2560b7ab4f6137340f9890e2dea04b5cea7dfabec683a9a4b3626128",
+      "size": 2763
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/hook/rank0.jsonl",
+      "sha256": "4c568bc78c3f81ccb7ee7ef2fb9f23b77a9ec07c55261ee9bd6c36222cf23cf6",
+      "size": 388112
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/outputs.json",
+      "sha256": "1fd41a5a05d60dd5ccea2449b49a2280f8c7ed4e378cb6278966c01782532bac",
+      "size": 199492
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/run.json",
+      "sha256": "03c74f8b4c4faedc31efd9d2a6befc76c9a825d70a8d2937cefda99227a2d76c",
+      "size": 32046
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/record/schedule.json",
+      "sha256": "0d91c75e04541e0dced9834b738e6e94cb4d881c7103694bad46aca0834e3f1b",
+      "size": 20448
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/artefacts.json",
+      "sha256": "be7f7e001e0f20c0221f8783346b42a80ba334e97834126900a377c7f4614bd4",
+      "size": 3079
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/cache_after_run.json",
+      "sha256": "8b26fe392f5c33fcaf2874e176b9104b4da06a45daa4a33f28bac82303846690",
+      "size": 1882
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/cache_before_engine.json",
+      "sha256": "397274d21f10ff434e682d460e958b6243c4339bbf5d6dc2731c656d341a95f4",
+      "size": 1612
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/env.json",
+      "sha256": "dadfeeab16dbbf04d9ad9264a4ef3cc18ad924d87cae3afc223a41b4cb123710",
+      "size": 11466
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/hook/forcing_rank0.jsonl",
+      "sha256": "d927de854f44d2eb4579b5225955ea6d05ab767cede6215769d2bf711760ca84",
+      "size": 53513
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/hook/rank0.jsonl",
+      "sha256": "112af506f29fc50ceff66d2bea214ea35a5b42a738ab6b4402a8cc20abc630df",
+      "size": 388112
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/outputs.json",
+      "sha256": "1fd41a5a05d60dd5ccea2449b49a2280f8c7ed4e378cb6278966c01782532bac",
+      "size": 199492
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_cold_a/run.json",
+      "sha256": "a820792a8920573f24f1c4d31268c83866d5ce1fc3c1c99c6bb2441a07b861bf",
+      "size": 68338
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/artefacts.json",
+      "sha256": "0f5bc237cfaed85fd0262340d948f9669604048181d3f95f36a5ba2fe03bd569",
+      "size": 3119
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/cache_after_run.json",
+      "sha256": "d1fd4f48179fd8289cf93867d442c36ef7e962d434e1278e8e47e5c992fddf04",
+      "size": 1922
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/cache_before_engine.json",
+      "sha256": "c4ca1d94360747ff16087150b46779052a01f69ed31b87cb492dc76c4b2fdf03",
+      "size": 1926
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/env.json",
+      "sha256": "9fbb85edfc32b8bc30f43fe7618399948a740d0a4d941770deca4a102980afa4",
+      "size": 11466
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/hook/forcing_rank0.jsonl",
+      "sha256": "d927de854f44d2eb4579b5225955ea6d05ab767cede6215769d2bf711760ca84",
+      "size": 53513
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/hook/rank0.jsonl",
+      "sha256": "3c2a205c53d2df74b43f36faf3abf45a8af16fcc19b4ac73a3ba4dbd9e283b99",
+      "size": 388112
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/outputs.json",
+      "sha256": "1fd41a5a05d60dd5ccea2449b49a2280f8c7ed4e378cb6278966c01782532bac",
+      "size": 199492
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/replay_warm/run.json",
+      "sha256": "0a7818ac08242077d76f92df51ad86e4d3d24818406e4c8f891b666520439b61",
+      "size": 68346
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_cold_a.json",
+      "sha256": "b963d43f86eef1d373767215dc3df5f9f63801c937d33837667e3cc6e769fab9",
+      "size": 3474
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_cold_a.json",
+      "sha256": "b963d43f86eef1d373767215dc3df5f9f63801c937d33837667e3cc6e769fab9",
+      "size": 3474
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_warm.json",
+      "sha256": "84b5f90d223ad439363433366691fe7e3d836ab9baf3c7c99b40c3d809216e81",
+      "size": 3462
+    },
+    {
+      "path": "evidence/preflight_report.json",
+      "sha256": "bae98d169c93aa227dc4027afcabd623c624730a42bede5332bd120f112b6ffc",
+      "size": 8853
+    },
+    {
+      "path": "handoff/DET_MIX_a/state_before_ack.json",
+      "sha256": "d4ab9d28c1525ca6df000574fc006148fd92d76eaec264c6456e441eddc77eb4",
+      "size": 13240
+    },
+    {
+      "path": "logs/DET_MIX_a.cache_after.json",
+      "sha256": "ae9aafe004511e4194de79e2c9f83adc1c8a672f9f6392ef90571a54186ad279",
+      "size": 47470
+    },
+    {
+      "path": "logs/DET_MIX_a.cache_before.json",
+      "sha256": "7299453dc9ad2a80dbe67b0f08aa31d374209e48b4f0eb9c392be325e7b16ad7",
+      "size": 1503
+    },
+    {
+      "path": "logs/DET_MIX_a.compare.log",
+      "sha256": "c4a2fd4d5bf7db19f169eb0ed1bc2875e0921811d69c8c3e69dfabf79dcec168",
+      "size": 494
+    },
+    {
+      "path": "logs/DET_MIX_a.run.log",
+      "sha256": "53763636065a12e5864d04876556d7a913896b5a0f9259a7cf6fb21b0ffc0c7e",
+      "size": 13993
+    }
+  ],
+  "label": "DET_MIX_a",
+  "schema": 1,
+  "sha256": "d02f66ea2495f571dcc6835865da28150b4fdfaefa23759d72fbb48af23302c7"
+}

@@ -1,0 +1,71 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/c2-campaign/cache/cold/DET_MIX_a/cuda_jit",
+    "deep_gemm": "/root/c2-campaign/cache/cold/DET_MIX_a/deep_gemm",
+    "flashinfer": "/root/c2-campaign/cache/cold/DET_MIX_a/flashinfer-workspace/.cache/flashinfer",
+    "inductor": "/root/c2-campaign/cache/cold/DET_MIX_a/tmp/torchinductor_root",
+    "inductor_env": "/root/c2-campaign/cache/cold/DET_MIX_a/inductor",
+    "torch_extensions": "/root/c2-campaign/cache/cold/DET_MIX_a/torch_extensions",
+    "triton": "/root/.triton",
+    "triton_env": "/root/c2-campaign/cache/cold/DET_MIX_a/triton",
+    "vllm": "/root/c2-campaign/cache/cold/DET_MIX_a/vllm"
+  },
+  "best_configs": {
+    "inductor_env/cg/d5b8ef3e4e8042158a725f95f3dfb5f8771fe0690c2e279785e7385017045322.best_config": {
+      "XBLOCK": 512,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+      "found_by_coordesc": false,
+      "time_taken_ms": 12,
+      "triton_cache_hash": "44WM4VD4I53O3LMQUHPREJ3HOWSHEUGOK6FHRJZNK5ZNX5JD5DXA"
+    },
+    "inductor_env/jr/f48187ec4253e4e41927279a3c7156f40a17e9028ed09dffd6f9106fc4511a76.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 12,
+      "triton_cache_hash": "QQMNDQZVNYR6ABEMOPZTN4C2SOJVNV4ZETM3365QZQVWJNKL6R3Q"
+    },
+    "inductor_env/kp/e3178e023813ba138b67e99ffba515a41fd2ebaa38d7ff4a7734e18e0b88c922.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 12,
+      "triton_cache_hash": "X6FAWGMRNE5JVXIJT3YE4UIMDYI6JVBL7K6WMNZQ4BPJMPQPR3EQ"
+    },
+    "inductor_env/lw/c7e3cd59a88496049d36bbc22fba3d93e2d999ee4ea585dc7b476798022b3528.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 12,
+      "triton_cache_hash": "W3A6Z5APEWIX3AOA66FDF7TL3K2G2Y66YCCWZDVOK64RHYAVS4HA"
+    },
+    "inductor_env/ur/1484623b270275d39f636b881d26198834bd06c602b8b100dd96b17f66d7e5c4.best_config": {
+      "XBLOCK": 512,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+      "found_by_coordesc": false,
+      "time_taken_ms": 12,
+      "triton_cache_hash": "PBAZO4WZ2HUAGRG5YPZ4ANVD4VIQZRPAQTWKEYCZ2DPKCPQOR2LQ"
+    }
+  },
+  "extern_calls": {
+    "addmm": 2,
+    "mm": 6
+  },
+  "triton_kernel_families": {
+    "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+    "triton_poi_fused_mul_silu_slice": 5,
+    "triton_red_fused__to_copy_embedding_rms_norm": 3,
+    "triton_red_fused_fused_add_rms_norm": 11,
+    "triton_red_fused_ge_sum": 2
+  }
+}

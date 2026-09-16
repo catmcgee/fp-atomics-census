@@ -1,9 +1,11 @@
-# Next E6 GPU batch
+# C2 follow-up execution plan
 
-Status: prepared only. No GPU has been provisioned and none of the commands in
-this document have been run.
+Status: executed on 16 September 2026. All 11 labels completed, including nine
+valid replay comparisons. Both pods were removed after verified archival. See
+[results and limitations](2026-09-16-h100-e6-followup.md). The specification below
+is retained as the execution contract.
 
-The next batch should finish the small set of missing C2 observations before
+This batch was designed to finish the small set of missing C2 observations before
 starting E4, operator, or cross-SKU work. C2's full binary caches and pods are
 gone. Its records, raw hook logs, comparisons, light archives, package lists,
 and model-file digests survive. A fresh run can therefore be a cold replay of a
@@ -25,7 +27,7 @@ are:
 | Triton | 3.7.1 |
 | FlashInfer | 0.6.18.post1, installed over vLLM's `0.6.18` requirement with `--no-deps`; retain the resulting `pip check` failure |
 | NCCL runtime | 2.29.7 (`nvidia-nccl-cu13==2.29.7`) |
-| GPU / driver / VBIOS | NVIDIA H100 80GB HBM3 / 580.126.09 / 96.00.DA.00.0C |
+| GPU / driver / VBIOS | NVIDIA H100 80GB HBM3 / 580.126.09 / M1 TP=1: 96.00.DA.00.0C; M3 TP=2: 96.00.89.00.01 |
 | Python distributions | all 210 entries exactly equal to the selected historical record's `env.json` |
 | Qwen2.5 model revision | `a09a35458c702b33eeacc393d103063234e8bc28` |
 | Qwen1.5-MoE revision | `ec052fda178e241c7c443468d2fa1db6618996be` |
@@ -153,3 +155,12 @@ separate validation campaign.
 - `next_campaign/README.md`: staging and execution contract. The recovered C2
   queue is retained only as a format/reference; the provider lifecycle remains
   a separate operation.
+
+## Follow-up after execution
+
+The missing repeats are complete. Further work should isolate the three
+determinism/combo settings, fix and trace the TP=2 collective subbackend, and
+validate graph-safe routing telemetry. Preflight compatibility does not establish
+multicast availability: the historical TP=2 record initialised `mnnvl`, while
+all three cold replays fell back to `trtllm`. Preserve this qualification when
+using their 0/3 IDENTICAL count.

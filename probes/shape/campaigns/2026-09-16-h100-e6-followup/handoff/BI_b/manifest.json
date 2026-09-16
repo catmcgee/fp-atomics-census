@@ -1,0 +1,187 @@
+{
+  "files": [
+    {
+      "path": "archives/BI_b/cache.tar.gz",
+      "sha256": "b03fc6eb915821f90fb888270453874284989dd81408661764063411f17bbaa2",
+      "size": 6056202
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._artefacts.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._cache_after_run.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._cache_before_engine.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._env.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._hook",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._outputs.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._run.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/._schedule.json",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/artefacts.json",
+      "sha256": "91a11881c8d193e9ebf8ba78aaff4ac6cc5841852a80fae6f11de37f558bb7b2",
+      "size": 5673
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/cache_after_run.json",
+      "sha256": "7a796efcb35c622a6584c2bcaa8d459901714669cb831ce477f9e5b679dad2c0",
+      "size": 1337
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/cache_before_engine.json",
+      "sha256": "701e6a323ae3372db11cbd6fa2a4b7916b280bd02781ae0a5635415f85221127",
+      "size": 1072
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/env.json",
+      "sha256": "7d7fde511c28b6d7a98a383f66ab2835858e9dee4db95be65db7ce7e683a7759",
+      "size": 11758
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/hook/._forcing_rank0.jsonl",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/hook/._rank0.jsonl",
+      "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+      "size": 163
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/hook/forcing_rank0.jsonl",
+      "sha256": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+      "size": 1323
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/hook/rank0.jsonl",
+      "sha256": "ee7f783bcbc0d9531ebf7fa5da306120bf852cb5a3fb27322d9fe212d9a90d7b",
+      "size": 270176
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/outputs.json",
+      "sha256": "4005bdb5dba58b72b67f46a95c48a1886b9ed524cc30f60227621e12b798e73f",
+      "size": 199356
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/run.json",
+      "sha256": "a271d596f984b43e586db8d9609f373703275bee278ea7830dbb7f2473cf13c6",
+      "size": 10969
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/record/schedule.json",
+      "sha256": "ab113c8c997d37bcb8d7991c733680f35078e644017991020cf666d71ed8052f",
+      "size": 13209
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/artefacts.json",
+      "sha256": "7bd0fedc07dae47209671b54a9c0e57198556bd8ae4657fa48c70eddbe3460cc",
+      "size": 6020
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/cache_after_run.json",
+      "sha256": "dfb5ad2e6ef6f0801d06013195f6af86e2bbe79a557f70e11da87472a651496e",
+      "size": 1843
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/cache_before_engine.json",
+      "sha256": "199cbae25a423e54be34934e2958295b240bc2460c9fe8d84e2ff803eb3bd7a1",
+      "size": 1572
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/env.json",
+      "sha256": "02e5ab38fe801e009e7fcd1933e4db87391956c34739a3ff9f90d3603808eb11",
+      "size": 11796
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/hook/forcing_rank0.jsonl",
+      "sha256": "8655ac095c21423921c774ee76a35a529ea81b8fe7da7deb693c6187956b477f",
+      "size": 48321
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/hook/rank0.jsonl",
+      "sha256": "8903e5ae5264879c31513477deaf9c3d9d94289e056d4dcb955ff6ff5651580f",
+      "size": 270176
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/outputs.json",
+      "sha256": "0c02ad6dc19711d8fe9011554edc5c8e81c6dfc50bd63a461e0cebc2297088ce",
+      "size": 199358
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/replay_cold_followup_b/run.json",
+      "sha256": "9dab5d717ccac27883b1ec0625fb609f78800894511f2dd2378fad6f3e140e54",
+      "size": 18271
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/summary_replay_cold_followup_b.json",
+      "sha256": "b8067ad1f00663f47b3d9cb4e0230e9178e46a99a0a4a582e3d0374fc761150b",
+      "size": 3659
+    },
+    {
+      "path": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/summary_replay_cold_followup_b.json",
+      "sha256": "b8067ad1f00663f47b3d9cb4e0230e9178e46a99a0a4a582e3d0374fc761150b",
+      "size": 3659
+    },
+    {
+      "path": "evidence/preflight_report.json",
+      "sha256": "bae98d169c93aa227dc4027afcabd623c624730a42bede5332bd120f112b6ffc",
+      "size": 8853
+    },
+    {
+      "path": "handoff/BI_b/state_before_ack.json",
+      "sha256": "9117a36c081ebd9058515072aae76e393b41117238337fb8c7daab9dc269c79b",
+      "size": 11349
+    },
+    {
+      "path": "logs/BI_b.cache_after.json",
+      "sha256": "218d573aea2dd4a81b3ad21d35c355be90478347a8f9c826dc32ac78186760cf",
+      "size": 84772
+    },
+    {
+      "path": "logs/BI_b.cache_before.json",
+      "sha256": "4c1ed9239dd5eecd16d004e8f9355e2ba979b7a8d4611642eb9361b228bb2f8b",
+      "size": 1458
+    },
+    {
+      "path": "logs/BI_b.compare.log",
+      "sha256": "d074731a0017d4508261b86725df528a41b1716f0fd9017ddef97ffc344cc70f",
+      "size": 491
+    },
+    {
+      "path": "logs/BI_b.run.log",
+      "sha256": "560c5617110519aa91a97710918c3272e76063a8f7b7d4fea8bdf07bbc8bd098",
+      "size": 17855
+    }
+  ],
+  "label": "BI_b",
+  "schema": 1,
+  "sha256": "39670ef715b9f8e3a597da9167e4d698f6d859798e1dbc2d929e31077e1048e7"
+}

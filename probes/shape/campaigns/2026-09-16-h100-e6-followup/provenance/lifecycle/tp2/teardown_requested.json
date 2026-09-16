@@ -1,0 +1,15 @@
+{
+  "at_utc": "2026-09-16T16:53:29.226682+00:00",
+  "pod": {
+    "costPerHr": 6.98,
+    "desiredStatus": "RUNNING",
+    "gpuCount": 2,
+    "id": "hqkadr739bjxkb",
+    "imageName": "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404",
+    "name": "census-c2-tp2-20260916",
+    "volumeInGb": 0
+  },
+  "returncode": 0,
+  "stdout": "{\n  \"deleted\": true,\n  \"id\": \"hqkadr739bjxkb\"\n}\n",
+  "stderr": ""
+}

@@ -1,0 +1,98 @@
+{
+  "labels": [
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant",
+      "kind": "replay",
+      "label": "BI_b",
+      "manifest_sha256": "39670ef715b9f8e3a597da9167e4d698f6d859798e1dbc2d929e31077e1048e7",
+      "replay": "replay_cold_followup_b",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/summary_replay_cold_followup_b.json"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant",
+      "kind": "replay",
+      "label": "BI_c",
+      "manifest_sha256": "41870b8926cbbe6f4677b8d6367682b254211d6e59352f75e71dd6ec36736f69",
+      "replay": "replay_cold_followup_c",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant/summary_replay_cold_followup_c.json"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed",
+      "kind": "replay",
+      "label": "DET_MIX_a",
+      "manifest_sha256": "d02f66ea2495f571dcc6835865da28150b4fdfaefa23759d72fbb48af23302c7",
+      "replay": "replay_cold_a",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_cold_a.json"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed",
+      "kind": "replay",
+      "label": "DET_MIX_b",
+      "manifest_sha256": "c1f3a228b53ff08f260ae27f91b0358365b08c99b2da1472d203c3c2e0d80902",
+      "replay": "replay_cold_b",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_cold_b.json"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed",
+      "kind": "replay",
+      "label": "DET_MIX_c",
+      "manifest_sha256": "c198800d5e4d2ed709bd3f776228afb24aa45f729da5f30960c927943e1c22b1",
+      "replay": "replay_cold_c",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_cold_c.json"
+    },
+    {
+      "kind": "record",
+      "label": "DET_MIX_record",
+      "manifest_sha256": "82cb1fa2066f5a1f046798b5896f37a9a48a8b7fe5854b5892f46a6bd505c6ac",
+      "scope": "tp1"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed",
+      "kind": "replay",
+      "label": "DET_MIX_warm",
+      "manifest_sha256": "b6cb234354a87cd23cf8fe961c5feaa8b57a58ce6e68ccc4c3f4da4a77d55ddc",
+      "replay": "replay_warm",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed/summary_replay_warm.json"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed",
+      "kind": "replay",
+      "label": "MIX_default_negative",
+      "manifest_sha256": "aad4266c956859c93571bce4cd542526891c4f8a8e1bceaeb335dc0e36500e46",
+      "replay": "replay_cold_followup_negative",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed/summary_replay_cold_followup_negative.json"
+    },
+    {
+      "kind": "record",
+      "label": "MOE_EAGER_record",
+      "manifest_sha256": "84ec4da5c892d470303aa39b836c27ca7cf3d1844528f07f31857a28f4f6ebb7",
+      "scope": "tp1"
+    },
+    {
+      "arm": "Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag",
+      "kind": "replay",
+      "label": "MOE_EAGER_replay",
+      "manifest_sha256": "6a200b3bbac46d68505909d8f1a6feed5993f9e684cea2f4ab98defc7822fffc",
+      "replay": "replay_warm",
+      "scope": "tp1",
+      "summary": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/summary_replay_warm.json"
+    },
+    {
+      "arm": "Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0",
+      "kind": "replay",
+      "label": "TP2_plain_c",
+      "manifest_sha256": "5ba1f4d978f6ff4d224b3621eb6a9067d805669d85ebd5b66a4540933429eb7b",
+      "replay": "replay_cold_followup_c",
+      "scope": "tp2",
+      "summary": "results_tp2/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/summary_replay_cold_followup_c.json"
+    }
+  ],
+  "schema": 1
+}

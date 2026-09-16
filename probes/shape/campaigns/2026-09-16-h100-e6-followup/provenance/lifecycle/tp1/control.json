@@ -1,0 +1,10 @@
+{
+  "pod_id": "kf8yjw64w3z498",
+  "name": "census-moe-56900-20260916",
+  "created_local_utc": "2026-09-16T15:49:48.969224+00:00",
+  "deadline_utc": "2026-09-16T17:19:48Z",
+  "watcher_pid": 30411,
+  "awake_pid": 30412,
+  "campaign_cap_usd": 25,
+  "initial_account_balance_usd": 29.9925919931
+}

@@ -1,0 +1,555 @@
+{
+  "causal_status": "UNRESOLVED",
+  "cells": [
+    {
+      "id": "old_m3_record",
+      "log": {
+        "line_ranges": [
+          [
+            8,
+            13
+          ],
+          [
+            39,
+            39
+          ]
+        ],
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/logs_m3/R7_tp2.run.log",
+        "sha256": "489d4eb4332b2316d5932e4763918728eb4404ff8dd2f015fd9f25f9e622e4db",
+        "size": 19839
+      },
+      "machine": {
+        "cuda_visible_devices": null,
+        "gpus": [
+          {
+            "index": "0",
+            "pci_bus_id": "00000000:BA:00.0",
+            "uuid": "GPU-dfeda8bb-2246-6ede-09f7-2c2e4502361f",
+            "vbios": "96.00.89.00.01"
+          },
+          {
+            "index": "1",
+            "pci_bus_id": "00000000:DB:00.0",
+            "uuid": "GPU-7f7a40de-6a64-54c0-dc72-694e7de0f2cb",
+            "vbios": "96.00.89.00.01"
+          }
+        ],
+        "hostname": "e4a0f6db3180",
+        "kernel": "6.8.0-90-generic",
+        "runpod_pod_id": null
+      },
+      "mnnvl_initialization": "success",
+      "per_call_kernel_launch_observed": false,
+      "role": "record",
+      "run": {
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/record/run.json",
+        "sha256": "e0037497f2a61436b5e59deae39330404696a1902947da66845fe7e6065a6bbd",
+        "size": 11019
+      },
+      "workspace_backend": "mnnvl"
+    },
+    {
+      "id": "old_m3_warm_replay",
+      "log": {
+        "line_ranges": [
+          [
+            8,
+            13
+          ],
+          [
+            38,
+            38
+          ]
+        ],
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/logs_m3/W7_tp2_warm.run.log",
+        "sha256": "4e48060b89fba763de156994a93228b1361bfc64957bc0d44ffa2b5afcf2e09b",
+        "size": 19027
+      },
+      "machine": {
+        "cuda_visible_devices": null,
+        "gpus": [
+          {
+            "index": "0",
+            "pci_bus_id": "00000000:BA:00.0",
+            "uuid": "GPU-dfeda8bb-2246-6ede-09f7-2c2e4502361f",
+            "vbios": "96.00.89.00.01"
+          },
+          {
+            "index": "1",
+            "pci_bus_id": "00000000:DB:00.0",
+            "uuid": "GPU-7f7a40de-6a64-54c0-dc72-694e7de0f2cb",
+            "vbios": "96.00.89.00.01"
+          }
+        ],
+        "hostname": "e4a0f6db3180",
+        "kernel": "6.8.0-90-generic",
+        "runpod_pod_id": null
+      },
+      "mnnvl_initialization": "success",
+      "outcome": {
+        "argmax_identical_rows": 512,
+        "first_divergence": null,
+        "free_running_divergence": {
+          "first": null,
+          "passes": 0,
+          "rows": 0
+        },
+        "hidden_identical_rows": 512,
+        "logits_identical_rows": 512,
+        "passes_differing": 0,
+        "rows_compared": 512,
+        "rows_differing": 0,
+        "verdict_P2": "IDENTICAL"
+      },
+      "per_call_kernel_launch_observed": false,
+      "role": "warm replay",
+      "summary": {
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/summary_replay_warm.json",
+        "sha256": "3f2c2a22afc64f81738ef28ac380e3bd0985e83c866b34d75409f4199c6aae12",
+        "size": 4188
+      },
+      "workspace_backend": "mnnvl"
+    },
+    {
+      "id": "old_m4_cold_a",
+      "log": {
+        "line_ranges": [
+          [
+            8,
+            23
+          ],
+          [
+            49,
+            55
+          ]
+        ],
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/logs_m4/Y7a_tp2_cold_m4.run.log",
+        "sha256": "a1a33f90f7f6d19aca4ab960ba842cd5b6dc674c8f893a56ba9331dd30dbd86d",
+        "size": 22746
+      },
+      "machine": {
+        "cuda_visible_devices": null,
+        "gpus": [
+          {
+            "index": "0",
+            "pci_bus_id": "00000000:BB:00.0",
+            "uuid": "GPU-b55731bb-f155-5167-6152-7032df41af3b",
+            "vbios": "96.00.DA.00.0C"
+          },
+          {
+            "index": "1",
+            "pci_bus_id": "00000000:CB:00.0",
+            "uuid": "GPU-aa5379bf-8c13-34c5-cd81-975ee13f9724",
+            "vbios": "96.00.DA.00.0C"
+          }
+        ],
+        "hostname": "4f002a453d47",
+        "kernel": "6.8.0-106-generic",
+        "runpod_pod_id": null
+      },
+      "mnnvl_initialization": "CUDA_ERROR_ILLEGAL_STATE",
+      "outcome": {
+        "argmax_identical_rows": 511,
+        "first_divergence": {
+          "fields": [
+            "h",
+            "logits_h"
+          ],
+          "pass": 0,
+          "slot": "0",
+          "step_recorded": 0
+        },
+        "free_running_divergence": {
+          "first": {
+            "pass": 19,
+            "slot": "0"
+          },
+          "passes": 1,
+          "rows": 1
+        },
+        "hidden_identical_rows": 18,
+        "logits_identical_rows": 18,
+        "passes_differing": 37,
+        "rows_compared": 512,
+        "rows_differing": 494,
+        "verdict_P2": "DIFFERS"
+      },
+      "per_call_kernel_launch_observed": false,
+      "role": "cold replay",
+      "run": {
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_m4_a/run.json",
+        "sha256": "da5852faa4f3eeaf030d0d32df953133a311d77ab044d854e39da74c3f32297e",
+        "size": 18363
+      },
+      "summary": {
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/summary_replay_cold_m4_a.json",
+        "sha256": "6107331b8fa8ae051edb912c1fa6c9e2ee50dc1f5ddbb19c7b7161083f1e3d54",
+        "size": 4374
+      },
+      "workspace_backend": "trtllm"
+    },
+    {
+      "id": "old_m4_cold_b",
+      "log": {
+        "line_ranges": [
+          [
+            8,
+            23
+          ],
+          [
+            49,
+            55
+          ]
+        ],
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/logs_m4/Y7b_tp2_cold_m4.run.log",
+        "sha256": "30bdadfb880134dc588ca5dfd4e632043f677aabe375ee02fa05031d4f1f8dcc",
+        "size": 22746
+      },
+      "machine": {
+        "cuda_visible_devices": null,
+        "gpus": [
+          {
+            "index": "0",
+            "pci_bus_id": "00000000:BB:00.0",
+            "uuid": "GPU-b55731bb-f155-5167-6152-7032df41af3b",
+            "vbios": "96.00.DA.00.0C"
+          },
+          {
+            "index": "1",
+            "pci_bus_id": "00000000:CB:00.0",
+            "uuid": "GPU-aa5379bf-8c13-34c5-cd81-975ee13f9724",
+            "vbios": "96.00.DA.00.0C"
+          }
+        ],
+        "hostname": "4f002a453d47",
+        "kernel": "6.8.0-106-generic",
+        "runpod_pod_id": null
+      },
+      "mnnvl_initialization": "CUDA_ERROR_ILLEGAL_STATE",
+      "outcome": {
+        "argmax_identical_rows": 511,
+        "first_divergence": {
+          "fields": [
+            "h",
+            "logits_h"
+          ],
+          "pass": 0,
+          "slot": "0",
+          "step_recorded": 0
+        },
+        "free_running_divergence": {
+          "first": {
+            "pass": 19,
+            "slot": "0"
+          },
+          "passes": 1,
+          "rows": 1
+        },
+        "hidden_identical_rows": 19,
+        "logits_identical_rows": 19,
+        "passes_differing": 37,
+        "rows_compared": 512,
+        "rows_differing": 493,
+        "verdict_P2": "DIFFERS"
+      },
+      "per_call_kernel_launch_observed": false,
+      "role": "cold replay",
+      "run": {
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_m4_b/run.json",
+        "sha256": "318c2e241c9509217824ed59018fc5e40cbf46580af5fa67848f65e986b5dc29",
+        "size": 18363
+      },
+      "summary": {
+        "path": "probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/summary_replay_cold_m4_b.json",
+        "sha256": "24bd5375db15ea94da77709d8e055a66883b91d866aa8009afc606d2e55899ef",
+        "size": 4374
+      },
+      "workspace_backend": "trtllm"
+    },
+    {
+      "id": "new_cold_followup_c",
+      "log": {
+        "line_ranges": [
+          [
+            9,
+            24
+          ],
+          [
+            50,
+            55
+          ],
+          [
+            81,
+            85
+          ]
+        ],
+        "path": "tp2-any-region/c2-results/logs/TP2_plain_c.run.log",
+        "sha256": "bc626eb42ea302ce1702b28a3361cc82a0d7c861ede6f5b644872d21f1fd8951",
+        "size": 22282
+      },
+      "machine": {
+        "cuda_visible_devices": null,
+        "gpus": [
+          {
+            "index": "0",
+            "pci_bus_id": "00000000:3A:00.0",
+            "uuid": "GPU-d5e245b4-5429-c607-9efb-a3578c7334e2",
+            "vbios": "96.00.89.00.01"
+          },
+          {
+            "index": "1",
+            "pci_bus_id": "00000000:BA:00.0",
+            "uuid": "GPU-b147fcfc-e61a-e854-3b3d-e26991a96cac",
+            "vbios": "96.00.89.00.01"
+          }
+        ],
+        "hostname": "30ea987da92e",
+        "kernel": "6.8.0-90-generic",
+        "runpod_pod_id": null
+      },
+      "mnnvl_initialization": "CUDA_ERROR_ILLEGAL_STATE",
+      "outcome": {
+        "argmax_identical_rows": 511,
+        "first_divergence": {
+          "fields": [
+            "h",
+            "logits_h"
+          ],
+          "pass": 0,
+          "slot": "0",
+          "step_recorded": 0
+        },
+        "free_running_divergence": {
+          "first": {
+            "pass": 19,
+            "slot": "0"
+          },
+          "passes": 1,
+          "rows": 1
+        },
+        "hidden_identical_rows": 18,
+        "logits_identical_rows": 18,
+        "passes_differing": 37,
+        "rows_compared": 512,
+        "rows_differing": 494,
+        "verdict_P2": "DIFFERS"
+      },
+      "per_call_kernel_launch_observed": false,
+      "preflight": {
+        "path": "tp2-any-region/c2-results/evidence/preflight_report.json",
+        "sha256": "638397b141523fff6d4b229280c9986f54a37fe96f83628d0bc9f87d7dfd06c5",
+        "size": 8841
+      },
+      "rank1_evidence": {
+        "path": "tp2-any-region/c2-results/evidence/rank1_TP2_plain_c.json",
+        "sha256": "6cf13ebd1f3b17333060a726fb049709e79b90513a4a28b51548257a3886796b",
+        "size": 890
+      },
+      "role": "cold replay",
+      "run": {
+        "path": "tp2-any-region/c2-results/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_followup_c/run.json",
+        "sha256": "f2fa8cc38c3cf702ea755c24af87168100b0cb51cde2b872fd168505496e2ad2",
+        "size": 18434
+      },
+      "summary": {
+        "path": "tp2-any-region/c2-results/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/summary_replay_cold_followup_c.json",
+        "sha256": "21736cb15f50db51b820052d154fe72a1fa74d0795cd94714d389eab04da97ad",
+        "size": 4422
+      },
+      "workspace_backend": "trtllm"
+    }
+  ],
+  "conclusion": "The original M3 record and same-host warm replay initialized a FlashInfer mnnvl workspace. Both old M4 cold replays and the new cold replay failed mnnvl initialization with CUDA_ERROR_ILLEGAL_STATE and initialized trtllm instead. Therefore each cold replay comparison changes an unrecorded collective workspace subbackend relative to the record. Per-call FlashInfer dispatch was not traced, so this is a material unresolved confound, not proof that either backend caused the observed tensor differences.",
+  "evidence_state": "COLLECTIVE_SUBBACKEND_MISMATCH",
+  "held_fixed": {
+    "NCCL_NVLS_ENABLE": "0",
+    "cuda": "13.0",
+    "driver": "580.126.09",
+    "flashinfer_python": "0.6.18.post1",
+    "gpu_model": "NVIDIA H100 80GB HBM3",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "resolved_compile": "3",
+    "resolved_cudagraph": "FULL_AND_PIECEWISE",
+    "resolved_fuse_allreduce_rms": false,
+    "torch": "2.13.0+cu130",
+    "vllm": "0.29.0",
+    "vllm_commit": "98dff2a81d747d1dba01a47f939f48c3526d4206"
+  },
+  "hypotheses_not_cause_claims": [
+    "The GPU-pair topology or exposed NVSwitch multicast capability may differ across instances despite matching H100 model, driver and VBIOS.",
+    "A CUDA/driver initialization-state difference may make multicast unavailable; CUDA_ERROR_ILLEGAL_STATE and the earlier Torch symmetric-memory multicast warnings co-occur in all three trtllm-fallback logs.",
+    "If eligible standalone allreduce calls dispatched through FlashInfer, mnnvl versus trtllm could change floating-point reduction order. No retained per-call dispatch trace proves that this occurred.",
+    "The identical warm replay and differing cold replays correlate with both cache/process placement and collective backend, so neither factor is isolated by these observations."
+  ],
+  "interpretation_update": "Old M4 cold a/b and new cold followup c should be described as mnnvl-record versus trtllm-replay comparisons. Their P2=DIFFERS verdicts remain valid observations of the complete runs, but do not isolate cold-process repeatability within one collective implementation. The old M3 warm replay is mnnvl-to-mnnvl and P2=IDENTICAL, but it is same-host/warm and cannot isolate backend effects either.",
+  "needed_for_isolation": [
+    "Record the initialized workspace backend as a required comparison field.",
+    "Add per-call dispatch counters or traces for FLASHINFER, CUSTOM, SYMM_MEM and PYNCCL; workspace initialization alone is insufficient.",
+    "For a future controlled pair, force the same VLLM_FLASHINFER_ALLREDUCE_BACKEND in record and replay and fail the run if that workspace cannot initialize."
+  ],
+  "path_roots": {
+    "repo": "/Users/catmcgee/Documents/projects/fp-atomics-census",
+    "work": "/Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-followup"
+  },
+  "preflight_limit": "The new preflight returned compatible=true and matched recorded distributions, pinned revisions, driver, H100 model, SM, CUDA, Python, kernel family, VBIOS family and required environment. It did not exercise multicast workspace creation or assert the selected FlashInfer subbackend. The successful preflight therefore did not control this axis.",
+  "record_to_replay_stack_equality": {
+    "cuda": true,
+    "cudnn": true,
+    "driver": true,
+    "env": true,
+    "gpu": true,
+    "gpu_count": true,
+    "installed_distributions": true,
+    "packages": true,
+    "pinned_shas": true,
+    "python": true,
+    "sm": true,
+    "torch": true
+  },
+  "schema": 1,
+  "shared_record_run_sha256": "e0037497f2a61436b5e59deae39330404696a1902947da66845fe7e6065a6bbd",
+  "source_semantics": {
+    "files": [
+      {
+        "line_ranges": [
+          [
+            31,
+            47
+          ],
+          [
+            135,
+            226
+          ],
+          [
+            352,
+            490
+          ]
+        ],
+        "path": "repos/vllm/vllm/distributed/device_communicators/flashinfer_all_reduce.py",
+        "sha256": "607a9090f141afab59bbac73d2f6d06f557b8b13e150c2af9bc06d66d2ef3825",
+        "size": 16906
+      },
+      {
+        "line_ranges": [
+          [
+            61,
+            64
+          ],
+          [
+            108,
+            112
+          ],
+          [
+            212,
+            347
+          ]
+        ],
+        "path": "repos/vllm/vllm/distributed/device_communicators/cuda_communicator.py",
+        "sha256": "03ece681b0bef349cb78dabc74585efea2cc160ae28bd711c81dfd807ca8dff5",
+        "size": 32080
+      },
+      {
+        "line_ranges": [
+          [
+            161,
+            180
+          ],
+          [
+            2221,
+            2247
+          ]
+        ],
+        "path": "repos/vllm/vllm/config/vllm.py",
+        "sha256": "788430b9211a5b0ccda0be565ad2a0f27e9069370f35d2b1f6a333a6ca135186",
+        "size": 134357
+      },
+      {
+        "line_ranges": [
+          [
+            218,
+            218
+          ],
+          [
+            266,
+            266
+          ],
+          [
+            1725,
+            1728
+          ],
+          [
+            1864,
+            1866
+          ]
+        ],
+        "path": "repos/vllm/vllm/envs.py",
+        "sha256": "518e8952af66697d7310d53a85ff5227c2918f4d802c111a10d84168ffb9c940",
+        "size": 112977
+      }
+    ],
+    "findings": [
+      {
+        "claim": "The FlashInfer import/feature check establishes API availability only.",
+        "lines": [
+          31,
+          40
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/flashinfer_all_reduce.py"
+      },
+      {
+        "claim": "auto selects mnnvl and permits single-node trtllm fallback.",
+        "lines": [
+          135,
+          160
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/flashinfer_all_reduce.py"
+      },
+      {
+        "claim": "The logged backend names the successfully created common workspace; it is not a per-call launch record.",
+        "lines": [
+          163,
+          226
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/flashinfer_all_reduce.py"
+      },
+      {
+        "claim": "Each call still passes device, contiguity, rank, dtype, size, token and workspace-buffer gates.",
+        "lines": [
+          421,
+          472
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/flashinfer_all_reduce.py"
+      },
+      {
+        "claim": "The FlashInfer allreduce kernel is invoked only after should_use_fi_ar returns true.",
+        "lines": [
+          278,
+          309
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/cuda_communicator.py"
+      },
+      {
+        "claim": "The enabled-backend log lists candidates in dispatch order and explicitly does not identify the actual per-call choice.",
+        "lines": [
+          212,
+          276
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/cuda_communicator.py"
+      },
+      {
+        "claim": "The same workspace serves standalone allreduce and non-quant allreduce+RMS fusion; the runs resolved fuse_allreduce_rms=false.",
+        "lines": [
+          42,
+          47
+        ],
+        "source": "repos/vllm/vllm/distributed/device_communicators/flashinfer_all_reduce.py"
+      }
+    ],
+    "pinned_vllm": {
+      "commit": "98dff2a81d747d1dba01a47f939f48c3526d4206",
+      "tag": "v0.29.0"
+    }
+  },
+  "title": "TP2 FlashInfer all-reduce subbackend audit"
+}

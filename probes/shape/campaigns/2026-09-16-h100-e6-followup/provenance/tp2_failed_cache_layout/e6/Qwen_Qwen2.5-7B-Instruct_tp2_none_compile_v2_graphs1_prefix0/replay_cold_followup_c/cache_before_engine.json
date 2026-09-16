@@ -1,0 +1,69 @@
+{
+  "phase": "before_engine",
+  "empty": true,
+  "roots": {
+    "cuda_jit": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/cuda_jit",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "deep_gemm": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/deep_gemm",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "flashinfer": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/flashinfer-workspace/.cache/flashinfer",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "inductor": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/tmp/torchinductor_root",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "inductor_env": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/inductor",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "torch_extensions": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/torch_extensions",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "triton": {
+      "path": "/root/.triton",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "triton_env": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/triton",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "vllm": {
+      "path": "/root/c2-campaign/cache/cold/TP2_plain_c/vllm",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    }
+  }
+}

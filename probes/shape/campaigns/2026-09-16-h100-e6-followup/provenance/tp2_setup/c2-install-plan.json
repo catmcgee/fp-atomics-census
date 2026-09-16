@@ -1,0 +1,23 @@
+{
+  "historical_distribution_count": 210,
+  "intentional_pip_check_failure": "vllm 0.29.0 requires flashinfer-python==0.6.18, while C2 retained flashinfer-python==0.6.18.post1",
+  "local_editable": {
+    "install": "pip install -e SOURCE_ROOT/probes/shape/shape_hook_pkg",
+    "name": "shape-hook",
+    "source_commit": "7dc6f469726d3eec0719c98e9bf6458945b961af",
+    "version": "0.1.0"
+  },
+  "required_runtime": {
+    "cuda": "13.0",
+    "cudnn": 92000,
+    "nccl_runtime_version": [
+      2,
+      29,
+      7
+    ],
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130"
+  },
+  "schema": 1,
+  "wheel_install_count": 209
+}

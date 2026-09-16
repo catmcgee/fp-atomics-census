@@ -1,0 +1,60 @@
+{
+  "roots": [
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "CUDA_CACHE_PATH",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/cuda_jit"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "DG_JIT_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/deep_gemm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "FLASHINFER_WORKSPACE_BASE",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/flashinfer-workspace"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TMPDIR",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/tmp"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCHINDUCTOR_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/inductor"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCH_EXTENSIONS_DIR",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/torch_extensions"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TRITON_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/triton"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "VLLM_CACHE_ROOT",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/vllm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "XDG_CACHE_HOME",
+      "path": "/root/c2-campaign/cache/cold/MOE_EAGER_record/xdg"
+    }
+  ],
+  "schema": 1,
+  "sha256": "3366909bee54df2d2a49e19bbd5c13f9045f6819205b1c1b1a2837e2eddc86aa"
+}

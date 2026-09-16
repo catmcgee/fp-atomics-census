@@ -1,0 +1,16 @@
+{
+  "at_epoch": 1789577222.7381926,
+  "completed_labels": [
+    "BI_b",
+    "BI_c",
+    "MIX_default_negative",
+    "DET_MIX_record",
+    "DET_MIX_warm",
+    "DET_MIX_a",
+    "DET_MIX_b",
+    "DET_MIX_c",
+    "MOE_EAGER_record",
+    "MOE_EAGER_replay"
+  ],
+  "schema": 1
+}

@@ -1,0 +1,60 @@
+{
+  "roots": [
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "CUDA_CACHE_PATH",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/cuda_jit"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "DG_JIT_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/deep_gemm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "FLASHINFER_WORKSPACE_BASE",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/flashinfer-workspace"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TMPDIR",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/tmp"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCHINDUCTOR_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/inductor"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCH_EXTENSIONS_DIR",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/torch_extensions"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TRITON_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/triton"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "VLLM_CACHE_ROOT",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/vllm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "XDG_CACHE_HOME",
+      "path": "/root/c2-campaign/cache/cold/MIX_default_negative/xdg"
+    }
+  ],
+  "schema": 1,
+  "sha256": "c804c5972b6daef03c3294ffbf6a85f1c8c4af61bf8c274adb1103df90731bb3"
+}

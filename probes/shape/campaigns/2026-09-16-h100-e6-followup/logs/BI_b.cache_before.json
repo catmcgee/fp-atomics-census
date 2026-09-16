@@ -1,0 +1,60 @@
+{
+  "roots": [
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "CUDA_CACHE_PATH",
+      "path": "/root/c2-campaign/cache/cold/BI_b/cuda_jit"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "DG_JIT_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/BI_b/deep_gemm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "FLASHINFER_WORKSPACE_BASE",
+      "path": "/root/c2-campaign/cache/cold/BI_b/flashinfer-workspace"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TMPDIR",
+      "path": "/root/c2-campaign/cache/cold/BI_b/tmp"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCHINDUCTOR_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/BI_b/inductor"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TORCH_EXTENSIONS_DIR",
+      "path": "/root/c2-campaign/cache/cold/BI_b/torch_extensions"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "TRITON_CACHE_DIR",
+      "path": "/root/c2-campaign/cache/cold/BI_b/triton"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "VLLM_CACHE_ROOT",
+      "path": "/root/c2-campaign/cache/cold/BI_b/vllm"
+    },
+    {
+      "file_count": 0,
+      "files": [],
+      "name": "XDG_CACHE_HOME",
+      "path": "/root/c2-campaign/cache/cold/BI_b/xdg"
+    }
+  ],
+  "schema": 1,
+  "sha256": "4074330b5c997c18570c8d3873759f55291773359c68f5c37faaac0ae11bb263"
+}

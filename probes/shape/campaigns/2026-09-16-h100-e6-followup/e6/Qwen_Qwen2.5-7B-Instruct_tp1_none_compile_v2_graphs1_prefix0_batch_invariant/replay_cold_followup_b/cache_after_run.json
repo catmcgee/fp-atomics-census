@@ -1,0 +1,69 @@
+{
+  "phase": "after_run",
+  "empty": false,
+  "roots": {
+    "cuda_jit": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/cuda_jit",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "deep_gemm": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/deep_gemm",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "flashinfer": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/flashinfer-workspace/.cache/flashinfer",
+      "exists": true,
+      "files": 9,
+      "bytes": 5622751,
+      "sha256": "b163fc7464d2d60ff65d3aca022cb65b390db5d00edb1f5dca0f5532e3ac07a0"
+    },
+    "inductor": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/tmp/torchinductor_root",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "inductor_env": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/inductor",
+      "exists": true,
+      "files": 72,
+      "bytes": 18241471,
+      "sha256": "b2425595fb612628d9883027ce596d5a3bda7543b8078a6d857baeb3862cf3f4"
+    },
+    "torch_extensions": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/torch_extensions",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "triton": {
+      "path": "/root/.triton",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "triton_env": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/triton",
+      "exists": true,
+      "files": 257,
+      "bytes": 8115941,
+      "sha256": "49c86e88cb8b44c28df60046204d7ea547ecdcfd9921f7a13579b30bf2356967"
+    },
+    "vllm": {
+      "path": "/root/c2-campaign/cache/cold/BI_b/vllm",
+      "exists": true,
+      "files": 3,
+      "bytes": 704762,
+      "sha256": "fcd5c89de0e703f5d9632cb0a5274247e3e8cd67c2072863c4fd3817ba1ec2ac"
+    }
+  }
+}

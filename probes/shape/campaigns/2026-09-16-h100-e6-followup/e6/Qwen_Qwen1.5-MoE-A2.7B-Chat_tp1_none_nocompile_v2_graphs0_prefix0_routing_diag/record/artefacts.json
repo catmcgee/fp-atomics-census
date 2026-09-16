@@ -1,0 +1,18 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/c2-campaign/cache/cold/MOE_EAGER_record/cuda_jit",
+    "deep_gemm": "/root/c2-campaign/cache/cold/MOE_EAGER_record/deep_gemm",
+    "flashinfer": "/root/c2-campaign/cache/cold/MOE_EAGER_record/flashinfer-workspace/.cache/flashinfer",
+    "inductor": "/root/c2-campaign/cache/cold/MOE_EAGER_record/tmp/torchinductor_root",
+    "inductor_env": "/root/c2-campaign/cache/cold/MOE_EAGER_record/inductor",
+    "torch_extensions": "/root/c2-campaign/cache/cold/MOE_EAGER_record/torch_extensions",
+    "triton": "/root/.triton",
+    "triton_env": "/root/c2-campaign/cache/cold/MOE_EAGER_record/triton",
+    "vllm": "/root/c2-campaign/cache/cold/MOE_EAGER_record/vllm"
+  },
+  "best_configs": {},
+  "extern_calls": {},
+  "triton_kernel_families": {
+    "triton_red_fused_ge_sum": 2
+  }
+}

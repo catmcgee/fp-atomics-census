@@ -1,0 +1,8 @@
+{
+  "distribution_count": 210,
+  "reference_env": "/root/c2-evidence/probes/shape/campaigns/2026-09-15-h100-e6-modern/results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/record/env.json",
+  "runner_sha256": "1a1bad6ca3cdb810e1a36f5aa4f5464f7a31a21d9ac4a58070b2cd3dd49e0de6",
+  "schema": 1,
+  "source_commit": "7dc6f469726d3eec0719c98e9bf6458945b961af",
+  "weights_manifest": "/root/c2-campaign/weights_digests_tp2.json"
+}

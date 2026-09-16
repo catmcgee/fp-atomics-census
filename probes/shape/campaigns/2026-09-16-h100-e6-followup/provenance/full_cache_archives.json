@@ -1,0 +1,116 @@
+{
+  "archives": [
+    {
+      "label": "BI_b",
+      "path": "archives/BI_b/cache.tar.gz",
+      "public_source_archive": "generated_sources/BI_b.sources.tar.gz",
+      "public_source_files": 266,
+      "public_source_sha256": "c57f09cac0b414e4ab9ce9a6d4278ff4e64f53b89475ce7cd7ef9cb51be003ed",
+      "scope": "tp1",
+      "sha256": "b03fc6eb915821f90fb888270453874284989dd81408661764063411f17bbaa2",
+      "size": 6056202
+    },
+    {
+      "label": "BI_c",
+      "path": "archives/BI_c/cache.tar.gz",
+      "public_source_archive": "generated_sources/BI_c.sources.tar.gz",
+      "public_source_files": 266,
+      "public_source_sha256": "37cbece189d9e5a7129d1f0243670e7541c03fc369a9d0af567de1571f906032",
+      "scope": "tp1",
+      "sha256": "b146574f4bb148f238b018e9998b62bc9507fde81aa5d1e1554e801208f320b9",
+      "size": 6046561
+    },
+    {
+      "label": "DET_MIX_a",
+      "path": "archives/DET_MIX_a/cache.tar.gz",
+      "public_source_archive": "generated_sources/DET_MIX_a.sources.tar.gz",
+      "public_source_files": 143,
+      "public_source_sha256": "12478b7eb8e202048f6b5d3ffee3dec6741161d55167b802afa4803974237fb6",
+      "scope": "tp1",
+      "sha256": "d5a1a41fe1741713ec4acdb3a4129544a68ecc38f3f02da3f84f0cca9fff2c35",
+      "size": 4034556
+    },
+    {
+      "label": "DET_MIX_b",
+      "path": "archives/DET_MIX_b/cache.tar.gz",
+      "public_source_archive": "generated_sources/DET_MIX_b.sources.tar.gz",
+      "public_source_files": 143,
+      "public_source_sha256": "2560e8127e00746760d810b731d8beac37cdbc5f043ddf9a1095a1b3ddaa3915",
+      "scope": "tp1",
+      "sha256": "9df17ef738650b414ce9f89480e336f8f4f572439f0d258ac62d562a193bd188",
+      "size": 4033659
+    },
+    {
+      "label": "DET_MIX_c",
+      "path": "archives/DET_MIX_c/cache.tar.gz",
+      "public_source_archive": "generated_sources/DET_MIX_c.sources.tar.gz",
+      "public_source_files": 143,
+      "public_source_sha256": "a2bacd8633737ef87cf6c0eced0c43c09e8c6e31ab71e3838d1c1593961f24a9",
+      "scope": "tp1",
+      "sha256": "4fe8a8001248804db46cf2186e4faa71cdec3d3a25bfe2d6af002919615f39a6",
+      "size": 4033073
+    },
+    {
+      "label": "DET_MIX_record",
+      "path": "archives/DET_MIX_record/cache.tar.gz",
+      "public_source_archive": "generated_sources/DET_MIX_record.sources.tar.gz",
+      "public_source_files": 143,
+      "public_source_sha256": "98b2d4408d24fa733b2a2d6dc9aaf3b516a51f0fa6f0203f7af00b923aa451c3",
+      "scope": "tp1",
+      "sha256": "8ef1575dc69c3622d7c04b47569cbb654af51ad8fff2153445e2295a99efdf52",
+      "size": 4037246
+    },
+    {
+      "label": "DET_MIX_warm",
+      "path": "archives/DET_MIX_warm/cache.tar.gz",
+      "public_source_archive": "generated_sources/DET_MIX_warm.sources.tar.gz",
+      "public_source_files": 143,
+      "public_source_sha256": "98b2d4408d24fa733b2a2d6dc9aaf3b516a51f0fa6f0203f7af00b923aa451c3",
+      "scope": "tp1",
+      "sha256": "737811023f9ae87d17ced78b0fb0b2c8fcab124e50d6d5fcc393e68bcfb5505a",
+      "size": 4037268
+    },
+    {
+      "label": "MIX_default_negative",
+      "path": "archives/MIX_default_negative/cache.tar.gz",
+      "public_source_archive": "generated_sources/MIX_default_negative.sources.tar.gz",
+      "public_source_files": 186,
+      "public_source_sha256": "1c3ba848b32de1a051aa5477b2e3f0b01dad7d04325e1237f2edb1ceb61a068c",
+      "scope": "tp1",
+      "sha256": "a58c4b772d7c83cced7d998a17577dde6b4d892d524b82dcc2648d6374c7f599",
+      "size": 4385424
+    },
+    {
+      "label": "MOE_EAGER_record",
+      "path": "archives/MOE_EAGER_record/cache.tar.gz",
+      "public_source_archive": "generated_sources/MOE_EAGER_record.sources.tar.gz",
+      "public_source_files": 96,
+      "public_source_sha256": "d9e42f57fd0ef5e253c934f1082db848ab746940c4e1b2c7b6bca8aebd988a9b",
+      "scope": "tp1",
+      "sha256": "2c2024e4cb8d1025c489798f2e1c68e7e84b4c9946a19d044262b268c1e9de42",
+      "size": 3559474
+    },
+    {
+      "label": "MOE_EAGER_replay",
+      "path": "archives/MOE_EAGER_replay/cache.tar.gz",
+      "public_source_archive": "generated_sources/MOE_EAGER_replay.sources.tar.gz",
+      "public_source_files": 96,
+      "public_source_sha256": "d9e42f57fd0ef5e253c934f1082db848ab746940c4e1b2c7b6bca8aebd988a9b",
+      "scope": "tp1",
+      "sha256": "c4eb7fc98a4102ca44b37913de47b29139d0b43022a87c8000977aa977e3cb44",
+      "size": 3559487
+    },
+    {
+      "label": "TP2_plain_c",
+      "path": "archives/TP2_plain_c/cache.tar.gz",
+      "public_source_archive": "generated_sources_tp2/TP2_plain_c.sources.tar.gz",
+      "public_source_files": 225,
+      "public_source_sha256": "7776f6bb37327f86cd58ef33db9df2ee21fb8f98d777217ce55790426774f5e2",
+      "scope": "tp2",
+      "sha256": "edb02af49cacda3b84eddb07fbfbbb9eb1ecd105cec127845ec5883182ff006a",
+      "size": 12726967
+    }
+  ],
+  "note": "Full binary cache archives remain in the durable private work root; public archives retain generated source and IR only.",
+  "schema": 1
+}

@@ -1,0 +1,39 @@
+{
+  "cross_rank_differing_rows": {
+    "argmax": 0,
+    "h": 4,
+    "logits_h": 0
+  },
+  "rank0_summary": "/root/c2-campaign/results-retry1/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/summary_replay_cold_followup_c.json",
+  "rank1": {
+    "argmax_identical_rows": 511,
+    "first_divergence": {
+      "fields": [
+        "h",
+        "logits_h"
+      ],
+      "pass": 0,
+      "slot": "0",
+      "step_recorded": 0
+    },
+    "first_mismatch": null,
+    "free_running_divergence": {
+      "first": {
+        "pass": 19,
+        "slot": "0"
+      },
+      "passes": 1,
+      "rows": 1
+    },
+    "hidden_identical_rows": 19,
+    "logits_identical_rows": 18,
+    "passes_differing": 37,
+    "passes_recorded": 37,
+    "passes_replayed": 37,
+    "rows_compared": 512,
+    "rows_differing": 494,
+    "validation_errors": [],
+    "verdict_P2": "DIFFERS"
+  },
+  "schema": 1
+}

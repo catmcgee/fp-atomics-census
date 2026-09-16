@@ -1,0 +1,9 @@
+{
+  "after_state_sha256": "4cf4d2f9276beac574745ce702b6ab5a77681378e7ba0e9224355431fba9a798",
+  "at_epoch": 1789575895.2090802,
+  "before_state_sha256": "9117a36c081ebd9058515072aae76e393b41117238337fb8c7daab9dc269c79b",
+  "gpu_work_repeated": false,
+  "handoff_manifest_sha256": "39670ef715b9f8e3a597da9167e4d698f6d859798e1dbc2d929e31077e1048e7",
+  "label": "BI_b",
+  "reason": "Operator ACK was non-atomically written; runner read empty/partial JSON and exited after successful arm and durable verified transfer. Complete ACK and every handoff file verified before reconciling completed label. Future ACKs use atomic rename."
+}

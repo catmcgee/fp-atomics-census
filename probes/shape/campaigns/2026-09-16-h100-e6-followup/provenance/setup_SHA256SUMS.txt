@@ -1,0 +1,2 @@
+85821232dcb9b59c065f82465af868207503feac219a1b6f7b028526130b7a95  /Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-followup/c2_setup/c2_setup.log
+782247c2b78a15fc332c533e12c210047fb194c13a2850c0aebe6544699e78a4  /Users/catmcgee/Documents/projects/fp-atomics-census-work/2026-09-16-followup/c2_setup/readiness_cpu.json

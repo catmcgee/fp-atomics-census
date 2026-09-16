@@ -1,0 +1,132 @@
+{
+  "completed_labels": [],
+  "created_at_epoch": 1789576929.2125525,
+  "frozen_source": "7dc6f469726d3eec0719c98e9bf6458945b961af",
+  "records": {
+    "Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0": {
+      "files": [
+        {
+          "path": "._artefacts.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._cache_after_run.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._cache_before_engine.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._env.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._hook",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._outputs.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._run.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "._schedule.json",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "artefacts.json",
+          "sha256": "d713dc88d52ed1750cc31e2f740f5fa8bb67baa179344c0defe354d8fe823677",
+          "size": 8895
+        },
+        {
+          "path": "cache_after_run.json",
+          "sha256": "89b8a5ffebd6fbe8bcf7d62dd6a80b6dd7520175ed59fc8f528a7657a540832f",
+          "size": 1339
+        },
+        {
+          "path": "cache_before_engine.json",
+          "sha256": "701e6a323ae3372db11cbd6fa2a4b7916b280bd02781ae0a5635415f85221127",
+          "size": 1072
+        },
+        {
+          "path": "env.json",
+          "sha256": "5f2849aeae45d31ff1aa3c81a3387b66190a947282e6db415ca563f7cecb28c5",
+          "size": 11459
+        },
+        {
+          "path": "hook/._forcing_rank0.jsonl",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "hook/._forcing_rank1.jsonl",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "hook/._rank0.jsonl",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "hook/._rank1.jsonl",
+          "sha256": "df03cdde3869d38cf8fcd228e9bfbe1d3e7ad703f629c1c15dc6d65770b84774",
+          "size": 163
+        },
+        {
+          "path": "hook/forcing_rank0.jsonl",
+          "sha256": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+          "size": 1323
+        },
+        {
+          "path": "hook/forcing_rank1.jsonl",
+          "sha256": "b1c0b755a58eddfe88d8f3da8a481f2e9f2f7f0fc9ab6ef9e4b25d238e5d9453",
+          "size": 1323
+        },
+        {
+          "path": "hook/rank0.jsonl",
+          "sha256": "2c1c5633f195d06cc4d9d2e3340e4a822f27982a82f8816921c3474dc7b2d081",
+          "size": 270148
+        },
+        {
+          "path": "hook/rank1.jsonl",
+          "sha256": "17d4474a2221843ab72acd5d3205a56e2865d0e2111f4d41530c5777a5c7a93f",
+          "size": 270147
+        },
+        {
+          "path": "outputs.json",
+          "sha256": "e78def84bbbed48cb32be6f6dfa31c838c2244bbcc02a50df489628c588a00c0",
+          "size": 199398
+        },
+        {
+          "path": "run.json",
+          "sha256": "e0037497f2a61436b5e59deae39330404696a1902947da66845fe7e6065a6bbd",
+          "size": 11019
+        },
+        {
+          "path": "schedule.json",
+          "sha256": "ab113c8c997d37bcb8d7991c733680f35078e644017991020cf666d71ed8052f",
+          "size": 13209
+        }
+      ],
+      "schema": 1,
+      "sha256": "7417fa3aa3a5882eff645ea70d47bcfc0f58c3ef7b31d5b44f8155d8a197849d"
+    }
+  },
+  "runner_copy": "runner/run_followup.py",
+  "runner_sha256": "1a1bad6ca3cdb810e1a36f5aa4f5464f7a31a21d9ac4a58070b2cd3dd49e0de6",
+  "schema": 1,
+  "updated_at_epoch": 1789576929.21277
+}

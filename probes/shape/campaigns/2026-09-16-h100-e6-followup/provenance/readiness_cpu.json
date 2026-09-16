@@ -1,0 +1,13 @@
+{
+  "distribution_count": 210,
+  "distribution_matches_reference": true,
+  "editable_hook_mapping_matches_frozen_source": true,
+  "ready_for_gpu_preflight": true,
+  "runner_sha256": "1a1bad6ca3cdb810e1a36f5aa4f5464f7a31a21d9ac4a58070b2cd3dd49e0de6",
+  "schema": 1,
+  "source_clean": true,
+  "source_head": "7dc6f469726d3eec0719c98e9bf6458945b961af",
+  "source_hook_sha256": "5bc003293fef95e525658226cfb05b2ad28199cb7010ebb09bbd9c37954e357f",
+  "weight_errors": [],
+  "weight_rows_match": true
+}

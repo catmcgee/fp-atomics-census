@@ -1,0 +1,147 @@
+{
+  "files": [
+    {
+      "path": "archives/MOE_EAGER_replay/cache.tar.gz",
+      "sha256": "c4eb7fc98a4102ca44b37913de47b29139d0b43022a87c8000977aa977e3cb44",
+      "size": 3559487
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/artefacts.json",
+      "sha256": "ebcb9b4400ce779169515dccb434bf4c29c5a5f22f1a464a0dd9c8e3d09a44d6",
+      "size": 820
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/cache_after_run.json",
+      "sha256": "3c4f15357214e02310296506c1ef095e82d2ae4b3d3f4ca53d77414223900dbe",
+      "size": 1933
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/cache_before_engine.json",
+      "sha256": "faba5db9afb45edf4bd898703066403e2237c5f825fab5cefb2c1e6820acf66c",
+      "size": 1668
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/env.json",
+      "sha256": "0192f4ed982e9f851cf754ff41acd012500986852c47cb0a9d7a9da5e138f210",
+      "size": 11467
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/hook/forcing_rank0.jsonl",
+      "sha256": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+      "size": 1323
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/hook/rank0.jsonl",
+      "sha256": "6c9ba59ad7fb60f820615148f7cab02c4b8024bebdc22fcae223b21b755b6a34",
+      "size": 276937
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/outputs.json",
+      "sha256": "195cac58621da27ae8e969b66100d066dff6d6ed837daaf1ec9dedf600196f14",
+      "size": 199140
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/run.json",
+      "sha256": "0e79a839dc004e109e484856ad5c0d3471d49aa145e219e3ddbe72d6ac8d2725",
+      "size": 10720
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/record/schedule.json",
+      "sha256": "ab113c8c997d37bcb8d7991c733680f35078e644017991020cf666d71ed8052f",
+      "size": 13209
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/artefacts.json",
+      "sha256": "ebcb9b4400ce779169515dccb434bf4c29c5a5f22f1a464a0dd9c8e3d09a44d6",
+      "size": 820
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/cache_after_run.json",
+      "sha256": "3c4f15357214e02310296506c1ef095e82d2ae4b3d3f4ca53d77414223900dbe",
+      "size": 1933
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/cache_before_engine.json",
+      "sha256": "7c10286277a6785f888d1e88846181a83cd788c2cdd7b204d30628c97e7ddb61",
+      "size": 1937
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/env.json",
+      "sha256": "ec422a687542406d0d60b1fa0deab4ab793d8add3f71e1ed893c2ee72552d58d",
+      "size": 11467
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/hook/forcing_rank0.jsonl",
+      "sha256": "2e1833fc7863e155eedde68b3047dae6181987f099591c0b55928b23ed0b0899",
+      "size": 48259
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/hook/rank0.jsonl",
+      "sha256": "2c8ce1e889951df549d6d64bc6d33891206b0a44477eec9ca28c525bf2a787f0",
+      "size": 276934
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/outputs.json",
+      "sha256": "195cac58621da27ae8e969b66100d066dff6d6ed837daaf1ec9dedf600196f14",
+      "size": 199140
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/replay_warm/run.json",
+      "sha256": "a0dcea4f860169e27d474af2086b04487f0ba2c74dc9047a46997c9ac5f0c396",
+      "size": 17960
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/summary_replay_warm.json",
+      "sha256": "d212ae0a1f3b36d507497932b71db0449510c58d52217bb370a8e09720c7c88e",
+      "size": 3456
+    },
+    {
+      "path": "e6/Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag/summary_replay_warm.json",
+      "sha256": "d212ae0a1f3b36d507497932b71db0449510c58d52217bb370a8e09720c7c88e",
+      "size": 3456
+    },
+    {
+      "path": "evidence/moe_routing_replay_warm.json",
+      "sha256": "26e5f84a0accb1f55975e429365e20c6a43e4976a77105072ff9d3eccee03d1a",
+      "size": 497
+    },
+    {
+      "path": "evidence/preflight_report.json",
+      "sha256": "bae98d169c93aa227dc4027afcabd623c624730a42bede5332bd120f112b6ffc",
+      "size": 8853
+    },
+    {
+      "path": "handoff/MOE_EAGER_replay/state_before_ack.json",
+      "sha256": "0462c42d00bab1f8b51697e7071262f732aca9a641e817ed4078a862d8c5bd53",
+      "size": 15109
+    },
+    {
+      "path": "logs/MOE_EAGER_replay.cache_after.json",
+      "sha256": "83af4f46dd25230359747abc419e8189d02e74a50099a8c274e6744d003d7fa4",
+      "size": 28974
+    },
+    {
+      "path": "logs/MOE_EAGER_replay.cache_before.json",
+      "sha256": "83af4f46dd25230359747abc419e8189d02e74a50099a8c274e6744d003d7fa4",
+      "size": 28974
+    },
+    {
+      "path": "logs/MOE_EAGER_replay.compare.log",
+      "sha256": "839cd6be0fa01148b99ab17382a340d19bab2b236262d10eef293d3cfa8dd024",
+      "size": 486
+    },
+    {
+      "path": "logs/MOE_EAGER_replay.routing.log",
+      "sha256": "9a080cdeac89363189176a7b48cab0dd8566e50a6cdfd0fa84dd0a8ec2ee9e36",
+      "size": 919
+    },
+    {
+      "path": "logs/MOE_EAGER_replay.run.log",
+      "sha256": "178cca284fa7f103c923c6abdfdb33870f395334497861c56a20a8dd8aa7a442",
+      "size": 12144
+    }
+  ],
+  "label": "MOE_EAGER_replay",
+  "schema": 1,
+  "sha256": "6a200b3bbac46d68505909d8f1a6feed5993f9e684cea2f4ab98defc7822fffc"
+}
