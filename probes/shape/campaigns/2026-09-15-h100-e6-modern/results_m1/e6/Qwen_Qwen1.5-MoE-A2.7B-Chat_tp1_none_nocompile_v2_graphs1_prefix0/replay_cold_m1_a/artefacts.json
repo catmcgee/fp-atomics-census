@@ -1,0 +1,16 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/.nv/ComputeCache",
+    "deep_gemm": "/root/.deep_gemm",
+    "flashinfer": "/root/.cache/flashinfer",
+    "inductor": "/tmp/torchinductor_root",
+    "torch_extensions": "/root/.cache/torch_extensions",
+    "triton": "/root/.triton",
+    "vllm": "/root/.cache/vllm"
+  },
+  "best_configs": {},
+  "extern_calls": {},
+  "triton_kernel_families": {
+    "triton_red_fused_ge_sum": 2
+  }
+}

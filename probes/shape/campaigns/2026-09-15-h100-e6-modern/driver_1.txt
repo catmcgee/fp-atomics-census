@@ -1,0 +1,2 @@
+name, driver_version, uuid, serial, pci.bus_id, vbios_version
+NVIDIA H100 80GB HBM3, 580.126.09, GPU-c9a56027-3e8a-cfd8-3677-f949fb22eb85, 1652424048941, 00000000:BB:00.0, 96.00.DA.00.0C

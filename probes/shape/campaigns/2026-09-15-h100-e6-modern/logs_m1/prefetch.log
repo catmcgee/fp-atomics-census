@@ -1,0 +1,82 @@
++ export HF_HOME=/root/hf HF_HUB_ENABLE_HF_TRANSFER=1 PIP_CACHE_DIR=/root/pip-cache
++ HF_HOME=/root/hf
++ HF_HUB_ENABLE_HF_TRANSFER=1
++ PIP_CACHE_DIR=/root/pip-cache
++ mkdir -p /root/hf /root/logs
++ date -u
+Tue Sep 15 17:00:11 UTC 2026
++ python3 -m venv /root/hfenv
++ /root/hfenv/bin/pip install -q huggingface_hub hf_transfer
++ tail -2
++ WHICH=tp1
++ /root/hfenv/bin/python -
+/root/hfenv/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+HF_TOKEN present: False
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]
+Fetching 9 files:   0%|          | 0/9 [00:00<?, ?it/s][A
+
+Fetching 16 files:   0%|          | 0/16 [00:00<?, ?it/s][A[A
+
+Fetching 16 files:  31%|███▏      | 5/16 [00:10<00:22,  2.02s/it][A[AWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+
+Fetching 16 files:  38%|███▊      | 6/16 [00:10<00:16,  1.65s/it][A[A
+
+Fetching 16 files:  44%|████▍     | 7/16 [00:10<00:11,  1.30s/it][A[A
+
+Fetching 16 files:  50%|█████     | 8/16 [00:10<00:08,  1.03s/it][A[A
+
+Fetching 16 files:  56%|█████▋    | 9/16 [00:11<00:05,  1.27it/s][A[A
+
+Fetching 16 files:  62%|██████▎   | 10/16 [00:11<00:03,  1.54it/s][A[AFetching 11 files:  73%|███████▎  | 8/11 [00:12<00:04,  1.51s/it]
+Fetching 9 files:  89%|████████▉ | 8/9 [00:12<00:01,  1.56s/it][A
+Fetching 9 files: 100%|██████████| 9/9 [00:16<00:00,  1.90s/it][AFetching 9 files: 100%|██████████| 9/9 [00:16<00:00,  1.81s/it]
+PREFETCHED Qwen/Qwen3-8B-FP8 220b46e3b2180893580a4454f21f22d3ebb187d3 /root/hf/hub/models--Qwen--Qwen3-8B-FP8/snapshots/220b46e3b2180893580a4454f21f22d3ebb187d3
+Fetching 11 files:  91%|█████████ | 10/11 [00:17<00:01,  1.82s/it]
+
+Fetching 16 files:  69%|██████▉   | 11/16 [00:18<00:12,  2.41s/it][A[AFetching 11 files: 100%|██████████| 11/11 [00:18<00:00,  1.67s/it]Fetching 11 files: 100%|██████████| 11/11 [00:18<00:00,  1.67s/it]
+PREFETCHED Qwen/Qwen2.5-7B-Instruct a09a35458c702b33eeacc393d103063234e8bc28 /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28
+
+
+Fetching 16 files:  75%|███████▌  | 12/16 [00:21<00:10,  2.55s/it][A[A
+
+Fetching 16 files:  81%|████████▏ | 13/16 [00:21<00:06,  2.07s/it][A[A
+
+Fetching 16 files:  88%|████████▊ | 14/16 [00:22<00:03,  1.68s/it][A[A
+
+Fetching 16 files: 100%|██████████| 16/16 [00:22<00:00,  1.06it/s][A[AFetching 16 files: 100%|██████████| 16/16 [00:22<00:00,  1.43s/it]
+PREFETCHED Qwen/Qwen1.5-MoE-A2.7B-Chat ec052fda178e241c7c443468d2fa1db6618996be /root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat/snapshots/ec052fda178e241c7c443468d2fa1db6618996be
++ date -u
+Tue Sep 15 17:00:37 UTC 2026
++ echo PREFETCH_DOWNLOADED
+PREFETCH_DOWNLOADED
++ /root/hfenv/bin/python -
+HASHED 36
++ du -sh /root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct /root/hf/hub/models--Qwen--Qwen3-8B-FP8
+27G	/root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat
+15G	/root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct
+8.9G	/root/hf/hub/models--Qwen--Qwen3-8B-FP8
++ df -h /root
++ tail -1
+overlay         200G   62G  139G  31% /
++ date -u
+Tue Sep 15 17:00:45 UTC 2026
++ echo PREFETCH_DONE
+PREFETCH_DONE
+6
++ echo PREFETCH_DOWNLOADED
+PREFETCH_DOWNLOADED
++ /root/hfenv/bin/python -
+HASHED 36
++ du -sh /root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct /root/hf/hub/models--Qwen--Qwen3-8B-FP8
+27G	/root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat
+15G	/root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct
+8.9G	/root/hf/hub/models--Qwen--Qwen3-8B-FP8
++ df -h /root
++ tail -1
+overlay         200G   62G  139G  31% /
++ date -u
+Tue Sep 15 17:00:45 UTC 2026
++ echo PREFETCH_DONE
+PREFETCH_DONE

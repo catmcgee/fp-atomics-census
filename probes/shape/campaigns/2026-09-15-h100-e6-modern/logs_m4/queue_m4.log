@@ -1,0 +1,68 @@
+QUEUE ARM_START R8_tp2_mixed 2026-09-15T17:31:57Z :: kind=record cache=cold env='NCCL_NVLS_ENABLE=0' caches_before=0 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 2 --cudagraph 1 --mixed
+QUEUE RUN_EXIT R8_tp2_mixed rc=0 2026-09-15T17:37:45Z
+  [R8_tp2_mixed] ARCHIVE_FULL R8_tp2_mixed bytes=15490489 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [R8_tp2_mixed] ARCHIVE_LIGHT R8_tp2_mixed files=331 bytes=1786596
+QUEUE FACTS R8_tp2_mixed direct_load=0 caches_after=907
+  [R8_tp2_mixed] (Worker pid=2745) INFO 09-15 17:32:20 [cuda_communicator.py:269] Using ['FLASHINFER', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'A
+  [R8_tp2_mixed] (Worker_TP0 pid=2745) INFO 09-15 17:32:21 [flash_attn.py:897] Using FlashAttention version 3
+  [R8_tp2_mixed] (Worker_TP0 pid=2745) INFO 09-15 17:32:37 [backends.py:393] Compiling a graph for compile range (1, 128) takes 6.79 s
+  [R8_tp2_mixed] (Worker_TP0 pid=2745) INFO 09-15 17:37:35 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9181 without CUDA graph me
+  [R8_tp2_mixed] (Worker_TP1 pid=2768) INFO 09-15 17:37:35 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9181 without CUDA graph me
+  [R8_tp2_mixed] INFO 09-15 17:37:35 [kv_cache_utils.py:2032] GPU KV cache size: 2,398,464 tokens, Maximum concurrency for 2,048 tokens per request: 1171.12x
+  [R8_tp2_mixed] (Worker_TP0 pid=2745) INFO 09-15 17:37:38 [gpu_model_runner.py:7001] Graph capturing finished in 3 secs, took 0.18 GiB
+  [R8_tp2_mixed] INFO 09-15 17:37:39 [core.py:361] init engine (profile, create kv cache, warmup model) took 315.52 s (compilation: 230.16 s)
+  [R8_tp2_mixed] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed record: 77 forward passes logged (77 at the scheduler); replayable
+QUEUE ARM_END R8_tp2_mixed 2026-09-15T17:37:46Z
+QUEUE ARM_START W8_tp2_mixed_warm 2026-09-15T17:37:46Z :: kind=replay cache=warm env='NCCL_NVLS_ENABLE=0' caches_before=907 :: Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay_warm
+QUEUE RUN_EXIT W8_tp2_mixed_warm rc=0 2026-09-15T17:38:27Z
+  [W8_tp2_mixed_warm] ARCHIVE_FULL W8_tp2_mixed_warm bytes=16148509 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [W8_tp2_mixed_warm] ARCHIVE_LIGHT W8_tp2_mixed_warm files=343 bytes=2155825
+QUEUE FACTS W8_tp2_mixed_warm direct_load=0 caches_after=924
+  [W8_tp2_mixed_warm] (Worker pid=4031) INFO 09-15 17:37:59 [cuda_communicator.py:269] Using ['FLASHINFER', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'A
+  [W8_tp2_mixed_warm] (Worker_TP0 pid=4031) INFO 09-15 17:38:01 [flash_attn.py:897] Using FlashAttention version 3
+  [W8_tp2_mixed_warm] (Worker_TP0 pid=4031) INFO 09-15 17:38:10 [backends.py:393] Compiling a graph for compile range (1, 128) takes 0.30 s
+  [W8_tp2_mixed_warm] (Worker_TP1 pid=4054) INFO 09-15 17:38:17 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9181 without CUDA graph me
+  [W8_tp2_mixed_warm] (Worker_TP0 pid=4031) INFO 09-15 17:38:17 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9181 without CUDA graph me
+  [W8_tp2_mixed_warm] INFO 09-15 17:38:17 [kv_cache_utils.py:2032] GPU KV cache size: 2,399,120 tokens, Maximum concurrency for 2,048 tokens per request: 1171.45x
+  [W8_tp2_mixed_warm] (Worker_TP0 pid=4031) INFO 09-15 17:38:20 [gpu_model_runner.py:7001] Graph capturing finished in 3 secs, took 0.18 GiB
+  [W8_tp2_mixed_warm] INFO 09-15 17:38:22 [core.py:361] init engine (profile, create kv cache, warmup model) took 18.37 s (compilation: 7.32 s)
+  [W8_tp2_mixed_warm] E6 replay results_c2/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/replay_warm: 77 forward passes logged (77 at the scheduler), recorded 77; run --compare for the verdict
+QUEUE COMPARE_EXIT W8_tp2_mixed_warm rc=0 2026-09-15T17:38:35Z
+[2026-09-15T17:38:35Z] [W8_tp2_mixed_warm compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay: P2 IDENTICAL; first mismatch None; rows compared 555; rows differing 0; errors 0
+QUEUE ARM_END W8_tp2_mixed_warm 2026-09-15T17:38:35Z
+QUEUE ARM_START Y7a_tp2_cold_m4 2026-09-15T17:38:35Z :: kind=replay cache=cold env='NCCL_NVLS_ENABLE=0' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay_cold_m4_a
+QUEUE RUN_EXIT Y7a_tp2_cold_m4 rc=0 2026-09-15T17:44:22Z
+  [Y7a_tp2_cold_m4] ARCHIVE_FULL Y7a_tp2_cold_m4 bytes=15510231 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [Y7a_tp2_cold_m4] ARCHIVE_LIGHT Y7a_tp2_cold_m4 files=331 bytes=1792391
+QUEUE FACTS Y7a_tp2_cold_m4 direct_load=0 caches_after=906
+  [Y7a_tp2_cold_m4] (Worker pid=5379) INFO 09-15 17:38:58 [cuda_communicator.py:269] Using ['FLASHINFER', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'A
+  [Y7a_tp2_cold_m4] (Worker_TP0 pid=5379) INFO 09-15 17:39:00 [flash_attn.py:897] Using FlashAttention version 3
+  [Y7a_tp2_cold_m4] (Worker_TP0 pid=5379) INFO 09-15 17:39:16 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 7.08 s
+  [Y7a_tp2_cold_m4] (Worker_TP1 pid=5402) INFO 09-15 17:44:11 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9028 without CUDA graph me
+  [Y7a_tp2_cold_m4] (Worker_TP0 pid=5379) INFO 09-15 17:44:11 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9025 without CUDA graph me
+  [Y7a_tp2_cold_m4] INFO 09-15 17:44:11 [kv_cache_utils.py:2032] GPU KV cache size: 2,311,216 tokens, Maximum concurrency for 2,048 tokens per request: 1128.52x
+  [Y7a_tp2_cold_m4] (Worker_TP0 pid=5379) INFO 09-15 17:44:16 [gpu_model_runner.py:7001] Graph capturing finished in 5 secs, took 0.47 GiB
+  [Y7a_tp2_cold_m4] INFO 09-15 17:44:17 [core.py:361] init engine (profile, create kv cache, warmup model) took 314.08 s (compilation: 14.00 s)
+  [Y7a_tp2_cold_m4] E6 replay results_c2/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_m4_a: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT Y7a_tp2_cold_m4 rc=0 2026-09-15T17:44:30Z
+[2026-09-15T17:44:30Z] [Y7a_tp2_cold_m4 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 494; errors 0
+QUEUE ARM_END Y7a_tp2_cold_m4 2026-09-15T17:44:30Z
+QUEUE ARM_START Y7b_tp2_cold_m4 2026-09-15T17:44:30Z :: kind=replay cache=cold env='NCCL_NVLS_ENABLE=0' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay_cold_m4_b
+QUEUE RUN_EXIT Y7b_tp2_cold_m4 rc=0 2026-09-15T17:50:19Z
+  [Y7b_tp2_cold_m4] ARCHIVE_FULL Y7b_tp2_cold_m4 bytes=15514237 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [Y7b_tp2_cold_m4] ARCHIVE_LIGHT Y7b_tp2_cold_m4 files=331 bytes=1792407
+QUEUE FACTS Y7b_tp2_cold_m4 direct_load=0 caches_after=906
+  [Y7b_tp2_cold_m4] (Worker pid=6899) INFO 09-15 17:44:54 [cuda_communicator.py:269] Using ['FLASHINFER', 'CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'A
+  [Y7b_tp2_cold_m4] (Worker_TP0 pid=6899) INFO 09-15 17:44:55 [flash_attn.py:897] Using FlashAttention version 3
+  [Y7b_tp2_cold_m4] (Worker_TP0 pid=6899) INFO 09-15 17:45:12 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 7.33 s
+  [Y7b_tp2_cold_m4] (Worker_TP0 pid=6899) INFO 09-15 17:50:08 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9025 without CUDA graph me
+  [Y7b_tp2_cold_m4] (Worker_TP1 pid=6922) INFO 09-15 17:50:08 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9028 without CUDA graph me
+  [Y7b_tp2_cold_m4] INFO 09-15 17:50:08 [kv_cache_utils.py:2032] GPU KV cache size: 2,311,216 tokens, Maximum concurrency for 2,048 tokens per request: 1128.52x
+  [Y7b_tp2_cold_m4] (Worker_TP0 pid=6899) INFO 09-15 17:50:14 [gpu_model_runner.py:7001] Graph capturing finished in 5 secs, took 0.47 GiB
+  [Y7b_tp2_cold_m4] INFO 09-15 17:50:15 [core.py:361] init engine (profile, create kv cache, warmup model) took 316.73 s (compilation: 14.63 s)
+  [Y7b_tp2_cold_m4] E6 replay results_c2/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_m4_b: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT Y7b_tp2_cold_m4 rc=0 2026-09-15T17:50:27Z
+[2026-09-15T17:50:27Z] [Y7b_tp2_cold_m4 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 493; errors 0
+QUEUE ARM_END Y7b_tp2_cold_m4 2026-09-15T17:50:27Z
+QUEUE DEADLINE passed; not launching Y7c_tp2_cold_m4 2026-09-15T17:50:27Z
+QUEUE_DONE 2026-09-15T17:50:27Z

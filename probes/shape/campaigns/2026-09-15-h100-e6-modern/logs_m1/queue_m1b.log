@@ -1,0 +1,28 @@
+QUEUE ARM_START D1_det_combo_off 2026-09-15T17:43:54Z :: kind=record cache=cold env='TORCHINDUCTOR_DETERMINISTIC=1' caches_before=0 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --inductor-config '{"combo_kernels":false,"benchmark_combo_kernel":false}' --tag det_combo_off
+QUEUE RUN_EXIT D1_det_combo_off rc=0 2026-09-15T17:45:55Z
+  [D1_det_combo_off] ARCHIVE_FULL D1_det_combo_off bytes=4663866 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [D1_det_combo_off] ARCHIVE_LIGHT D1_det_combo_off files=124 bytes=704508
+QUEUE FACTS D1_det_combo_off direct_load=0 caches_after=342
+  [D1_det_combo_off] INFO 09-15 17:44:16 [flash_attn.py:897] Using FlashAttention version 3
+  [D1_det_combo_off] INFO 09-15 17:44:30 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 4.76 s
+  [D1_det_combo_off] INFO 09-15 17:45:48 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [D1_det_combo_off] INFO 09-15 17:45:48 [kv_cache_utils.py:2032] GPU KV cache size: 1,021,056 tokens, Maximum concurrency for 2,048 tokens per request: 498.56x
+  [D1_det_combo_off] INFO 09-15 17:45:52 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [D1_det_combo_off] INFO 09-15 17:45:53 [core.py:361] init engine (profile, create kv cache, warmup model) took 93.44 s (compilation: 10.64 s)
+  [D1_det_combo_off] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END D1_det_combo_off 2026-09-15T17:45:56Z
+QUEUE ARM_START E1_batch_invariant 2026-09-15T17:45:56Z :: kind=record cache=cold env='VLLM_BATCH_INVARIANT=1' caches_before=0 :: --model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --tag batch_invariant
+QUEUE RUN_EXIT E1_batch_invariant rc=0 2026-09-15T17:48:24Z
+  [E1_batch_invariant] ARCHIVE_FULL E1_batch_invariant bytes=7162181 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [E1_batch_invariant] ARCHIVE_LIGHT E1_batch_invariant files=230 bytes=1053670
+QUEUE FACTS E1_batch_invariant direct_load=0 caches_after=672
+  [E1_batch_invariant] INFO 09-15 17:46:18 [flash_attn.py:897] Using FlashAttention version 3
+  [E1_batch_invariant] INFO 09-15 17:46:54 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 25.79 s
+  [E1_batch_invariant] INFO 09-15 17:48:15 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9150 without CUDA graph memory profiling. To mai
+  [E1_batch_invariant] INFO 09-15 17:48:15 [kv_cache_utils.py:2032] GPU KV cache size: 1,005,312 tokens, Maximum concurrency for 2,048 tokens per request: 490.88x
+  [E1_batch_invariant] INFO 09-15 17:48:20 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.32 GiB
+  [E1_batch_invariant] INFO 09-15 17:48:21 [core.py:361] init engine (profile, create kv cache, warmup model) took 119.77 s (compilation: 33.51 s)
+  [E1_batch_invariant] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END E1_batch_invariant 2026-09-15T17:48:25Z
+QUEUE DEADLINE passed; not launching S7_moe_graphs0 2026-09-15T17:48:25Z
+QUEUE_DONE 2026-09-15T17:48:25Z

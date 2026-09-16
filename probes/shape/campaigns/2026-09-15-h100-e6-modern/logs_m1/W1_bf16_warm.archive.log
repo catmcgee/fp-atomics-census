@@ -1,0 +1,2 @@
+ARCHIVE_FULL W1_bf16_warm bytes=5556485 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT W1_bf16_warm files=185 bytes=1185218

@@ -1,0 +1,33 @@
++ export HF_HOME=/root/hf HF_HUB_ENABLE_HF_TRANSFER=1 PIP_CACHE_DIR=/root/pip-cache
++ HF_HOME=/root/hf
++ HF_HUB_ENABLE_HF_TRANSFER=1
++ PIP_CACHE_DIR=/root/pip-cache
++ mkdir -p /root/hf /root/logs
++ date -u
+Tue Sep 15 17:22:33 UTC 2026
++ python3 -m venv /root/hfenv
++ /root/hfenv/bin/pip install -q huggingface_hub hf_transfer
++ tail -2
++ WHICH=one
++ /root/hfenv/bin/python -
+/root/hfenv/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+HF_TOKEN present: False
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 11 files:   9%|▉         | 1/11 [00:00<00:03,  3.22it/s]Fetching 11 files:  36%|███▋      | 4/11 [00:00<00:00, 10.55it/s]Fetching 11 files:  55%|█████▍    | 6/11 [00:00<00:00,  9.49it/s]Fetching 11 files:  73%|███████▎  | 8/11 [00:10<00:05,  1.87s/it]Fetching 11 files: 100%|██████████| 11/11 [00:17<00:00,  2.19s/it]Fetching 11 files: 100%|██████████| 11/11 [00:17<00:00,  1.62s/it]
+PREFETCHED Qwen/Qwen2.5-7B-Instruct a09a35458c702b33eeacc393d103063234e8bc28 /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28
++ date -u
+Tue Sep 15 17:22:58 UTC 2026
++ echo PREFETCH_DOWNLOADED
+PREFETCH_DOWNLOADED
++ /root/hfenv/bin/python -
+HASHED 11
++ du -sh /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct
+15G	/root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct
++ df -h /root
++ tail -1
+overlay         200G   22G  179G  11% /
++ date -u
+Tue Sep 15 17:23:04 UTC 2026
++ echo PREFETCH_DONE
+PREFETCH_DONE

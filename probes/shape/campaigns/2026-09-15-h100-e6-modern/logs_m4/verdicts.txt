@@ -1,0 +1,3 @@
+[2026-09-15T17:38:35Z] [W8_tp2_mixed_warm compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay: P2 IDENTICAL; first mismatch None; rows compared 555; rows differing 0; errors 0
+[2026-09-15T17:44:30Z] [Y7a_tp2_cold_m4 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 494; errors 0
+[2026-09-15T17:50:27Z] [Y7b_tp2_cold_m4 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 493; errors 0

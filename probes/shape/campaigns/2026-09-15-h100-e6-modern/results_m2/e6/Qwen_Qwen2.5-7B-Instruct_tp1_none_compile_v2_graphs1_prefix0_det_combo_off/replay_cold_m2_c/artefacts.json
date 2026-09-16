@@ -1,0 +1,69 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/.nv/ComputeCache",
+    "deep_gemm": "/root/.deep_gemm",
+    "flashinfer": "/root/.cache/flashinfer",
+    "inductor": "/tmp/torchinductor_root",
+    "torch_extensions": "/root/.cache/torch_extensions",
+    "triton": "/root/.triton",
+    "vllm": "/root/.cache/vllm"
+  },
+  "best_configs": {
+    "inductor/76/f4688d9fe00a16a1542ca87ffa231be72b3849aae545b8253cf1620f5b0d04a4.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 39,
+      "triton_cache_hash": "X6FAWGMRNE5JVXIJT3YE4UIMDYI6JVBL7K6WMNZQ4BPJMPQPR3EQ"
+    },
+    "inductor/7c/94a97b0554f27f39e95bc596e073ec3a24586c0c942ad8226454a5cc187ebdb8.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 15,
+      "triton_cache_hash": "W47RBSG53LWGDHMQP2CWWBQY3FCXRGNBCE5WBI2FGWZRQ4ULQ2WQ"
+    },
+    "inductor/di/e6d324c32929004cc8a731ad3223ef3796a06b4cceaf7424d70cf939ef5f9635.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 65,
+      "triton_cache_hash": "QQMNDQZVNYR6ABEMOPZTN4C2SOJVNV4ZETM3365QZQVWJNKL6R3Q"
+    },
+    "inductor/fc/7113ae598ddf17bc1a4120ac9fdba8553995daf158044ce25cac14e56edae6c7.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 39,
+      "triton_cache_hash": "W3A6Z5APEWIX3AOA66FDF7TL3K2G2Y66YCCWZDVOK64RHYAVS4HA"
+    },
+    "inductor/yh/f3a0589d3f77625be0f814645b458a1f45ab043ee390f8174e1c1ecee865f21c.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 15,
+      "triton_cache_hash": "RF7ANN56ZJIAO6INH34RJC2FXYLPVEU37K3UCIA2HXBEEXHY7WFQ"
+    }
+  },
+  "extern_calls": {
+    "addmm": 2,
+    "mm": 6
+  },
+  "triton_kernel_families": {
+    "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+    "triton_poi_fused_mul_silu_slice": 5,
+    "triton_red_fused__to_copy_embedding_rms_norm": 3,
+    "triton_red_fused_fused_add_rms_norm": 11,
+    "triton_red_fused_ge_sum": 2
+  }
+}

@@ -1,0 +1,4 @@
+[2026-09-15 17:31:28] 4f002a453d47:1811:1811 [1] transport/nvls.cc:287 NCCL WARN Failed to bind NVLink SHARP (NVLS) Multicast memory of size 2097152 : CUDA error 401 'the operation cannot be performed in the present state'.
+Disable NVLS (NCCL_NVLS_ENABLE=0) if you wish to avoid this error in the future.
+[2026-09-15 17:31:28] 4f002a453d47:1810:1810 [0] transport/nvls.cc:287 NCCL WARN Failed to bind NVLink SHARP (NVLS) Multicast memory of size 2097152 : CUDA error 401 'the operation cannot be performed in the present state'.
+Disable NVLS (NCCL_NVLS_ENABLE=0) if you wish to avoid this error in the future.

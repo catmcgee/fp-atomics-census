@@ -1,0 +1,2 @@
+ARCHIVE_FULL Y1a_bf16_cold_m2 bytes=4898332 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT Y1a_bf16_cold_m2 files=173 bytes=816597

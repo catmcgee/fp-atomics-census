@@ -1,0 +1,4 @@
+record|D1_det_combo_off|cold|TORCHINDUCTOR_DETERMINISTIC=1|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --inductor-config '{"combo_kernels":false,"benchmark_combo_kernel":false}' --tag det_combo_off
+replay|E2a_batchinv_cold_m1|cold|VLLM_BATCH_INVARIANT=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant replay_cold_m1_a
+replay|E2b_batchinv_cold_m1|cold|VLLM_BATCH_INVARIANT=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant replay_cold_m1_b
+replay|E2c_batchinv_cold_m1|cold|VLLM_BATCH_INVARIANT=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant replay_cold_m1_c

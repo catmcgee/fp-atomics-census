@@ -1,0 +1,2 @@
+ARCHIVE_FULL Z1_bf16_restored_m2 bytes=5562324 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT Z1_bf16_restored_m2 files=185 bytes=1185216

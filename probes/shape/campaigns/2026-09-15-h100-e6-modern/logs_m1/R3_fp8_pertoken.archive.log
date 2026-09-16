@@ -1,0 +1,2 @@
+ARCHIVE_FULL R3_fp8_pertoken bytes=6198205 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT R3_fp8_pertoken files=197 bytes=1248282

@@ -1,0 +1,120 @@
+CACHE /root/.cache exists files=13 bytes=6732852
+  /root/.cache
+  /root/.cache/vllm
+  /root/.cache/vllm/modelinfos
+  /root/.cache/vllm/modelinfos/vllm-model_executor-models-qwen2-Qwen2ForCausalLM.json
+  /root/.cache/vllm/torch_compile_cache
+  /root/.cache/vllm/torch_compile_cache/b25520caf5
+  /root/.cache/motd.legal-displayed
+  /root/.cache/flashinfer
+  /root/.cache/flashinfer/0.6.18.post1
+  /root/.cache/flashinfer/0.6.18.post1/90a
+CACHE /root/.triton exists files=1 bytes=55832
+  /root/.triton
+  /root/.triton/cache
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ/cuda_utils.cpython-312-x86_64-linux-gnu.so
+CACHE /root/.nv exists files=0 bytes=0
+  /root/.nv
+  /root/.nv/ComputeCache
+CACHE /root/.deep_gemm absent
+CACHE /root/.tilelang exists files=0 bytes=0
+  /root/.tilelang
+  /root/.tilelang/cache
+  /root/.tilelang/cache/tmp
+  /root/.tilelang/cache/0.1.12
+  /root/.tilelang/cache/0.1.12/linux-x86_64
+CACHE /root/.cutlass absent
+CACHE /root/.humming exists files=1 bytes=0
+  /root/.humming
+  /root/.humming/tmp
+  /root/.humming/tmp/lock
+  /root/.humming/tmp/lock/launcher.lock
+CACHE /root/.config/vllm exists files=1 bytes=1508
+  /root/.config/vllm
+  /root/.config/vllm/usage_stats.json
+CACHE /tmp/torchinductor_root exists files=260 bytes=17128052
+  /tmp/torchinductor_root
+  /tmp/torchinductor_root/xj
+  /tmp/torchinductor_root/xj/cxjyqdrhgm62xq3yuzzhgev7fynli5djryff5musuzx7v5j3ze7o.py
+  /tmp/torchinductor_root/xj/5effd09000a1b9744d1f6e435a4a6e515be9b51a13e9b9aba54307a1ac706ad5.best_config
+  /tmp/torchinductor_root/xj/cxjyqdrhgm62xq3yuzzhgev7fynli5djryff5musuzx7v5j3ze7o.kernel_perf
+  /tmp/torchinductor_root/triton
+  /tmp/torchinductor_root/triton/0
+  /tmp/torchinductor_root/triton/0/UMBJUUIIOXQ44MVLRYPXZ5KJOWVKJEDFBNKO5FRK3OEFCQYVVTSQ
+  /tmp/torchinductor_root/triton/0/TCPXOMTXOOIN56MHWAKMGHLLTRNKN6UKT6W33RDTHTB2FSHMF5PQ
+  /tmp/torchinductor_root/triton/0/7CT7QJO3FUT7WUMOTBVGQKWZ3I7L4APIWBA4HOMVSR5GEDGREU4A
+  /tmp/torchinductor_root/triton/0/47NMY5FTBCG43RHPWFLZAM6AVBN7MNQ4QLRAQTH4VTHBZOC7NCYQ
+  /tmp/torchinductor_root/triton/0/26CQHX3TOKAD7KBBXQXOZLJNTXTS7RA57D75FH6LBBBR56RAVSNA
+  /tmp/torchinductor_root/triton/0/ITZEPSXVUSJSU4WY4TRQW7CC7RG44EYF2JWJAHBRYLLKAPLF3CEA
+  /tmp/torchinductor_root/triton/0/GCWPEZNZSPNGYS5C3FXWA5SOVV2QRB6JFFNMYPYI46CPOEJTBBNQ
+  /tmp/torchinductor_root/triton/0/3XBD7KSWMN2CLDTVO7NVNHIXWF4JMU3RI5X2RCFRDTPR2LV4JXLQ
+  /tmp/torchinductor_root/triton/0/NCFK2QXDL2LIR2JE4GAXHI46VVNPVAHTS43ZM3VACWHERP5WGEZQ
+  /tmp/torchinductor_root/triton/0/2VQJKLSWCL7OTUUILLGBJCBTJXIPKXKPUYGZBPWYF45KQSP5LINA
+  /tmp/torchinductor_root/triton/0/3LTRTTRML2FZW43IUS5AD4GSLMQEVM3HL5S25GQR7QPCZOZIFTYA
+  /tmp/torchinductor_root/triton/0/P7DMUYOVYUHYDEWFNHZRYR3RW6AX46VM4JK7Q4WOES27BDIZ5DGQ
+  /tmp/torchinductor_root/triton/0/TEMOGJ5MCZJPVEWLUAMSTQDEVLSSY2EHU54I2SLYJQTPHC5GP5CQ
+  /tmp/torchinductor_root/triton/0/4GMIIJOI6FFE3OJQOCICDYF3XYL2ZRYF24NQGQAXAPR3HDLA4F7A
+  /tmp/torchinductor_root/triton/0/PGS7QDCDJXYXUY5XUWQZJFURDCX5Q6M7DVTEGZLVR3H667OT3NDQ
+  /tmp/torchinductor_root/triton/0/S3X2LHPSKUHM7PTL4JYRXQIRRHMVGBAOKYSMEJL3HKPYKS3KRLIQ
+  /tmp/torchinductor_root/triton/0/AB7P6TPS7PWXLGGKOQB4KUEWMC4RNL7OMBMUTJIT2UZZVPQYRWZA
+  /tmp/torchinductor_root/triton/0/7LUGSKTLDX45E6EVLQMTCZVZ2XZGXPU5MSG743JIRYVLHSUV7VJQ
+  /tmp/torchinductor_root/triton/0/322M5VTBJAKN2FP5JBGOX7HUHCWVWPU4SJFZLWOIG3QP7MPHYVCA
+  /tmp/torchinductor_root/triton/0/LCOVCBCJJIQ52QWBLVB5QDKLMZZZXPU3EZFAI7ALHBV4VG2ZUEBA
+  /tmp/torchinductor_root/triton/0/3CYVZCD5DYG5H2RGISCDF6K67WTTAQ3W7T24TN6YCUZDK2QKK7CA
+  /tmp/torchinductor_root/triton/0/3ZO3C5GYACODGGP5YDXRFHEURTD3RGYRSZCHMKNJWCDX2H3W6I4A
+  /tmp/torchinductor_root/triton/0/R4Z42XJWREUKKO6OAUHTYRJEZWM5ZR3S22YY4YKOC6PDGGLQ4YOA
+  /tmp/torchinductor_root/triton/0/M4UZGRCVHY7TMZGSFZHKZXAQTX45KHDGJMIIL55ZCJ6EO3WTP27Q
+  /tmp/torchinductor_root/triton/0/QDUSSMSJKQNPVXNOTID4U37WOKXTVPOWEOHBL2VE7H3EGPHVXPBA
+  /tmp/torchinductor_root/triton/0/RUSDFVKBDVINPBPUBSG5MPQKWU36V53YIC5O7IN7623ZU4NN5R7A
+  /tmp/torchinductor_root/triton/0/WE24B542LW6UNOVCCDGJD7OVNXR3KEBVRE2UKCJTVLVW4FS5Y7CA
+  /tmp/torchinductor_root/triton/0/PITWYHPNTLPMHT6G427GPW3RJXE2Z2MYV6YNL4FFCPAM2PZ7MHYQ
+  /tmp/torchinductor_root/rh
+  /tmp/torchinductor_root/rh/crhjvnukp2lwf6ful5yccnvljva2q4gv2slvkivwajnci3pw6xtd.py
+  /tmp/torchinductor_root/rh/a678465fd81f0923f90e85b6de52b7456a94ae0c0e9a216d55cb81ec4e7c17df.best_config
+  /tmp/torchinductor_root/rh/crhjvnukp2lwf6ful5yccnvljva2q4gv2slvkivwajnci3pw6xtd.kernel_perf
+  /tmp/torchinductor_root/y4
+CACHE /tmp exists files=260 bytes=17128052
+  /tmp
+  /tmp/torchinductor_root
+  /tmp/torchinductor_root/xj
+  /tmp/torchinductor_root/xj/cxjyqdrhgm62xq3yuzzhgev7fynli5djryff5musuzx7v5j3ze7o.py
+  /tmp/torchinductor_root/xj/5effd09000a1b9744d1f6e435a4a6e515be9b51a13e9b9aba54307a1ac706ad5.best_config
+  /tmp/torchinductor_root/xj/cxjyqdrhgm62xq3yuzzhgev7fynli5djryff5musuzx7v5j3ze7o.kernel_perf
+  /tmp/torchinductor_root/triton
+  /tmp/torchinductor_root/triton/0
+  /tmp/torchinductor_root/rh
+  /tmp/torchinductor_root/rh/crhjvnukp2lwf6ful5yccnvljva2q4gv2slvkivwajnci3pw6xtd.py
+  /tmp/torchinductor_root/rh/a678465fd81f0923f90e85b6de52b7456a94ae0c0e9a216d55cb81ec4e7c17df.best_config
+  /tmp/torchinductor_root/rh/crhjvnukp2lwf6ful5yccnvljva2q4gv2slvkivwajnci3pw6xtd.kernel_perf
+  /tmp/torchinductor_root/y4
+  /tmp/torchinductor_root/y4/cy4zgr7qnfnep5tmqjjsmcr5kyvweo5fe2br2nhemkivlq4pqjgi.py
+  /tmp/torchinductor_root/ni
+  /tmp/torchinductor_root/ni/cniffjst5rfjc664rnmhlvuxmguon6ggxcuwge2w2s676357gxeg.py
+  /tmp/torchinductor_root/ni/af228e1c900a7a6084c4641026f057057cafe1950d0b05a5c5280d371d3c709e.best_config
+  /tmp/torchinductor_root/rm
+  /tmp/torchinductor_root/rm/crmpggiszfy7mvcdbgv23pmtg3spkplit5oxyi3fdpwtgyehvuhb.py
+  /tmp/torchinductor_root/rm/012e84d0bb4c61e8e74375e4cd5c4840efee7bc6ed681219517e5277365800e0.best_config
+  /tmp/torchinductor_root/gd
+  /tmp/torchinductor_root/gd/cgdrdh65pmmsyioajatzeigjbolt356cdmick2zgpt3l2dvcskfr.py
+  /tmp/torchinductor_root/fxgraph
+  /tmp/torchinductor_root/fxgraph/3b
+  /tmp/torchinductor_root/fxgraph/6z
+  /tmp/torchinductor_root/fxgraph/ag
+  /tmp/torchinductor_root/fxgraph/qx
+  /tmp/torchinductor_root/aotautograd
+  /tmp/torchinductor_root/aotautograd/aquywnigztjthrugieoaqtfltknffb34mh5jcgxrlp6fcn4wakpd
+  /tmp/torchinductor_root/aotautograd/afvl6fcdkqr6dy3siz3vaowrywti2g4v5qql2kviftqve4sahyyf
+  /tmp/torchinductor_root/aotautograd/a5r2t245mgvsrtckgp6qvvambv54x34qcxekhdxfkwtlyym5h3y6
+  /tmp/torchinductor_root/aotautograd/atidfo7i55qttsw3njeyj7e4yr3onluur4d5yizipt7k2763uurb
+  /tmp/torchinductor_root/qh
+  /tmp/torchinductor_root/qh/cqh52oaeqqqkvytbix7b47mrintqlfkn4vcmowaiwyhm6hvjot4y.py
+  /tmp/torchinductor_root/qh/cea10cd06c3a29fb29b18fc5455ffccd42a8c3589f7dee57c04ccd29bcac2a70.best_config
+  /tmp/torchinductor_root/tp
+  /tmp/torchinductor_root/tp/ctpopedl5m4bk6tko2zwqilus5bzedmvjhndji7hajshvb3jqm3l.py
+  /tmp/torchinductor_root/3z
+  /tmp/torchinductor_root/3z/c3zt47byvwinrbxzhb45rlzgz3iujvgayzpqpqedxjc3xnmcqqvg.py
+  /tmp/torchinductor_root/3z/a951bca7cd03766526b4dcba20174e3d6f605c4bd38858ca52256d9d1ac615e6.best_config
+CACHE /var/tmp exists files=0 bytes=0
+  /var/tmp
+CACHE_TOTAL_FILES 536

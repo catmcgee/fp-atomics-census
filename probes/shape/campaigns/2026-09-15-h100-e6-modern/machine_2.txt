@@ -1,0 +1,6 @@
+e6b25e6c9c34
+GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-d13abf0e-77f7-fd12-430e-77e6f955f525)
+38.80.152.148
+model name	: Intel(R) Xeon(R) Platinum 8462Y+
+128
+6.17.0-1008-nvidia

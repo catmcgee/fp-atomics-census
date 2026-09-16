@@ -1,0 +1,5 @@
+record|R7_tp2|cold|NCCLENV|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 2 --cudagraph 1
+replay|W7_tp2_warm|warm|NCCLENV|Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay_warm
+replay|X8a_tp2_mixed_cold_m3|cold|NCCLENV|Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay_cold_m3_a
+replay|X8b_tp2_mixed_cold_m3|cold|NCCLENV|Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay_cold_m3_b
+replay|X8c_tp2_mixed_cold_m3|cold|NCCLENV|Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed replay_cold_m3_c

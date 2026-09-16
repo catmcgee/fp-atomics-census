@@ -1,0 +1,16 @@
+record|R1_bf16|cold|-|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1
+boundary|B1_boundary12|warm|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 boundary_12 12
+replay|W1_bf16_warm|warm|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_warm
+record|R2_bf16_mixed|cold|-|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --mixed
+replay|W2_bf16_mixed_warm|warm|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed replay_warm
+record|R3_fp8_pertoken|cold|-|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --quantization fp8
+replay|W3_fp8_pertoken_warm|warm|-|Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 replay_warm
+replay|X4a_pertensor_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 replay_cold_m1_a
+replay|X5a_q3fp8_cold_m1|cold|-|Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 replay_cold_m1_a
+replay|X6a_moe_cold_m1|cold|-|Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 replay_cold_m1_a
+replay|X4b_pertensor_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 replay_cold_m1_b
+replay|X5b_q3fp8_cold_m1|cold|-|Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 replay_cold_m1_b
+replay|X6b_moe_cold_m1|cold|-|Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 replay_cold_m1_b
+replay|X4c_pertensor_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 replay_cold_m1_c
+replay|X5c_q3fp8_cold_m1|cold|-|Qwen_Qwen3-8B-FP8_tp1_fp8_compile_v2_graphs1_prefix0 replay_cold_m1_c
+replay|X6c_moe_cold_m1|cold|-|Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs1_prefix0 replay_cold_m1_c

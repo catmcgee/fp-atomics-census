@@ -1,0 +1,2 @@
+ARCHIVE_FULL W8_tp2_mixed_warm bytes=16148509 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT W8_tp2_mixed_warm files=343 bytes=2155825

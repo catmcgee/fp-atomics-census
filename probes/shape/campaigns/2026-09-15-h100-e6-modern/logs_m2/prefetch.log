@@ -1,0 +1,67 @@
++ export HF_HOME=/root/hf HF_HUB_ENABLE_HF_TRANSFER=1 PIP_CACHE_DIR=/root/pip-cache
++ HF_HOME=/root/hf
++ HF_HUB_ENABLE_HF_TRANSFER=1
++ PIP_CACHE_DIR=/root/pip-cache
++ mkdir -p /root/hf /root/logs
++ date -u
+Tue Sep 15 17:04:16 UTC 2026
++ python3 -m venv /root/hfenv
++ /root/hfenv/bin/pip install -q huggingface_hub hf_transfer
++ tail -2
++ WHICH=tp1
++ /root/hfenv/bin/python -
+/root/hfenv/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+HF_TOKEN present: False
+Fetching 11 files:   0%|          | 0/11 [00:00<?, ?it/s]
+Fetching 16 files:   0%|          | 0/16 [00:00<?, ?it/s][A
+
+Fetching 9 files:   0%|          | 0/9 [00:00<?, ?it/s][A[AWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 11 files:  18%|█▊        | 2/11 [00:00<00:00, 19.41it/s]
+
+Fetching 9 files:  11%|█         | 1/9 [00:00<00:01,  7.78it/s][A[A
+Fetching 16 files:   6%|▋         | 1/16 [00:00<00:02,  5.21it/s][AFetching 11 files:  45%|████▌     | 5/11 [00:00<00:00, 24.60it/s]
+
+Fetching 9 files:  67%|██████▋   | 6/9 [00:00<00:00, 26.77it/s][A[AFetching 11 files:  64%|██████▎   | 7/11 [00:20<00:00, 24.60it/s]
+
+Fetching 9 files:  67%|██████▋   | 6/9 [00:19<00:00, 26.77it/s][A[AFetching 11 files:  73%|███████▎  | 8/11 [01:01<00:30, 10.07s/it]Fetching 11 files:  82%|████████▏ | 9/11 [01:05<00:17,  8.90s/it]
+
+Fetching 9 files:  78%|███████▊  | 7/9 [01:06<00:26, 13.28s/it][A[A
+Fetching 16 files:  31%|███▏      | 5/16 [01:08<02:39, 14.53s/it][A
+Fetching 16 files:  38%|███▊      | 6/16 [01:08<01:52, 11.20s/it][A
+Fetching 16 files:  44%|████▍     | 7/16 [01:08<01:16,  8.48s/it][A
+Fetching 16 files:  50%|█████     | 8/16 [01:09<00:50,  6.31s/it][A
+Fetching 16 files:  56%|█████▋    | 9/16 [01:09<00:32,  4.65s/it][AFetching 11 files:  91%|█████████ | 10/11 [01:20<00:08,  8.90s/it]Fetching 11 files: 100%|██████████| 11/11 [01:34<00:00, 10.85s/it]Fetching 11 files: 100%|██████████| 11/11 [01:34<00:00,  8.56s/it]
+PREFETCHED Qwen/Qwen2.5-7B-Instruct a09a35458c702b33eeacc393d103063234e8bc28 /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28
+
+Fetching 16 files:  62%|██████▎   | 10/16 [01:37<01:07, 11.26s/it][A
+
+Fetching 9 files:  89%|████████▉ | 8/9 [01:39<00:17, 17.66s/it][A[A
+Fetching 16 files:  69%|██████▉   | 11/16 [01:42<00:47,  9.57s/it][A
+Fetching 16 files:  75%|███████▌  | 12/16 [01:58<00:45, 11.29s/it][A
+Fetching 16 files:  81%|████████▏ | 13/16 [01:59<00:25,  8.38s/it][A
+Fetching 16 files:  88%|████████▊ | 14/16 [02:28<00:28, 14.36s/it][A
+Fetching 16 files:  94%|█████████▍| 15/16 [02:35<00:12, 12.32s/it][A
+
+Fetching 9 files: 100%|██████████| 9/9 [02:48<00:00, 30.03s/it][A[AFetching 9 files: 100%|██████████| 9/9 [02:48<00:00, 18.70s/it]
+PREFETCHED Qwen/Qwen3-8B-FP8 220b46e3b2180893580a4454f21f22d3ebb187d3 /root/hf/hub/models--Qwen--Qwen3-8B-FP8/snapshots/220b46e3b2180893580a4454f21f22d3ebb187d3
+
+Fetching 16 files: 100%|██████████| 16/16 [03:09<00:00, 18.79s/it][AFetching 16 files: 100%|██████████| 16/16 [03:09<00:00, 11.87s/it]
+PREFETCHED Qwen/Qwen1.5-MoE-A2.7B-Chat ec052fda178e241c7c443468d2fa1db6618996be /root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat/snapshots/ec052fda178e241c7c443468d2fa1db6618996be
++ date -u
+Tue Sep 15 17:07:31 UTC 2026
++ echo PREFETCH_DOWNLOADED
+PREFETCH_DOWNLOADED
++ /root/hfenv/bin/python -
+HASHED 36
++ du -sh /root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat /root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct /root/hf/hub/models--Qwen--Qwen3-8B-FP8
+27G	/root/hf/hub/models--Qwen--Qwen1.5-MoE-A2.7B-Chat
+15G	/root/hf/hub/models--Qwen--Qwen2.5-7B-Instruct
+8.9G	/root/hf/hub/models--Qwen--Qwen3-8B-FP8
++ df -h /root
++ tail -1
+overlay         200G   62G  139G  31% /
++ date -u
+Tue Sep 15 17:07:37 UTC 2026
++ echo PREFETCH_DONE
+PREFETCH_DONE

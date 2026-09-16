@@ -1,0 +1,108 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/.nv/ComputeCache",
+    "deep_gemm": "/root/.deep_gemm",
+    "flashinfer": "/root/.cache/flashinfer",
+    "inductor": "/tmp/torchinductor_root",
+    "torch_extensions": "/root/.cache/torch_extensions",
+    "triton": "/root/.triton",
+    "vllm": "/root/.cache/vllm"
+  },
+  "best_configs": {
+    "inductor/2a/47a457e8af2a0e4da859d057a264681b5e04de58a217425f8ceea040494695e8.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 11,
+      "triton_cache_hash": "2KTCSZFZB7ELYZNQRCB64DOTGXAD2D4DMJK5ERSXZFBLLI5IVNKQ"
+    },
+    "inductor/ea/dfc40a48cc6dabfe72231a9b1e163040f10ea2e278f633f1dbd000e904751df2.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 11,
+      "triton_cache_hash": "MGRVR2URZHFZME4VL27FSKWDX46HZS7QUT7PYTNSVSHH3EZMMPAA"
+    },
+    "inductor/fs/d5364ee38bb535ba947d54cfbecc515bfbe8d005ee3133b0680d93a99128be80.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 12,
+      "triton_cache_hash": "QQMNDQZVNYR6ABEMOPZTN4C2SOJVNV4ZETM3365QZQVWJNKL6R3Q"
+    },
+    "inductor/jj/aeb0cdc78fcecaf44a99b10d08bc5a339498cf9ebe5a890837cc35b135f1a6cc.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 374,
+      "triton_cache_hash": "AJK53A2JKIFE37GLFMRXL327Y6WS2BILIV4PFTVWFY25IGUPJKPQ"
+    },
+    "inductor/mm/ae36aa0887e77eaed348bf88965693a921f8af2b9e3f895e83ecf83ed25c0fb2.best_config": {
+      "XBLOCK": 256,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "7cced77f371acaa5aa7d90332a90e0c907727cfefb71d9cc9d997c24557fc44f",
+      "found_by_coordesc": false,
+      "time_taken_ms": 238,
+      "triton_cache_hash": "5HLNECP2QCVVE3EIM2VLSBIAMBOZXYOXOBN4CLJBGSV4PR4TSKFA"
+    },
+    "inductor/o2/841bfd5ce017a796317ac1e9f235ce0254ade3a49698d7acd89c9a257fcd3680.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 11,
+      "triton_cache_hash": "FMF26N5QTOJ6GT3AN2YY43B2RIV5LO67VGDQYU2O2RVRXUH4LPFQ"
+    },
+    "inductor/w2/d24d3f398ab80fb36a7de49e706dfa0d8352def1602ed77d9b90625777baf250.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 17,
+      "triton_cache_hash": "LIISISHGQ5463HI2OM6KUANAZN3GMZBSXYNDR4M44H2Y6ZPGPUUQ"
+    },
+    "inductor/xl/a0a3c3912aab24e607b4f3968e7e22f92b349c981bb9417b282322d798ee0c89.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 235,
+      "triton_cache_hash": "7CT7QJO3FUT7WUMOTBVGQKWZ3I7L4APIWBA4HOMVSR5GEDGREU4A"
+    },
+    "inductor/xz/dd9699a51908defcf7e073de2b2c5374c74158ae5209af3ef8e90212052bfdcc.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 11,
+      "triton_cache_hash": "X7RSG2OHXVL36HHI65S5N3D6R5NRSXEGEE3NKPEPCQZJ43N2AVEQ"
+    }
+  },
+  "extern_calls": {
+    "addmm": 2,
+    "mm": 6
+  },
+  "triton_kernel_families": {
+    "triton_poi_fused": 6,
+    "triton_poi_fused_mul_silu_slice": 5,
+    "triton_red_fused__to_copy_embedding_rms_norm": 3,
+    "triton_red_fused_fused_add_rms_norm": 11,
+    "triton_red_fused_ge_sum": 2
+  }
+}

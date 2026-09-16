@@ -1,0 +1,1385 @@
+{
+  "forward_passes_at_scheduler": 77,
+  "passes": [
+    {
+      "index": 0,
+      "step": 0,
+      "admitted": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 1,
+      "step": 1,
+      "admitted": [
+        "4",
+        "5"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 2,
+      "step": 2,
+      "admitted": [
+        "6",
+        "7"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 3,
+      "step": 3,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 4,
+      "step": 4,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 5,
+      "step": 5,
+      "admitted": [
+        "8"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 6,
+      "step": 6,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 7,
+      "step": 7,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 8,
+      "step": 8,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 9,
+      "step": 9,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 10,
+      "step": 10,
+      "admitted": [
+        "9"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 11,
+      "step": 11,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 12,
+      "step": 12,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 13,
+      "step": 13,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 14,
+      "step": 14,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 15,
+      "step": 15,
+      "admitted": [
+        "10"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 16,
+      "step": 16,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 17,
+      "step": 17,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 18,
+      "step": 18,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 19,
+      "step": 19,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 20,
+      "step": 20,
+      "admitted": [
+        "11"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 21,
+      "step": 21,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 22,
+      "step": 22,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 23,
+      "step": 23,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 24,
+      "step": 24,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 25,
+      "step": 25,
+      "admitted": [
+        "12"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 26,
+      "step": 26,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 27,
+      "step": 27,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 28,
+      "step": 28,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 29,
+      "step": 29,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 30,
+      "step": 30,
+      "admitted": [
+        "13"
+      ],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 31,
+      "step": 31,
+      "admitted": [],
+      "rows": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 32,
+      "step": 32,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "finished": [
+        "0",
+        "1",
+        "2"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 33,
+      "step": 33,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "finished": [
+        "3",
+        "4"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 34,
+      "step": 34,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "7"
+      ],
+      "finished": [
+        "5",
+        "6"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 35,
+      "step": 35,
+      "admitted": [
+        "14"
+      ],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14"
+      ],
+      "finished": [
+        "7"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 36,
+      "step": 36,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 37,
+      "step": 37,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 38,
+      "step": 38,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 39,
+      "step": 39,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 40,
+      "step": 40,
+      "admitted": [
+        "15"
+      ],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 41,
+      "step": 41,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 42,
+      "step": 42,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "15",
+        "14"
+      ],
+      "finished": [
+        "8"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 43,
+      "step": 43,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 44,
+      "step": 44,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 45,
+      "step": 45,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 46,
+      "step": 46,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "9",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 47,
+      "step": 47,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "14",
+        "15"
+      ],
+      "finished": [
+        "9"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 48,
+      "step": 48,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 49,
+      "step": 49,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 50,
+      "step": 50,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 51,
+      "step": 51,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "10",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 52,
+      "step": 52,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "15",
+        "14"
+      ],
+      "finished": [
+        "10"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 53,
+      "step": 53,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 54,
+      "step": 54,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 55,
+      "step": 55,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 56,
+      "step": 56,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "11",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 57,
+      "step": 57,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "14",
+        "15"
+      ],
+      "finished": [
+        "11"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 58,
+      "step": 58,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 59,
+      "step": 59,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 60,
+      "step": 60,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 61,
+      "step": 61,
+      "admitted": [],
+      "rows": [
+        "13",
+        "12",
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 62,
+      "step": 62,
+      "admitted": [],
+      "rows": [
+        "13",
+        "15",
+        "14"
+      ],
+      "finished": [
+        "12"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 63,
+      "step": 63,
+      "admitted": [],
+      "rows": [
+        "13",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 64,
+      "step": 64,
+      "admitted": [],
+      "rows": [
+        "13",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 65,
+      "step": 65,
+      "admitted": [],
+      "rows": [
+        "13",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 66,
+      "step": 66,
+      "admitted": [],
+      "rows": [
+        "13",
+        "15",
+        "14"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 67,
+      "step": 67,
+      "admitted": [],
+      "rows": [
+        "14",
+        "15"
+      ],
+      "finished": [
+        "13"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 68,
+      "step": 68,
+      "admitted": [],
+      "rows": [
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 69,
+      "step": 69,
+      "admitted": [],
+      "rows": [
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 70,
+      "step": 70,
+      "admitted": [],
+      "rows": [
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 71,
+      "step": 71,
+      "admitted": [],
+      "rows": [
+        "14",
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 72,
+      "step": 72,
+      "admitted": [],
+      "rows": [
+        "15"
+      ],
+      "finished": [
+        "14"
+      ],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 73,
+      "step": 73,
+      "admitted": [],
+      "rows": [
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 74,
+      "step": 74,
+      "admitted": [],
+      "rows": [
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 75,
+      "step": 75,
+      "admitted": [],
+      "rows": [
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    },
+    {
+      "index": 76,
+      "step": 76,
+      "admitted": [],
+      "rows": [
+        "15"
+      ],
+      "finished": [],
+      "resumed": [],
+      "preempted": []
+    }
+  ],
+  "errors": [],
+  "notes": []
+}

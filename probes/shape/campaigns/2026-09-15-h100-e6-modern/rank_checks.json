@@ -1,0 +1,278 @@
+{
+  "comparisons": [
+    {
+      "label": "W7_tp2_warm",
+      "rank1": {
+        "passes_recorded": 37,
+        "passes_replayed": 37,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": null,
+        "rows_compared": 512,
+        "rows_differing": 0,
+        "passes_differing": 0,
+        "hidden_identical_rows": 512,
+        "argmax_identical_rows": 512,
+        "logits_identical_rows": 512,
+        "free_running_divergence": {
+          "rows": 0,
+          "passes": 0,
+          "first": null
+        },
+        "verdict_P2": "IDENTICAL"
+      }
+    },
+    {
+      "label": "X8a_tp2_mixed_cold_m3",
+      "rank1": {
+        "passes_recorded": 77,
+        "passes_replayed": 77,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": {
+          "pass": 0,
+          "step_recorded": 0,
+          "slot": "0",
+          "fields": [
+            "h",
+            "logits_h"
+          ]
+        },
+        "rows_compared": 555,
+        "rows_differing": 555,
+        "passes_differing": 77,
+        "hidden_identical_rows": 0,
+        "argmax_identical_rows": 555,
+        "logits_identical_rows": 0,
+        "free_running_divergence": {
+          "rows": 0,
+          "passes": 0,
+          "first": null
+        },
+        "verdict_P2": "DIFFERS"
+      }
+    },
+    {
+      "label": "X8b_tp2_mixed_cold_m3",
+      "rank1": {
+        "passes_recorded": 77,
+        "passes_replayed": 77,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": {
+          "pass": 0,
+          "step_recorded": 0,
+          "slot": "0",
+          "fields": [
+            "h",
+            "logits_h"
+          ]
+        },
+        "rows_compared": 555,
+        "rows_differing": 555,
+        "passes_differing": 77,
+        "hidden_identical_rows": 0,
+        "argmax_identical_rows": 555,
+        "logits_identical_rows": 0,
+        "free_running_divergence": {
+          "rows": 0,
+          "passes": 0,
+          "first": null
+        },
+        "verdict_P2": "DIFFERS"
+      }
+    },
+    {
+      "label": "X8c_tp2_mixed_cold_m3",
+      "rank1": {
+        "passes_recorded": 77,
+        "passes_replayed": 77,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": {
+          "pass": 2,
+          "step_recorded": 2,
+          "slot": "2",
+          "fields": [
+            "h",
+            "logits_h"
+          ]
+        },
+        "rows_compared": 555,
+        "rows_differing": 5,
+        "passes_differing": 5,
+        "hidden_identical_rows": 550,
+        "argmax_identical_rows": 555,
+        "logits_identical_rows": 550,
+        "free_running_divergence": {
+          "rows": 0,
+          "passes": 0,
+          "first": null
+        },
+        "verdict_P2": "DIFFERS"
+      }
+    },
+    {
+      "label": "W8_tp2_mixed_warm",
+      "rank1": {
+        "passes_recorded": 77,
+        "passes_replayed": 77,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": null,
+        "rows_compared": 555,
+        "rows_differing": 0,
+        "passes_differing": 0,
+        "hidden_identical_rows": 555,
+        "argmax_identical_rows": 555,
+        "logits_identical_rows": 555,
+        "free_running_divergence": {
+          "rows": 0,
+          "passes": 0,
+          "first": null
+        },
+        "verdict_P2": "IDENTICAL"
+      }
+    },
+    {
+      "label": "Y7a_tp2_cold_m4",
+      "rank1": {
+        "passes_recorded": 37,
+        "passes_replayed": 37,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": {
+          "pass": 0,
+          "step_recorded": 0,
+          "slot": "0",
+          "fields": [
+            "h",
+            "logits_h"
+          ]
+        },
+        "rows_compared": 512,
+        "rows_differing": 494,
+        "passes_differing": 37,
+        "hidden_identical_rows": 19,
+        "argmax_identical_rows": 511,
+        "logits_identical_rows": 18,
+        "free_running_divergence": {
+          "rows": 1,
+          "passes": 1,
+          "first": {
+            "pass": 19,
+            "slot": "0"
+          }
+        },
+        "verdict_P2": "DIFFERS"
+      }
+    },
+    {
+      "label": "Y7b_tp2_cold_m4",
+      "rank1": {
+        "passes_recorded": 37,
+        "passes_replayed": 37,
+        "validation_errors": [],
+        "first_mismatch": null,
+        "first_divergence": {
+          "pass": 0,
+          "step_recorded": 0,
+          "slot": "0",
+          "fields": [
+            "h",
+            "logits_h"
+          ]
+        },
+        "rows_compared": 512,
+        "rows_differing": 493,
+        "passes_differing": 37,
+        "hidden_identical_rows": 19,
+        "argmax_identical_rows": 511,
+        "logits_identical_rows": 19,
+        "free_running_divergence": {
+          "rows": 1,
+          "passes": 1,
+          "first": {
+            "pass": 19,
+            "slot": "0"
+          }
+        },
+        "verdict_P2": "DIFFERS"
+      }
+    }
+  ],
+  "cross_rank": [
+    {
+      "run": "results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/record",
+      "differing_rows": {
+        "h": 4,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_warm",
+      "differing_rows": {
+        "h": 4,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/record",
+      "differing_rows": {
+        "h": 0,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/replay_cold_m3_a",
+      "differing_rows": {
+        "h": 0,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/replay_cold_m3_b",
+      "differing_rows": {
+        "h": 0,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m3/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/replay_cold_m3_c",
+      "differing_rows": {
+        "h": 5,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_m4_a",
+      "differing_rows": {
+        "h": 0,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0/replay_cold_m4_b",
+      "differing_rows": {
+        "h": 7,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    },
+    {
+      "run": "results_m4/e6/Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0_mixed/replay_warm",
+      "differing_rows": {
+        "h": 0,
+        "logits_h": 0,
+        "argmax": 0
+      }
+    }
+  ]
+}

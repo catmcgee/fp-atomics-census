@@ -1,0 +1,3 @@
+RANK 1 allreduce sum 2048.0
+RANK 0 allreduce sum 2048.0
+NCCL_OK

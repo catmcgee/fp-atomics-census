@@ -1,0 +1,3 @@
+record|D1_det_combo_off|cold|TORCHINDUCTOR_DETERMINISTIC=1|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --inductor-config '{"combo_kernels":false,"benchmark_combo_kernel":false}' --tag det_combo_off
+record|E1_batch_invariant|cold|VLLM_BATCH_INVARIANT=1|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --tag batch_invariant
+record|S7_moe_graphs0|cold|-|--model Qwen/Qwen1.5-MoE-A2.7B-Chat --revision ec052fda178e241c7c443468d2fa1db6618996be --tp 1 --no-compile --cudagraph 0

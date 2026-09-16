@@ -1,0 +1,2 @@
+ARCHIVE_FULL W3_fp8_pertoken_warm bytes=6198276 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT W3_fp8_pertoken_warm files=197 bytes=1248284

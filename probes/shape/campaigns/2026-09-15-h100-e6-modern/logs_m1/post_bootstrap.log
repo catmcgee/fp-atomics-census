@@ -1,0 +1,79 @@
++ export HF_HOME=/root/hf PIP_CACHE_DIR=/root/pip-cache PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ HF_HOME=/root/hf
++ PIP_CACHE_DIR=/root/pip-cache
++ PATH=/root/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
++ pip install -q -e /root/census/probes/shape/shape_hook_pkg
++ echo HOOK_INSTALL_OK
+HOOK_INSTALL_OK
++ python -
+ENTRY_POINTS [('lora_filesystem_resolver', 'vllm.plugins.lora_resolvers.filesystem_resolver:register_filesystem_resolver'), ('lora_hf_hub_resolver', 'vllm.plugins.lora_resolvers.hf_hub_resolver:register_hf_hub_resolver'), ('shape_hook', 'shape_hook:register')]
+SHAPE_HOOK_IMPORT_OK /root/census/probes/shape/shape_hook_pkg/shape_hook/__init__.py register_resolves_to shape_hook.register
+SCHEMA 3 new_token_ids_occurrences 12
+STACK python 3.12.3 torch 2.13.0+cu130 cuda 13.0 vllm 0.29.0
+PKG flashinfer-python 0.6.18.post1
+PKG triton 3.7.1
+PKG transformers 5.17.0
+PKG ninja 1.13.2
+DRIVER NVRM version: NVIDIA UNIX x86_64 Kernel Module  580.126.09  Wed Jan  7 22:59:56 UTC 2026
+GPU_COUNT 1 ['NVIDIA H100 80GB HBM3']
++ cd /root/census/probes/shape
++ python -c 'import sys; sys.path.insert(0,"."); import teacher_forcing; print("TEACHER_FORCING_VLLM_INTERFACE", teacher_forcing.VLLM_INTERFACE)'
+TEACHER_FORCING_VLLM_INTERFACE True
++ cd /root/census/probes/shape
++ python -
+CACHE_ROOTS {
+ "vllm": "/root/.cache/vllm",
+ "inductor": "/tmp/torchinductor_root",
+ "triton": "/root/.triton",
+ "flashinfer": "/root/.cache/flashinfer",
+ "torch_extensions": "/root/.cache/torch_extensions",
+ "cuda_jit": "/root/.nv/ComputeCache",
+ "deep_gemm": "/root/.deep_gemm"
+}
+MACHINE {
+ "hostname": "2badab1870d3",
+ "runpod_pod_id": null,
+ "cuda_visible_devices": null,
+ "kernel": "6.8.0-106-generic",
+ "gpus": [
+  {
+   "index": "0",
+   "uuid": "GPU-c9a56027-3e8a-cfd8-3677-f949fb22eb85",
+   "pci_bus_id": "00000000:BB:00.0",
+   "vbios": "96.00.DA.00.0C"
+  }
+ ]
+}
+CACHE_EMPTY_NOW True
++ nvidia-smi -L
+GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-c9a56027-3e8a-cfd8-3677-f949fb22eb85)
++ nvidia-smi --query-gpu=index,name,uuid,serial,pci.bus_id,driver_version,vbios_version --format=csv
+index, name, uuid, serial, pci.bus_id, driver_version, vbios_version
+0, NVIDIA H100 80GB HBM3, GPU-c9a56027-3e8a-cfd8-3677-f949fb22eb85, 1652424048941, 00000000:BB:00.0, 580.126.09, 96.00.DA.00.0C
++ hostname
+2badab1870d3
++ grep -m1 'model name' /proc/cpuinfo
+model name	: Intel(R) Xeon(R) Platinum 8480+
++ nproc
+224
++ free -g
++ head -2
+               total        used        free      shared  buff/cache   available
+Mem:            2015          69         837           0        1121        1945
++ uname -r
+6.8.0-106-generic
++ cat /etc/os-release
++ head -2
+PRETTY_NAME="Ubuntu 24.04.3 LTS"
+NAME="Ubuntu"
++ env
++ grep -E '^RUNPOD_(POD_ID|POD_HOSTNAME|DC_ID|GPU_COUNT|CPU_COUNT|PUBLIC_IP|TCP_PORT_22)='
++ sort
++ curl -s --max-time 10 https://api.ipify.org
+103.108.13.52+ echo
+
++ pip freeze
++ wc -l /root/logs/pip-freeze.txt
+199 /root/logs/pip-freeze.txt
++ echo POST_BOOTSTRAP_DONE
+POST_BOOTSTRAP_DONE

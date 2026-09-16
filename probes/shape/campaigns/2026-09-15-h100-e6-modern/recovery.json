@@ -1,0 +1,48 @@
+{
+  "recovered_utc": "2026-09-15T18:15:55Z",
+  "verification": "Every result, engine log and light/full artefact archive matched the SHA-256 listing obtained from its pod before removal. Full binary archives are retained locally; light archives are included here.",
+  "pods": [
+    {
+      "id": "dwssu80ddb315t",
+      "name": "fp-census-c2-m1",
+      "created_utc": "2026-09-15T16:54:31Z",
+      "terminate_after_utc": "2026-09-15T17:54:31Z",
+      "removed_utc": "2026-09-15T18:15:53.483011+00:00",
+      "status": "REMOVED",
+      "costPerHr": 3.49
+    },
+    {
+      "id": "h8w6b3hrthf3wt",
+      "name": "fp-census-c2-m2",
+      "created_utc": "2026-09-15T17:03:19Z",
+      "terminate_after_utc": "2026-09-15T18:03:19Z",
+      "removed_utc": "2026-09-15T18:15:54.199018+00:00",
+      "status": "REMOVED",
+      "costPerHr": 3.49
+    },
+    {
+      "id": "caw51n9cfkocdt",
+      "name": "fp-census-c2-m3",
+      "created_utc": "2026-09-15T17:18:22Z",
+      "terminate_after_utc": "2026-09-15T17:58:22Z",
+      "removed_utc": "2026-09-15T18:15:54.913912+00:00",
+      "status": "REMOVED",
+      "costPerHr": 6.98
+    },
+    {
+      "id": "3klswanxa431ti",
+      "name": "fp-census-c2-m4",
+      "created_utc": "2026-09-15T17:21:06Z",
+      "terminate_after_utc": "2026-09-15T18:01:06Z",
+      "removed_utc": "2026-09-15T18:15:55.593905+00:00",
+      "status": "REMOVED",
+      "costPerHr": 6.98
+    }
+  ],
+  "remaining_census_pods": [],
+  "account_balance_usd": 1.8555318572,
+  "account_balance_decrease_usd": 21.3655450072,
+  "listed_rate_cost_kept_pods_usd": 22.02839301218611,
+  "campaign_cap_usd": 17,
+  "billing_note": "The cap was exceeded while the campaign was unattended. The account balance change includes other resources and is not itemised campaign billing. No GPU job was launched during recovery."
+}

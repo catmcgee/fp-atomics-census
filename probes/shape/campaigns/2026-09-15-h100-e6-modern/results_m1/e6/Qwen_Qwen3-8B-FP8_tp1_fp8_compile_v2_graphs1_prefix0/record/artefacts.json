@@ -1,0 +1,110 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/.nv/ComputeCache",
+    "deep_gemm": "/root/.cache/vllm/deep_gemm",
+    "flashinfer": "/root/.cache/flashinfer",
+    "inductor": "/tmp/torchinductor_root",
+    "torch_extensions": "/root/.cache/torch_extensions",
+    "triton": "/root/.triton",
+    "vllm": "/root/.cache/vllm"
+  },
+  "best_configs": {
+    "inductor/3n/9effd1bec5a3a83fd19fdc734dedd378f8895e43dee88f32b3e4a25c3776fc08.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 59,
+      "triton_cache_hash": "5OJSA4WQ5Z3PPWOCICS7QUXQDUDJ3Q5GOSVINKXGN2ZIMR6BO3JQ"
+    },
+    "inductor/76/cab18a58fa471cd4b7919ea76f6c48e12da69389a4ae74bcc68559776781a8be.best_config": {
+      "XBLOCK": 2,
+      "R0_BLOCK": 128,
+      "num_warps": 2,
+      "num_stages": 1,
+      "configs_hash": "d17bd9ccaeeaa2df343ca0e6388249886ef138fe3fe8ae8fa48632d5825131f4",
+      "found_by_coordesc": false,
+      "time_taken_ms": 1905,
+      "triton_cache_hash": "JMHJ44XBX3H7GVH3Z3DLTBHIASKPS4HVYDI77OGHZWOBD665YYYA"
+    },
+    "inductor/aq/7651f9574080bbe26eea03a5266f7b51966e93808fe8bbe9c9f29735d8916464.best_config": {
+      "XBLOCK": 2,
+      "R0_BLOCK": 128,
+      "num_warps": 2,
+      "num_stages": 1,
+      "configs_hash": "d17bd9ccaeeaa2df343ca0e6388249886ef138fe3fe8ae8fa48632d5825131f4",
+      "found_by_coordesc": false,
+      "time_taken_ms": 62,
+      "triton_cache_hash": "3EHYYXYJ5YROGYXSBP63VSN4DZM24C62AQJMZYAJYFOR2OMXNX3A"
+    },
+    "inductor/m7/7c7f5d772993df53fb9f439df33cdb6091117ca44175bac7aae1905590d0821a.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 24,
+      "triton_cache_hash": "VZEBT33BS3SO2AC7SUP4F52SVGOXHOM5W2VDZGBE4VW4ONMON6JA"
+    },
+    "inductor/nq/d360aaa6d5f1fb0e4e0ead9280b83c51a46b2e88da7956f543e92e1f2880eb0f.best_config": {
+      "XBLOCK": 2,
+      "R0_BLOCK": 128,
+      "num_warps": 2,
+      "num_stages": 1,
+      "configs_hash": "d17bd9ccaeeaa2df343ca0e6388249886ef138fe3fe8ae8fa48632d5825131f4",
+      "found_by_coordesc": false,
+      "time_taken_ms": 3284,
+      "triton_cache_hash": "Z2IOIS5DDPCEXUJ2VKO7EGMOZJ332IYGJRBIEZMYOIQGH64YOHDA"
+    },
+    "inductor/sa/33351f294dff0bff1bcd91e122247b2e5147e275ee1099a697990f1a645db672.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 32,
+      "triton_cache_hash": "GYC7ZYJBILXJ5SDTKHOVYVIAX2PDOHCP6SXE65IH6WQYG4PJOP6A"
+    },
+    "inductor/w2/1567c4089f30476b629ba7e740deca606963587ba5421caf02f5a9ce37702beb.best_config": {
+      "XBLOCK": 2,
+      "R0_BLOCK": 128,
+      "num_warps": 2,
+      "num_stages": 1,
+      "configs_hash": "6ffa43f2ca8cb1499f3ff3fbf8c975f2c07eef9b57fcecda113029ab12cbef66",
+      "found_by_coordesc": false,
+      "time_taken_ms": 1754,
+      "triton_cache_hash": "N5SPQ56DOUUWS56K3UFLBIT3BB27YFUNPWFVT7FGEEH3347GASNQ"
+    },
+    "inductor/wq/eb4f848d7be13ac827904c58321717add5b01e61c9120b6c999a245b39fdc21d.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 38,
+      "triton_cache_hash": "LKIT6OM7HC4P4VXCYKULA63UVFEIT7H2ZNNRC3IHR5H2WXC3FHAA"
+    },
+    "inductor/x3/177419d3e6fe2600cdcf9ca95dde088a9dbe8881a6854d25078551a78fed9a38.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 44,
+      "triton_cache_hash": "JWQVCTEBF34CBGLOYNPCRI2WI6UV2TPIZ2XA43KVBADJ7HZCGJJQ"
+    }
+  },
+  "extern_calls": {},
+  "triton_kernel_families": {
+    "triton_poi_fused": 5,
+    "triton_poi_fused__to_copy_abs_ceil_clamp_div_log2_mul_pow_reciprocal_slice_view_zeros": 2,
+    "triton_poi_fused__to_copy_abs_ceil_clamp_div_log2_mul_pow_reciprocal_view_zeros": 2,
+    "triton_poi_fused__to_copy_embedding": 3,
+    "triton_red_fused": 5,
+    "triton_red_fused_abs_amax_ceil_clamp_div_log2_pow_view_zeros": 2,
+    "triton_red_fused_fused_add_rms_norm": 3,
+    "triton_red_fused_ge_sum": 2
+  }
+}

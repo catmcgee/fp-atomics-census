@@ -1,0 +1,2 @@
+ARCHIVE_FULL E2a_batchinv_cold_m2 bytes=7176946 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT E2a_batchinv_cold_m2 files=230 bytes=1053683

@@ -1,0 +1,2 @@
+ARCHIVE_FULL R1_bf16 bytes=4898351 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT R1_bf16 files=173 bytes=816602

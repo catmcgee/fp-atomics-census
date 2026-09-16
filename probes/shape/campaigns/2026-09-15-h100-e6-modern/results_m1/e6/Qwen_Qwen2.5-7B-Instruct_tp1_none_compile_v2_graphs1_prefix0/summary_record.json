@@ -1,0 +1,103 @@
+{
+  "experiment": "E6",
+  "mode": "replay",
+  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0",
+  "recorded_arm": "record",
+  "replay_arm": "record",
+  "passes_recorded": 37,
+  "passes_replayed": 37,
+  "first_mismatch": null,
+  "first_divergence": null,
+  "rows_compared": 512,
+  "rows_differing": 0,
+  "passes_differing": 0,
+  "hidden_identical_rows": 512,
+  "argmax_identical_rows": 512,
+  "logits_identical_rows": 512,
+  "free_running_divergence": {
+    "rows": 0,
+    "passes": 0,
+    "first": null
+  },
+  "requirements_met": false,
+  "outputs_identical": true,
+  "forcing_log": {
+    "calls": 37,
+    "forced_rows": 0,
+    "rows_where_forced_equalled_argmax": 0
+  },
+  "notes": [],
+  "verdict_P2": "INVALID",
+  "validation_errors": [
+    "pass 0: 0 forced rows but 8 batch rows",
+    "pass 10: 0 forced rows but 16 batch rows",
+    "pass 11: 0 forced rows but 16 batch rows",
+    "pass 12: 0 forced rows but 16 batch rows",
+    "pass 13: 0 forced rows but 16 batch rows",
+    "pass 14: 0 forced rows but 16 batch rows",
+    "pass 15: 0 forced rows but 16 batch rows",
+    "pass 16: 0 forced rows but 16 batch rows",
+    "pass 17: 0 forced rows but 16 batch rows",
+    "pass 18: 0 forced rows but 16 batch rows",
+    "pass 19: 0 forced rows but 16 batch rows",
+    "pass 1: 0 forced rows but 8 batch rows",
+    "pass 20: 0 forced rows but 16 batch rows",
+    "pass 21: 0 forced rows but 16 batch rows",
+    "pass 22: 0 forced rows but 16 batch rows",
+    "pass 23: 0 forced rows but 16 batch rows",
+    "pass 24: 0 forced rows but 16 batch rows",
+    "pass 25: 0 forced rows but 16 batch rows",
+    "pass 26: 0 forced rows but 16 batch rows",
+    "pass 27: 0 forced rows but 16 batch rows",
+    "pass 28: 0 forced rows but 16 batch rows",
+    "pass 29: 0 forced rows but 16 batch rows",
+    "pass 2: 0 forced rows but 8 batch rows",
+    "pass 30: 0 forced rows but 16 batch rows",
+    "pass 31: 0 forced rows but 16 batch rows",
+    "pass 32: 0 forced rows but 8 batch rows",
+    "pass 33: 0 forced rows but 8 batch rows",
+    "pass 34: 0 forced rows but 8 batch rows",
+    "pass 35: 0 forced rows but 8 batch rows",
+    "pass 36: 0 forced rows but 8 batch rows",
+    "pass 3: 0 forced rows but 8 batch rows",
+    "pass 4: 0 forced rows but 8 batch rows",
+    "pass 5: 0 forced rows but 16 batch rows",
+    "pass 6: 0 forced rows but 16 batch rows",
+    "pass 7: 0 forced rows but 16 batch rows",
+    "pass 8: 0 forced rows but 16 batch rows",
+    "pass 9: 0 forced rows but 16 batch rows",
+    "record files differ from the digests the replay run.json recorded; raw record files must not change after a replay",
+    "replay run.json does not reference the recorded run id"
+  ],
+  "record_stack": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09"
+  },
+  "replay_stack": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "driver": "580.126.09"
+  },
+  "claim_scope": "One recorded schedule replayed in one fresh process on the same recorded stack (GPU, driver and installed distributions equal in both env.json files) with teacher forcing; identical means the recorded passes were reproduced from the record, not that every schedule or stack would be.",
+  "record_sha256": {
+    "run.json": "3fed2c7249752a91efb34e2b08b0852d72d5a0500e234feb2db91ff000c7a9f1",
+    "outputs.json": "a379767025975ce0ba1c1279c39023d4377cae2e1309d521839c4c7aec6683de",
+    "rank0.jsonl": "5c75373be1d0006049bf7f9e18ed8c0850ff04835b6d103ce2a60bf6b584a7c0",
+    "forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08"
+  },
+  "replay_sha256": {
+    "run.json": "3fed2c7249752a91efb34e2b08b0852d72d5a0500e234feb2db91ff000c7a9f1",
+    "outputs.json": "a379767025975ce0ba1c1279c39023d4377cae2e1309d521839c4c7aec6683de",
+    "rank0.jsonl": "5c75373be1d0006049bf7f9e18ed8c0850ff04835b6d103ce2a60bf6b584a7c0",
+    "forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08"
+  },
+  "analysis_schema": 2,
+  "analyser_sha256": "fd45a1b297e9e377e7478a6ba322a58cc4c08b65b088f4f6635983274cd4dcd1",
+  "input_sha256": {
+    "env.json": "7bce93f71c88ad93c50590563c48531f02c586fb49cf97b3b9904e076bb6cd92",
+    "hook/forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+    "hook/rank0.jsonl": "5c75373be1d0006049bf7f9e18ed8c0850ff04835b6d103ce2a60bf6b584a7c0",
+    "outputs.json": "a379767025975ce0ba1c1279c39023d4377cae2e1309d521839c4c7aec6683de",
+    "run.json": "3fed2c7249752a91efb34e2b08b0852d72d5a0500e234feb2db91ff000c7a9f1"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
+}

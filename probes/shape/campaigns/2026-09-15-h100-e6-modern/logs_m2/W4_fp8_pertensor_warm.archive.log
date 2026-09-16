@@ -1,0 +1,2 @@
+ARCHIVE_FULL W4_fp8_pertensor_warm bytes=6202941 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT W4_fp8_pertensor_warm files=262 bytes=1099773
