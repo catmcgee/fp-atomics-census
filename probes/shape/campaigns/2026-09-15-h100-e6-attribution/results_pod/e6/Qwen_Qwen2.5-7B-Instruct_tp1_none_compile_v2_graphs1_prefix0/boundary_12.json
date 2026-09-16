@@ -1,0 +1,72 @@
+{
+  "experiment": "E6",
+  "mode": "boundary",
+  "arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0",
+  "recorded_arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/record",
+  "replay_arm": "Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/boundary_12",
+  "pass": 12,
+  "recorded_step": 12,
+  "rows": 16,
+  "prefix_tokens_total": 1098,
+  "first_mismatch": null,
+  "rows_compared": 16,
+  "rows_differing": 16,
+  "differing_slots": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+  ],
+  "excluded_row_fields": [
+    "prompt",
+    "cache_hit"
+  ],
+  "rebuilt_passes": 2,
+  "verdict_P2_boundary": "DIFFERS",
+  "forcing_log": {
+    "calls": 2,
+    "forced_rows": 32,
+    "rows_where_forced_equalled_argmax": 32
+  },
+  "validation_errors": [],
+  "claim_scope": "One recorded all-decode pass rebuilt by prefilling every row's recorded prefix in a single pass; the KV state comes from that prefill, not from the recorded sequence of passes, so DIFFERS does not separate a prefill-versus-decode KV difference from other causes. The rebuilt rows' prompt field is the prefix length and is excluded.",
+  "record_sha256": {
+    "run.json": "667449938bd93dc44f222263141986e22fc1191f4fc80b89453caeea262a346a",
+    "outputs.json": "a379767025975ce0ba1c1279c39023d4377cae2e1309d521839c4c7aec6683de",
+    "rank0.jsonl": "2ace0ed4ba7a35cab104d4f5edbd8b89f9d995484b689662ea0a8903638a1b94",
+    "forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08"
+  },
+  "replay_sha256": {
+    "run.json": "bb4b5c19e6c8606a39ee99e24b431180e9f33687ca64cea5fc87ceedc47bdf04",
+    "outputs.json": "8940fc2a842f9b050a72c2f90615303b2869be090d19d0740d4949ad6642a232",
+    "boundary.json": "cda91e16d3fa0eacf2f7143992eec26e3bbbff58e6da19eab84a1fd4af01cb04",
+    "rank0.jsonl": "5ca79ba701b5453766aaae6cbbaa815dcb00329a661edda83e54b036d0a04485",
+    "forcing_rank0.jsonl": "5253ea61657adb921903fd670138e0218057236b848fbff9b0ece2558d5e170f"
+  },
+  "analysis_schema": 2,
+  "analyser_sha256": "fd45a1b297e9e377e7478a6ba322a58cc4c08b65b088f4f6635983274cd4dcd1",
+  "input_sha256": {
+    "boundary_12/boundary.json": "cda91e16d3fa0eacf2f7143992eec26e3bbbff58e6da19eab84a1fd4af01cb04",
+    "boundary_12/hook/forcing_rank0.jsonl": "5253ea61657adb921903fd670138e0218057236b848fbff9b0ece2558d5e170f",
+    "boundary_12/hook/rank0.jsonl": "5ca79ba701b5453766aaae6cbbaa815dcb00329a661edda83e54b036d0a04485",
+    "boundary_12/outputs.json": "8940fc2a842f9b050a72c2f90615303b2869be090d19d0740d4949ad6642a232",
+    "boundary_12/run.json": "bb4b5c19e6c8606a39ee99e24b431180e9f33687ca64cea5fc87ceedc47bdf04",
+    "record/hook/forcing_rank0.jsonl": "172db8e7462e2954ff4f52f324e9313039564074d52396feb9877bf93a9dee08",
+    "record/hook/rank0.jsonl": "2ace0ed4ba7a35cab104d4f5edbd8b89f9d995484b689662ea0a8903638a1b94",
+    "record/outputs.json": "a379767025975ce0ba1c1279c39023d4377cae2e1309d521839c4c7aec6683de",
+    "record/run.json": "667449938bd93dc44f222263141986e22fc1191f4fc80b89453caeea262a346a"
+  },
+  "observation_limits": "Legacy runs use truncated hidden hashes and unlabelled sparse logprobs; no KV commitment or teacher-forced replay."
+}

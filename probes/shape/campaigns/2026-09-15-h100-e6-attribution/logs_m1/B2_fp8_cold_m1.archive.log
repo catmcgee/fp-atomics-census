@@ -1,0 +1,2 @@
+ARCHIVE_FULL B2_fp8_cold_m1 bytes=6198270 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT B2_fp8_cold_m1 files=197 bytes=1248320

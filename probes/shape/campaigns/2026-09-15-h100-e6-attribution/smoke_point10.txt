@@ -1,0 +1,4 @@
+SMOKE  8 PASS :: record cache_before_engine.empty=True, artefacts best_configs=10, extern_calls={'addmm': 2, 'mm': 6}, triton_kernel_families=5
+SMOKE  9 PASS :: forcing calls 37 vs forward passes 37; self-compare says: E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 INVALID; first mismatch None; rows compared 512; rows differing 0; errors 39
+SMOKE 10 PASS :: ParallelConfig.enable_batch_sharded_sampling present=True resolved=None (not printed in resolved_config: {'record': False, 'replay': False}); resolved_model_runner v1 in record and replay; hook wrote hashed rows, so the batch-sharded refusal path was not taken
+SMOKE_RESULT PASS

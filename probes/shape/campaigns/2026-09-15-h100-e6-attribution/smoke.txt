@@ -1,0 +1,11 @@
+SMOKE  1 PASS :: rank0.jsonl present in record and warm replay: True; TP=2 rank1 N/A (C1 is a one-GPU campaign, C2 covers TP=2)
+SMOKE  2 PASS :: hook model_runner {'record': ['v1'], 'replay': ['v1']}, run.json resolved_model_runner {'record': 'v1', 'replay': 'v1'}
+SMOKE  3 PASS :: schema [3], rows with an invalid reason 0, rows missing new_token_ids 0; TP=2 half N/A (one-GPU campaign)
+SMOKE  4 PASS :: attention_backend ['FLASH_ATTN'], decode-pass cudagraph modes ['FULL'], resolved (compile, cudagraph) {'record': ('3', 'FULL_AND_PIECEWISE'), 'replay': ('3', 'FULL_AND_PIECEWISE')}
+SMOKE  5 PASS :: linear_quant {"bf16": {"layer": "model.layers.0.self_attn.qkv_proj", "method": "UnquantizedLinearMethod", "activation_quant_key": null, "kernel": null}, "fp8_per_token": {"layer": "model.layers.0.self_attn.qkv_proj", "method": "Fp8PerTensorOnlineLinearMethod", "activation_quant_key": "QuantKey(f8e4m3fn,scale(f32,dynamic,per_token),symmetric)", "kernel": "CutlassFP8ScaledMMLinearKernel"}, "fp8_per_tensor": {"layer": "model.layers.0.self_attn.qkv_proj", "method": "Fp8PerTensorOnlineLinearMethod", "activation_quant_key": "QuantKey(f8e4m3fn,scale(f32,dynamic,per_tensor),symmetric)", "kernel": "CutlassFP8ScaledMMLinearKernel"}}
+SMOKE  6 PASS :: fp8_forcing.patched_modules ['vllm.model_executor.layers.quantization.fp8', 'vllm.model_executor.layers.quantization.online.fp8', 'vllm.model_executor.layers.quantization.utils.w8a8_utils']
+SMOKE  7 N/A  :: N/A: C1 runs one dense model (Qwen2.5-7B-Instruct); no MoE arm. C2 and C3 carry the MoE arms
+SMOKE  8 PASS :: record cache_before_engine.empty=True, artefacts best_configs=10, extern_calls={'addmm': 2, 'mm': 6}, triton_kernel_families=5
+SMOKE  9 PASS :: forcing calls 37 vs forward passes 37; self-compare says: E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 INVALID; first mismatch None; rows compared 512; rows differing 0; errors 39
+SMOKE 10 FAIL :: resolved_config says enable_batch_sharded_sampling=False: {'record': False, 'replay': False} (key present: {'record': False, 'replay': False})
+SMOKE_RESULT FAIL points [10]

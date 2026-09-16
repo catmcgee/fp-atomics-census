@@ -1,0 +1,99 @@
+{
+  "cache_roots": {
+    "cuda_jit": "/root/.nv/ComputeCache",
+    "deep_gemm": "/root/.deep_gemm",
+    "flashinfer": "/root/.cache/flashinfer",
+    "inductor": "/tmp/torchinductor_root",
+    "torch_extensions": "/root/.cache/torch_extensions",
+    "triton": "/root/.triton",
+    "vllm": "/root/.cache/vllm"
+  },
+  "best_configs": {
+    "inductor/24/f9ac892c530cdc1e7126f3248eca4ea27fd3d91c480bf046d40b086864e3111d.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 52,
+      "triton_cache_hash": "MGRVR2URZHFZME4VL27FSKWDX46HZS7QUT7PYTNSVSHH3EZMMPAA"
+    },
+    "inductor/ac/2ba5ff8a4e32a1a852550c9b6cc9fc1b5cc6d61444f8836c37d57c2e7d309d8e.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 39,
+      "triton_cache_hash": "W3A6Z5APEWIX3AOA66FDF7TL3K2G2Y66YCCWZDVOK64RHYAVS4HA"
+    },
+    "inductor/bl/508747aa8d7eae8040d3ce3ae77e74ddc596199cda75b5142836f288ae0e650c.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 39,
+      "triton_cache_hash": "X6FAWGMRNE5JVXIJT3YE4UIMDYI6JVBL7K6WMNZQ4BPJMPQPR3EQ"
+    },
+    "inductor/d5/1b6d702d5f6d0bd9df8caf55983f9243e676bd6a005bc109e2f461294a7df068.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 65,
+      "triton_cache_hash": "QQMNDQZVNYR6ABEMOPZTN4C2SOJVNV4ZETM3365QZQVWJNKL6R3Q"
+    },
+    "inductor/i7/d7b93f28338792293a0b21cba942e87aa652862c9a29c83dc9213f54afc01dd6.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 15,
+      "triton_cache_hash": "W47RBSG53LWGDHMQP2CWWBQY3FCXRGNBCE5WBI2FGWZRQ4ULQ2WQ"
+    },
+    "inductor/kn/b6ee7c0f3b68a5015fcfcb0c622f83a4c70ea3b4ee043a5ec0e81a75c0c0d470.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 63,
+      "triton_cache_hash": "LIISISHGQ5463HI2OM6KUANAZN3GMZBSXYNDR4M44H2Y6ZPGPUUQ"
+    },
+    "inductor/pp/ed662f9cd1eb17ecca9c2180924ee1827553e0493346af90c204e3904006d581.best_config": {
+      "XBLOCK": 1,
+      "R0_BLOCK": 4096,
+      "num_warps": 16,
+      "num_stages": 1,
+      "configs_hash": "ba27f374f6982634f1ab959ad1e63f726920cfc2c7c821f8e68ec55c3d4d94fc",
+      "found_by_coordesc": false,
+      "time_taken_ms": 35,
+      "triton_cache_hash": "FMF26N5QTOJ6GT3AN2YY43B2RIV5LO67VGDQYU2O2RVRXUH4LPFQ"
+    },
+    "inductor/uq/cc25b2767ded0c5ba8bd8211a8ef960f0ee1cee9be48c42e78e510c9b8aba1d8.best_config": {
+      "XBLOCK": 1024,
+      "num_warps": 4,
+      "num_stages": 1,
+      "configs_hash": "3ca5c3e34d35093f3c9ab2829a9faeebad5e61c4ca13d5ed6053d7b71ce60d5a",
+      "found_by_coordesc": false,
+      "time_taken_ms": 15,
+      "triton_cache_hash": "RF7ANN56ZJIAO6INH34RJC2FXYLPVEU37K3UCIA2HXBEEXHY7WFQ"
+    }
+  },
+  "extern_calls": {
+    "addmm": 2,
+    "mm": 6
+  },
+  "triton_kernel_families": {
+    "triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view": 12,
+    "triton_poi_fused_mul_silu_slice": 5,
+    "triton_red_fused__to_copy_embedding_rms_norm": 3,
+    "triton_red_fused_fused_add_rms_norm": 11,
+    "triton_red_fused_ge_sum": 2
+  }
+}

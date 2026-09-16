@@ -1,0 +1,55 @@
+{
+  "phase": "after_run",
+  "empty": false,
+  "roots": {
+    "cuda_jit": {
+      "path": "/root/.nv/ComputeCache",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "deep_gemm": {
+      "path": "/root/.cache/vllm/deep_gemm",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "flashinfer": {
+      "path": "/root/.cache/flashinfer",
+      "exists": true,
+      "files": 9,
+      "bytes": 5625233,
+      "sha256": "8290746f7158f0379ceef7cf25d460cfa99a8939c1dc8497b6595b20bd2488d7"
+    },
+    "inductor": {
+      "path": "/tmp/torchinductor_root",
+      "exists": true,
+      "files": 260,
+      "bytes": 17128052,
+      "sha256": "bd8b12eea71a13bc3e704cbab35b13a5b4dac0053f1cd7b4f80cb592a2fc72d4"
+    },
+    "torch_extensions": {
+      "path": "/root/.cache/torch_extensions",
+      "exists": false,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null
+    },
+    "triton": {
+      "path": "/root/.triton",
+      "exists": true,
+      "files": 1,
+      "bytes": 55832,
+      "sha256": "66856320d378f20bac7660d597be5cba154515bd9e3880423761772a83feddfc"
+    },
+    "vllm": {
+      "path": "/root/.cache/vllm",
+      "exists": true,
+      "files": 3,
+      "bytes": 1107619,
+      "sha256": "f9731e6a2f263348843a17e1e6249b4dac4ed2be15c84e94c265347b400706fb"
+    }
+  }
+}

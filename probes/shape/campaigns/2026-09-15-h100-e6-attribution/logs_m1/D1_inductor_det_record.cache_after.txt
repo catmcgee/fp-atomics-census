@@ -1,0 +1,52 @@
+CACHE /root/.cache exists files=4 bytes=11035
+  /root/.cache
+  /root/.cache/motd.legal-displayed
+  /root/.cache/vllm
+  /root/.cache/vllm/modelinfos
+  /root/.cache/vllm/modelinfos/vllm-model_executor-models-qwen2-Qwen2ForCausalLM.json
+  /root/.cache/vllm/torch_compile_cache
+  /root/.cache/vllm/torch_compile_cache/65abb0ba38
+  /root/.cache/flashinfer
+  /root/.cache/flashinfer/0.6.18.post1
+  /root/.cache/flashinfer/0.6.18.post1/90a
+CACHE /root/.triton exists files=1 bytes=55832
+  /root/.triton
+  /root/.triton/cache
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ
+  /root/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ/cuda_utils.cpython-312-x86_64-linux-gnu.so
+CACHE /root/.nv exists files=0 bytes=0
+  /root/.nv
+  /root/.nv/ComputeCache
+CACHE /root/.deep_gemm absent
+CACHE /root/.tilelang absent
+CACHE /root/.cutlass absent
+CACHE /root/.humming exists files=1 bytes=0
+  /root/.humming
+  /root/.humming/tmp
+  /root/.humming/tmp/lock
+  /root/.humming/tmp/lock/launcher.lock
+CACHE /root/.config/vllm exists files=1 bytes=1505
+  /root/.config/vllm
+  /root/.config/vllm/usage_stats.json
+CACHE /tmp/torchinductor_root exists files=18 bytes=319373
+  /tmp/torchinductor_root
+  /tmp/torchinductor_root/qn
+  /tmp/torchinductor_root/qn/cqn2ofv7rthqmi4rbnyatujagh2dcwnpl3idz4clzylp3fp3sput.py
+  /tmp/torchinductor_root/qn/3d4fd5a9d6beb37a4222fbc8eb0000b43276bd0643e4ee9334246cc7a456b549.best_config
+  /tmp/torchinductor_root/triton
+  /tmp/torchinductor_root/triton/0
+  /tmp/torchinductor_root/triton/0/UMBJUUIIOXQ44MVLRYPXZ5KJOWVKJEDFBNKO5FRK3OEFCQYVVTSQ
+  /tmp/torchinductor_root/triton/0/TCPXOMTXOOIN56MHWAKMGHLLTRNKN6UKT6W33RDTHTB2FSHMF5PQ
+CACHE /tmp exists files=18 bytes=319373
+  /tmp
+  /tmp/torchinductor_root
+  /tmp/torchinductor_root/qn
+  /tmp/torchinductor_root/qn/cqn2ofv7rthqmi4rbnyatujagh2dcwnpl3idz4clzylp3fp3sput.py
+  /tmp/torchinductor_root/qn/3d4fd5a9d6beb37a4222fbc8eb0000b43276bd0643e4ee9334246cc7a456b549.best_config
+  /tmp/torchinductor_root/triton
+  /tmp/torchinductor_root/triton/0
+  /tmp/root
+  /tmp/root/cutlass_python_cache
+CACHE /var/tmp exists files=0 bytes=0
+  /var/tmp
+CACHE_TOTAL_FILES 43

@@ -1,0 +1,5 @@
+replay|E3a_rmsnorm_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_rmsnorm_custom replay_cold_m1_a
+replay|A3d_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_d
+replay|E3b_rmsnorm_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_rmsnorm_custom replay_cold_m1_b
+replay|A3e_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_e
+replay|A3f_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_f

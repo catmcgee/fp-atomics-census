@@ -1,0 +1,2 @@
+ARCHIVE_FULL S3_fp8_pertensor bytes=6203180 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+ARCHIVE_LIGHT S3_fp8_pertensor files=262 bytes=1099548

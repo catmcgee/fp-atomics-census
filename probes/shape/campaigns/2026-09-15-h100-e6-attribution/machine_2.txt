@@ -1,0 +1,6 @@
+index, name, uuid, serial, pci.bus_id, driver_version, vbios_version
+0, NVIDIA H100 80GB HBM3, GPU-1f65937e-10dc-f52d-7b2d-8f4b052f5f56, 1652823084493, 00000000:3B:00.0, 580.126.09, 96.00.DA.00.0C
+d4d75e89ac58
+128
+6.17.0-1008-nvidia
+model name	: Intel(R) Xeon(R) Platinum 8462Y+

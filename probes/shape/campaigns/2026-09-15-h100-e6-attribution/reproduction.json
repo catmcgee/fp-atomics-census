@@ -1,0 +1,74 @@
+{
+  "files_verified": 729,
+  "summaries_byte_identical": 32,
+  "agreement": {
+    "equal_IDENTICAL": 20,
+    "unequal_DIFFERS": 12
+  },
+  "reference_classes": [
+    {
+      "R0_BLOCK": [
+        2048,
+        2048,
+        4096
+      ],
+      "runs": [
+        "A3c_cold_m1"
+      ],
+      "row_sha256": "2d555e760119513098a6a011cd47a965f907ea8e733a1c1a8d408c1c18aae4ee",
+      "rows_differing": 512
+    },
+    {
+      "R0_BLOCK": [
+        2048,
+        4096,
+        2048
+      ],
+      "runs": [
+        "A3e_cold_m1",
+        "A6c_cold_m2"
+      ],
+      "row_sha256": "b4d022841721bb0f3bf30e3c9f88f45359229fc3249da17eef4d9a184374dc77",
+      "rows_differing": 512
+    },
+    {
+      "R0_BLOCK": [
+        2048,
+        4096,
+        4096
+      ],
+      "runs": [
+        "A3f_cold_m1",
+        "A6b_cold_m2",
+        "A6i_cold_m2"
+      ],
+      "row_sha256": "fcabf494b89dd7c2744fa6fe1a261f10596a6212679a57d19d05dfd5377b728a",
+      "rows_differing": 512
+    },
+    {
+      "R0_BLOCK": [
+        4096,
+        4096,
+        4096
+      ],
+      "runs": [
+        "A1_record",
+        "A2_warm",
+        "A3a_cold_m1",
+        "A3b_cold_m1",
+        "A4_restored_m1",
+        "A3d_cold_m1",
+        "A6a_cold_m2",
+        "A5_restored_m2",
+        "A6d_cold_m2",
+        "A6e_cold_m2",
+        "A6f_cold_m2",
+        "A6g_cold_m2",
+        "A6h_cold_m2",
+        "A6j_cold_m2"
+      ],
+      "row_sha256": "edac9e054fc0ea5ceab00320ab53546bf045aa528f09e61ca87cb7ced95d546d",
+      "rows_differing": 0
+    }
+  ]
+}

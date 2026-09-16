@@ -1,0 +1,13 @@
+replay|A2_warm|warm|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_warm
+record|S3_fp8_pertensor|cold|-|--quantization fp8 --fp8-per-tensor
+record|B1_fp8_record|cold|-|--quantization fp8
+record|C1_autotune_off_record|cold|-|--inductor-config '{"max_autotune":false,"max_autotune_gemm":false,"coordinate_descent_tuning":false}' --tag autotune_off
+record|D1_inductor_det_record|cold|TORCHINDUCTOR_DETERMINISTIC=1|--tag inductor_det
+record|E1_rmsnorm_record|cold|-|--custom-ops +rms_norm --tag rmsnorm_custom
+record|F1_nocompile_record|cold|-|--no-compile --tag nocompile
+replay|A3a_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_a
+replay|A3b_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_b
+replay|A4_restored_m1|restore:A1_record|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_restored_m1
+replay|B2_fp8_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 replay_cold_m1_a
+replay|A3c_cold_m1|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_c
+boundary|A13_boundary|warm|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 boundary_12 12

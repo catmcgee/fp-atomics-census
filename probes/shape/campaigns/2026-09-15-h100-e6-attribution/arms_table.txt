@@ -1,0 +1,41 @@
+label                 M   cache               verdict    rows      artefacts vs record
+A2_warm               M1  warm                IDENTICAL  0/512     equal
+S3_fp8_pertensor      M1  cold                (record)             12 autotune choices archived
+B1_fp8_record         M1  cold                (record)             9 autotune choices archived
+C1_autotune_off_recordM1  cold                (record)             10 autotune choices archived
+D1_inductor_det_recordM1  cold                (record)             1 autotune choices archived
+E1_rmsnorm_record     M1  cold                (record)             10 autotune choices archived
+F1_nocompile_record   M1  cold                (record)             0 autotune choices archived
+A3a_cold_m1           M1  cold                IDENTICAL  0/512     equal
+A3b_cold_m1           M1  cold                IDENTICAL  0/512     equal
+A4_restored_m1        M1  restore:A1_record   IDENTICAL  0/512     equal
+B2_fp8_cold_m1        M1  cold                IDENTICAL  0/512     equal
+A3c_cold_m1           M1  cold                DIFFERS    512/512   DIFFER: triton_red_fused_fused_add_rms_norm_2 4096->2048, triton_red_fused_fused_add_rms_norm_0 4096->2048
+A13_boundary          M1  warm                DIFFERS    16/16     DIFFER: triton_red_fused_fused_add_rms_norm_2 4096->2048, triton_red_fused_fused_add_rms_norm_0 4096->2048
+G1_combo_off_record   M1  cold                (record)             8 autotune choices archived
+G3_combo_off_cold_m1  M1  cold                IDENTICAL  0/512     equal
+A1_record             M1  cold                (record)             10 autotune choices archived
+E3a_rmsnorm_cold_m1   M1  cold                DIFFERS    6/512     DIFFER: triton_red_fused_fused_add_rms_norm_2 2048->4096
+A3d_cold_m1           M1  cold                IDENTICAL  0/512     equal
+E3b_rmsnorm_cold_m1   M1  cold                DIFFERS    6/512     DIFFER: triton_red_fused_fused_add_rms_norm_2 2048->4096
+A3e_cold_m1           M1  cold                DIFFERS    512/512   DIFFER: triton_red_fused_fused_add_rms_norm_0 4096->2048, triton_red_fused_fused_add_rms_norm_2 4096->2048
+A3f_cold_m1           M1  cold                DIFFERS    512/512   DIFFER: triton_red_fused_fused_add_rms_norm_0 4096->2048
+A6a_cold_m2           M2  cold                IDENTICAL  0/512     equal
+A5_restored_m2        M2  restore:A1_record   IDENTICAL  0/512     equal
+A6b_cold_m2           M2  cold                DIFFERS    512/512   DIFFER: triton_red_fused_fused_add_rms_norm_0 4096->2048
+B3_fp8_cold_m2_a      M2  cold                IDENTICAL  0/512     equal
+C2_autotune_off_m2    M2  cold                DIFFERS    497/512   DIFFER: triton_red_fused_fused_add_rms_norm_2 4096->2048, triton_red_fused_fused_add_rms_norm_2 4096->2048
+A6c_cold_m2           M2  cold                DIFFERS    512/512   DIFFER: triton_red_fused_fused_add_rms_norm_0 4096->2048, triton_red_fused_fused_add_rms_norm_2 4096->2048
+B4_fp8_cold_m2_b      M2  cold                IDENTICAL  0/512     equal
+E2_rmsnorm_m2         M2  cold                DIFFERS    6/512     DIFFER: triton_red_fused_fused_add_rms_norm_2 2048->4096
+F2_nocompile_m2       M2  cold                IDENTICAL  0/512     equal
+G2_combo_off_m2       M2  cold                IDENTICAL  0/512     equal
+A6d_cold_m2           M2  cold                IDENTICAL  0/512     equal
+E4_rmsnorm_cold_m2    M2  cold                DIFFERS    6/512     DIFFER: triton_red_fused_fused_add_rms_norm_2 2048->4096
+A6e_cold_m2           M2  cold                IDENTICAL  0/512     equal
+A6f_cold_m2           M2  cold                IDENTICAL  0/512     equal
+A6g_cold_m2           M2  cold                IDENTICAL  0/512     equal
+B5_fp8_cold_m2_c      M2  cold                IDENTICAL  0/512     equal
+A6h_cold_m2           M2  cold                IDENTICAL  0/512     equal
+A6i_cold_m2           M2  cold                DIFFERS    512/512   DIFFER: triton_red_fused_fused_add_rms_norm_0 4096->2048
+A6j_cold_m2           M2  cold                IDENTICAL  0/512     equal

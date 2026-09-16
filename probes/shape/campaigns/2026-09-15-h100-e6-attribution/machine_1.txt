@@ -1,0 +1,9 @@
+index, name, uuid, serial, pci.bus_id, driver_version, vbios_version
+0, NVIDIA H100 80GB HBM3, GPU-f9071a8a-85c1-f95a-ac68-7168f5c5970d, 1652324105472, 00000000:4C:00.0, 580.126.09, 96.00.DA.00.0C
+---
+1127700dc539
+224
+6.8.0-106-generic
+model name	: Intel(R) Xeon(R) Platinum 8480+
+PRETTY_NAME="Ubuntu 24.04.3 LTS"
+NAME="Ubuntu"

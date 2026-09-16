@@ -1,0 +1,213 @@
+QUEUE ARM_START A2_warm 2026-09-15T15:38:46Z :: kind=replay cache=warm env='' caches_before=472 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_warm
+QUEUE RUN_EXIT A2_warm rc=0 2026-09-15T15:39:20Z
+  [A2_warm] ARCHIVE_FULL A2_warm bytes=5555969 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [A2_warm] ARCHIVE_LIGHT A2_warm files=185 bytes=1185323
+QUEUE FACTS A2_warm direct_load=0 caches_after=488
+  [A2_warm] INFO 09-15 15:38:58 [flash_attn.py:897] Using FlashAttention version 3
+  [A2_warm] INFO 09-15 15:39:07 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 0.27 s
+  [A2_warm] INFO 09-15 15:39:13 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [A2_warm] INFO 09-15 15:39:13 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [A2_warm] INFO 09-15 15:39:17 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [A2_warm] INFO 09-15 15:39:18 [core.py:361] init engine (profile, create kv cache, warmup model) took 16.78 s (compilation: 5.79 s)
+  [A2_warm] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/replay_warm: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT A2_warm rc=0 2026-09-15T15:39:28Z
+[2026-09-15T15:39:28Z] [A2_warm compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE ARM_END A2_warm 2026-09-15T15:39:28Z
+QUEUE ARM_START S3_fp8_pertensor 2026-09-15T15:39:28Z :: kind=record cache=cold env='' caches_before=0 :: --quantization fp8 --fp8-per-tensor
+QUEUE RUN_EXIT S3_fp8_pertensor rc=0 2026-09-15T15:41:40Z
+  [S3_fp8_pertensor] ARCHIVE_FULL S3_fp8_pertensor bytes=6203180 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [S3_fp8_pertensor] ARCHIVE_LIGHT S3_fp8_pertensor files=262 bytes=1099548
+QUEUE FACTS S3_fp8_pertensor direct_load=0 caches_after=701
+  [S3_fp8_pertensor] INFO 09-15 15:39:49 [__init__.py:726] Selected CutlassFP8ScaledMMLinearKernel for Fp8PerTensorOnlineLinearMethod
+  [S3_fp8_pertensor] INFO 09-15 15:39:49 [flash_attn.py:897] Using FlashAttention version 3
+  [S3_fp8_pertensor] INFO 09-15 15:40:12 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 9.66 s
+  [S3_fp8_pertensor] INFO 09-15 15:41:32 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9123 without CUDA graph memory profiling. To mai
+  [S3_fp8_pertensor] INFO 09-15 15:41:32 [kv_cache_utils.py:2032] GPU KV cache size: 1,149,504 tokens, Maximum concurrency for 2,048 tokens per request: 561.28x
+  [S3_fp8_pertensor] INFO 09-15 15:41:36 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.61 GiB
+  [S3_fp8_pertensor] INFO 09-15 15:41:37 [core.py:361] init engine (profile, create kv cache, warmup model) took 104.39 s (compilation: 19.65 s)
+  [S3_fp8_pertensor] E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_pertensor_compile_v2_graphs1_prefix0 record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END S3_fp8_pertensor 2026-09-15T15:41:40Z
+QUEUE ARM_START B1_fp8_record 2026-09-15T15:41:40Z :: kind=record cache=cold env='' caches_before=0 :: --quantization fp8
+QUEUE RUN_EXIT B1_fp8_record rc=0 2026-09-15T15:44:00Z
+  [B1_fp8_record] ARCHIVE_FULL B1_fp8_record bytes=6198347 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [B1_fp8_record] ARCHIVE_LIGHT B1_fp8_record files=197 bytes=1248320
+QUEUE FACTS B1_fp8_record direct_load=0 caches_after=536
+  [B1_fp8_record] INFO 09-15 15:42:04 [__init__.py:726] Selected CutlassFP8ScaledMMLinearKernel for Fp8PerTensorOnlineLinearMethod
+  [B1_fp8_record] INFO 09-15 15:42:04 [flash_attn.py:897] Using FlashAttention version 3
+  [B1_fp8_record] INFO 09-15 15:42:29 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 10.85 s
+  [B1_fp8_record] INFO 09-15 15:43:52 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [B1_fp8_record] INFO 09-15 15:43:52 [kv_cache_utils.py:2032] GPU KV cache size: 1,152,208 tokens, Maximum concurrency for 2,048 tokens per request: 562.60x
+  [B1_fp8_record] INFO 09-15 15:43:56 [gpu_model_runner.py:7001] Graph capturing finished in 3 secs, took 0.55 GiB
+  [B1_fp8_record] INFO 09-15 15:43:57 [core.py:361] init engine (profile, create kv cache, warmup model) took 109.62 s (compilation: 22.36 s)
+  [B1_fp8_record] E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END B1_fp8_record 2026-09-15T15:44:00Z
+QUEUE ARM_START C1_autotune_off_record 2026-09-15T15:44:00Z :: kind=record cache=cold env='' caches_before=0 :: --inductor-config '{"max_autotune":false,"max_autotune_gemm":false,"coordinate_descent_tuning":false}' --tag autotune_off
+QUEUE RUN_EXIT C1_autotune_off_record rc=0 2026-09-15T15:46:11Z
+  [C1_autotune_off_record] ARCHIVE_FULL C1_autotune_off_record bytes=4898562 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [C1_autotune_off_record] ARCHIVE_LIGHT C1_autotune_off_record files=173 bytes=816493
+QUEUE FACTS C1_autotune_off_record direct_load=0 caches_after=472
+  [C1_autotune_off_record] INFO 09-15 15:44:23 [flash_attn.py:897] Using FlashAttention version 3
+  [C1_autotune_off_record] INFO 09-15 15:44:39 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 6.51 s
+  [C1_autotune_off_record] INFO 09-15 15:46:03 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [C1_autotune_off_record] INFO 09-15 15:46:03 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [C1_autotune_off_record] INFO 09-15 15:46:07 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [C1_autotune_off_record] INFO 09-15 15:46:08 [core.py:361] init engine (profile, create kv cache, warmup model) took 101.65 s (compilation: 12.65 s)
+  [C1_autotune_off_record] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_autotune_off record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END C1_autotune_off_record 2026-09-15T15:46:11Z
+QUEUE ARM_START D1_inductor_det_record 2026-09-15T15:46:11Z :: kind=record cache=cold env='TORCHINDUCTOR_DETERMINISTIC=1' caches_before=0 :: --tag inductor_det
+QUEUE RUN_EXIT D1_inductor_det_record rc=1 2026-09-15T15:46:48Z
+  [D1_inductor_det_record] ARCHIVE_FULL D1_inductor_det_record bytes=90061 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [D1_inductor_det_record] ARCHIVE_LIGHT D1_inductor_det_record files=16 bytes=40023
+QUEUE FACTS D1_inductor_det_record direct_load=0 caches_after=43
+  [D1_inductor_det_record] INFO 09-15 15:46:35 [flash_attn.py:897] Using FlashAttention version 3
+  [D1_inductor_det_record ERR] [rank0]: Traceback (most recent call last):
+  [D1_inductor_det_record ERR] [rank0]:     raise InductorError(e, currentframe()).with_traceback(
+  [D1_inductor_det_record ERR] [rank0]:     raise RuntimeError("""In the deterministic mode of Inductor, we will avoid those
+  [D1_inductor_det_record ERR] [rank0]: torch._inductor.exc.InductorError: RuntimeError: In the deterministic mode of Inductor, we will avoid those
+QUEUE ARM_END D1_inductor_det_record 2026-09-15T15:46:48Z
+QUEUE ARM_START E1_rmsnorm_record 2026-09-15T15:46:48Z :: kind=record cache=cold env='' caches_before=0 :: --custom-ops +rms_norm --tag rmsnorm_custom
+QUEUE RUN_EXIT E1_rmsnorm_record rc=0 2026-09-15T15:48:54Z
+  [E1_rmsnorm_record] ARCHIVE_FULL E1_rmsnorm_record bytes=4904349 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [E1_rmsnorm_record] ARCHIVE_LIGHT E1_rmsnorm_record files=173 bytes=816499
+QUEUE FACTS E1_rmsnorm_record direct_load=0 caches_after=472
+  [E1_rmsnorm_record] INFO 09-15 15:47:11 [flash_attn.py:897] Using FlashAttention version 3
+  [E1_rmsnorm_record] INFO 09-15 15:47:27 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 6.32 s
+  [E1_rmsnorm_record] INFO 09-15 15:48:47 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [E1_rmsnorm_record] INFO 09-15 15:48:47 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [E1_rmsnorm_record] INFO 09-15 15:48:51 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [E1_rmsnorm_record] INFO 09-15 15:48:52 [core.py:361] init engine (profile, create kv cache, warmup model) took 97.49 s (compilation: 13.31 s)
+  [E1_rmsnorm_record] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_rmsnorm_custom record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END E1_rmsnorm_record 2026-09-15T15:48:55Z
+QUEUE ARM_START F1_nocompile_record 2026-09-15T15:48:55Z :: kind=record cache=cold env='' caches_before=0 :: --no-compile --tag nocompile
+QUEUE RUN_EXIT F1_nocompile_record rc=0 2026-09-15T15:50:44Z
+  [F1_nocompile_record] ARCHIVE_FULL F1_nocompile_record bytes=3357223 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [F1_nocompile_record] ARCHIVE_LIGHT F1_nocompile_record files=21 bytes=384744
+QUEUE FACTS F1_nocompile_record direct_load=0 caches_after=54
+  [F1_nocompile_record] INFO 09-15 15:49:16 [flash_attn.py:897] Using FlashAttention version 3
+  [F1_nocompile_record] INFO 09-15 15:50:38 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9157 without CUDA graph memory profiling. To mai
+  [F1_nocompile_record] INFO 09-15 15:50:38 [kv_cache_utils.py:2032] GPU KV cache size: 1,041,792 tokens, Maximum concurrency for 2,048 tokens per request: 508.69x
+  [F1_nocompile_record] INFO 09-15 15:50:40 [gpu_model_runner.py:7001] Graph capturing finished in 2 secs, took 0.34 GiB
+  [F1_nocompile_record] INFO 09-15 15:50:41 [core.py:368] init engine (profile, create kv cache, warmup model) took 81.86 s
+  [F1_nocompile_record] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_nocompile_v2_graphs1_prefix0_nocompile record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END F1_nocompile_record 2026-09-15T15:50:44Z
+QUEUE ARM_START A3a_cold_m1 2026-09-15T15:50:44Z :: kind=replay cache=cold env='' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_a
+QUEUE RUN_EXIT A3a_cold_m1 rc=0 2026-09-15T15:52:48Z
+  [A3a_cold_m1] ARCHIVE_FULL A3a_cold_m1 bytes=4898057 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [A3a_cold_m1] ARCHIVE_LIGHT A3a_cold_m1 files=173 bytes=816553
+QUEUE FACTS A3a_cold_m1 direct_load=0 caches_after=472
+  [A3a_cold_m1] INFO 09-15 15:51:06 [flash_attn.py:897] Using FlashAttention version 3
+  [A3a_cold_m1] INFO 09-15 15:51:21 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 6.19 s
+  [A3a_cold_m1] INFO 09-15 15:52:41 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [A3a_cold_m1] INFO 09-15 15:52:41 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [A3a_cold_m1] INFO 09-15 15:52:45 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [A3a_cold_m1] INFO 09-15 15:52:46 [core.py:361] init engine (profile, create kv cache, warmup model) took 96.94 s (compilation: 12.29 s)
+  [A3a_cold_m1] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/replay_cold_m1_a: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT A3a_cold_m1 rc=0 2026-09-15T15:52:56Z
+[2026-09-15T15:52:56Z] [A3a_cold_m1 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE ARM_END A3a_cold_m1 2026-09-15T15:52:56Z
+QUEUE ARM_START A3b_cold_m1 2026-09-15T15:52:56Z :: kind=replay cache=cold env='' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_b
+QUEUE RUN_EXIT A3b_cold_m1 rc=0 2026-09-15T15:54:59Z
+  [A3b_cold_m1] ARCHIVE_FULL A3b_cold_m1 bytes=4898088 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [A3b_cold_m1] ARCHIVE_LIGHT A3b_cold_m1 files=173 bytes=816489
+QUEUE FACTS A3b_cold_m1 direct_load=0 caches_after=472
+  [A3b_cold_m1] INFO 09-15 15:53:17 [flash_attn.py:897] Using FlashAttention version 3
+  [A3b_cold_m1] INFO 09-15 15:53:32 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 6.12 s
+  [A3b_cold_m1] INFO 09-15 15:54:52 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [A3b_cold_m1] INFO 09-15 15:54:52 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [A3b_cold_m1] INFO 09-15 15:54:56 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [A3b_cold_m1] INFO 09-15 15:54:56 [core.py:361] init engine (profile, create kv cache, warmup model) took 95.93 s (compilation: 11.97 s)
+  [A3b_cold_m1] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/replay_cold_m1_b: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT A3b_cold_m1 rc=0 2026-09-15T15:55:07Z
+[2026-09-15T15:55:07Z] [A3b_cold_m1 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE ARM_END A3b_cold_m1 2026-09-15T15:55:07Z
+RESTORE_FULL A1_record files=242
+QUEUE ARM_START A4_restored_m1 2026-09-15T15:55:07Z :: kind=replay cache=restore:A1_record env='' caches_before=470 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_restored_m1
+QUEUE RUN_EXIT A4_restored_m1 rc=0 2026-09-15T15:55:43Z
+  [A4_restored_m1] ARCHIVE_FULL A4_restored_m1 bytes=5556027 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [A4_restored_m1] ARCHIVE_LIGHT A4_restored_m1 files=185 bytes=1185333
+QUEUE FACTS A4_restored_m1 direct_load=0 caches_after=488
+  [A4_restored_m1] INFO 09-15 15:55:20 [flash_attn.py:897] Using FlashAttention version 3
+  [A4_restored_m1] INFO 09-15 15:55:29 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 0.30 s
+  [A4_restored_m1] INFO 09-15 15:55:35 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [A4_restored_m1] INFO 09-15 15:55:35 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [A4_restored_m1] INFO 09-15 15:55:39 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [A4_restored_m1] INFO 09-15 15:55:40 [core.py:361] init engine (profile, create kv cache, warmup model) took 17.42 s (compilation: 6.22 s)
+  [A4_restored_m1] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/replay_restored_m1: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT A4_restored_m1 rc=0 2026-09-15T15:55:51Z
+[2026-09-15T15:55:51Z] [A4_restored_m1 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE ARM_END A4_restored_m1 2026-09-15T15:55:51Z
+QUEUE ARM_START B2_fp8_cold_m1 2026-09-15T15:55:51Z :: kind=replay cache=cold env='' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 replay_cold_m1_a
+QUEUE RUN_EXIT B2_fp8_cold_m1 rc=0 2026-09-15T15:58:08Z
+  [B2_fp8_cold_m1] ARCHIVE_FULL B2_fp8_cold_m1 bytes=6198270 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [B2_fp8_cold_m1] ARCHIVE_LIGHT B2_fp8_cold_m1 files=197 bytes=1248320
+QUEUE FACTS B2_fp8_cold_m1 direct_load=0 caches_after=536
+  [B2_fp8_cold_m1] INFO 09-15 15:56:13 [__init__.py:726] Selected CutlassFP8ScaledMMLinearKernel for Fp8PerTensorOnlineLinearMethod
+  [B2_fp8_cold_m1] INFO 09-15 15:56:13 [flash_attn.py:897] Using FlashAttention version 3
+  [B2_fp8_cold_m1] INFO 09-15 15:56:37 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 10.60 s
+  [B2_fp8_cold_m1] INFO 09-15 15:58:01 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [B2_fp8_cold_m1] INFO 09-15 15:58:01 [kv_cache_utils.py:2032] GPU KV cache size: 1,152,208 tokens, Maximum concurrency for 2,048 tokens per request: 562.60x
+  [B2_fp8_cold_m1] INFO 09-15 15:58:05 [gpu_model_runner.py:7001] Graph capturing finished in 3 secs, took 0.55 GiB
+  [B2_fp8_cold_m1] INFO 09-15 15:58:06 [core.py:361] init engine (profile, create kv cache, warmup model) took 109.16 s (compilation: 21.57 s)
+  [B2_fp8_cold_m1] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0/replay_cold_m1_a: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT B2_fp8_cold_m1 rc=0 2026-09-15T15:58:16Z
+[2026-09-15T15:58:16Z] [B2_fp8_cold_m1 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_fp8_compile_v2_graphs1_prefix0 replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE ARM_END B2_fp8_cold_m1 2026-09-15T15:58:16Z
+QUEUE ARM_START A3c_cold_m1 2026-09-15T15:58:16Z :: kind=replay cache=cold env='' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay_cold_m1_c
+QUEUE RUN_EXIT A3c_cold_m1 rc=0 2026-09-15T16:00:17Z
+  [A3c_cold_m1] ARCHIVE_FULL A3c_cold_m1 bytes=4913924 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [A3c_cold_m1] ARCHIVE_LIGHT A3c_cold_m1 files=173 bytes=816592
+QUEUE FACTS A3c_cold_m1 direct_load=0 caches_after=472
+  [A3c_cold_m1] INFO 09-15 15:58:37 [flash_attn.py:897] Using FlashAttention version 3
+  [A3c_cold_m1] INFO 09-15 15:58:52 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 5.88 s
+  [A3c_cold_m1] INFO 09-15 16:00:10 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [A3c_cold_m1] INFO 09-15 16:00:10 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [A3c_cold_m1] INFO 09-15 16:00:14 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [A3c_cold_m1] INFO 09-15 16:00:15 [core.py:361] init engine (profile, create kv cache, warmup model) took 94.01 s (compilation: 11.49 s)
+  [A3c_cold_m1] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/replay_cold_m1_c: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT A3c_cold_m1 rc=0 2026-09-15T16:00:25Z
+[2026-09-15T16:00:25Z] [A3c_cold_m1 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 replay: P2 DIFFERS; first mismatch None; rows compared 512; rows differing 512; errors 0
+QUEUE ARM_END A3c_cold_m1 2026-09-15T16:00:25Z
+QUEUE ARM_START A13_boundary 2026-09-15T16:00:25Z :: kind=boundary cache=warm env='' caches_before=472 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 boundary_12 12
+QUEUE RUN_EXIT A13_boundary rc=0 2026-09-15T16:00:59Z
+  [A13_boundary] ARCHIVE_FULL A13_boundary bytes=5571382 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [A13_boundary] ARCHIVE_LIGHT A13_boundary files=185 bytes=1185288
+QUEUE FACTS A13_boundary direct_load=0 caches_after=488
+  [A13_boundary] INFO 09-15 16:00:37 [flash_attn.py:897] Using FlashAttention version 3
+  [A13_boundary] INFO 09-15 16:00:46 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 0.28 s
+  [A13_boundary] INFO 09-15 16:00:52 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [A13_boundary] INFO 09-15 16:00:52 [kv_cache_utils.py:2032] GPU KV cache size: 1,039,488 tokens, Maximum concurrency for 2,048 tokens per request: 507.56x
+  [A13_boundary] INFO 09-15 16:00:56 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [A13_boundary] INFO 09-15 16:00:57 [core.py:361] init engine (profile, create kv cache, warmup model) took 16.39 s (compilation: 5.79 s)
+  [A13_boundary] E6 boundary results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0/boundary_12: 2 forward passes logged (2 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT A13_boundary rc=0 2026-09-15T16:01:07Z
+[2026-09-15T16:01:07Z] [A13_boundary compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0 boundary pass 12: P2 DIFFERS; first mismatch None; rows compared 16; rows differing 16; errors 0
+QUEUE ARM_END A13_boundary 2026-09-15T16:01:07Z
+QUEUE ARM_START G1_combo_off_record 2026-09-15T16:01:07Z :: kind=record cache=cold env='' caches_before=0 :: --inductor-config '{"combo_kernels":false,"benchmark_combo_kernel":false}' --tag combo_off
+QUEUE RUN_EXIT G1_combo_off_record rc=0 2026-09-15T16:03:09Z
+  [G1_combo_off_record] ARCHIVE_FULL G1_combo_off_record bytes=4722536 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [G1_combo_off_record] ARCHIVE_LIGHT G1_combo_off_record files=145 bytes=751543
+QUEUE FACTS G1_combo_off_record direct_load=0 caches_after=396
+  [G1_combo_off_record] INFO 09-15 16:01:29 [flash_attn.py:897] Using FlashAttention version 3
+  [G1_combo_off_record] INFO 09-15 16:01:43 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 5.26 s
+  [G1_combo_off_record] INFO 09-15 16:03:02 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [G1_combo_off_record] INFO 09-15 16:03:02 [kv_cache_utils.py:2032] GPU KV cache size: 1,021,056 tokens, Maximum concurrency for 2,048 tokens per request: 498.56x
+  [G1_combo_off_record] INFO 09-15 16:03:06 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [G1_combo_off_record] INFO 09-15 16:03:07 [core.py:361] init engine (profile, create kv cache, warmup model) took 94.29 s (compilation: 11.10 s)
+  [G1_combo_off_record] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_combo_off record: 37 forward passes logged (37 at the scheduler); replayable
+QUEUE ARM_END G1_combo_off_record 2026-09-15T16:03:09Z
+QUEUE ARM_START G3_combo_off_cold_m1 2026-09-15T16:03:09Z :: kind=replay cache=cold env='' caches_before=0 :: Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_combo_off replay_cold_m1_a
+QUEUE RUN_EXIT G3_combo_off_cold_m1 rc=0 2026-09-15T16:05:11Z
+  [G3_combo_off_cold_m1] ARCHIVE_FULL G3_combo_off_cold_m1 bytes=4722448 dirs= /root/.cache /root/.triton /root/.nv /tmp/torchinductor_root
+  [G3_combo_off_cold_m1] ARCHIVE_LIGHT G3_combo_off_cold_m1 files=145 bytes=751706
+QUEUE FACTS G3_combo_off_cold_m1 direct_load=0 caches_after=396
+  [G3_combo_off_cold_m1] INFO 09-15 16:03:31 [flash_attn.py:897] Using FlashAttention version 3
+  [G3_combo_off_cold_m1] INFO 09-15 16:03:45 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 5.17 s
+  [G3_combo_off_cold_m1] INFO 09-15 16:05:03 [gpu_worker.py:640] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9200 is equivalent to --gpu-memory-utilization=0.9141 without CUDA graph memory profiling. To mai
+  [G3_combo_off_cold_m1] INFO 09-15 16:05:03 [kv_cache_utils.py:2032] GPU KV cache size: 1,021,056 tokens, Maximum concurrency for 2,048 tokens per request: 498.56x
+  [G3_combo_off_cold_m1] INFO 09-15 16:05:08 [gpu_model_runner.py:7001] Graph capturing finished in 4 secs, took 0.59 GiB
+  [G3_combo_off_cold_m1] INFO 09-15 16:05:09 [core.py:361] init engine (profile, create kv cache, warmup model) took 94.75 s (compilation: 10.95 s)
+  [G3_combo_off_cold_m1] E6 replay results_c1/e6/Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_combo_off/replay_cold_m1_a: 37 forward passes logged (37 at the scheduler), recorded 37; run --compare for the verdict
+QUEUE COMPARE_EXIT G3_combo_off_cold_m1 rc=0 2026-09-15T16:05:20Z
+[2026-09-15T16:05:20Z] [G3_combo_off_cold_m1 compare] E6 Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_combo_off replay: P2 IDENTICAL; first mismatch None; rows compared 512; rows differing 0; errors 0
+QUEUE ARM_END G3_combo_off_cold_m1 2026-09-15T16:05:20Z
+QUEUE_DONE 2026-09-15T16:05:20Z
