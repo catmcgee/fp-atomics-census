@@ -1,0 +1,2 @@
+# KIND|LABEL|CACHE|ENV|REST
+replay|TP2_plain_c|cold|NCCL_NVLS_ENABLE=0|Qwen_Qwen2.5-7B-Instruct_tp2_none_compile_v2_graphs1_prefix0 replay_cold_followup_c

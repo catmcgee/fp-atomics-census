@@ -1,0 +1,12 @@
+# KIND|LABEL|CACHE|ENV|REST
+# Historical records must first be staged under $RESULTS_ROOT using README.md.
+replay|BI_b|cold|VLLM_BATCH_INVARIANT=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant replay_cold_followup_b
+replay|BI_c|cold|VLLM_BATCH_INVARIANT=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_batch_invariant replay_cold_followup_c
+replay|MIX_default_negative|cold|-|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_mixed replay_cold_followup_negative
+record|DET_MIX_record|cold|TORCHINDUCTOR_DETERMINISTIC=1|--model Qwen/Qwen2.5-7B-Instruct --revision a09a35458c702b33eeacc393d103063234e8bc28 --tp 1 --cudagraph 1 --mixed --inductor-config '{"combo_kernels":false,"benchmark_combo_kernel":false}' --tag det_combo_off
+replay|DET_MIX_warm|warm|TORCHINDUCTOR_DETERMINISTIC=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed replay_warm
+replay|DET_MIX_a|cold|TORCHINDUCTOR_DETERMINISTIC=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed replay_cold_a
+replay|DET_MIX_b|cold|TORCHINDUCTOR_DETERMINISTIC=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed replay_cold_b
+replay|DET_MIX_c|cold|TORCHINDUCTOR_DETERMINISTIC=1|Qwen_Qwen2.5-7B-Instruct_tp1_none_compile_v2_graphs1_prefix0_det_combo_off_mixed replay_cold_c
+record|MOE_EAGER_record|cold|-|--model Qwen/Qwen1.5-MoE-A2.7B-Chat --revision ec052fda178e241c7c443468d2fa1db6618996be --tp 1 --no-compile --cudagraph 0 --tag routing_diag
+replay|MOE_EAGER_replay|warm|-|Qwen_Qwen1.5-MoE-A2.7B-Chat_tp1_none_nocompile_v2_graphs0_prefix0_routing_diag replay_warm
