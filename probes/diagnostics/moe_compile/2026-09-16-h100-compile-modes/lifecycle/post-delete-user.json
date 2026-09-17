@@ -1,0 +1,10 @@
+{
+  "clientBalance": 6.9070855034,
+  "currentSpendPerHr": 0.056,
+  "email": "helloworld@mcgee.cat",
+  "id": "user_3G317F3hehVRKR1n1Apa4RHjrWk",
+  "notifyLowBalance": true,
+  "notifyPodsGeneral": true,
+  "notifyPodsStale": true,
+  "spendLimit": 80
+}

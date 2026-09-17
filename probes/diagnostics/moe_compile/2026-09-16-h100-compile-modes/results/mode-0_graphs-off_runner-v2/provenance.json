@@ -1,0 +1,67 @@
+{
+  "executable": "/opt/issue56900/cu130/bin/python",
+  "fused_moe_router_select_experts_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/model_executor/layers/fused_moe/router/fused_moe_router.py",
+  "nvidia_smi": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "0, GPU-6cb260f3-3a31-ed42-4620-89fa068e493d, NVIDIA H100 80GB HBM3, 580.126.09\n"
+  },
+  "pip_freeze": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "agent-detector==2.0.0\naiohappyeyeballs==2.7.1\naiohttp==3.14.3\naiosignal==1.4.0\nannotated-doc==0.0.5\nannotated-types==0.8.0\nanthropic==1.6.0\nanyio==4.15.1\napache-tvm-ffi==0.1.11\nastor==0.8.1\nattrs==26.1.0\nblake3==1.0.9\ncachetools==7.2.0\ncbor2==6.1.4\ncertifi==2026.7.22\ncffi==2.1.1\ncharset-normalizer==3.5.1\nclick==8.5.0\ncloudpickle==3.1.2\ncompressed-tensors==0.17.0\ncryptography==50.0.1\ncuda-bindings==13.4.1\ncuda-core==1.2.0\ncuda-pathfinder==1.6.0\ncuda-python==13.4.1\ncuda-tile==1.6.0\ncuda-toolkit==13.0.3.0\ndepyf==0.20.0\ndetect-installer==0.2.1\ndill==0.4.1\ndnspython==2.8.0\ndocstring_parser==0.18.0\neinops==0.8.2\nemail-validator==2.3.0\nfastapi==0.136.3\nfastapi-cli==0.0.32\nfastapi-cloud-cli==0.26.0\nfastar==0.12.0\nfastsafetensors==0.4.0\nfilelock==3.32.3\nflashinfer-python==0.6.16.post3\nfrozenlist==1.8.0\nfsspec==2026.7.0\ngoogleapis-common-protos==1.75.3\ngrpcio==1.84.0\nh11==0.16.0\nhf-xet==1.6.0\nhttpcore==1.0.9\nhttpcore2==2.13.0\nhttptools==0.8.0\nhttpx==0.28.1\nhttpx2==2.13.0\nhuggingface_hub==1.31.0\nhumming-kernels==0.1.12\nidna==3.19\nijson==3.5.1\ninteregular==0.3.3\nJinja2==3.1.6\njiter==0.17.0\njmespath==1.1.0\njsonschema==4.26.0\njsonschema-specifications==2025.9.1\nlark==1.2.2\nllguidance==1.7.6\nllvmlite==0.47.0\nlm-format-enforcer==0.11.3\nloguru==0.7.3\nmarkdown-it-py==4.2.0\nMarkupSafe==3.0.3\nmcp==2.2.0\nmcp-types==2.2.0\nmdurl==0.1.2\nmistral_common==1.11.7\nml_dtypes==0.6.0\nmodel-hosting-container-standards==0.1.16\nmpmath==1.3.0\nmsgspec==0.21.1\nmultidict==6.8.0\nnccl4py==0.5.0\nnetworkx==3.6.1\nninja==1.13.2\nnumba==0.65.0\nnumpy==2.3.5\nnvidia-cublas==13.1.1.3\nnvidia-cuda-cccl==13.3.4.3.1\nnvidia-cuda-crt==13.4.92\nnvidia-cuda-cupti==13.0.85\nnvidia-cuda-nvcc==13.4.92\nnvidia-cuda-nvdisasm==13.4.92\nnvidia-cuda-nvrtc==13.0.88\nnvidia-cuda-runtime==13.0.96\nnvidia-cudnn-cu13==9.20.0.48\nnvidia-cudnn-frontend==1.29.0\nnvidia-cufft==12.0.0.61\nnvidia-cufile==1.15.1.6\nnvidia-curand==10.4.0.35\nnvidia-cusolver==12.0.4.66\nnvidia-cusparse==12.6.3.3\nnvidia-cusparselt-cu13==0.8.1\nnvidia-cutlass-dsl==4.6.2\nnvidia-cutlass-dsl-libs-base==4.6.2\nnvidia-cutlass-dsl-libs-core==4.6.2\nnvidia-cutlass-dsl-libs-cu12==4.6.2\nnvidia-cutlass-dsl-libs-cu13==4.6.2\nnvidia-ml-py==13.610.43\nnvidia-nccl-cu13==2.29.7\nnvidia-nvjitlink==13.3.33\nnvidia-nvshmem-cu13==3.4.5\nnvidia-nvtx==13.0.85\nnvidia-nvvm==13.4.92\nnvtx==0.2.15\nopenai==3.14.1\nopenai-harmony==0.0.8\nopencv-python-headless==5.0.0.93\nopentelemetry-api==1.44.0\nopentelemetry-exporter-otlp==1.44.0\nopentelemetry-exporter-otlp-proto-common==1.44.0\nopentelemetry-exporter-otlp-proto-grpc==1.44.0\nopentelemetry-exporter-otlp-proto-http==1.44.0\nopentelemetry-proto==1.44.0\nopentelemetry-sdk==1.44.0\nopentelemetry-semantic-conventions==0.65b0\nopentelemetry-semantic-conventions-ai==0.5.1\noutlines_core==0.2.14\npackaging==26.3\npartial-json-parser==0.2.1.1.post7\npillow==12.3.0\npip==26.2.1\nprometheus-fastapi-instrumentator==8.1.0\nprometheus_client==0.26.0\npropcache==0.5.4\nprotobuf==6.33.6\npsutil==7.2.2\npy-cpuinfo==9.0.0\npybase64==1.5.0\npycountry==26.2.16\npycparser==3.0\npydantic==2.13.5\npydantic-extra-types==2.11.1\npydantic-settings==2.15.0\npydantic_core==2.46.5\nPygments==2.21.0\nPyJWT==2.14.0\npynvvideocodec==2.0.4\npython-dotenv==1.2.3\npython-json-logger==4.2.0\npython-multipart==0.0.32\nPyYAML==6.0.3\npyzmq==27.2.0\nquack-kernels==0.6.4\nreferencing==0.37.0\nregex==2026.9.10\nrequests==2.34.2\nrich==15.0.0\nrich-toolkit==0.20.5\nrignore==0.8.1\nrpds-py==2026.6.3\nsafetensors==0.8.0\nsentencepiece==0.2.2\nsentry-sdk==2.69.2\nsetproctitle==1.3.7\nsetuptools==78.1.0\nshellingham==1.5.4\nsix==1.17.0\nsniffio==1.3.1\nsse-starlette==3.4.11\nstarlette==1.6.0\nsupervisor==4.3.0\nsympy==1.14.0\ntabulate==0.10.0\ntiktoken==0.14.0\ntilelang==0.1.12\ntokenizers==0.23.2\ntokenspeed-mla==0.1.8\ntokenspeed-triton==3.8.10.post20260906\ntorch==2.13.0+cu130\ntorch_c_dlpack_ext==0.1.5\ntorchaudio==2.11.0+cu130\ntorchcodec==0.16.0+cu130\ntorchvision==0.28.0+cu130\ntqdm==4.70.1\ntransformers==5.17.0\ntriton==3.7.1\ntruststore==0.10.4\ntyper==0.27.2\ntyping-inspection==0.4.4\ntyping_extensions==4.16.0\nurllib3==2.8.0\nuvicorn==0.53.0\nuvloop==0.22.1\nvllm @ https://files.pythonhosted.org/packages/87/d7/97f6ecc2ae883e601e08d7cef87cb54ececeefcfe6b5e12d5d92f8d06d6b/vllm-0.28.0-cp38-abi3-manylinux_2_28_x86_64.whl#sha256=addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\nwatchfiles==1.2.0\nwebsockets==17.1\nxgrammar==0.2.7\nyarl==1.25.1\nz3-solver==4.15.4.0\n"
+  },
+  "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+  "tokenspeed-triton": {
+    "direct_url": null,
+    "distribution_location": "/opt/issue56900/cu130/lib/python3.12/site-packages",
+    "distribution_version": "3.8.10.post20260906",
+    "record_sha256": "2a79e94aa9181dc812425d6cd915cf782d4ef603855f2bce1137366855818fa6"
+  },
+  "torch": {
+    "cuda_available": true,
+    "cuda_build": "13.0",
+    "cuda_device": {
+      "major": 9,
+      "minor": 0,
+      "multi_processor_count": 132,
+      "name": "NVIDIA H100 80GB HBM3",
+      "total_memory": 85017493504,
+      "uuid": "<torch._C._CUuuid object at 0x76c226de77b0>"
+    },
+    "cuda_device_count": 1,
+    "direct_url": null,
+    "distribution_location": "/opt/issue56900/cu130/lib/python3.12/site-packages",
+    "distribution_version": "2.13.0+cu130",
+    "import_error": null,
+    "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/__init__.py",
+    "module_file_sha256": "cf40c075c95864036e835795756d69b8cccfafa76f3bcde5eba9d06065ccd3d1",
+    "module_version": "2.13.0+cu130",
+    "record_sha256": "7e4655e60208c1df22db7a6e29fde1f8102a544587088ed8cefbe85daf1a0d4a",
+    "torch_config": "PyTorch built with:\n  - GCC 13.3\n  - C++ Version: 202002\n  - Intel(R) oneAPI Math Kernel Library Version 2024.2-Product Build 20240605 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 201511 (a.k.a. OpenMP 4.5)\n  - LAPACK is enabled (usually provided by MKL)\n  - NNPACK is enabled\n  - CPU capability usage: AVX512\n  - CUDA Runtime 13.0\n  - NVCC architecture flags: -gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_100,code=sm_100;-gencode;arch=compute_120,code=sm_120\n  - CuDNN 92.0  (built against CUDA 13.2)\n  - Magma 2.6.1\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=cf30153c4c131c8164ee7798e5022d810682e2cb, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xfatbin -compress-all -DONNX_NAMESPACE=onnx_torch -gencode arch=compute_75,code=sm_75 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_86,code=sm_86 -gencode arch=compute_90,code=sm_90 -gencode arch=compute_100,code=sm_100 -gencode arch=compute_120,code=sm_120 -Xcudafe --diag_suppress=cc_clobber_ignored,--diag_suppress=field_without_dll_interface,--diag_suppress=base_class_has_different_dll_interface,--diag_suppress=dll_interface_conflict_none_assumed,--diag_suppress=dll_interface_conflict_dllexport_assumed,--diag_suppress=bad_friend_decl --expt-relaxed-constexpr --expt-extended-lambda -Xfatbin -compress-all --threads 2 -compress-mode=size -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -DC10_NODEPRECATED, CUDA_VERSION=13.0, CUDNN_VERSION=9.20.0, CXX_COMPILER=/opt/rh/gcc-toolset-13/root/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DHAS_CUPTI -DUSE_FBGEMM -DUSE_MSLK -DUSE_PYTORCH_QNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=old-style-cast -faligned-new -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-dangling-reference -Wno-error=dangling-reference -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.13.0, USE_CUDA=1, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n"
+  },
+  "triton": {
+    "direct_url": null,
+    "distribution_location": "/opt/issue56900/cu130/lib/python3.12/site-packages",
+    "distribution_version": "3.7.1",
+    "import_error": null,
+    "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/triton/__init__.py",
+    "module_file_sha256": "ae908c069c695e60788beef511f58d0b16d399782257335b86e466503dc74eca",
+    "module_version": "3.7.1",
+    "record_sha256": "bcbf3007a3ff1d351e8960ae15b5619d94f43b56205a42ff3068dd1f31f93099"
+  },
+  "triton_package_providers": [
+    "triton"
+  ],
+  "vllm": {
+    "direct_url": "{\"archive_info\": {\"hash\": \"sha256=addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\", \"hashes\": {\"sha256\": \"addb0ffdaafd8155d75e9b3f5ddb3da28fdee9e8a7097ede91f7db2e9e1a3889\"}}, \"url\": \"https://files.pythonhosted.org/packages/87/d7/97f6ecc2ae883e601e08d7cef87cb54ececeefcfe6b5e12d5d92f8d06d6b/vllm-0.28.0-cp38-abi3-manylinux_2_28_x86_64.whl\"}",
+    "distribution_location": "/opt/issue56900/cu130/lib/python3.12/site-packages",
+    "distribution_version": "0.28.0",
+    "import_error": null,
+    "module_file": "/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/__init__.py",
+    "module_file_sha256": "fd3708e5a13abe98c566afd79a6b1987cef70c0548bb19c1218ff6a7f9d43346",
+    "module_version": "0.28.0",
+    "record_sha256": "2ee8df97b3aab0d819ece50ff3f002315dd68dae4b1484107b6cd84a281d44bd"
+  }
+}

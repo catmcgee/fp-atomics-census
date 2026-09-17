@@ -1,0 +1,56 @@
+{
+  "command": [
+    "probes/diagnostics/moe_compile/moe_compile_reproducer.py",
+    "--output-dir",
+    "/root/mode-matrix-2",
+    "--modes",
+    "0",
+    "1",
+    "2",
+    "3",
+    "--graphs",
+    "off",
+    "--runners",
+    "v2",
+    "--expected-vllm",
+    "0.28.0",
+    "--timeout-seconds",
+    "900",
+    "--require-ack",
+    "--ack-timeout-seconds",
+    "600"
+  ],
+  "controller_python": "/opt/issue56900/cu130/bin/python",
+  "created_at": "2026-09-16T23:51:20.680174+00:00",
+  "debug_dump": false,
+  "expected_vllm": "0.28.0",
+  "issue": "https://github.com/vllm-project/vllm/issues/56900",
+  "model": "Qwen/Qwen1.5-MoE-A2.7B-Chat",
+  "requested": [
+    {
+      "compile": "off",
+      "graphs": "off",
+      "mode": 0,
+      "runner": "v2"
+    },
+    {
+      "compile": "on",
+      "graphs": "off",
+      "mode": 1,
+      "runner": "v2"
+    },
+    {
+      "compile": "on",
+      "graphs": "off",
+      "mode": 2,
+      "runner": "v2"
+    },
+    {
+      "compile": "on",
+      "graphs": "off",
+      "mode": 3,
+      "runner": "v2"
+    }
+  ],
+  "revision": "ec052fda178e241c7c443468d2fa1db6618996be"
+}

@@ -1,0 +1,22 @@
+{
+  "containerDiskInGb": 120,
+  "costPerHr": 3.49,
+  "desiredStatus": "RUNNING",
+  "env": [
+    "PUBLIC_KEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZhLroFQ09pWer2L5yaZ6OFP3rvqSAtN1tyLEFFi8SiT6vcr4WTulKD+3rum84WgZbQJEpXgbPYge3oplCDSMiNpYAWW0EY4sfHDHccMOTpOQXn4kRlktOshyNgpjojG5PwsZsauGYQSiesD1zw+ijD50sgH5QYlXsrChbfZwjwC02GuvD0TNXYBk8xKzHyuLR1iheck9I3EZf99T5mfmlEBRIY/ShyScjOTTNOdMiA1k6btUWB71QHA283aWtfuQNwVm5wtU2vJuvEwBToCizWdABAFxymrRHgtt/g93qialcxsXMNCXdiD862pa8liVGKHVLc4YQaTQNw66W+bI7 runpodctl-ssh-key"
+  ],
+  "gpuCount": 1,
+  "id": "rgq9s26bu5i33t",
+  "imageName": "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404",
+  "lastStatusChange": "Rented by User: Wed Sep 16 2026 21:55:25 GMT+0000 (Coordinated Universal Time)",
+  "machine": {
+    "gpuDisplayName": "H100 SXM",
+    "location": "IN"
+  },
+  "memoryInGb": 251,
+  "name": "census-vllm-56900-modes",
+  "ports": "22/tcp",
+  "vcpuCount": 28,
+  "volumeInGb": 0,
+  "volumeMountPath": "/workspace"
+}

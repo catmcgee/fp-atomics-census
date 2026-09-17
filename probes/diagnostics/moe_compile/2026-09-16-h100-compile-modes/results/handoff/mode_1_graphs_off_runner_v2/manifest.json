@@ -1,0 +1,67 @@
+{
+  "files": [
+    {
+      "path": "handoff/mode_1_graphs_off_runner_v2/comparison_before_ack.json",
+      "sha256": "109edf88314873c341911c40efa8856de2166b87e1ac5790513e5bccb81b232d",
+      "size": 11968
+    },
+    {
+      "path": "handoff/mode_1_graphs_off_runner_v2/controller_manifest.json",
+      "sha256": "c951c7eaa5a996e18403665e5a70e3490bdfdaa168a8312acce56e82d3c4117d",
+      "size": 1109
+    },
+    {
+      "path": "handoff/mode_1_graphs_off_runner_v2/moe_compile_reproducer.py",
+      "sha256": "6110b1fe69e47baa742b8297ffe46b247f4c2cba0968fdbc89baf9c29ed7eac3",
+      "size": 39178
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2.stderr.log",
+      "sha256": "f32418c4ae9e652754018fbe209d84c2b0e0a444f2251972b01ed8e20f3e44e4",
+      "size": 1609
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2.stdout.log",
+      "sha256": "a2cba7d66dfaebcd5a9e4c1cfa6c071811310bbe3ba8674d0a29887ff41e0410",
+      "size": 5495
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/cache/vllm/modelinfos/vllm-model_executor-models-qwen2_moe-Qwen2MoeForCausalLM.json",
+      "sha256": "2eca838fbcff961aacfb9b146b10d16ccd5997dfd296e42123f564e0ef5743e8",
+      "size": 873
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/cache_after.json",
+      "sha256": "fdf48b39123083788d8f980cb10008692e13c9e103e0ad6367146c107de76d2b",
+      "size": 191
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/cache_before.json",
+      "sha256": "c87a5f6770e1e8c9bada5bdfb2d546c5081a685db01f1732fef1079b361be634",
+      "size": 104
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/collect_env.txt",
+      "sha256": "d73cc4871c105857890e4915a37a59ce63739b4541bbd2af43f15d966cf4b9da",
+      "size": 9059
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/environment.json",
+      "sha256": "c30e31ec96c0113c68e137911ed13cb36213c71510bee489c8b87240c7ab5de8",
+      "size": 1210
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/failure.json",
+      "sha256": "592538eae1130258d74545a231f1cdb6d558c6aa11177c75be3521d8812740b2",
+      "size": 1747
+    },
+    {
+      "path": "mode-1_graphs-off_runner-v2/provenance.json",
+      "sha256": "e89bc878e17bd1dc12d70525695f300744c73b4995ee9b03b4eff3b7ec0961cf",
+      "size": 10601
+    }
+  ],
+  "label": "mode_1_graphs_off_runner_v2",
+  "schema": 1,
+  "sha256": "845c7b71c107d88c5c677c98f9dc3414193d8af76bb73833c98f7073f671c1e0"
+}

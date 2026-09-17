@@ -17,6 +17,7 @@ guarantee.
 | Do equal coarse backend names prove equal implementations? | The TP=2 record initialised `mnnvl`; all three cold replays fell back to `trtllm`. | Backend names and package equality are insufficient. These differing outputs do not isolate a cold-compile effect. |
 | Does the compiled MoE symptom depend on the CUDA build? | vLLM 0.28.0 cu129 and cu130 reproduced exactly the same V2 failure on one H100, including saved top-five log probabilities. | Build choice did not remove this symptom. V1 also failed differently. The kernel cause and the contributor's H20 non-reproduction remain unresolved. |
 | Where does compiled MoE first differ numerically? | Layer-0 attention and output projection match eager, but post-attention RMSNorm differs across all 962 packed rows. Precision emulation and matched residual-rounding controls retain the output failure. | This narrows a numerical difference; it does not establish the cause of the degenerate model output. |
+| Does the compiled MoE symptom require vLLM's custom compile backend? | Mode 2 (`DYNAMO_TRACE_ONCE`) with plain Inductor reproduced 0/8 agreeing duplicate pairs and 8/16 short cycles; mode 0 had 8/8 and 0/16. | The custom `VllmBackend`, its passes and splitting are unnecessary. Mode 2 still uses vLLM's compile wrapper and traced model/operator code. Mode 1 is unsupported on V2, so attribution to stock `torch.compile` is not established. |
 | Can actual MoE routing be observed inside CUDA graphs? | Native selected-expert capture matched eager routing, changed across seven decode steps per request, and preserved tokens and tensor hashes when enabled. | Validated on two prompts with compilation mode 0, FULL graphs and synchronous scheduling. Historical null Python-hook fields remain unobserved. |
 
 The [README](../README.md) retains the inventory and complete runtime context.
@@ -26,7 +27,8 @@ Primary campaign records and offline reproduction commands are in
 [the C2 completion](../probes/shape/campaigns/2026-09-16-h100-e6-followup.md),
 [the setting and routing follow-up](../probes/shape/campaigns/2026-09-16-h100-causal-followup.md),
 [the controlled MoE investigation](../probes/diagnostics/moe_compile/2026-09-16-h100-builds/README.md), and
-[its operation-level localisation](../probes/diagnostics/moe_compile/2026-09-16-h100-localisation/README.md).
+[its operation-level localisation](../probes/diagnostics/moe_compile/2026-09-16-h100-localisation/README.md), and
+[the compilation-mode discriminator](../probes/diagnostics/moe_compile/2026-09-16-h100-compile-modes/README.md).
 
 ## What a replay claim must state
 

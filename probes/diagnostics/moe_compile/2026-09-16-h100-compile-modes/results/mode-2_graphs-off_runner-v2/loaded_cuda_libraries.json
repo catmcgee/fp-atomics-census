@@ -1,0 +1,27 @@
+{
+  "paths": [
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/nvidia/cu13/lib/libcudart.so.13",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/nvidia/cu13/lib/libnvrtc-builtins.so.13.0",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/nvidia/cu13/lib/libnvrtc.so.13",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/nvidia/cudnn/lib/libcudnn.so.9",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/nvidia/cudnn/lib/libcudnn_graph.so.9",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/lib/libtorch.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/lib/libtorch_global_deps.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/lib/libtorch_nvshmem.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torch/lib/libtorch_python.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torchaudio/lib/libtorchaudio.abi3.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torchcodec/libtorchcodec_core6.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torchcodec/libtorchcodec_custom_ops6.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torchcodec/libtorchcodec_image.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torchcodec/libtorchcodec_pybind_ops.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/torchvision.libs/libcudart.faf08d9a.so.13",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/triton/_C/libtriton.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/_C_stable_libtorch.abi3.so",
+    "/opt/issue56900/cu130/lib/python3.12/site-packages/vllm/_moe_C_stable_libtorch.abi3.so",
+    "/usr/lib/x86_64-linux-gnu/libcuda.so.580.126.09",
+    "/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.580.126.09",
+    "/usr/local/cuda-12.8/targets/x86_64-linux/lib/libcudart.so.12.8.90"
+  ]
+}

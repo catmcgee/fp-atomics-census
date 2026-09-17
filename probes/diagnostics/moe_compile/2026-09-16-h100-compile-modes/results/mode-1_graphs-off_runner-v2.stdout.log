@@ -1,0 +1,35 @@
+DEBUG 09-16 23:54:32 [plugins/__init__.py:44] No plugins for group vllm.platform_plugins found.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:36] Checking if TPU platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:55] TPU platform is not available because: No module named 'libtpu'
+DEBUG 09-16 23:54:32 [platforms/__init__.py:61] Checking if CUDA platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:84] Confirmed CUDA platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:112] Checking if ROCm platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:126] ROCm platform is not available because: No module named 'amdsmi'
+DEBUG 09-16 23:54:32 [platforms/__init__.py:133] Checking if XPU platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:163] Checking if CPU platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:61] Checking if CUDA platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:84] Confirmed CUDA platform is available.
+DEBUG 09-16 23:54:32 [platforms/__init__.py:262] Automatically detected platform cuda.
+DEBUG 09-16 23:54:40 [utils/import_utils.py:73] Loading module triton_kernels from /opt/issue56900/cu130/lib/python3.12/site-packages/vllm/third_party/triton_kernels/__init__.py.
+DEBUG 09-16 23:54:40 [utils/flashinfer.py:43] flashinfer-cubin package was not found
+DEBUG 09-16 23:54:40 [utils/flashinfer.py:58] FlashInfer unavailable since nvcc was not found and not using pre-downloaded cubins
+DEBUG 09-16 23:54:41 [plugins/__init__.py:52] Available plugins for group vllm.general_plugins:
+DEBUG 09-16 23:54:41 [plugins/__init__.py:54] - lora_filesystem_resolver -> vllm.plugins.lora_resolvers.filesystem_resolver:register_filesystem_resolver
+DEBUG 09-16 23:54:41 [plugins/__init__.py:54] - lora_hf_hub_resolver -> vllm.plugins.lora_resolvers.hf_hub_resolver:register_hf_hub_resolver
+INFO 09-16 23:54:42 [entrypoints/.../utils/api_utils.py:272] non-default args: {'max_model_len': 2048, 'enable_prefix_caching': False, 'disable_log_stats': True, 'revision': 'ec052fda178e241c7c443468d2fa1db6618996be', 'tokenizer_revision': 'ec052fda178e241c7c443468d2fa1db6618996be', 'compilation_config': {'mode': <CompilationMode.STOCK_TORCH_COMPILE: 1>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': [], 'ir_enable_torch_wrap': None, 'splitting_ops': None, 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': None, 'compile_ranges_endpoints': None, 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': None, 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': None, 'pass_config': {}, 'max_cudagraph_capture_size': None, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': None, 'static_all_moe_layers': []}, 'model': 'Qwen/Qwen1.5-MoE-A2.7B-Chat'}
+WARNING 09-16 23:54:42 [engine/arg_utils.py:1719] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+DEBUG 09-16 23:54:42 [model_executor/models/registry.py:954] Cached model info file for class vllm.model_executor.models.qwen2_moe.Qwen2MoeForCausalLM not found
+DEBUG 09-16 23:54:42 [model_executor/models/registry.py:1024] Cache model info for class vllm.model_executor.models.qwen2_moe.Qwen2MoeForCausalLM miss. Loading model instead.
+DEBUG 09-16 23:54:50 [model_executor/models/registry.py:1034] Loaded model info for class vllm.model_executor.models.qwen2_moe.Qwen2MoeForCausalLM
+DEBUG 09-16 23:54:51 [logging_utils/log_time.py:29] Registry inspect model class: Elapsed time 8.1943745 secs
+INFO 09-16 23:54:51 [config/model.py:672] Resolved architecture: Qwen2MoeForCausalLM
+INFO 09-16 23:54:51 [config/model.py:1965] Using max model len 2048
+DEBUG 09-16 23:54:51 [config/model.py:2030] Generative models support chunked prefill.
+DEBUG 09-16 23:54:51 [config/model.py:2085] Generative models support prefix caching.
+DEBUG 09-16 23:54:51 [engine/arg_utils.py:2655] Enabling chunked prefill by default
+DEBUG 09-16 23:54:51 [engine/arg_utils.py:2831] Defaulting max_num_batched_tokens to 16384 for LLM_CLASS usage context.
+DEBUG 09-16 23:54:51 [engine/arg_utils.py:2841] Defaulting max_num_seqs to 1024 for LLM_CLASS usage context.
+INFO 09-16 23:54:51 [config/scheduler.py:242] Chunked prefill is enabled with max_num_batched_tokens=16384.
+WARNING 09-16 23:54:51 [config/vllm.py:1354] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+DEBUG 09-16 23:54:51 [config/kernel.py:290] Setting platform-specific IR op priority defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), user-defined: IrOpPriorityConfig(rms_norm=[], fused_add_rms_norm=[])
+INFO 09-16 23:54:51 [config/kernel.py:308] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])

@@ -1,0 +1,7 @@
+{
+  "file_count": 1,
+  "files": [
+    "vllm/modelinfos/vllm-model_executor-models-qwen2_moe-Qwen2MoeForCausalLM.json"
+  ],
+  "root": "/root/mode-matrix-2/mode-1_graphs-off_runner-v2/cache"
+}
