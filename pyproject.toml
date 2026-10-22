@@ -12,7 +12,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
-probe-test = ["torch==2.8.0", "numpy==2.3.3"]
+probe-test = ["torch>=2.13.0", "numpy==2.3.3"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
